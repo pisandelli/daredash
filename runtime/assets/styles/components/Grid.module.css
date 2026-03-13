@@ -1,0 +1,9 @@
+.grid {
+  /* -- Local Tokens -- */
+  --local-gap: v('grid.gap');
+  --local-column-min-width: v('grid.column-min-width');
+
+  display: grid;
+  gap: var(--local-gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--local-column-min-width), 100%), 1fr));
+}

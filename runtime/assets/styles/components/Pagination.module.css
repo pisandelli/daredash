@@ -1,0 +1,174 @@
+.pagination {
+  /* Local tokens mapped to global tokens */
+  --local-font-size: v('pagination.font-size');
+  --local-font-family: v('font.base');
+  
+  --local-color: v('pagination.color');
+  --local-bg: v('pagination.bg');
+  --local-border-color: v('pagination.border-color');
+  
+  --local-color-hover: v('pagination.color-hover');
+  --local-bg-hover: v('pagination.bg-hover');
+  --local-border-hover: v('pagination.border-hover');
+  
+  --local-color-active: v('pagination.color-active');
+  --local-bg-active: v('pagination.bg-active');
+  --local-border-active: v('pagination.border-active');
+  
+  --local-color-disabled: v('pagination.color-disabled');
+  --local-bg-disabled: v('pagination.bg-disabled');
+  --local-border-disabled: v('pagination.border-disabled');
+
+  --local-size: v('pagination.size');
+  --local-size-small: v('pagination.size-small');
+  --local-radius: v('pagination.radius');
+  
+  /* Layout */
+  display: flex;
+  align-items: center;
+  font-family: var(--local-font-family);
+  font-size: var(--local-font-size);
+}
+
+.list {
+  --local-gap: v('space.xs'); /* Feed into Cluster's generic layout system */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Base Item Properties */
+.item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--local-size);
+  block-size: var(--local-size);
+  border-radius: var(--local-radius);
+  background: var(--local-bg);
+  border: 1px solid var(--local-border-color);
+  color: var(--local-color);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.button,
+.ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0 4px; /* Slight padding for double digit numbers */
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Dots have no cursor/hover */
+.item.dots,
+.ellipsis {
+  cursor: default;
+  border-color: transparent;
+  background: transparent;
+}
+
+.icon {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+/* Hover States (apply only to button-like items that aren't disabled) */
+.item:not(.dots):not(:has(.button[disabled])):hover {
+  border-color: var(--local-border-hover);
+  color: var(--local-color-hover);
+  background: var(--local-bg-hover);
+}
+
+/* Active State */
+.item[data-active] {
+  border-color: var(--local-border-active);
+  color: var(--local-color-active);
+  background: color-mix(in srgb, var(--local-color-active) 8%, transparent);
+  font-weight: 600;
+}
+
+/* Disabled State */
+.item:has(.button[disabled]) {
+  cursor: not-allowed;
+  color: var(--local-color-disabled);
+  background: var(--local-bg-disabled);
+  border-color: var(--local-border-disabled);
+}
+
+.item:has(.button[disabled]):hover {
+  background: var(--local-bg-disabled);
+  border-color: var(--local-border-disabled);
+  color: var(--local-color-disabled);
+}
+
+.item:has(.button[disabled]) .button,
+.item:has(.button[disabled]) .icon {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ------------------------------------- */
+/* Variants: Passed from useBaseComponent*/
+/* ------------------------------------- */
+
+.pagination {
+  /* Small Variant */
+  &[data-small] .item {
+    min-inline-size: var(--local-size-small);
+    block-size: var(--local-size-small);
+  }
+
+  /* Simple Variant (no borders/background unless active) */
+  &[data-simple] .item:not([data-active]):not(.dots) {
+    border-color: transparent;
+    background: transparent;
+
+    &:hover {
+      background: var(--local-bg-hover); /* Give just a subtle background on hover */
+    }
+  }
+
+  &[data-compact] > .list {
+    --local-gap: 0;
+  }
+  /* Compact Variant (glued together) handled via nogap explicitly on DdCluster */
+  &[data-compact] .item {
+    /* For compact variant, items lose standard border radius */
+    border-radius: 0;
+
+    /* Except the first (leftmost) and last (rightmost) */
+    &:first-child {
+      border-start-start-radius: var(--local-radius);
+      border-end-start-radius: var(--local-radius);
+    }
+
+    &:last-child {
+      border-start-end-radius: var(--local-radius);
+      border-end-end-radius: var(--local-radius);
+    }
+
+    /* Remove the left border for all items EXCEPT the first one to avoid double borders */
+    /* We use margin-inline-start: -1px instead of border-inline-start: none 
+       so that when an item is hovered/active, we can raise its z-index and 
+       reveal its full border outline natively. */
+    & + .item {
+      margin-inline-start: -1px;
+    }
+
+    /* Elevate hovered or active items in compact mode so their borders show over siblings */
+    &:not(.dots):hover,
+    &[data-active] {
+      z-index: 1;
+    }
+  }
+}

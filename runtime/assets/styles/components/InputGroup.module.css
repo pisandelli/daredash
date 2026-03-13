@@ -1,0 +1,134 @@
+.wrapper {
+  inline-size: 100%;
+}
+
+.label {
+  --local-label-color: v('input.label.color');
+  --local-label-font-size: v('input.label.font-size');
+  --local-label-font-weight: v('input.label.font-weight');
+
+  color: var(--local-label-color);
+  font-size: var(--local-label-font-size);
+  font-weight: var(--local-label-font-weight);
+}
+
+.group {
+  /* -- Local Tokens -- */
+  --local-border-radius: v('input-group.border-radius');
+  --local-border-color: v('input-group.border-color');
+  --local-border-width: v('input-group.border-width');
+  --local-border-style: v('input-group.border-style');
+  --local-focus-border-color: v('input.focus.border-color');
+  --local-focus-box-shadow: v('input.focus.box-shadow');
+
+  inline-size: 100%;
+  min-inline-size: 0;
+  border-radius: var(--local-border-radius);
+  border: var(--local-border-width) var(--local-border-style) var(--local-border-color);
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: var(--local-focus-border-color);
+    box-shadow: var(--local-focus-box-shadow);
+  }
+
+  /*
+   * Suppress inner wrapper chrome (label, message) from child Input/Select.
+   * The InputGroup owns those layers and renders them outside the visual box.
+   */
+  label { display: none; }
+  small { display: none; }
+
+  /* Strip border and radius from the inner input/select */
+  :is(input, select) {
+    border: none;
+    border-radius: 0;
+    outline: none;
+    flex: 1;
+    min-inline-size: 0;
+
+    &:focus { box-shadow: none; }
+  }
+
+  /* When the group has addons, square off the adjacent input corners */
+  &.hasPre  :is(input, select) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  &.hasPost :is(input, select) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  /* Error / warning / success border states */
+  &.groupError {
+    --local-border-color: v('input.error-state.border-color');
+  }
+
+  &.groupWarning {
+    --local-border-color: v('input.warning-state.border-color');
+  }
+
+  &.groupSuccess {
+    --local-border-color: v('input.success-state.border-color');
+  }
+}
+
+.addon {
+  /* -- Local Tokens -- */
+  --local-addon-bg: v('input-group.addon.background-color');
+  --local-addon-color: v('input-group.addon.color');
+  --local-addon-font-size: v('input-group.addon.font-size');
+  --local-addon-padding-inline: v('input-group.addon.padding-inline');
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-inline-size: 0;
+  block-size: v('input.height');
+  padding-inline: var(--local-addon-padding-inline);
+
+  background-color: var(--local-addon-bg);
+  color: var(--local-addon-color);
+  font-size: var(--local-addon-font-size);
+  white-space: nowrap;
+
+  &.addonPre {
+    border-inline-end: v('input-group.border-width') v('input-group.border-style') v('input-group.addon.border-color');
+  }
+
+  &.addonPost {
+    border-inline-start: v('input-group.border-width') v('input-group.border-style') v('input-group.addon.border-color');
+  }
+
+  /*
+   * When a <dd-select> is placed inside an addon slot:
+   * Extra padding-inline-end makes room for the absolutely-positioned chevron icon.
+   */
+  select {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    block-size: 100%;
+    padding-inline-start: var(--local-addon-padding-inline);
+    padding-inline-end: v('select.indicator-padding-inline-end'); /* semantic clearance for chevron */
+    font-size: var(--local-addon-font-size);
+    color: var(--local-addon-color);
+    cursor: pointer;
+
+    &:focus { box-shadow: none; }
+  }
+}
+
+/* Message container — always rendered, reserves space (same as Input pattern) */
+.message {
+  font-family: v('input.error-label.font-family');
+  font-size: v('input.error-label.font-size');
+  font-weight: v('input.error-label.font-weight');
+  min-block-size: 1.25em;
+}
+
+.errorMessage   { color: v('input.error-label.color'); }
+.warningMessage { color: v('input.warning-label.color'); }

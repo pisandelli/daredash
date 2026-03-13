@@ -1,0 +1,30 @@
+.toaster {
+  --local-z-index: v('toaster.z-index');
+  --local-gap: v('toaster.gap');
+  --local-top: v('toaster.position.top');
+  --local-right: v('toaster.position.right');
+
+  position: fixed;
+  inset-block-start: var(--local-top);
+  inset-inline-end: var(--local-right);
+  z-index: var(--local-z-index);
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--local-gap);
+  }
+}
+
+/* TransitionGroup animations */
+:global(.toast-fade-enter-active),
+:global(.toast-fade-leave-active) {
+  transition: all 0.5s ease;
+}
+
+:global(.toast-fade-enter-from),
+:global(.toast-fade-leave-to) {
+  opacity: 0;
+  transform: translateX(100%);
+}

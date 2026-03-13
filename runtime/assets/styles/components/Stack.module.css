@@ -1,0 +1,47 @@
+/* Stack.module.css
+ *
+ * NOTE: The Stylus `for $i in 1..10` loop for `data-split-after`
+ * cannot be expressed in plain CSS without a preprocessor.
+ * This is intentionally handled via the `split-after` attribute
+ * directly in the component logic (setting margin-block-end: auto
+ * on the nth-child via a CSS custom property or inline style if needed),
+ * or the tokens can emit the 10 rules explicitly if needed.
+ *
+ * For now, the split-after rules (1–10) are expanded manually below.
+ */
+
+.stack {
+  /* -- Local Tokens -- */
+  --local-gap: v('stack.gap');
+  --local-compact-gap: v('stack.compact.gap');
+  --local-spaced-gap: v('stack.spaced.gap');
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--local-gap);
+
+  &[data-compact] { gap: var(--local-compact-gap); }
+  &[data-spaced]  { gap: var(--local-spaced-gap); }
+  &[data-nogap]   { gap: 0; }
+
+  &[data-recursive] > * {
+    margin-block-end: 0;
+
+    & + * {
+      margin-block-start: var(--local-gap);
+    }
+  }
+
+  /* split-after: push nth-child to the end */
+  &[data-split-after="1"]  > :nth-child(1)  { margin-block-end: auto; }
+  &[data-split-after="2"]  > :nth-child(2)  { margin-block-end: auto; }
+  &[data-split-after="3"]  > :nth-child(3)  { margin-block-end: auto; }
+  &[data-split-after="4"]  > :nth-child(4)  { margin-block-end: auto; }
+  &[data-split-after="5"]  > :nth-child(5)  { margin-block-end: auto; }
+  &[data-split-after="6"]  > :nth-child(6)  { margin-block-end: auto; }
+  &[data-split-after="7"]  > :nth-child(7)  { margin-block-end: auto; }
+  &[data-split-after="8"]  > :nth-child(8)  { margin-block-end: auto; }
+  &[data-split-after="9"]  > :nth-child(9)  { margin-block-end: auto; }
+  &[data-split-after="10"] > :nth-child(10) { margin-block-end: auto; }
+}

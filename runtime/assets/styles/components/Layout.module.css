@@ -1,0 +1,14 @@
+.layout {
+  /* -- Local Tokens -- */
+  --local-gap: v('layout.gap');
+
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+  gap: var(--local-gap) 0;
+
+  & > main,
+  & > [data-body] {
+    flex: 1;
+  }
+}

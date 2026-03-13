@@ -1,0 +1,129 @@
+.avatar {
+  /* -- Local Tokens -- */
+  --local-size: v('avatar.size');
+  --local-font-size: v('avatar.font-size');
+  --local-radius: v('avatar.border-radius');
+  --local-bg: v('avatar.background-color');
+  --local-text: v('avatar.color');
+
+  /* -- Layout -- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  inline-size: var(--local-size);
+  block-size: var(--local-size);
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  /* -- Borders -- */
+  border: v('border-width.md') solid transparent;
+  border-radius: var(--local-radius);
+
+  /* -- Typography -- */
+  font-family: v('font.base');
+  font-weight: v('font.weight.medium');
+  font-size: var(--local-font-size);
+  user-select: none;
+
+  /* -- Colors -- */
+  background-color: var(--local-bg);
+  color: var(--local-text);
+
+  /* -- Sizes -- */
+  &[data-small] {
+    --local-size: v('avatar.sm.size');
+    --local-font-size: v('avatar.sm.font-size');
+  }
+
+  &[data-large] {
+    --local-size: v('avatar.lg.size');
+    --local-font-size: v('avatar.lg.font-size');
+  }
+
+  &[data-xlarge] {
+    --local-size: calc(v('avatar.lg.size') * 1.5);
+    --local-font-size: calc(v('avatar.lg.font-size') * 1.5);
+  }
+
+  /* -- Variants -- */
+  &[data-square] {
+    --local-radius: v('border-radius.md');
+  }
+
+  /* -- Image handling -- */
+  & img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+  }
+
+  /* -- Status Indicator (Pseudo-element) -- */
+  &[data-online],
+  &[data-busy],
+  &[data-away],
+  &[data-offline] {
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      inset-block-end: 0;
+      inset-inline-end: 0;
+      inline-size: 25%;
+      block-size: 25%;
+      min-inline-size: v('space.xxs');
+      min-block-size: v('space.xxs');
+      border-radius: v('border-radius.full');
+      border: v('border-width.md') solid v('color.bg.canvas');
+      background-color: var(--local-status-color, v('color.gray'));
+    }
+  }
+
+  &[data-online] { --local-status-color: v('color.success'); }
+  &[data-busy]   { --local-status-color: v('color.danger'); }
+  &[data-away]   { --local-status-color: v('color.warning'); }
+  &[data-offline]{ --local-status-color: v('color.gray'); }
+}
+
+/* -- Avatar Group -- */
+.avatarGroup {
+  display: flex;
+  align-items: center;
+
+  --local-overlap: v('avatar.overlap');
+
+  & .avatar {
+    border: v('border-width.md') solid v('color.bg.canvas');
+    margin-inline-end: var(--local-overlap);
+    transition: transform v('transition.fast');
+
+    &:hover {
+      transform: translateY(-2px);
+      z-index: 10;
+    }
+
+    &:last-child {
+      margin-inline-end: 0;
+    }
+  }
+
+  &[data-small] .avatar {
+    --local-size: v('avatar.sm.size');
+    --local-font-size: v('avatar.sm.font-size');
+  }
+
+  &[data-large] .avatar {
+    --local-size: v('avatar.lg.size');
+    --local-font-size: v('avatar.lg.font-size');
+  }
+
+  &[data-xlarge] .avatar {
+    --local-size: calc(v('avatar.lg.size') * 1.5);
+    --local-font-size: calc(v('avatar.lg.font-size') * 1.5);
+  }
+
+  &[data-square] .avatar {
+    --local-radius: v('border-radius.md');
+  }
+}

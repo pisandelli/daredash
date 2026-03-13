@@ -1,0 +1,119 @@
+.group {
+  /* -- Local Tokens -- */
+  --local-border-radius: v('input-search.group.border-radius');
+  --local-border-color: v('input-search.group.border-color');
+  --local-border-width: v('input-search.group.border-width');
+  --local-border-style: v('input-search.group.border-style');
+
+  display: flex;
+  inline-size: 100%;
+  min-inline-size: 0;
+  border-radius: var(--local-border-radius);
+  border: var(--local-border-width) var(--local-border-style) var(--local-border-color);
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: v('input.focus.border-color');
+    box-shadow: v('input.focus.box-shadow');
+  }
+}
+
+.input {
+  /* -- Local Tokens -- */
+  --local-background-color: v('input.background-color');
+  --local-color: v('input.color');
+  --local-font-family: v('input.font-family');
+  --local-font-size: v('input.font-size');
+  --local-font-weight: v('input.font-weight');
+  --local-placeholder-color: v('input.placeholder.color');
+
+  appearance: none;
+  display: block;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  block-size: v('input.height');
+  padding-block: v('input.padding.block.start') v('input.padding.block.end');
+  padding-inline: v('input.padding.inline.start') v('input.padding.inline.end');
+
+  background-color: var(--local-background-color);
+  font-family: var(--local-font-family);
+  font-size: var(--local-font-size);
+  font-weight: var(--local-font-weight);
+  color: var(--local-color);
+
+  border: none;
+  outline: none;
+
+  /* Remove native clear button on search input */
+  &::-webkit-search-cancel-button { display: none; }
+
+  &::placeholder {
+    color: var(--local-placeholder-color);
+  }
+
+  &[disabled] {
+    background-color: v('input.disabled.background-color');
+    color: v('input.disabled.color');
+    cursor: v('input.disabled.cursor');
+  }
+}
+
+.searchButton {
+  /* -- Local Tokens -- */
+  --local-bg: v('input-search.button.background-color');
+  --local-color: v('input-search.button.color');
+  --local-hover-bg: v('input-search.button.hover-background-color');
+  --local-icon-size: v('input-search.button.icon-size');
+  --local-font-size: v('input-search.button.font-size');
+  --local-font-weight: v('input-search.button.font-weight');
+  --local-padding-inline: v('input-search.button.padding-inline');
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v('space.xs');
+  flex-shrink: 0;
+  block-size: v('input.height');
+  padding-inline: var(--local-padding-inline);
+
+  background-color: var(--local-bg);
+  color: var(--local-color);
+  font-size: var(--local-font-size);
+  font-weight: var(--local-font-weight);
+  border: none;
+  cursor: pointer;
+  transition: v('transition.base');
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    background-color: var(--local-hover-bg);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* -- Colour Variants via data-variant attribute -- */
+  &[data-variant="success"] {
+    --local-bg: v('input-search.button.success.background-color');
+    --local-hover-bg: v('input-search.button.success.hover-background-color');
+  }
+
+  &[data-variant="danger"] {
+    --local-bg: v('input-search.button.danger.background-color');
+    --local-hover-bg: v('input-search.button.danger.hover-background-color');
+  }
+
+  &[data-variant="neutral"] {
+    --local-bg: v('input-search.button.neutral.background-color');
+    --local-color: v('input-search.button.neutral.color');
+    --local-hover-bg: v('input-search.button.neutral.hover-background-color');
+  }
+}
+
+.buttonIcon {
+  block-size: var(--local-icon-size);
+  inline-size: var(--local-icon-size);
+  flex-shrink: 0;
+}

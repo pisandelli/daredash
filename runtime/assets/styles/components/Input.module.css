@@ -1,0 +1,150 @@
+.input {
+  /* -- Local Tokens -- */
+  --local-background-color: v('input.background-color');
+  --local-height: v('input.height');
+  --local-border-radius: v('input.border-radius');
+  --local-border-width: v('input.border-width');
+  --local-border-style: v('input.border-style');
+  --local-border-color: v('input.border-color');
+  --local-color: v('input.color');
+  --local-font-family: v('input.font-family');
+  --local-placeholder-color: v('input.placeholder.color');
+  --local-font-size: v('input.font-size');
+  --local-font-weight: v('input.font-weight');
+  --local-padding-inline-start: v('input.padding.inline.start');
+  --local-padding-inline-end: v('input.padding.inline.end');
+  --local-padding-block-start: v('input.padding.block.start');
+  --local-padding-block-end: v('input.padding.block.end');
+
+  /* -- Size Tokens -- */
+  --local-small-height: v('input.size.small.height');
+  --local-small-font-size: v('input.size.small.font-size');
+  --local-small-padding-inline: v('input.size.small.padding-inline');
+  --local-large-height: v('input.size.large.height');
+  --local-large-font-size: v('input.size.large.font-size');
+  --local-large-padding-inline: v('input.size.large.padding-inline');
+
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 0;
+  resize: none;
+  overflow: hidden;
+
+  block-size: var(--local-height);
+  padding-block: var(--local-padding-block-start) var(--local-padding-block-end);
+  padding-inline: var(--local-padding-inline-start) var(--local-padding-inline-end);
+  border-radius: var(--local-border-radius);
+
+  font-family: var(--local-font-family);
+  font-size: var(--local-font-size);
+  font-weight: var(--local-font-weight);
+
+  background-color: var(--local-background-color);
+  border: var(--local-border-width) var(--local-border-style) var(--local-border-color);
+  color: var(--local-color);
+
+  &::placeholder {
+    color: var(--local-placeholder-color);
+  }
+
+  &:hover:not(:disabled) {
+    --local-border-color: v('color.border-hover');
+  }
+
+  &:focus {
+    outline: v('input.focus.outline');
+    --local-border-color: v('input.focus.border-color');
+    box-shadow: v('input.focus.box-shadow');
+  }
+
+  &[disabled] {
+    --local-background-color: v('input.disabled.background-color');
+    --local-color: v('input.disabled.color');
+    cursor: v('input.disabled.cursor');
+    --local-border-color: v('color.secondary-200');
+  }
+
+  &[data-error] {
+    --local-border-color: v('input.error-state.border-color');
+
+    &:focus {
+      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.danger') 30%, transparent);
+    }
+  }
+
+  &[data-warning] {
+    --local-border-color: v('color.warning');
+
+    &:focus {
+      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.warning') 30%, transparent);
+    }
+  }
+
+  &[data-success] {
+    --local-border-color: v('color.success');
+
+    &:focus {
+      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.success') 30%, transparent);
+    }
+  }
+
+  &[data-has-icon-left]  { padding-inline-start: 2.5rem; }
+  &[data-has-icon-right] { padding-inline-end: 2.5rem; }
+
+  &[data-small] {
+    block-size: var(--local-small-height);
+    font-size: var(--local-small-font-size);
+    padding-inline: var(--local-small-padding-inline);
+  }
+
+  &[data-large] {
+    block-size: var(--local-large-height);
+    font-size: var(--local-large-font-size);
+    padding-inline: var(--local-large-padding-inline);
+  }
+}
+
+.iconWrapper {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v('color.secondary-400');
+  pointer-events: none;
+  inline-size: 2.5rem;
+  block-size: 100%;
+  z-index: 2;
+
+  &.left  { inset-inline-start: 0; }
+  &.right { inset-inline-end: 0; }
+
+  &.error   { color: v('color.danger'); }
+  &.warning { color: v('color.warning'); }
+  &.success { color: v('color.success'); }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  gap: 0.375rem;
+}
+
+.label {
+  font-size: v('input.label.font-size');
+  font-weight: v('input.label.font-weight');
+  color: v('input.label.color');
+}
+
+.message {
+  font-family: v('input.error-label.font-family');
+  font-size: v('input.error-label.font-size');
+  font-weight: v('input.error-label.font-weight');
+  min-block-size: 1.25em;
+}
+
+.errorMessage   { color: v('input.error-label.color'); }
+.warningMessage { color: v('color.warning'); }

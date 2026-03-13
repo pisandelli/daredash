@@ -1,0 +1,16 @@
+/* Global Reset & Base Styles */
+:where(*),
+:where(*::before),
+:where(*::after) {
+  box-sizing: border-box;
+}
+
+:where(body) {
+  margin: 0;
+  font-family: v('font.base');
+  color: v('color.text.default');
+  background-color: v('color.bg.surface');
+  line-height: v('line-height.normal');
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

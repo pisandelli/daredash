@@ -1,0 +1,81 @@
+.modal {
+  /* -- Local Tokens -- */
+  --local-inline-size: v('modal.inline-size');
+  --local-max-inline-size: v('modal.max-inline-size');
+  --local-border-radius: v('modal.border-radius');
+  --local-box-shadow: v('modal.box-shadow');
+  --local-z-index: v('modal.z-index');
+  --local-backdrop-bg: v('modal.backdrop.background-color');
+  --local-backdrop-filter: v('modal.backdrop.filter');
+  --local-title-font-size: v('modal.title.font-size');
+  --local-title-font-weight: v('modal.title.font-weight');
+  --local-close-size: v('modal.close-size');
+  --local-body-font-family: v('modal.body.font-family');
+  --local-padding: v('modal.padding');
+
+  /* Native Dialog Attributes */
+  margin: auto;
+  padding: 0;
+  border: none;
+  background-color: v('color.white');
+  color: v('color.text.default');
+
+  /* Layout & Design */
+  inline-size: var(--local-inline-size);
+  max-inline-size: var(--local-max-inline-size);
+  max-block-size: calc(100dvh - 2rem);
+  border-radius: var(--local-border-radius);
+  box-shadow: var(--local-box-shadow);
+  z-index: var(--local-z-index);
+  overflow: hidden;
+
+  &::backdrop {
+    background-color: var(--local-backdrop-bg);
+    backdrop-filter: var(--local-backdrop-filter);
+  }
+}
+
+
+.header {
+  padding: var(--local-padding);
+  padding-block-end: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--local-title-font-size);
+  font-weight: var(--local-title-font-weight);
+}
+
+.close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--local-close-size);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v('color.darker-gray');
+  padding: v('space.xs');
+  margin-inline-end: calc(var(--local-padding) * -0.25);
+  border-radius: v('border-radius.full');
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: v('color.danger.600');
+    background-color: v('color.danger.50');
+  }
+}
+
+.body {
+  font-family: var(--local-body-font-family);
+  padding: 0 var(--local-padding);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.footer {
+  padding: var(--local-padding);
+  padding-block-start: 0;
+}

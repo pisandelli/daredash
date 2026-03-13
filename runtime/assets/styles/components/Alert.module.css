@@ -1,0 +1,103 @@
+.alert {
+  /* -- Local Tokens -- */
+  --local-base-color: v('alert.base-color');
+  --local-border-radius: v('alert.border-radius');
+  --local-padding: v('alert.padding');
+  --local-gap: v('alert.gap');
+  --local-font-family: v('alert.font-family');
+  --local-font-size: v('alert.font-size');
+  --local-line-height: v('alert.line-height');
+  --local-icon-size: v('alert.icon-size');
+  --local-title-font-weight: v('alert.title.font-weight');
+  --local-title-font-size: v('alert.title.font-size');
+  --local-close-size: v('alert.close.size');
+  --local-close-opacity: v('alert.close.opacity');
+  --local-close-hover-opacity: v('alert.close.hover-opacity');
+  --local-border-radius-base: v('border-radius.base');
+  --local-transition-fast: v('transition.fast');
+
+  /* Calculate text and bg based on the hue of base-color */
+  /* For background we use 10% opacity, and for text we darken it heavily for contrast */
+  --local-bg-tint: hsl(from var(--local-base-color) h s l / 0.1);
+  --local-text-color: hsl(from var(--local-base-color) h s 35); /* ~35% lightness for dark contrast */
+
+  /* -- Layout -- */
+  display: flex;
+  align-items: flex-start;
+  gap: var(--local-gap);
+  padding: var(--local-padding);
+  border-radius: var(--local-border-radius);
+
+  /* -- Appearance -- */
+  background-color: var(--local-bg-tint);
+  color: var(--local-text-color);
+  font-family: var(--local-font-family);
+  font-size: var(--local-font-size);
+  line-height: var(--local-line-height);
+
+  /* -- Border (optional, depending on design but typically none or subtle) -- */
+  /* border: 1px solid hsl(from var(--local-base-color) h s l / 0.3); */
+
+  /* -- CSS Variables updates via semantic variants -- */
+  &[data-primary] { --local-base-color: v('alert.primary.base-color'); }
+  &[data-success] { --local-base-color: v('alert.success.base-color'); }
+  &[data-warning] { --local-base-color: v('alert.warning.base-color'); }
+  &[data-danger]  { --local-base-color: v('alert.danger.base-color'); }
+  &[data-error]   { --local-base-color: v('alert.error.base-color'); }
+  &[data-info]    { --local-base-color: v('alert.info.base-color'); }
+}
+
+.iconContainer {
+  display: flex;
+  flex-shrink: 0;
+  padding-block-start: 0.125rem; /* Optical alignment with text */
+}
+
+.icon {
+  font-size: var(--local-icon-size);
+  color: var(--local-base-color);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.25rem;
+}
+
+.title {
+  font-weight: var(--local-title-font-weight);
+  font-size: var(--local-title-font-size);
+  color: var(--local-base-color);
+}
+
+.message {
+  color: var(--local-text-color);
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--local-close-size);
+  color: var(--local-base-color);
+  opacity: var(--local-close-opacity);
+  cursor: pointer;
+  border-radius: var(--local-border-radius-base);
+  transition: opacity var(--local-transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    opacity: var(--local-close-hover-opacity);
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--local-base-color), transparent 70%);
+  }
+}

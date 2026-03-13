@@ -1,0 +1,10 @@
+.inputLabel {
+  /* -- Local Tokens -- */
+  --local-color: v('input.label.color');
+  --local-font-size: v('input.label.font-size');
+  --local-font-weight: v('input.label.font-weight');
+
+  color: var(--local-color);
+  font-size: var(--local-font-size);
+  font-weight: var(--local-font-weight);
+}

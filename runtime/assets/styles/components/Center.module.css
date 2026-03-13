@@ -1,0 +1,22 @@
+.center {
+  /* -- Local Tokens -- */
+  --local-max-width: v('center.max-width');
+  --local-padding: v('center.gap');
+
+  /* -- Styles -- */
+  box-sizing: content-box;
+  margin-inline: auto;
+  max-inline-size: var(--local-max-width);
+  padding-inline: var(--local-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* -- Intrinsic Behavior -- */
+  &[data-intrinsic] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

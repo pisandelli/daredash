@@ -1,0 +1,23 @@
+.cluster {
+  /* -- Local Tokens -- */
+  --local-gap: v('cluster.gap');
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--local-gap);
+  justify-content: flex-start;
+  align-items: center;
+
+  &[data-center]  { justify-content: center; }
+  &[data-end]     { justify-content: flex-end; }
+  &[data-between] { justify-content: space-between; }
+  &[data-around]  { justify-content: space-around; }
+  &[data-evenly]  { justify-content: space-evenly; }
+
+  &[data-narrow]  { --local-gap: v('cluster.narrow.gap'); }
+  &[data-wide]    { --local-gap: v('cluster.wide.gap'); }
+
+  &[data-nowrap]  { flex-wrap: nowrap; }
+  &[data-stretch] { align-items: stretch; }
+  &[data-nogap]   { --local-gap: 0; }
+}

@@ -1,0 +1,23 @@
+.loading {
+  /* -- Local Tokens -- */
+  --local-font-family: v('loading.font-family');
+  --local-color: v('loading.color');
+  --local-animation: v('loading.animation');
+  --local-gap: v('loading.gap');
+  --local-icon-size: v('loading.icon-size');
+
+  font-family: var(--local-font-family);
+  color: var(--local-color);
+}
+
+.loader {
+  font-size: var(--local-icon-size);
+  animation: var(--local-animation);
+  margin-block-end: var(--local-gap);
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0); }
+  100% { transform: rotate(359deg); }
+}
+

@@ -1,0 +1,47 @@
+.badge {
+  /* -- Local Tokens -- */
+  --local-base-color: v('badge.base-color');
+  --local-padding-x: v('badge.padding.inline');
+  --local-padding-y: v('badge.padding.block');
+  --local-radius: v('badge.border-radius');
+  --local-font-size: v('badge.font-size');
+  --local-font-weight: v('badge.font-weight');
+  --local-icon-size: v('badge.icon-size');
+
+  /* -- Layout -- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v('space.xxs');
+
+  inline-size: fit-content;
+  padding-block: var(--local-padding-y);
+  padding-inline: var(--local-padding-x);
+  border-radius: var(--local-radius);
+
+  /* -- Typography -- */
+  font-family: v('font.base');
+  font-size: var(--local-font-size);
+  font-weight: var(--local-font-weight);
+  line-height: v('line-height.none');
+  text-decoration: none;
+  white-space: nowrap;
+  text-transform: v('badge.text-transform');
+  letter-spacing: v('badge.letter-spacing');
+
+  /* -- Colors -- */
+  background-color: hsl(from var(--local-base-color) h s l / 0.15);
+  color: hsl(from var(--local-base-color) h s 35%);
+
+  /* -- Variants -- */
+  &[data-primary] { --local-base-color: v('badge.primary.base-color'); }
+  &[data-success] { --local-base-color: v('badge.success.base-color'); }
+  &[data-warning] { --local-base-color: v('badge.warning.base-color'); }
+  &[data-danger]  { --local-base-color: v('badge.danger.base-color'); }
+  &[data-info]    { --local-base-color: v('badge.info.base-color'); }
+}
+
+.icon {
+  font-size: var(--local-icon-size);
+  font-weight: v('font.weight.regular');
+}

@@ -1,0 +1,85 @@
+.wrapper {
+  /* -- Local Tokens -- */
+  --local-bg: v('color.bg.surface');
+  --local-border-color: v('table.border-color');
+  --local-border-radius: v('table.border-radius');
+  --local-header-bg: v('table.header.background-color');
+  --local-header-color: v('color.dark-gray');
+  --local-header-font-weight: v('table.header.font-weight');
+  --local-row-hover-bg: v('table.row-hover.background-color');
+  --local-row-striped-bg: v('table.row-striped.background-color');
+  --local-cell-padding: v('table.cell.padding');
+  --local-width: v('table.width');
+  --local-border-collapse: v('table.border-collapse');
+  --local-empty-color: v('table.empty-state.color');
+  --local-error-bg: v('table.error-state.background-color');
+  --local-error-color: v('table.error-state.color');
+  --local-font-size: v('font-size.sm');
+  --local-transition: v('transition.fast');
+
+  inline-size: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--local-border-color);
+  border-radius: var(--local-border-radius);
+  background-color: var(--local-bg);
+  box-sizing: border-box;
+}
+
+.table {
+  inline-size: var(--local-width);
+  border-collapse: var(--local-border-collapse);
+  text-align: start;
+  font-size: var(--local-font-size);
+}
+
+
+.th {
+  background-color: var(--local-header-bg);
+  color: var(--local-header-color);
+  font-weight: var(--local-header-font-weight);
+  text-align: start;
+}
+
+.th, .td {
+  padding: var(--local-cell-padding);
+  border-block-end: 1px solid var(--local-border-color);
+  vertical-align: middle;
+}
+
+/* Remove bottom border from last row to avoid double borders with wrapper */
+.tr:last-child .td {
+  border-block-end: none;
+}
+
+.tr {
+  transition: background-color var(--local-transition);
+}
+
+.wrapper[data-striped] tbody .tr:nth-child(even):not(.empty-row):not(.loading-row):not(.error-row) {
+  background-color: var(--local-row-striped-bg);
+}
+
+.wrapper .tr:hover:not(.empty-row):not(.loading-row):not(.error-row),
+.wrapper[data-striped] tbody .tr:hover:not(.empty-row):not(.loading-row):not(.error-row) {
+  background-color: var(--local-row-hover-bg);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: calc(var(--local-cell-padding) * 3);
+  color: var(--local-empty-color);
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding-block: calc(var(--local-cell-padding) * 2);
+}
+
+.error-row {
+  background-color: var(--local-error-bg);
+  color: var(--local-error-color);
+}

@@ -1,0 +1,14 @@
+.accordiongroup {
+  display: flex;
+  flex-direction: column;
+  /* Visual grouping: Outer border and no internal gap */
+  border: v('accordion.border-width') solid v('accordion.border-color');
+  border-radius: v('accordion.border-radius');
+  overflow: hidden;
+  background-color: v('color.bg.surface');
+}
+
+/* Remove the duplicate bottom border of the last accordion in the group */
+.accordiongroup > :last-child {
+  border-block-end: 0;
+}
