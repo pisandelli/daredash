@@ -1,4 +1,4 @@
-# daredash: Double Dash Design Tokens Module
+# ⚡ DareDash: Token-Driven UI Library for Nuxt
 
 ## Overview
 
