@@ -1,0 +1,12 @@
+{
+  "$description": "Tokens for the Center layout primitive",
+  "$type": "object",
+  "gap": {
+    "$description": "Used for padding-inline",
+    "$value": "{space.lg}"
+  },
+  "max-width": {
+    "$description": "Max width for centered content",
+    "$value": "{primitives.max-width}"
+  }
+}

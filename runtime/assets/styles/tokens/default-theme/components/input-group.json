@@ -1,0 +1,33 @@
+{
+  "$description": "Tokens for the InputGroup (pre/post addon) component",
+  "$type": "object",
+  "border-radius": {
+    "$value": "{input.border-radius}"
+  },
+  "border-color": {
+    "$value": "{input.border-color}"
+  },
+  "border-width": {
+    "$value": "{input.border-width}"
+  },
+  "border-style": {
+    "$value": "{input.border-style}"
+  },
+  "addon": {
+    "background-color": {
+      "$value": "{color.secondary-50}"
+    },
+    "color": {
+      "$value": "{color.secondary-600}"
+    },
+    "border-color": {
+      "$value": "{input.border-color}"
+    },
+    "font-size": {
+      "$value": "{input.font-size}"
+    },
+    "padding-inline": {
+      "$value": "{space.sm}"
+    }
+  }
+}

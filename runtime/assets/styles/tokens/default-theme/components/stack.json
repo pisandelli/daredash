@@ -1,0 +1,21 @@
+{
+  "$description": "Tokens for the Stack layout primitive",
+  "$type": "object",
+  "gap": {
+    "$value": "{space.lg}"
+  },
+  "compact": {
+    "$description": "Tokens for the [data-compact] variant",
+    "$type": "object",
+    "gap": {
+      "$value": "calc({stack.gap} / 2)"
+    }
+  },
+  "spaced": {
+    "$description": "Tokens for the [data-spaced] variant",
+    "$type": "object",
+    "gap": {
+      "$value": "calc({stack.gap} * 3)"
+    }
+  }
+}

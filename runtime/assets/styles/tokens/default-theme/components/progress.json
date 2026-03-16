@@ -1,0 +1,38 @@
+{
+  "$description": "Tokens for the Progress component (progress bar)",
+  "$type": "object",
+  "height": {
+    "$description": "Height of the progress bar",
+    "$value": "{space.sm}"
+  },
+  "background-color": {
+    "$description": "Color of the 'track' (background)",
+    "$value": "{color.light-gray}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.full}"
+  },
+  "indicator": {
+    "$description": "Tokens for the 'indicator' (filled bar)",
+    "$type": "object",
+    "background-color": {
+      "$value": "{color.primary}"
+    },
+    "transition": {
+      "$value": "{transition.base}"
+    }
+  },
+  "label": {
+    "$description": "Tokens for the text (e.g., 50%)",
+    "$type": "object",
+    "font-family": {
+      "$value": "{font.system}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    },
+    "color": {
+      "$value": "{color.dark-gray}"
+    }
+  }
+}

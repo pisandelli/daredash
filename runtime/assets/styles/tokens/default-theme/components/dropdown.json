@@ -1,0 +1,12 @@
+{
+  "$description": "Tokens for the Dropdown menu (inherits from Select)",
+  "$type": "object",
+  "menu": {
+    "$description": "The floating panel",
+    "$value": "{select.menu}"
+  },
+  "item": {
+    "$description": "An item within the menu",
+    "$value": "{select.option}"
+  }
+}

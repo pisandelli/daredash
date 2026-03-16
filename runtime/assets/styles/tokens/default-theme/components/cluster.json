@@ -1,0 +1,21 @@
+{
+  "$description": "Tokens for the Cluster layout primitive",
+  "$type": "object",
+  "gap": {
+    "$value": "{space.lg}"
+  },
+  "narrow": {
+    "$description": "Tokens for the [data-narrow] variant",
+    "$type": "object",
+    "gap": {
+      "$value": "calc({cluster.gap} * 0.666667)"
+    }
+  },
+  "wide": {
+    "$description": "Tokens for the [data-wide] variant",
+    "$type": "object",
+    "gap": {
+      "$value": "calc({cluster.gap} * 2)"
+    }
+  }
+}

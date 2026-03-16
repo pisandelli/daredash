@@ -1,0 +1,25 @@
+{
+  "$description": "Tokens for the individual toast pop-up",
+  "$type": "object",
+  "padding": {
+    "$value": "{space.md}"
+  },
+  "border-radius": {
+    "$value": "{space.xs}"
+  },
+  "font-family": {
+    "$value": "{font.system}"
+  },
+  "box-shadow": {
+    "$description": "Reuses the card shadow",
+    "$value": "{card.box-shadow}"
+  },
+  "close-size": {
+    "$description": "Size of the close icon",
+    "$value": "{font-size.lg}"
+  },
+  "cluster-gap": {
+    "$description": "Internal gap between message and close button",
+    "$value": "{space.xs}"
+  }
+}

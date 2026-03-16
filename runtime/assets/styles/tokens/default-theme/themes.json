@@ -1,0 +1,140 @@
+{
+  "light": {
+    "$description": "Light theme (Default)",
+    "color": {
+      "text": {
+        "default": {
+          "$value": "{color.secondary.900}"
+        },
+        "muted": {
+          "$value": "{color.secondary.500}"
+        },
+        "inverse": {
+          "$value": "{color.white}"
+        }
+      },
+      "bg": {
+        "canvas": {
+          "$value": "{color.secondary.50}"
+        },
+        "surface": {
+          "$value": "{color.white}"
+        },
+        "surface-hover": {
+          "$value": "{color.secondary.100}"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{color.secondary.200}"
+        },
+        "active": {
+          "$value": "{color.primary.500}"
+        }
+      },
+      "primary": {
+        "default": {
+          "$value": "{color.primary.600}"
+        },
+        "fg": {
+          "$value": "{color.white}"
+        },
+        "hover": {
+          "$value": "{color.primary.700}"
+        }
+      }
+    }
+  },
+  "dark": {
+    "$description": "Dark theme",
+    "color": {
+      "text": {
+        "default": {
+          "$value": "{color.white}"
+        },
+        "muted": {
+          "$value": "{color.secondary.400}"
+        },
+        "inverse": {
+          "$value": "{color.secondary.900}"
+        }
+      },
+      "bg": {
+        "canvas": {
+          "$value": "{color.secondary.950}"
+        },
+        "surface": {
+          "$value": "{color.secondary.900}"
+        },
+        "surface-hover": {
+          "$value": "{color.secondary.800}"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{color.secondary.800}"
+        },
+        "active": {
+          "$value": "{color.primary.400}"
+        }
+      },
+      "primary": {
+        "default": {
+          "$value": "{color.primary.500}"
+        },
+        "fg": {
+          "$value": "{color.white}"
+        },
+        "hover": {
+          "$value": "{color.primary.400}"
+        }
+      }
+    }
+  },
+  "radar": {
+    "$description": "Daredevil Accessibility Theme (High Contrast)",
+    "color": {
+      "text": {
+        "default": {
+          "$value": "{color.white}"
+        },
+        "muted": {
+          "$value": "{color.crimson.100}"
+        },
+        "inverse": {
+          "$value": "{color.black}"
+        }
+      },
+      "bg": {
+        "canvas": {
+          "$value": "{color.crimson.950}"
+        },
+        "surface": {
+          "$value": "{color.black}"
+        },
+        "surface-hover": {
+          "$value": "{color.crimson.900}"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{color.crimson.700}"
+        },
+        "active": {
+          "$value": "{color.crimson.400}"
+        }
+      },
+      "primary": {
+        "default": {
+          "$value": "{color.crimson.500}"
+        },
+        "fg": {
+          "$value": "{color.white}"
+        },
+        "hover": {
+          "$value": "{color.crimson.400}"
+        }
+      }
+    }
+  }
+}

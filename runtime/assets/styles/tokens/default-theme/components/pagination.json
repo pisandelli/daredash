@@ -1,0 +1,52 @@
+{
+  "$description": "Tokens for the Pagination component",
+  "$type": "object",
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "color": {
+    "$value": "{color.dark-gray}"
+  },
+  "bg": {
+    "$value": "transparent"
+  },
+  "border-color": {
+    "$value": "{color.light-gray}"
+  },
+  "color-hover": {
+    "$value": "{color.primary}"
+  },
+  "bg-hover": {
+    "$value": "transparent"
+  },
+  "border-hover": {
+    "$value": "{color.primary}"
+  },
+  "color-active": {
+    "$value": "{color.primary}"
+  },
+  "bg-active": {
+    "$value": "transparent"
+  },
+  "border-active": {
+    "$value": "{color.primary}"
+  },
+  "color-disabled": {
+    "$value": "{color.gray}"
+  },
+  "bg-disabled": {
+    "$value": "{color.light-gray}"
+  },
+  "border-disabled": {
+    "$value": "{color.light-gray}"
+  },
+  "size": {
+    "$value": "{space.xl}"
+  },
+  "size-small": {
+    "$value": "{space.lg}"
+  },
+  "radius": {
+    "$value": "{border-radius.base}"
+  }
+}

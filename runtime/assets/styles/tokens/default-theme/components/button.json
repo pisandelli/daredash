@@ -1,0 +1,129 @@
+{
+  "$description": "Tokens for the Button component",
+  "$type": "object",
+  "base-color": {
+    "$value": "{color.primary.600}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "font-family": {
+    "$value": "{font.base}"
+  },
+  "font-weight": {
+    "$value": "{font.weight.bold}"
+  },
+  "text-transform": {
+    "$value": "uppercase"
+  },
+  "sizes": {
+    "tiny": {
+      "height": {
+        "$value": "1.75rem"
+      },
+      "padding": {
+        "$value": "0.5rem"
+      },
+      "font-size": {
+        "$value": "{font-size.xs}"
+      },
+      "icon-size": {
+        "$value": "1rem"
+      }
+    },
+    "small": {
+      "height": {
+        "$value": "2rem"
+      },
+      "padding": {
+        "$value": "0.75rem"
+      },
+      "font-size": {
+        "$value": "{font-size.sm}"
+      },
+      "icon-size": {
+        "$value": "1.25rem"
+      }
+    },
+    "regular": {
+      "height": {
+        "$value": "2.5rem"
+      },
+      "padding": {
+        "$value": "1rem"
+      },
+      "font-size": {
+        "$value": "{font-size.sm}"
+      },
+      "icon-size": {
+        "$value": "1.25rem"
+      }
+    },
+    "large": {
+      "height": {
+        "$value": "3rem"
+      },
+      "padding": {
+        "$value": "1.5rem"
+      },
+      "font-size": {
+        "$value": "{font-size.md}"
+      },
+      "icon-size": {
+        "$value": "1.5rem"
+      }
+    },
+    "xlarge": {
+      "height": {
+        "$value": "3.5rem"
+      },
+      "padding": {
+        "$value": "2rem"
+      },
+      "font-size": {
+        "$value": "{font-size.lg}"
+      },
+      "icon-size": {
+        "$value": "1.75rem"
+      }
+    }
+  },
+  "semantic": {
+    "inline": {
+      "$value": "{space.lg}"
+    },
+    "block": {
+      "$value": "{space.sm}"
+    }
+  },
+  "icon": {
+    "gap": {
+      "$value": "{space.xs}"
+    }
+  },
+  "primary": {
+    "base-color": {
+      "$value": "{color.primary.600}"
+    }
+  },
+  "success": {
+    "base-color": {
+      "$value": "{color.success}"
+    }
+  },
+  "warning": {
+    "base-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "danger": {
+    "base-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "info": {
+    "base-color": {
+      "$value": "{color.info}"
+    }
+  }
+}

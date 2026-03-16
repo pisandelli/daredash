@@ -1,0 +1,52 @@
+{
+  "$description": "Tokens for the Checkbox component",
+  "$type": "object",
+  "size": {
+    "$value": "1.25rem"
+  },
+  "gap": {
+    "$value": "{space.xxs}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "bg": {
+    "$value": "{color.bg.surface}"
+  },
+  "border": {
+    "$value": "{color.light-gray}"
+  },
+  "hover": {
+    "border": {
+      "$value": "{color.primary.500}"
+    }
+  },
+  "checked": {
+    "bg": {
+      "$value": "{color.primary.600}"
+    },
+    "border": {
+      "$value": "{color.primary.600}"
+    }
+  },
+  "disabled": {
+    "bg": {
+      "$value": "{color.bg-disabled}"
+    },
+    "border": {
+      "$value": "{color.light-gray}"
+    }
+  },
+  "transition": {
+    "$value": "{transition.fast}"
+  },
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "color": {
+    "$value": "{color.darker-gray}"
+  },
+  "line-height": {
+    "$value": "{line-height.snug}"
+  }
+}

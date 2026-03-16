@@ -1,0 +1,63 @@
+{
+  "$description": "Tokens for the Switch (toggle) component",
+  "$type": "object",
+  "font-size": {
+    "$description": "Base size for 'em' calculations",
+    "$value": "{font-size.md}"
+  },
+  "transition": {
+    "$value": "{transition.fast}"
+  },
+  "thumb": {
+    "$type": "object",
+    "size": {
+      "$value": "1.25em"
+    },
+    "background-color": {
+      "$value": "#FFF"
+    },
+    "box-shadow": {
+      "$value": "0 1px 2px rgba(0,0,0,0.2)"
+    },
+    "translate-x": {
+      "$description": "Distance to move the thumb when checked",
+      "$value": "calc({switch.track.width} - {switch.thumb.size} - ({switch.track.padding} * 2))"
+    }
+  },
+  "track": {
+    "$type": "object",
+    "width": {
+      "$value": "3em"
+    },
+    "height": {
+      "$value": "1.5em"
+    },
+    "padding": {
+      "$description": "Space between the thumb and track edge",
+      "$value": "0.165em"
+    },
+    "border-radius": {
+      "$value": "{border-radius.full}"
+    },
+    "background-color": {
+      "$description": "Track color ('off' state)",
+      "$value": "{color.gray}"
+    },
+    "background-color-active": {
+      "$description": "Track color ('on' state)",
+      "$value": "{color.success}"
+    }
+  },
+  "focus": {
+    "$value": "{checkbox.focus}"
+  },
+  "disabled": {
+    "$type": "object",
+    "opacity": {
+      "$value": 0.6
+    },
+    "cursor": {
+      "$value": "not-allowed"
+    }
+  }
+}

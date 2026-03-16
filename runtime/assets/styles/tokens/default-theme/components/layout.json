@@ -1,0 +1,13 @@
+{
+  "$description": "Tokens for the Layout component (Head / Body / Footer)",
+  "$type": "object",
+  "footer-height": {
+    "$value": "min-content"
+  },
+  "gap": {
+    "$value": "0"
+  },
+  "header-height": {
+    "$value": "min-content"
+  }
+}

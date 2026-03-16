@@ -1,0 +1,56 @@
+{
+  "$description": "Tokens for the Modal (dialog) component",
+  "$type": "object",
+  "border-radius": {
+    "$value": "{border-radius.xl}"
+  },
+  "box-shadow": {
+    "$value": "{card.box-shadow}"
+  },
+  "inline-size": {
+    "$description": "Preferred size of the modal",
+    "$value": "70vw"
+  },
+  "max-inline-size": {
+    "$description": "Max size of the modal",
+    "$value": "37.5rem"
+  },
+  "z-index": {
+    "$value": "{z-index.4}"
+  },
+  "close-size": {
+    "$description": "Size of the close icon",
+    "$value": "{font-size.lg}"
+  },
+  "backdrop": {
+    "$description": "Styles for the modal's scrim (backdrop)",
+    "$type": "object",
+    "filter": {
+      "$value": "blur(5px)"
+    },
+    "background-color": {
+      "$value": "rgba(0, 0, 0, 0.7)"
+    }
+  },
+  "title": {
+    "$description": "Styles for the 'title' slot",
+    "$type": "object",
+    "font-size": {
+      "$value": "{font-size.lg}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.bold}"
+    }
+  },
+  "body": {
+    "$description": "Styles for the 'body' slot",
+    "$type": "object",
+    "font-family": {
+      "$value": "{font.system}"
+    }
+  },
+  "padding": {
+    "$description": "Inner padding of the modal elements",
+    "$value": "{space.md}"
+  }
+}
