@@ -11,7 +11,7 @@ import { setupComponents } from './src/builder/components'
 import { addCustomTab } from '@nuxt/devtools-kit'
 
 const moduleTokensPath =
-  './runtime/assets/styles/tokens/default-theme.tokens.json'
+  './runtime/assets/styles/tokens/default-theme'
 
 export default defineNuxtModule<ModuleOptions>().with({
   meta: {

@@ -1,0 +1,7 @@
+{
+  "$description": "Tokens for the Box layout primitive. Controls padding.",
+  "$type": "object",
+  "gap": {
+    "$value": "{space.lg}"
+  }
+}

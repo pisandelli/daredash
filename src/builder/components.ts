@@ -6,6 +6,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../types'
 import { debugLog } from '../utils'
 import { flattenTokens } from '../utils/tokens'
+import { mergeTokenSource } from '../utils/token-merger'
 import { createPostCSSVPlugin } from '../postcss/postcss-v-function'
 import { components } from '../../components.config'
 
@@ -52,16 +53,30 @@ export async function setupComponents(
   if (debugMode) debugLog(`Registered alias @daredash -> ${moduleRoot}`)
 
   // Load and flatten tokens for automated CSS fallback resolution
-  let tokens: Record<string, any> = {}
+  const tokens: Record<string, any> = {}
   try {
-    const tokensPath = resolver.resolve(
-      'runtime/assets/styles/tokens/default-theme.tokens.json'
-    )
-    const tokensContent = await readFile(tokensPath, 'utf-8')
-    tokens = flattenTokens(JSON.parse(tokensContent))
+    if (!options.tokens) {
+      if (debugMode) debugLog('No tokens file specified for CSS fallbacks.', 'warn')
+    } else {
+      const projectPath = resolve(
+        nuxt.options.rootDir,
+        'app/assets/styles/tokens',
+        options.tokens
+      )
+      const modulePath = resolver.resolve(options.tokens)
 
-    if (debugMode)
-      debugLog(`Loaded tokens for CSS fallbacks from ${tokensPath}`)
+      let rawTokens
+      try {
+        rawTokens = await mergeTokenSource(projectPath)
+        if (debugMode) debugLog(`Loaded tokens for CSS fallbacks from ${projectPath}`)
+      } catch (err: any) {
+        if (err.code !== 'ENOENT') throw err
+        rawTokens = await mergeTokenSource(modulePath)
+        if (debugMode) debugLog(`Loaded tokens for CSS fallbacks from ${modulePath}`)
+      }
+
+      Object.assign(tokens, flattenTokens(rawTokens))
+    }
   } catch (error) {
     if (debugMode)
       debugLog(`Failed to load tokens for CSS fallbacks: ${error}`, 'warn')

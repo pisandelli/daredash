@@ -47,7 +47,12 @@ The module supports a configurable prefix (default: `dd`). This is handled by **
 - **Build Time**: `module.ts` passes the prefix to the builder, which registers components using Nuxt's `addComponent`.
 - **Runtime**: `runtimeConfig.public.daredash` exposes the prefix. `getPrefixName` consumes this to resolve names dynamically.
 
-### 2. PostCSS `v()` Hook
+### 2. Design Tokens Architecture
+The module consumes JSON files to build the design system. The `tokens` setting in `module.ts` can point to a **single JSON file** or a **Directory of JSON files**.
+- **Directory Support**: If a directory is provided, the module recursively finds all `.json` files and performs an in-memory Deep Merge.
+- **File Namespace Matching**: The directory structure dictates the JSON namespace. A file at `components/button.json` is automatically injected into the `{"components": {"button": {...}}}` object.
+
+### 3. PostCSS `v()` Hook
 We use a custom PostCSS plugin (`postcss-v-function`) to handle design tokens in CSS.
 
 - **Function**: `color: v('color.primary');`

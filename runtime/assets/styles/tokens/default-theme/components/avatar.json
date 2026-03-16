@@ -1,0 +1,46 @@
+{
+  "$description": "Tokens for the Avatar component",
+  "$type": "object",
+  "size": {
+    "$description": "Base size (width/height) of the avatar",
+    "$value": "{space.sl}"
+  },
+  "overlap": {
+    "$description": "Negative margin for overlapping avatars in a group",
+    "$value": "-0.75rem"
+  },
+  "border-radius": {
+    "$value": "{border-radius.full}"
+  },
+  "background-color": {
+    "$value": "{color.gray}"
+  },
+  "color": {
+    "$description": "Text color (for initials)",
+    "$value": "{color.text-light}"
+  },
+  "font-size": {
+    "$value": "{font-size.md}"
+  },
+  "font-weight": {
+    "$value": "{font.weight.bold}"
+  },
+  "sm": {
+    "$type": "object",
+    "size": {
+      "$value": "{space.xl}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    }
+  },
+  "lg": {
+    "$type": "object",
+    "size": {
+      "$value": "{space.ul}"
+    },
+    "font-size": {
+      "$value": "{font-size.lg}"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$description": "Tokens for the Badge component",
+  "$type": "object",
+  "base-color": {
+    "$value": "{color.gray}"
+  },
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "icon-size": {
+    "$value": "1.2em"
+  },
+  "font-weight": {
+    "$value": "{font-weight.light}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.md}"
+  },
+  "padding": {
+    "inline": {
+      "$value": "{space.sm}"
+    },
+    "block": {
+      "$value": "{space.tiny}"
+    }
+  },
+  "primary": {
+    "base-color": {
+      "$value": "{color.primary}"
+    }
+  },
+  "success": {
+    "base-color": {
+      "$value": "{color.success}"
+    }
+  },
+  "warning": {
+    "base-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "danger": {
+    "base-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "info": {
+    "base-color": {
+      "$value": "{color.info}"
+    }
+  },
+  "letter-spacing": {
+    "$value": "0.8"
+  },
+  "text-transform": {
+    "$value": "none"
+  }
+}

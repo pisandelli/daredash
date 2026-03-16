@@ -1,0 +1,143 @@
+{
+  "$description": "Tokens for the Input component",
+  "$type": "object",
+  "background-color": {
+    "$value": "#FFF"
+  },
+  "height": {
+    "$value": "2.5rem"
+  },
+  "size": {
+    "$description": "Size variants for the Input component",
+    "$type": "object",
+    "small": {
+      "height": {
+        "$value": "2rem"
+      },
+      "font-size": {
+        "$value": "{font-size.xs}"
+      },
+      "padding-inline": {
+        "$value": "{space.sm}"
+      }
+    },
+    "large": {
+      "height": {
+        "$value": "3rem"
+      },
+      "font-size": {
+        "$value": "{font-size.md}"
+      },
+      "padding-inline": {
+        "$value": "{space.lg}"
+      }
+    }
+  },
+  "border-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "border-width": {
+    "$value": "1px"
+  },
+  "border-style": {
+    "$value": "solid"
+  },
+  "border-color": {
+    "$value": "{color.light-gray}"
+  },
+  "color": {
+    "$description": "Input text color",
+    "$value": "{color.darker-gray}"
+  },
+  "font-family": {
+    "$value": "{font.base}"
+  },
+  "placeholder": {
+    "color": {
+      "$value": "{color.secondary-600}"
+    }
+  },
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "font-weight": {
+    "$value": "{font.weight.regular}"
+  },
+  "padding": {
+    "inline": {
+      "start": {
+        "$value": "{space.md}"
+      },
+      "end": {
+        "$value": "{input.padding.inline.start}"
+      }
+    },
+    "block": {
+      "start": {
+        "$value": "{space.sm}"
+      },
+      "end": {
+        "$value": "{input.padding.block.start}"
+      }
+    }
+  },
+  "label": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.dark-gray}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.medium}"
+    }
+  },
+  "focus": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.primary}"
+    },
+    "box-shadow": {
+      "$value": "0 0 0 4px color-mix(in srgb, {color.primary} 30%, transparent)"
+    },
+    "outline": {
+      "$value": "none"
+    }
+  },
+  "disabled": {
+    "$type": "object",
+    "background-color": {
+      "$value": "{color.bg-disabled}"
+    },
+    "color": {
+      "$value": "{color.gray}"
+    },
+    "cursor": {
+      "$value": "not-allowed"
+    }
+  },
+  "error-state": {
+    "$description": "Tokens for the input in an error state",
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "error-label": {
+    "$description": "Tokens for the error message",
+    "$type": "object",
+    "font-family": {
+      "$value": "{font.system}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.black}"
+    },
+    "color": {
+      "$value": "{color.error}"
+    },
+    "font-size": {
+      "$value": "{font-size.xs}"
+    }
+  }
+}

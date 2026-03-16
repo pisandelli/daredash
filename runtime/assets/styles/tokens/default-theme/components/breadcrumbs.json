@@ -1,0 +1,35 @@
+{
+  "$description": "Tokens for the Breadcrumbs component",
+  "$type": "object",
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "font-family": {
+    "$value": "{font.system}"
+  },
+  "gap": {
+    "$value": "{space.xs}"
+  },
+  "item": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.gray}"
+    }
+  },
+  "item-current": {
+    "$description": "For the final item (current page)",
+    "$type": "object",
+    "color": {
+      "$value": "{color.darker-gray}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.bold}"
+    }
+  },
+  "separator": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.gray}"
+    }
+  }
+}

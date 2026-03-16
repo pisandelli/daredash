@@ -1,0 +1,22 @@
+{
+  "$description": "Tokens for the Loading component",
+  "$type": "object",
+  "animation": {
+    "$description": "The animation definition",
+    "$value": "rotate 2s infinite linear"
+  },
+  "color": {
+    "$value": "{color.secondary}"
+  },
+  "font-family": {
+    "$value": "{font.system}"
+  },
+  "icon-size": {
+    "$description": "Replaces the static '2.5rem' in component",
+    "$value": "{space.xl}"
+  },
+  "gap": {
+    "$description": "Replaces the static 'margin-block-end: 1rem'",
+    "$value": "{space.md}"
+  }
+}

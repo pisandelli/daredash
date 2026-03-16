@@ -1,0 +1,79 @@
+{
+  "$description": "Tokens for the Alert component",
+  "$type": "object",
+  "base-color": {
+    "$value": "{color.gray}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.md}"
+  },
+  "padding": {
+    "$value": "{space.md}"
+  },
+  "gap": {
+    "$value": "{space.sm}"
+  },
+  "font-family": {
+    "$value": "{font.base}"
+  },
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "line-height": {
+    "$value": "{line-height.snug}"
+  },
+  "icon-size": {
+    "$value": "1.5rem"
+  },
+  "title": {
+    "$type": "object",
+    "font-weight": {
+      "$value": "{font-weight.bold}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    }
+  },
+  "close": {
+    "$type": "object",
+    "size": {
+      "$value": "1.25rem"
+    },
+    "opacity": {
+      "$value": "0.7"
+    },
+    "hover-opacity": {
+      "$value": "1"
+    }
+  },
+  "primary": {
+    "base-color": {
+      "$value": "{color.primary.600}"
+    }
+  },
+  "success": {
+    "base-color": {
+      "$value": "{color.success}"
+    }
+  },
+  "warning": {
+    "base-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "danger": {
+    "base-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "error": {
+    "base-color": {
+      "$value": "{color.error}"
+    }
+  },
+  "info": {
+    "base-color": {
+      "$value": "{color.info}"
+    }
+  }
+}

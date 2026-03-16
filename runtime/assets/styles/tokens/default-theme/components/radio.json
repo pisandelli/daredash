@@ -1,0 +1,59 @@
+{
+  "$description": "Tokens for the Radio component",
+  "$type": "object",
+  "size": {
+    "$value": "{checkbox.size}"
+  },
+  "gap": {
+    "$value": "{space.xxs}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.full}"
+  },
+  "bg": {
+    "$value": "{color.bg.surface}"
+  },
+  "border": {
+    "$value": "{color.light-gray}"
+  },
+  "hover": {
+    "border": {
+      "$value": "{color.primary.500}"
+    }
+  },
+  "checked": {
+    "border": {
+      "$value": "{color.primary.600}"
+    },
+    "dot-color": {
+      "$value": "{color.primary.600}"
+    },
+    "dot-color-svg": {
+      "$value": "%230984e3",
+      "$description": "SVG encoded color for the checked dot"
+    }
+  },
+  "disabled": {
+    "bg": {
+      "$value": "{color.bg-disabled}"
+    },
+    "border": {
+      "$value": "{color.light-gray}"
+    },
+    "dot-color-svg": {
+      "$value": "%239ca3af"
+    }
+  },
+  "transition": {
+    "$value": "{transition.fast}"
+  },
+  "font-size": {
+    "$value": "{font-size.sm}"
+  },
+  "color": {
+    "$value": "{color.darker-gray}"
+  },
+  "line-height": {
+    "$value": "{line-height.snug}"
+  }
+}

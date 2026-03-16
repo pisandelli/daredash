@@ -1,0 +1,50 @@
+{
+  "$description": "Tokens for the Accordion component (based on <details>)",
+  "$type": "object",
+  "border-width": {
+    "$value": "1px"
+  },
+  "border-color": {
+    "$value": "{color.light-gray}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "header": {
+    "$type": "object",
+    "background-color": {
+      "$value": "transparent"
+    },
+    "background-color-hover": {
+      "$value": "{color.light-gray}"
+    },
+    "padding": {
+      "$value": "{space.md}"
+    },
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.lg}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.bold}"
+    },
+    "icon-size": {
+      "$description": "Size of the icon (e.g., chevron)",
+      "$value": "1em"
+    }
+  },
+  "content": {
+    "$type": "object",
+    "padding": {
+      "$value": "{accordion.header.padding}"
+    },
+    "background-color": {
+      "$value": "#FFF"
+    },
+    "font-family": {
+      "$value": "{font.system}"
+    }
+  }
+}

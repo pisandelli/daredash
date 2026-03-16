@@ -1,0 +1,71 @@
+{
+  "$description": "Tokens for the InputSearch component",
+  "$type": "object",
+  "button": {
+    "background-color": {
+      "$value": "{button.primary.base-color}"
+    },
+    "color": {
+      "$value": "{color.white}"
+    },
+    "border-radius": {
+      "$value": "{input.border-radius}"
+    },
+    "hover-background-color": {
+      "$value": "color-mix(in srgb, {button.primary.base-color} 85%, black)"
+    },
+    "icon-size": {
+      "$value": "{button.sizes.regular.icon-size}"
+    },
+    "font-size": {
+      "$value": "{button.sizes.regular.font-size}"
+    },
+    "font-weight": {
+      "$value": "{button.font-weight}"
+    },
+    "padding-inline": {
+      "$value": "{button.semantic.inline}"
+    },
+    "success": {
+      "background-color": {
+        "$value": "{button.success.base-color}"
+      },
+      "hover-background-color": {
+        "$value": "color-mix(in srgb, {button.success.base-color} 85%, black)"
+      }
+    },
+    "danger": {
+      "background-color": {
+        "$value": "{button.danger.base-color}"
+      },
+      "hover-background-color": {
+        "$value": "color-mix(in srgb, {button.danger.base-color} 85%, black)"
+      }
+    },
+    "neutral": {
+      "background-color": {
+        "$value": "{color.secondary-100}"
+      },
+      "color": {
+        "$value": "{color.darker-gray}"
+      },
+      "hover-background-color": {
+        "$value": "{color.secondary-200}"
+      }
+    }
+  },
+  "group": {
+    "border-radius": {
+      "$value": "{input.border-radius}"
+    },
+    "border-color": {
+      "$value": "{input.border-color}"
+    },
+    "border-width": {
+      "$value": "{input.border-width}"
+    },
+    "border-style": {
+      "$value": "{input.border-style}"
+    }
+  }
+}

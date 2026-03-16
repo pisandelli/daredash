@@ -1,0 +1,152 @@
+{
+  "$description": "Semantic typography definitions",
+  "$type": "typography",
+  "h1": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.xxl}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.tight}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.tight}"
+    }
+  },
+  "h2": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.xl}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.tight}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.tight}"
+    }
+  },
+  "h3": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.lg}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.snug}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.normal}"
+    }
+  },
+  "h4": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.md}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.snug}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.normal}"
+    }
+  },
+  "h5": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.semi-bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.normal}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.wide}"
+    }
+  },
+  "h6": {
+    "font-family": {
+      "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.xs}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.semi-bold}"
+    },
+    "line-height": {
+      "$value": "{line-height.normal}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.wide}"
+    }
+  },
+  "body": {
+    "lg": {
+      "font-family": {
+        "$value": "{font.base}"
+      },
+      "font-size": {
+        "$value": "{font-size.lg}"
+      },
+      "line-height": {
+        "$value": "{line-height.relaxed}"
+      }
+    },
+    "md": {
+      "font-family": {
+        "$value": "{font.base}"
+      },
+      "font-size": {
+        "$value": "{font-size.md}"
+      },
+      "line-height": {
+        "$value": "{line-height.normal}"
+      }
+    },
+    "sm": {
+      "font-family": {
+        "$value": "{font.base}"
+      },
+      "font-size": {
+        "$value": "{font-size.sm}"
+      },
+      "line-height": {
+        "$value": "{line-height.normal}"
+      }
+    },
+    "xs": {
+      "font-family": {
+        "$value": "{font.base}"
+      },
+      "font-size": {
+        "$value": "{font-size.xs}"
+      },
+      "line-height": {
+        "$value": "{line-height.normal}"
+      }
+    }
+  }
+}

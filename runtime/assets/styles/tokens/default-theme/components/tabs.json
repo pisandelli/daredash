@@ -1,0 +1,59 @@
+{
+  "$description": "Tokens for the Tabs component",
+  "$type": "object",
+  "list": {
+    "$description": "The container for the list of 'triggers'",
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.light-gray}"
+    },
+    "border-width": {
+      "$value": "1px"
+    }
+  },
+  "trigger": {
+    "$description": "The individual 'button' (tab)",
+    "$type": "object",
+    "padding": {
+      "$value": "{space.md}"
+    },
+    "font-family": {
+      "$value": "{font.system}"
+    },
+    "font-size": {
+      "$value": "{font-size.md}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.medium}"
+    },
+    "color": {
+      "$value": "{color.gray}"
+    },
+    "border-width": {
+      "$value": "2px"
+    },
+    "hover": {
+      "$type": "object",
+      "color": {
+        "$value": "{color.dark-gray}"
+      }
+    },
+    "active": {
+      "$description": "For the [data-active] state",
+      "$type": "object",
+      "color": {
+        "$value": "{color.primary}"
+      },
+      "border-color": {
+        "$value": "{color.primary}"
+      }
+    }
+  },
+  "panel": {
+    "$description": "The content panel",
+    "$type": "object",
+    "padding": {
+      "$value": "{space.lg}"
+    }
+  }
+}

@@ -1,10 +1,11 @@
-import { resolve } from 'path'
-import { readFile, writeFile } from 'fs/promises'
+import { resolve, dirname } from 'path'
+import { readFile, writeFile, mkdir } from 'fs/promises'
 import { addTemplate, addPlugin } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions, TokensFile, TypedTokenValue } from '../types'
 import { debugLog } from '../utils'
+import { mergeTokenSource } from '../utils/token-merger'
 import { parseTokens } from '../parser'
 
 export async function setupTokens(
@@ -36,7 +37,7 @@ export async function setupTokens(
       filePath = projectPath
       if (debugMode)
         debugLog(`Attempting to load tokens from project path: ${filePath}`)
-      fileContent = await readFile(filePath, 'utf-8')
+      tokens = (await mergeTokenSource(filePath)) as TokensFile
       if (debugMode) debugLog(`Successfully loaded tokens from project path.`)
     } catch (projectError: any) {
       if (projectError.code !== 'ENOENT') {
@@ -48,12 +49,9 @@ export async function setupTokens(
       filePath = modulePath
       if (debugMode)
         debugLog(`Attempting to load tokens from module path: ${filePath}`)
-      fileContent = await readFile(filePath, 'utf-8')
+      tokens = (await mergeTokenSource(filePath)) as TokensFile
       if (debugMode) debugLog(`Successfully loaded tokens from module path.`)
     }
-
-    const loadedTokens = JSON.parse(fileContent)
-    tokens = loadedTokens.default || loadedTokens
   } catch (error) {
     debugLog(
       `Failed to load tokens. Last attempted path: '${filePath}'`,
@@ -116,7 +114,7 @@ export async function setupTokens(
     })
     nuxt.options.css.unshift(template.dst)
     if (debugMode) {
-      debugLog(`Injected CSS template at ${template.dst}`)
+      debugLog(`Virtual global CSS Custom Properties registered`)
     }
   } else {
     if (debugMode) {
@@ -124,14 +122,17 @@ export async function setupTokens(
     }
   }
 
+  const jsonPath = resolve(nuxt.options.buildDir, 'design-tokens.json')
+  await mkdir(dirname(jsonPath), { recursive: true })
   if (typedTokens.length > 0) {
-    const jsonPath = resolve(nuxt.options.buildDir, 'design-tokens.json')
     await writeFile(jsonPath, JSON.stringify(typedTokens), 'utf-8')
     if (debugMode) debugLog(`Typed tokens JSON generated at ${jsonPath}`)
-    addPlugin(resolver.resolve('./src/typedTokens.client.ts'))
-    if (debugMode) debugLog(`typedTokens Plugin added to Nuxt.`)
   } else {
+    await writeFile(jsonPath, JSON.stringify([]), 'utf-8')
     if (debugMode)
-      debugLog('No typed tokens found to generate JSON file.', 'warn')
+      debugLog('No typed tokens found. Generated empty JSON file.', 'warn')
   }
+
+  addPlugin(resolver.resolve('./src/typedTokens.client.ts'))
+  if (debugMode) debugLog(`typedTokens Plugin added to Nuxt.`)
 }

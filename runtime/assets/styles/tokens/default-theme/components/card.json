@@ -1,0 +1,55 @@
+{
+  "$description": "Tokens for the Card component",
+  "$type": "object",
+  "background-color": {
+    "$value": "{color.bg.surface}"
+  },
+  "color": {
+    "$value": "{color.text.default}"
+  },
+  "border-color": {
+    "$value": "{color.border.default}"
+  },
+  "border-width": {
+    "$value": "{border-width.sm}"
+  },
+  "border-style": {
+    "$value": "solid"
+  },
+  "border-radius": {
+    "$value": "{border-radius.lg}"
+  },
+  "box-shadow": {
+    "$value": "{shadow.sm}"
+  },
+  "max-width": {
+    "$value": "content"
+  },
+  "padding": {
+    "$value": "{space.lg}"
+  },
+  "header": {
+    "$type": "object",
+    "padding": {
+      "$value": "{space.lg}"
+    },
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "border-width": {
+      "$value": "{border-width.sm}"
+    }
+  },
+  "footer": {
+    "$type": "object",
+    "padding": {
+      "$value": "{space.lg}"
+    },
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "border-width": {
+      "$value": "{border-width.sm}"
+    }
+  }
+}

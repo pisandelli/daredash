@@ -1,0 +1,20 @@
+{
+  "$description": "Tokens for the container managing toasts",
+  "$type": "object",
+  "z-index": {
+    "$value": "{z-index.9}"
+  },
+  "gap": {
+    "$description": "Space between multiple toasts",
+    "$value": "{space.sm}"
+  },
+  "position": {
+    "$type": "object",
+    "top": {
+      "$value": "{space.md}"
+    },
+    "right": {
+      "$value": "{space.md}"
+    }
+  }
+}

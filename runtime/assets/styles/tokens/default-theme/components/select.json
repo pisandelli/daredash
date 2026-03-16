@@ -1,0 +1,145 @@
+{
+  "$description": "Tokens for the Select component, inherits from Input",
+  "$type": "object",
+  "indicator-padding-inline-end": {
+    "$value": "2.5rem"
+  },
+  "height": {
+    "$value": "{input.height}"
+  },
+  "background-color": {
+    "$value": "{input.background-color}"
+  },
+  "border-radius": {
+    "$value": "{input.border-radius}"
+  },
+  "border-width": {
+    "$value": "{input.border-width}"
+  },
+  "border-style": {
+    "$value": "{input.border-style}"
+  },
+  "border-color": {
+    "$value": "{input.border-color}"
+  },
+  "color": {
+    "$value": "{input.color}"
+  },
+  "font-family": {
+    "$value": "{input.font-family}"
+  },
+  "font-size": {
+    "$value": "{input.font-size}"
+  },
+  "font-weight": {
+    "$value": "{input.font-weight}"
+  },
+  "padding": {
+    "inline": {
+      "start": {
+        "$value": "{input.padding.inline.start}"
+      },
+      "end": {
+        "$value": "{input.padding.inline.end}"
+      }
+    },
+    "block": {
+      "start": {
+        "$value": "{input.padding.block.start}"
+      },
+      "end": {
+        "$value": "{input.padding.block.end}"
+      }
+    }
+  },
+  "label": {
+    "$value": "{input.label}"
+  },
+  "focus": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{input.focus.border-color}"
+    },
+    "box-shadow": {
+      "$value": "{input.focus.box-shadow}"
+    },
+    "outline": {
+      "$value": "{input.focus.outline}"
+    }
+  },
+  "disabled": {
+    "$type": "object",
+    "background-color": {
+      "$value": "{input.disabled.background-color}"
+    },
+    "color": {
+      "$value": "{input.disabled.color}"
+    },
+    "cursor": {
+      "$value": "{input.disabled.cursor}"
+    },
+    "border-color": {
+      "$value": "{color.secondary-200}"
+    }
+  },
+  "error-state": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{input.error-state.border-color}"
+    }
+  },
+  "error-label": {
+    "$type": "object",
+    "font-family": {
+      "$value": "{input.error-label.font-family}"
+    },
+    "font-weight": {
+      "$value": "{input.error-label.font-weight}"
+    },
+    "color": {
+      "$value": "{input.error-label.color}"
+    },
+    "font-size": {
+      "$value": "{input.error-label.font-size}"
+    }
+  },
+  "arrow": {
+    "$description": "Tokens for the arrow/chevron icon",
+    "$type": "object",
+    "color": {
+      "$value": "{input.color}"
+    },
+    "size": {
+      "$value": "1em"
+    }
+  },
+  "menu": {
+    "$description": "Tokens for the dropdown panel (options list)",
+    "$type": "object",
+    "background-color": {
+      "$value": "{input.background-color}"
+    },
+    "border-radius": {
+      "$value": "{input.border-radius}"
+    },
+    "box-shadow": {
+      "$value": "{card.box-shadow}"
+    },
+    "z-index": {
+      "$value": "{z-index.1}"
+    }
+  },
+  "option": {
+    "$description": "Tokens for an item (option) within the menu",
+    "$type": "object",
+    "padding": {
+      "$value": "{input.padding.inline.start}"
+    },
+    "hover-background-color": {
+      "$value": "{color.light-gray}"
+    },
+    "selected-background-color": {
+      "$value": "{color.primary}"
+    }
+  }
+}

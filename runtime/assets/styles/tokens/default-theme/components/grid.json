@@ -1,0 +1,10 @@
+{
+  "$description": "Tokens for the Grid layout primitive",
+  "$type": "object",
+  "column-min-width": {
+    "$value": "15.625rem"
+  },
+  "gap": {
+    "$value": "{space.lg}"
+  }
+}
