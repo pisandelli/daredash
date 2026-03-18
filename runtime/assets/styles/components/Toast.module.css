@@ -8,14 +8,14 @@
   --local-close-size: v('toast.close-size');
   --local-cluster-gap: v('toast.cluster-gap');
 
-  --local-bg-color: v('color.white');
-  --local-color: v('color.text.default');
-  --local-border-color: v('color.border');
-  --local-icon-color: v('color.info');
+  --local-bg-color: v('toast.bg-color');
+  --local-color: v('toast.color');
+  --local-border-color: v('toast.border-color');
+  --local-icon-color: v('toast.icon-color');
 
-  --local-close-color: v('color.darker-gray');
-  --local-close-hover-color: v('color.danger.600');
-  --local-close-hover-bg: v('color.danger.50');
+  --local-close-color: v('toast.close-color');
+  --local-close-hover-color: v('toast.close-hover-color');
+  --local-close-hover-bg: v('toast.close-hover-bg');
 
   display: flex;
   align-items: flex-start;
