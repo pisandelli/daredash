@@ -1,0 +1,47 @@
+/* Sidebar.module.css */
+.sidebar {
+  /* -- Local Tokens -- */
+  --local-gap: v('sidebar.gap');
+  --local-column-size: v('sidebar.column-size');
+  --local-content-size: v('sidebar.content-size');
+
+  /* -- Layout -- */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--local-gap);
+
+  &[data-nogap] {
+    --local-gap: 0;
+  }
+
+  /* -- Alignment Variants -- */
+  &[data-start] {
+    align-items: flex-start;
+  }
+  
+  &[data-end] {
+    align-items: flex-end;
+  }
+
+  &:not([data-right]) > :first-child {
+    flex-basis: var(--local-column-size);
+    flex-grow: 1;
+  }
+  
+  &:not([data-right]) > :last-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--local-content-size);
+  }
+
+  &[data-right] > :last-child {
+    flex-basis: var(--local-column-size);
+    flex-grow: 1;
+  }
+  
+  &[data-right] > :first-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--local-content-size);
+  }
+}

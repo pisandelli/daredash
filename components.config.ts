@@ -25,6 +25,7 @@ export const components: Record<string, ComponentConfig> = {
   Grid: { style: './runtime/assets/styles/components/Grid.module.css' },
   Layout: { style: './runtime/assets/styles/components/Layout.module.css' },
   Stack: { style: './runtime/assets/styles/components/Stack.module.css' },
+  Sidebar: { style: './runtime/assets/styles/components/Sidebar.module.css' },
 
   // Primitives (Simple - Factory)
   Card: {

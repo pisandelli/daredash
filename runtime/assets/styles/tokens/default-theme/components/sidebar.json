@@ -1,0 +1,15 @@
+{
+  "$description": "Tokens for the Sidebar layout primitive",
+  "$type": "object",
+  "gap": {
+    "$value": "{space.md}"
+  },
+  "column-size": {
+    "$description": "The ideal width of the sidebar",
+    "$value": "15rem"
+  },
+  "content-size": {
+    "$description": "The minimum width of the main content area before wrapping",
+    "$value": "50%"
+  }
+}

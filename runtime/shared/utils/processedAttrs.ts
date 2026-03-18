@@ -64,6 +64,7 @@ export const customAttributes = new Set([
   'body',
   // generic variants
   'solid',
+  'right',
   // pagination variants & states
   'simple',
   // table states
