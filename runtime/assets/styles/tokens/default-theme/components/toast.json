@@ -21,5 +21,26 @@
   "cluster-gap": {
     "$description": "Internal gap between message and close button",
     "$value": "{space.xs}"
+  },
+  "bg-color": {
+    "$value": "{color.white}"
+  },
+  "color": {
+    "$value": "{color.text.default}"
+  },
+  "border-color": {
+    "$value": "{color.border.default}"
+  },
+  "icon-color": {
+    "$value": "{color.info}"
+  },
+  "close-color": {
+    "$value": "{color.darker-gray}"
+  },
+  "close-hover-color": {
+    "$value": "{color.danger.600}"
+  },
+  "close-hover-bg": {
+    "$value": "{color.danger.50}"
   }
 }

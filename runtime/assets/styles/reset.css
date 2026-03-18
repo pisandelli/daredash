@@ -1,16 +1,40 @@
-/* Global Reset & Base Styles */
-:where(*),
-:where(*::before),
-:where(*::after) {
+:where(*, *::before, *::after) {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :where(body) {
-  margin: 0;
+  min-height: 100vh;
+  line-height: v('line-height.normal');
   font-family: v('font.base');
   color: v('color.text.default');
   background-color: v('color.bg.surface');
-  line-height: v('line-height.normal');
+  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:where(img, svg, video, canvas, picture) {
+  display: block;
+  max-width: 100%;
+}
+
+:where(input, button, textarea, select) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(p, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

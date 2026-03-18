@@ -99,6 +99,25 @@ Arranges children vertically with consistent spacing (gap). A foundational verti
 -   `recursive`: Applies stack spacing to nested elements.
 -   `split-after`: Applies `margin-block-end: auto` to the nth child, pushing subsequent items to the bottom.
 
+## Sidebar (`<dd-sidebar>`)
+
+Arranges elements horizontally, placing a sidebar alongside a main content area. Based on Every Layout's "The Sidebar" pattern. It automatically wraps into a stacked layout when the main content would fall below its minimum threshold width.
+
+```vue
+<template>
+  <dd-sidebar>
+    <aside>Sidebar Nav</aside>
+    <div>Main Content</div>
+  </dd-sidebar>
+</template>
+```
+
+### Props/Attrs
+-   `right`: Reverses the order, placing the sidebar on the right instead of the left.
+-   `start`: Aligns items to the top (flex-start).
+-   `end`: Aligns items to the bottom (flex-end).
+-   `nogap`: Removes the gap between the sidebar and the main content.
+
 ## Layout (`<dd-layout>`)
 
 Root layout component often used for page structures (Sidebar + Main Content).
