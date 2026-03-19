@@ -133,6 +133,10 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/widgets/Modal/Modal.ts',
     style: './runtime/assets/styles/components/Modal.module.css'
   },
+  Drawer: {
+    filePath: './runtime/components/widgets/Drawer/Drawer.ts',
+    style: './runtime/assets/styles/components/Drawer.module.css'
+  },
   Avatar: {
     filePath: './runtime/components/primitives/Avatar/Avatar.ts',
     style: './runtime/assets/styles/components/Avatar.module.css'

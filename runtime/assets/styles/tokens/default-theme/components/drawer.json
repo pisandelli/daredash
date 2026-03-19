@@ -1,0 +1,61 @@
+{
+  "$description": "Tokens for the Drawer component",
+  "$type": "object",
+  "backdrop": {
+    "filter": {
+      "$value": "blur(5px)"
+    },
+    "background-color": {
+      "$value": "rgba(0, 0, 0, 0.7)"
+    }
+  },
+  "bg": {
+    "$value": "{color.white}"
+  },
+  "box-shadow": {
+    "$value": "{shadow.xl}"
+  },
+  "close-size": {
+    "$value": "{font-size.lg}"
+  },
+  "padding": {
+    "$value": "{space.md}"
+  },
+  "size": {
+    "$description": "Default size of the drawer for block or inline depending on position.",
+    "$value": "25rem"
+  },
+  "header": {
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "border-style": {
+      "$value": "solid"
+    },
+    "border-width": {
+      "$value": "{border-width.sm}"
+    }
+  },
+  "footer": {
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "border-style": {
+      "$value": "solid"
+    },
+    "border-width": {
+      "$value": "{border-width.sm}"
+    }
+  },
+  "title": {
+    "font-size": {
+      "$value": "{font-size.lg}"
+    },
+    "font-weight": {
+      "$value": "{font.weight.bold}"
+    }
+  },
+  "z-index": {
+    "$value": "{z-index.4}"
+  }
+}

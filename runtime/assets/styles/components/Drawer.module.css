@@ -1,0 +1,187 @@
+.drawer {
+  --local-bg: v('drawer.bg');
+  --local-shadow: v('drawer.box-shadow');
+  --local-z-index: v('drawer.z-index');
+  --local-padding: v('drawer.padding');
+  --local-title-size: v('drawer.title.font-size');
+  --local-title-weight: v('drawer.title.font-weight');
+  --local-close-size: v('drawer.close-size');
+  --local-backdrop-bg: v('drawer.backdrop.background-color');
+  --local-backdrop-filter: v('drawer.backdrop.filter');
+  --local-size: v('drawer.size');
+  --local-header-border-color: v('drawer.header.border-color');
+  --local-header-border-style: v('drawer.header.border-style');
+  --local-header-border-width: v('drawer.header.border-width');
+  --local-footer-border-color: v('drawer.footer.border-color');
+  --local-footer-border-style: v('drawer.footer.border-style');
+  --local-footer-border-width: v('drawer.footer.border-width');
+  
+  /* Logical properties and layout */
+  background-color: var(--local-bg);
+  color: v('color.text.default');
+  box-shadow: var(--local-shadow);
+  padding: 0;
+  border: none;
+  margin: 0;
+  max-inline-size: 100vw;
+  max-block-size: 100vh;
+  z-index: var(--local-z-index);
+  
+  /* Initial state (closed) */
+  opacity: 0;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out, overlay 0.3s ease-out allow-discrete, display 0.3s ease-out allow-discrete;
+}
+
+.drawer::backdrop {
+  background-color: var(--local-backdrop-bg);
+  backdrop-filter: var(--local-backdrop-filter);
+  opacity: 0;
+  transition: opacity 0.3s ease-out, overlay 0.3s ease-out allow-discrete, display 0.3s ease-out allow-discrete;
+}
+
+.drawer[open] {
+  opacity: 1;
+}
+
+.drawer[open]::backdrop {
+  opacity: 1;
+}
+
+/* @starting-style for enter animation from display: none to display: block */
+@starting-style {
+  .drawer[open] {
+    opacity: 0;
+  }
+  .drawer[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Positioning mappings */
+.drawer[data-position="right"] {
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  inline-size: var(--local-size);
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  transform: translateX(100%);
+}
+
+.drawer[open][data-position="right"] {
+  transform: translateX(0);
+}
+
+@starting-style {
+  .drawer[open][data-position="right"] {
+    transform: translateX(100%);
+  }
+}
+
+.drawer[data-position="left"] {
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+  inline-size: var(--local-size);
+  block-size: 100dvh;
+  max-block-size: 100dvh;
+  transform: translateX(-100%);
+}
+
+.drawer[open][data-position="left"] {
+  transform: translateX(0);
+}
+
+@starting-style {
+  .drawer[open][data-position="left"] {
+    transform: translateX(-100%);
+  }
+}
+
+.drawer[data-position="top"] {
+  inset-block-start: 0;
+  inset-block-end: auto;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inline-size: 100vw;
+  block-size: var(--local-size);
+  transform: translateY(-100%);
+}
+
+.drawer[open][data-position="top"] {
+  transform: translateY(0);
+}
+
+@starting-style {
+  .drawer[open][data-position="top"] {
+    transform: translateY(-100%);
+  }
+}
+
+.drawer[data-position="bottom"] {
+  inset-block-start: auto;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inline-size: 100vw;
+  block-size: var(--local-size);
+  transform: translateY(100%);
+}
+
+.drawer[open][data-position="bottom"] {
+  transform: translateY(0);
+}
+
+@starting-style {
+  .drawer[open][data-position="bottom"] {
+    transform: translateY(100%);
+  }
+}
+
+.inner {
+  block-size: 100%;
+}
+
+.header {
+  padding: var(--local-padding);
+  border-block-end: var(--local-header-border-width) var(--local-header-border-style) var(--local-header-border-color);
+}
+
+.title {
+  font-size: var(--local-title-size);
+  font-weight: var(--local-title-weight);
+  margin: 0;
+  color: v('color.text.default');
+}
+
+.close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: v('space.xs');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: v('color.text.muted');
+  font-size: var(--local-close-size);
+  border-radius: v('border-radius.md');
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.close:hover {
+  background-color: v('color.surface.hover');
+  color: v('color.text');
+}
+
+.body {
+  padding: var(--local-padding);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.footer {
+  padding: var(--local-padding);
+  border-block-start: var(--local-footer-border-width) var(--local-footer-border-style) var(--local-footer-border-color);
+}
