@@ -38,6 +38,11 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/primitives/Badge/Badge.ts',
     style: './runtime/assets/styles/components/Badge.module.css'
   },
+  
+  Breadcrumb: {
+    filePath: './runtime/components/primitives/Breadcrumb/Breadcrumb.ts',
+    style: './runtime/assets/styles/components/Breadcrumb.module.css'
+  },
 
   // Primitives (Complex - Custom File)
   Alert: {
