@@ -2,26 +2,33 @@
   "$description": "Tokens for the Tabs component",
   "$type": "object",
   "list": {
-    "$description": "The container for the list of 'triggers'",
-    "$type": "object",
     "border-color": {
       "$value": "{color.light-gray}"
     },
     "border-width": {
       "$value": "1px"
+    },
+    "gap": {
+      "$value": "{space.sm}"
+    },
+    "padding": {
+      "$value": "{space.sm}"
     }
   },
   "trigger": {
     "$description": "The individual 'button' (tab)",
     "$type": "object",
+    "base-color": {
+      "$value": "{color.primary.600}"
+    },
     "padding": {
-      "$value": "{space.md}"
+      "$value": "{tabs.trigger.size.regular.padding}"
     },
     "font-family": {
       "$value": "{font.system}"
     },
     "font-size": {
-      "$value": "{font-size.md}"
+      "$value": "{tabs.trigger.size.regular.font-size}"
     },
     "font-weight": {
       "$value": "{font.weight.medium}"
@@ -29,13 +36,25 @@
     "color": {
       "$value": "{color.gray}"
     },
+    "bg": {
+      "$value": "transparent"
+    },
     "border-width": {
       "$value": "2px"
+    },
+    "border-radius": {
+      "$value": "{border-radius.base}"
+    },
+    "icon-size": {
+      "$value": "1.25rem"
     },
     "hover": {
       "$type": "object",
       "color": {
         "$value": "{color.dark-gray}"
+      },
+      "bg": {
+        "$value": "{color.light-gray}"
       }
     },
     "active": {
@@ -46,6 +65,33 @@
       },
       "border-color": {
         "$value": "{color.primary}"
+      },
+      "bg": {
+        "$value": "transparent"
+      }
+    },
+    "indicator": {
+      "$type": "object",
+      "color": {
+        "$value": "{color.primary}"
+      },
+      "size": {
+        "$value": "2px"
+      }
+    },
+    "size": {
+      "$description": "Sizing scale for the tabs",
+      "small": {
+        "padding": { "$value": "{space.xs} {space.sm}" },
+        "font-size": { "$value": "{font-size.sm}" }
+      },
+      "regular": {
+        "padding": { "$value": "{space.sm} {space.md}" },
+        "font-size": { "$value": "{font-size.base}" }
+      },
+      "large": {
+        "padding": { "$value": "{space.md}" },
+        "font-size": { "$value": "{font-size.md}" }
       }
     }
   },
