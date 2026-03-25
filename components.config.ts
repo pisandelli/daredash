@@ -173,5 +173,9 @@ export const components: Record<string, ComponentConfig> = {
   Table: {
     filePath: './runtime/components/widgets/Table/Table.vue',
     style: './runtime/assets/styles/components/Table.module.css'
+  },
+  Popover: {
+    filePath: './runtime/components/widgets/Popover/Popover.ts',
+    style: './runtime/assets/styles/components/Popover.module.css'
   }
 }
