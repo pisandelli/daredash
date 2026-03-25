@@ -134,6 +134,22 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/widgets/Accordion/AccordionGroup.ts',
     style: './runtime/assets/styles/components/AccordionGroup.module.css'
   },
+  Tabs: {
+    filePath: './runtime/components/widgets/Tabs/Tabs.ts',
+    style: './runtime/assets/styles/components/Tabs.module.css'
+  },
+  TabList: {
+    filePath: './runtime/components/widgets/Tabs/TabList.ts'
+  },
+  Tab: {
+    filePath: './runtime/components/widgets/Tabs/Tab.ts'
+  },
+  TabPanels: {
+    filePath: './runtime/components/widgets/Tabs/TabPanels.ts'
+  },
+  TabPanel: {
+    filePath: './runtime/components/widgets/Tabs/TabPanel.ts'
+  },
   Modal: {
     filePath: './runtime/components/widgets/Modal/Modal.ts',
     style: './runtime/assets/styles/components/Modal.module.css'
