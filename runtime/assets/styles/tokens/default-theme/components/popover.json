@@ -1,0 +1,28 @@
+{
+  "$description": "Tokens for the Popover component",
+  "$type": "object",
+  "bg": {
+    "$value": "{color.bg.surface}"
+  },
+  "border-color": {
+    "$value": "{color.border.default}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "shadow": {
+    "$value": "{shadow.md}"
+  },
+  "padding": {
+    "$value": "{space.md}"
+  },
+  "arrow-size": {
+    "$value": "8px"
+  },
+  "color": {
+    "$value": "{color.text.default}"
+  },
+  "z-index": {
+    "$value": "{z-index.8}"
+  }
+}

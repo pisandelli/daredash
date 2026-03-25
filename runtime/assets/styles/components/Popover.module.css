@@ -1,0 +1,130 @@
+.popover {
+  --local-bg: v('popover.bg');
+  --local-border: v('popover.border-color');
+  --local-radius: v('popover.border-radius');
+  --local-shadow: v('popover.shadow');
+  --local-padding: v('popover.padding');
+  --local-arrow-size: v('popover.arrow-size');
+  --local-color: v('popover.color');
+  --local-z-index: v('popover.z-index');
+  
+  display: inline-block;
+}
+
+.triggerWrapper {
+  display: inline-block;
+}
+
+.popoverPanel {
+  /* Using Popover API defaults overridden */
+  margin: 0;
+  border: 1px solid transparent; /* We let the border be defined by the inner container or background to avoid double borders if using filters */
+  background-color: transparent; /* Background applied to inner and arrow */
+  color: var(--local-color);
+  padding: 0;
+  
+  /* Reset browser popover defaults */
+  position: fixed;
+  z-index: var(--local-z-index);
+  
+  /* Filter drop-shadow contours both the box AND the arrow */
+  filter: drop-shadow(0 10px 15px rgb(0 0 0 / 0.1));
+  
+  /* Transitions */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  
+  /* Limit maximum dimensions */
+  max-block-size: calc(100vh - 32px);
+  max-inline-size: calc(100vw - 32px);
+  
+  /* CRITICAL: overflow must be visible so the arrow isn't clipped */
+  overflow: visible;
+}
+
+.inner {
+  background-color: var(--local-bg);
+  border: 1px solid var(--local-border);
+  border-radius: var(--local-radius);
+  max-block-size: calc(100vh - 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.popoverPanel:popover-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header {
+  padding: var(--local-padding);
+  font-weight: 500;
+  border-bottom: 1px solid var(--local-border);
+}
+
+.content {
+  padding: var(--local-padding);
+}
+
+/* Arrow logic */
+.arrow {
+  position: absolute;
+  width: var(--local-arrow-size);
+  height: var(--local-arrow-size);
+  background-color: var(--local-bg);
+  border: 1px solid var(--local-border);
+  transform: rotate(45deg);
+  z-index: 10; /* Goes above inner to mask the border for a seamless bubble */
+  pointer-events: none; /* Prevents arrow from blocking clicks on the popover edge */
+}
+
+/* Define arrow positions based on data-placement */
+.popoverPanel[data-placement^="top"] .arrow {
+  bottom: calc(var(--local-arrow-size) / -2);
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+.popoverPanel[data-placement="top"] .arrow { left: calc(50% - var(--local-arrow-size) / 2); }
+.popoverPanel[data-placement="top-start"] .arrow { left: var(--local-padding); }
+.popoverPanel[data-placement="top-end"] .arrow { right: var(--local-padding); }
+
+.popoverPanel[data-placement^="bottom"] .arrow {
+  top: calc(var(--local-arrow-size) / -2);
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+.popoverPanel[data-placement="bottom"] .arrow { left: calc(50% - var(--local-arrow-size) / 2); }
+.popoverPanel[data-placement="bottom-start"] .arrow { left: var(--local-padding); }
+.popoverPanel[data-placement="bottom-end"] .arrow { right: var(--local-padding); }
+
+.popoverPanel[data-placement^="left"] .arrow {
+  right: calc(var(--local-arrow-size) / -2);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.popoverPanel[data-placement="left"] .arrow { top: calc(50% - var(--local-arrow-size) / 2); }
+.popoverPanel[data-placement="left-start"] .arrow { top: var(--local-padding); }
+.popoverPanel[data-placement="left-end"] .arrow { bottom: var(--local-padding); }
+
+.popoverPanel[data-placement^="right"] .arrow {
+  left: calc(var(--local-arrow-size) / -2);
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.popoverPanel[data-placement="right"] .arrow { top: calc(50% - var(--local-arrow-size) / 2); }
+.popoverPanel[data-placement="right-start"] .arrow { top: var(--local-padding); }
+.popoverPanel[data-placement="right-end"] .arrow { bottom: var(--local-padding); }
+
+/* Mobile logic - center on very small screens */
+@media (max-width: 480px) {
+  .popoverPanel {
+    /* Fallback mobile positioning center */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+  }
+  .arrow {
+    display: none; /* Hide arrow if centered */
+  }
+}
