@@ -1,0 +1,22 @@
+{
+  "$description": "Tokens for the Anchor component",
+  "$type": "object",
+  "active-font-weight": {
+    "$value": "600"
+  },
+  "active-color": {
+    "$value": "{color.primary}"
+  },
+  "border-color": {
+    "$value": "{color.gray.200}"
+  },
+  "indicator-color": {
+    "$value": "{color.primary}"
+  },
+  "link-color": {
+    "$value": "{color.gray.500}"
+  },
+  "link-color-hover": {
+    "$value": "{color.gray.900}"
+  }
+}

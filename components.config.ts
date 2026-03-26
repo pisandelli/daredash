@@ -177,5 +177,9 @@ export const components: Record<string, ComponentConfig> = {
   Popover: {
     filePath: './runtime/components/widgets/Popover/Popover.ts',
     style: './runtime/assets/styles/components/Popover.module.css'
+  },
+  Anchor: {
+    filePath: './runtime/components/widgets/Anchor/Anchor.ts',
+    style: './runtime/assets/styles/components/Anchor.module.css'
   }
 }
