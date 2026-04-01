@@ -92,9 +92,6 @@ describe('Pagination Widget', () => {
       }
     })
 
-    console.log('WRAPPER HTML:', wrapper.html())
-    console.log('WRAPPER ATTRS:', wrapper.attributes())
-
     // The component wrapper should have the data- variants injected
     expect(wrapper.attributes('data-small')).toBeDefined()
     expect(wrapper.attributes('data-compact')).toBeDefined()
