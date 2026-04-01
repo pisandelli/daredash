@@ -1,0 +1,130 @@
+.progress {
+  /* -- Local Tokens -- */
+  --local-height:              v('progress.height.regular');
+  --local-track-bg:            v('progress.background-color');
+  --local-border-radius:       v('progress.border-radius');
+  --local-indicator-color:     v('progress.indicator.background-color');
+  --local-indicator-transition: v('progress.indicator.transition');
+  --local-label-font-family:   v('progress.label.font-family');
+  --local-label-font-size:     v('progress.label.font-size');
+  --local-label-color:         v('progress.label.color');
+  --local-tooltip-bg:          v('progress.tooltip.background-color');
+  --local-tooltip-color:       v('progress.tooltip.color');
+  --local-tooltip-font-size:   v('progress.tooltip.font-size');
+  --local-tooltip-radius:      v('progress.tooltip.border-radius');
+  --local-tooltip-padding:     v('progress.tooltip.padding');
+  --local-tooltip-z:           v('progress.tooltip.z-index');
+
+  /* -- Layout -- */
+  display: flex;
+  flex-direction: column;
+  gap: v('space.xxs');
+  inline-size: 100%;
+  min-inline-size: 0;
+
+  /* -- Size Variants -- */
+  &[data-tiny]   { --local-height: v('progress.height.tiny'); }
+  &[data-small]  { --local-height: v('progress.height.small'); }
+  &[data-large]  { --local-height: v('progress.height.large'); }
+  &[data-xlarge] { --local-height: v('progress.height.xlarge'); }
+
+  /* -- Semantic Color Variants -- */
+  &[data-primary] { --local-indicator-color: v('progress.indicator.primary.base-color'); }
+  &[data-success] { --local-indicator-color: v('progress.indicator.success.base-color'); }
+  &[data-warning] { --local-indicator-color: v('progress.indicator.warning.base-color'); }
+  &[data-danger]  { --local-indicator-color: v('progress.indicator.danger.base-color'); }
+  &[data-info]    { --local-indicator-color: v('progress.indicator.info.base-color'); }
+}
+
+/* -- Label -- */
+.label {
+  font-family: var(--local-label-font-family);
+  font-size: var(--local-label-font-size);
+  color: var(--local-label-color);
+  line-height: v('line-height.tight');
+}
+
+/* -- Track (visible background) -- */
+.track {
+  position: relative;
+  inline-size: 100%;
+  block-size: var(--local-height);
+  background-color: var(--local-track-bg);
+  border-radius: var(--local-border-radius);
+  min-inline-size: 0;
+}
+
+/* -- Fill / Indicator -- */
+.fill {
+  position: relative;
+  block-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  border-radius: var(--local-border-radius);
+  background-color: var(--local-indicator-color);
+  transition: inline-size var(--local-indicator-transition);
+}
+
+/* -- Tooltip (shown on fill hover) -- */
+.tooltip {
+  position: absolute;
+  inset-block-end: calc(100% + 0.4rem);
+  inset-inline-end: 0;
+  translate: 50% 0;
+
+  background-color: var(--local-tooltip-bg);
+  color: var(--local-tooltip-color);
+  font-size: var(--local-tooltip-font-size);
+  border-radius: var(--local-tooltip-radius);
+  padding: var(--local-tooltip-padding);
+  white-space: nowrap;
+  z-index: var(--local-tooltip-z);
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity v('transition.fast');
+
+  /* Decorative arrow pointing down */
+  &::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 50%;
+    translate: 50% 0;
+    border: 4px solid transparent;
+    border-block-start-color: var(--local-tooltip-bg);
+  }
+}
+
+.fill:hover > .tooltip {
+  opacity: 1;
+}
+
+/* -- RTL Support -- */
+:dir(rtl) .tooltip {
+  translate: -50% 0;
+
+  &::after {
+    inset-inline-end: auto;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+  }
+}
+
+/* -- Indeterminate State -- */
+@keyframes progress-indeterminate {
+  0%   { inset-inline-start: -35%; inline-size: 35%; }
+  60%  { inset-inline-start: 100%; inline-size: 35%; }
+  100% { inset-inline-start: 100%; inline-size: 35%; }
+}
+
+.progress[data-indeterminate] .track {
+  overflow: hidden;
+}
+
+.progress[data-indeterminate] .fill {
+  position: absolute;
+  inset-block: 0;
+  inline-size: 35%;
+  animation: progress-indeterminate 1.6s ease-in-out infinite;
+}

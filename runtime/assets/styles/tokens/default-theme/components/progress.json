@@ -1,38 +1,52 @@
 {
-  "$description": "Tokens for the Progress component (progress bar)",
+  "$description": "Tokens for the Progress component (linear progress bar)",
   "$type": "object",
   "height": {
-    "$description": "Height of the progress bar",
-    "$value": "{space.sm}"
+    "$description": "Height variants for the progress track",
+    "tiny":    { "$value": "0.25rem" },
+    "small":   { "$value": "0.5rem" },
+    "regular": { "$value": "0.625rem" },
+    "large":   { "$value": "0.875rem" },
+    "xlarge":  { "$value": "1.25rem" }
   },
   "background-color": {
-    "$description": "Color of the 'track' (background)",
+    "$description": "Color of the track (empty background)",
     "$value": "{color.light-gray}"
   },
   "border-radius": {
     "$value": "{border-radius.full}"
   },
   "indicator": {
-    "$description": "Tokens for the 'indicator' (filled bar)",
+    "$description": "Tokens for the fill/indicator bar",
     "$type": "object",
     "background-color": {
+      "$description": "Default indicator color — overridden by semantic variants or custom color prop",
       "$value": "{color.primary}"
     },
     "transition": {
       "$value": "{transition.base}"
-    }
+    },
+    "primary":   { "base-color": { "$value": "{color.primary}" } },
+    "success":   { "base-color": { "$value": "{color.success}" } },
+    "warning":   { "base-color": { "$value": "{color.warning}" } },
+    "danger":    { "base-color": { "$value": "{color.danger}" } },
+    "info":      { "base-color": { "$value": "{color.info}" } }
   },
   "label": {
-    "$description": "Tokens for the text (e.g., 50%)",
+    "$description": "Tokens for the external label text",
     "$type": "object",
-    "font-family": {
-      "$value": "{font.system}"
-    },
-    "font-size": {
-      "$value": "{font-size.sm}"
-    },
-    "color": {
-      "$value": "{color.dark-gray}"
-    }
+    "font-family": { "$value": "{font.system}" },
+    "font-size":   { "$value": "{font-size.sm}" },
+    "color":       { "$value": "{color.dark-gray}" }
+  },
+  "tooltip": {
+    "$description": "Tokens for the hover tooltip at the fill tip",
+    "$type": "object",
+    "background-color": { "$value": "{color.darker-gray}" },
+    "color":            { "$value": "{color.white}" },
+    "font-size":        { "$value": "{font-size.xs}" },
+    "border-radius":    { "$value": "{border-radius.base}" },
+    "padding":          { "$value": "0.2rem 0.45rem" },
+    "z-index":          { "$value": "{z-index.3}" }
   }
 }

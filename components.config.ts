@@ -44,6 +44,11 @@ export const components: Record<string, ComponentConfig> = {
     style: './runtime/assets/styles/components/Breadcrumb.module.css'
   },
 
+  Progress: {
+    filePath: './runtime/components/primitives/Progress/Progress.ts',
+    style: './runtime/assets/styles/components/Progress.module.css'
+  },
+
   // Primitives (Complex - Custom File)
   Alert: {
     filePath: './runtime/components/primitives/Alert/Alert.vue',

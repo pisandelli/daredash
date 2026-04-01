@@ -60,15 +60,15 @@ export const customAttributes = new Set([
   'danger',
   'error',
   'info',
-  // from Layout
-  'body',
   // generic variants
   'solid',
   'right',
   // pagination variants & states
   'simple',
   // table states
-  'striped'
+  'striped',
+  // from Progress.module.css
+  'indeterminate'
 ])
 
 /**
