@@ -35,7 +35,7 @@ export default defineNuxtComponent({
     const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Breadcrumb')
 
     const separatorChar = computed(() => {
-      return props.config.separator ?? '&#10140;'
+      return props.config.separator ?? '➜'
     })
 
     const renderIcon = (iconName?: string) => {
@@ -59,7 +59,7 @@ export default defineNuxtComponent({
 
         const itemContent = [
           renderIcon(item.icon),
-          h('span', { innerHTML: item.label }) // handle HTML entities if provided in label
+          h('span', {}, item.label)
         ]
 
         let elementNode: VNode
@@ -94,9 +94,9 @@ export default defineNuxtComponent({
               'span',
               {
                 class: styles.separator,
-                'aria-hidden': 'true',
-                innerHTML: separatorChar.value
-              }
+                'aria-hidden': 'true'
+              },
+              separatorChar.value
             )
           )
         }
