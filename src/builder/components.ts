@@ -111,6 +111,8 @@ export async function setupComponents(
   )
   await mkdir(generatedComponentsDir, { recursive: true })
 
+  const generationPromises: Promise<void>[] = []
+
   for (const [name, config] of Object.entries(components)) {
     const componentName = config.name || name
     const prefixedName = `${prefix}${componentName}`
@@ -129,9 +131,11 @@ export default baseComponent(styles, '${componentName}')
         generatedComponentsDir,
         `${componentName}.ts`
       )
-      await writeFile(componentPath, componentContent, 'utf-8')
-
-      if (debugMode) debugLog(`Generated component file: ${componentPath}`)
+      generationPromises.push(
+        writeFile(componentPath, componentContent, 'utf-8').then(() => {
+          if (debugMode) debugLog(`Generated component file: ${componentPath}`)
+        })
+      )
 
       addComponent({
         name: prefixedName,
@@ -156,4 +160,6 @@ export default baseComponent(styles, '${componentName}')
         debugLog(`Registered complex component: ${prefixedName} -> ${filePath}`)
     }
   }
+
+  await Promise.all(generationPromises)
 }
