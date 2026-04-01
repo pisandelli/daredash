@@ -1,70 +1,116 @@
 # UI Components & Primitives
 
-The `daredash` module includes a variety of UI primitives and form elements.
+`daredash` provides an extensive collection of User Interface Primitives and complex Widgets to build Nuxt applications.
 
-**Note**: Examples assume the default `dd` prefix.
+**Note:** The examples assume the default `dd` prefix. If you have configured a different prefix (e.g., `rtv`), replace `dd-` with `rtv-`.
 
-## General Components
+---
 
-### Button (`<dd-button>`)
+## 1. Primitives (Base Components)
 
-A styled button component.
+These components are simple building blocks, mostly Functional (TS), meaning they are lightweight and delegate styling strictly to CSS Modules.
+
+### 1.1 Button (`<dd-button>`)
+
+A button component with support for state variations, icons, and link behavior.
 
 ```vue
 <template>
-  <dd-button @click="handleClick">Click Me</dd-button>
-  <dd-button href="/home" icon="mdi:home">Home Link</dd-button>
+  <dd-cluster>
+    <dd-button @click="handleClick">Default Button</dd-button>
+    <dd-button warning>Warning</dd-button>
+    <dd-button href="/home" icon="mdi:home">Link to Home</dd-button>
+  </dd-cluster>
 </template>
 ```
 
-#### Props
--   `warning`, `info`, `success`, `error`: Boolean flags for variations.
--   `href` / `to`: Renders as a link (`NuxtLink`).
--   `icon`: Icon name (via `@nuxt/icon`).
+#### API (Props / Attributes)
 
-### Card (`<dd-card>`)
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `warning` | `Boolean` | Styles the button with the warning color (yellow/orange). |
+| `info` | `Boolean` | Styles the button with the info color (light blue). |
+| `success` | `Boolean` | Styles the button with the success color (green). |
+| `error` | `Boolean` | Styles the button with the error color (red). |
+| `href`/`to` | `String` | Renders the button as a `<NuxtLink>` or `<a>`. |
+| `icon` | `String` | Name of the icon to be rendered before the text (uses `@nuxt/icon`). |
+| `disabled` | `Boolean` | Disables interactions and applies opacity. |
 
-A generic card container with default styling.
+### 1.2 Card (`<dd-card>`)
+
+A generic container to group content with default elevation/border styling.
 
 ```vue
 <template>
   <dd-card>
-    <h2>Card Title</h2>
-    <p>Card content...</p>
+    <h3>Card Title</h3>
+    <p>Detailed card content goes here.</p>
   </dd-card>
 </template>
 ```
 
-### Badge (`<dd-badge>`)
+### 1.3 Badge (`<dd-badge>`)
 
-A small text badge or tag.
-
-```vue
-<template>
-  <dd-badge>New</dd-badge>
-  <dd-badge class="success">Completed</dd-badge>
-</template>
-```
-
-### Accordion (`<dd-accordion>`)
-
-A collapsible panel using native `<details>` and `<summary>`.
+A small label or text tag.
 
 ```vue
 <template>
-  <dd-accordion title="More Info">
-    <p>Hidden content...</p>
-  </dd-accordion>
+  <dd-cluster>
+    <dd-badge>New</dd-badge>
+    <dd-badge success>Completed</dd-badge>
+    <dd-badge error>Failed</dd-badge>
+  </dd-cluster>
 </template>
 ```
 
-#### Props
--   `title`: The summary text.
--   `open`: Initial open state.
+#### API (Props / Attributes)
 
-### Loading (`<dd-loading>`)
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `warning` | `Boolean` | Warning style. |
+| `info` | `Boolean` | Informative style. |
+| `success` | `Boolean` | Success style. |
+| `error` | `Boolean` | Error style. |
 
-A loading spinner/indicator.
+### 1.4 Avatar (`<dd-avatar>` & `<dd-avatar-group>`)
+
+Displays a profile picture or user initials.
+
+```vue
+<template>
+  <dd-avatar-group>
+    <dd-avatar src="https://example.com/photo1.jpg" alt="Maria" />
+    <dd-avatar fallback="JD" />
+    <dd-avatar icon="mdi:account" />
+  </dd-avatar-group>
+</template>
+```
+
+### 1.5 Alert (`<dd-alert>`)
+
+Displays an important message to the user.
+
+```vue
+<template>
+  <dd-alert title="Attention" warning>
+    Your session will expire in 5 minutes.
+  </dd-alert>
+</template>
+```
+
+### 1.6 Progress (`<dd-progress>`)
+
+Linear progress bar.
+
+```vue
+<template>
+  <dd-progress :value="50" max="100" />
+</template>
+```
+
+### 1.7 Loading (`<dd-loading>`)
+
+A visual indicator (spinner) for ongoing processes.
 
 ```vue
 <template>
@@ -72,73 +118,269 @@ A loading spinner/indicator.
 </template>
 ```
 
-### VideoPlayer (`<dd-video-player>`)
+### 1.8 Breadcrumb (`<dd-breadcrumb>`)
 
-A video player wrapper around Video.js.
+Breadcrumb navigation trail.
 
 ```vue
 <template>
-  <dd-video-player src="https://example.com/video.m3u8" />
+  <dd-breadcrumb :items="[{ label: 'Home', href: '/' }, { label: 'Docs', href: '/docs' }]" />
+</template>
+```
+
+### 1.9 VideoPlayer (`<dd-video-player>`)
+
+A responsive wrapper for Video.js.
+
+```vue
+<template>
+  <dd-video-player src="https://example.com/video.m3u8" poster="/cover.jpg" />
 </template>
 ```
 
 ---
 
-## Form Elements
+## 2. Forms & Inputs
 
-### Input (`<dd-input>`)
+### 2.1 Basic Primitives
 
-A validated text input field (integrates with VeeValidate).
+These are styled HTML form elements (without attached validation).
+
+* `<dd-input>`: Generic text field.
+* `<dd-textarea>`: Multiline text field.
+* `<dd-select>`: Native dropdown menu.
+* `<dd-checkbox>`: Checkbox.
+* `<dd-radio>`: Radio button.
+* `<dd-toggle>`: Switch.
+* `<dd-input-search>`: Field optimized for search.
 
 ```vue
 <template>
-  <dd-input name="email" label="Email Address" type="email" required />
+  <dd-form-label text="Your Name">
+    <dd-input placeholder="e.g., John Doe" />
+  </dd-form-label>
 </template>
 ```
 
-#### Props
--   `name`: Field name for validation (required).
--   `label`: Visual label text.
--   `placeholder`: Input placeholder.
--   `type`: Input type (text, email, password, etc.).
-
-### Checkbox (`<dd-checkbox>`)
-
-A validated checkbox component.
+#### Add-ons (InputGroup)
+To add icons or buttons next to the input.
 
 ```vue
 <template>
-  <dd-checkbox name="terms" :value="true">
-    I agree to the terms
-  </dd-checkbox>
+  <dd-input-group>
+    <template #leading>
+      <dd-icon name="mdi:email" />
+    </template>
+    <dd-input type="email" placeholder="email@example.com" />
+    <template #trailing>
+      <dd-button>Send</dd-button>
+    </template>
+  </dd-input-group>
+</template>
+```
+
+### 2.2 Form Wrappers (VeeValidate Integration)
+
+For complete forms with robust validation, `daredash` provides wrappers prefixed with `Form` that integrate seamlessly with the `vee-validate` library.
+
+They manage error messages and states (dirty, touched) automatically.
+
+* `<dd-form-input>`
+* `<dd-form-textarea>`
+* `<dd-form-select>`
+* `<dd-form-checkbox>`
+* `<dd-form-radio>`
+* `<dd-form-toggle>`
+
+```vue
+<template>
+  <dd-form-input
+    name="email"
+    label="Email Address"
+    type="email"
+    required
+  />
+</template>
+```
+
+#### Wrappers API (Props)
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `name` | `String` | Name of the field in the form (required for validation). |
+| `label` | `String` | Text of the visual label. |
+| `placeholder` | `String` | Hint text for the field. |
+| `type` | `String` | Type of input (text, email, password, etc.). |
+
+---
+
+## 3. Widgets (Complex Components)
+
+Widgets are more sophisticated interactive components (Vue SFCs), usually containing internal state and heavy logic.
+
+### 3.1 Accordion (`<dd-accordion>` & `<dd-accordion-group>`)
+
+Native expandable panels based on `<details>` and `<summary>` tags.
+
+```vue
+<template>
+  <dd-accordion-group>
+    <dd-accordion title="Question 1" open>
+      Detailed answer...
+    </dd-accordion>
+    <dd-accordion title="Question 2">
+      Another detailed answer...
+    </dd-accordion>
+  </dd-accordion-group>
+</template>
+```
+
+#### API (Props)
+* `title`: The visible summary text.
+* `open`: Boolean that dictates the initial state of the panel.
+
+### 3.2 Modal (`<dd-modal>`)
+
+A dialog box using the native browser Popover API (when applicable) and `dialog` behaviors.
+
+```vue
+<template>
+  <dd-button @click="isOpen = true">Open Modal</dd-button>
+
+  <dd-modal v-model:open="isOpen" title="Confirm Action">
+    <p>Are you sure you want to delete this item?</p>
+    <template #footer>
+      <dd-cluster justify="end">
+        <dd-button warning @click="isOpen = false">Cancel</dd-button>
+        <dd-button success>Confirm</dd-button>
+      </dd-cluster>
+    </template>
+  </dd-modal>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+const isOpen = ref(false)
+</script>
+```
+
+#### Slots
+* `header`: Replaces the default header (where the title is).
+* `default`: Main body of the modal.
+* `footer`: Bottom area, generally used for action buttons.
+
+### 3.3 Drawer (`<dd-drawer>`)
+
+Sliding panel (Off-canvas).
+
+```vue
+<template>
+  <dd-drawer v-model:open="isOpen" side="right">
+    Sidebar menu content...
+  </dd-drawer>
+</template>
+```
+
+#### API (Props)
+* `side`: 'left', 'right', 'top', 'bottom' (default: 'right').
+
+### 3.4 Tabs (`<dd-tabs>`)
+
+Tab navigation.
+
+```vue
+<template>
+  <dd-tabs>
+    <dd-tab-list>
+      <dd-tab>Profile</dd-tab>
+      <dd-tab>Settings</dd-tab>
+    </dd-tab-list>
+    <dd-tab-panels>
+      <dd-tab-panel>Profile data...</dd-tab-panel>
+      <dd-tab-panel>System options...</dd-tab-panel>
+    </dd-tab-panels>
+  </dd-tabs>
+</template>
+```
+
+### 3.5 Table (`<dd-table>`)
+
+Styled data table.
+
+```vue
+<template>
+  <dd-table :columns="columns" :data="rows" />
+</template>
+```
+
+### 3.6 Pagination (`<dd-pagination>`)
+
+Controls to navigate between pages of results.
+
+```vue
+<template>
+  <dd-pagination :total="100" :per-page="10" v-model:page="currentPage" />
+</template>
+```
+
+### 3.7 Popover (`<dd-popover>`)
+
+A small information balloon anchored to an element.
+
+```vue
+<template>
+  <dd-popover>
+    <template #trigger>
+      <dd-button>More options</dd-button>
+    </template>
+    <ul>
+      <li>Option A</li>
+      <li>Option B</li>
+    </ul>
+  </dd-popover>
 </template>
 ```
 
 ---
 
-## Feedback
+## 4. Feedback and Notifications
 
-### Toaster (`<dd-toaster>`) & Toast
+### Toaster (`<dd-toaster>` & `useToaster`)
 
-A global notification system. Place `<dd-toaster>` once in your layout (usually in `app.vue` or a root layout).
+Global notification system (Toast messages).
+
+**Initial Setup:**
+Place the `<dd-toaster>` component **only once** in your base layout (usually in `app.vue` or within layouts like `default.vue`).
 
 ```vue
 <!-- app.vue -->
 <template>
   <NuxtLayout>
     <NuxtPage />
-    <dd-toaster />
+    <dd-toaster /> <!-- Single global instance -->
   </NuxtLayout>
 </template>
 ```
 
-#### Usage (`useToaster`)
+**Use in Components/Pages:**
+Use the `useToaster` composable to trigger notifications from anywhere in your application.
 
-Use the `useToaster` composable to trigger notifications.
-
-```typescript
+```vue
+<script setup>
 const { showToast } = useToaster()
 
-showToast('Operation successful', { type: 'success' })
-showToast('Something went wrong', { type: 'error', duration: 5000 })
+const save = async () => {
+  try {
+    await asyncOperation()
+    showToast('Operation performed successfully!', { type: 'success' })
+  } catch (err) {
+    showToast('An error occurred while saving.', { type: 'error', duration: 5000 })
+  }
+}
+</script>
 ```
+
+#### Toast Options
+* `type`: 'success', 'error', 'warning', 'info' (Default: 'info').
+* `duration`: Time in milliseconds before disappearing (Default: 3000ms). Use `0` for persistent toasts (closed manually).
+* `title`: Bold title above the main message.
