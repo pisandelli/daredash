@@ -7,7 +7,6 @@
   min-block-size: 100dvh;
   gap: var(--local-gap) 0;
 
-  & > main,
   & > [data-body] {
     flex: 1;
   }
