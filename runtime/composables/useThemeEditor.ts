@@ -133,6 +133,9 @@ export function useThemeEditor() {
   /** All fields from every group, keyed by token path */
   const allFields = TOKEN_GROUPS.flatMap((g) => g.fields)
 
+  /** Lookup map for O(1) field retrieval by path */
+  const fieldsMap = Object.fromEntries(allFields.map((f) => [f.path, f]))
+
   /** Reactive map of { tokenPath → currentValue } */
   const values: Ref<TokenValues> = ref(
     Object.fromEntries(allFields.map((f) => [f.path, f.defaultValue]))
@@ -150,7 +153,7 @@ export function useThemeEditor() {
   function buildCss(vals: TokenValues): string {
     const overrides = Object.entries(vals)
       .filter(([path, val]) => {
-        const field = allFields.find((f) => f.path === path)
+        const field = fieldsMap[path]
         return field && val !== field.defaultValue
       })
       .map(([path, val]) => `  ${pathToCssVar(path, prefix)}: ${val};`)
@@ -206,7 +209,7 @@ export function useThemeEditor() {
     }
 
     for (const [path, val] of Object.entries(values.value)) {
-      const field = allFields.find((f) => f.path === path)
+      const field = fieldsMap[path]
       if (!field || val === field.defaultValue) continue
 
       // Determine the section: base fields live at root level of the JSON,
