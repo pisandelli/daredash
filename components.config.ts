@@ -186,5 +186,9 @@ export const components: Record<string, ComponentConfig> = {
   Anchor: {
     filePath: './runtime/components/widgets/Anchor/Anchor.ts',
     style: './runtime/assets/styles/components/Anchor.module.css'
+  },
+  Menu: {
+    filePath: './runtime/components/widgets/Menu/Menu.ts',
+    style: './runtime/assets/styles/components/Menu.module.css'
   }
 }

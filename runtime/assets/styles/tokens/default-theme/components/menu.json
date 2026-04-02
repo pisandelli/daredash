@@ -1,0 +1,123 @@
+{
+  "$description": "Tokens for the Menu navigation component",
+  "$type": "object",
+  "bg": {
+    "$value": "{color.bg.surface}"
+  },
+  "border-color": {
+    "$value": "{color.border.default}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.lg}"
+  },
+  "width": {
+    "$description": "Expanded sidebar width",
+    "$value": "240px"
+  },
+  "width-collapsed": {
+    "$description": "Collapsed sidebar width (icons only)",
+    "$value": "60px"
+  },
+  "transition": {
+    "$value": "{transition.base}"
+  },
+  "z-index": {
+    "$value": "{z-index.3}"
+  },
+  "item": {
+    "$type": "object",
+    "padding-block": {
+      "$value": "{space.xxs}"
+    },
+    "padding-inline": {
+      "$value": "{space.sm}"
+    },
+    "border-radius": {
+      "$value": "{border-radius.md}"
+    },
+    "color": {
+      "$value": "{color.text.default}"
+    },
+    "color-active": {
+      "$value": "{color.primary}"
+    },
+    "color-disabled": {
+      "$value": "{color.gray}"
+    },
+    "bg-hover": {
+      "$value": "{color.bg.surface-hover}"
+    },
+    "bg-active": {
+      "$value": "{color.primary.50}"
+    },
+    "icon-size": {
+      "$value": "1.125rem"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.regular}"
+    },
+    "font-weight-active": {
+      "$value": "{font-weight.semi-bold}"
+    }
+  },
+  "separator": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.gray}"
+    },
+    "font-size": {
+      "$value": "{font-size.xs}"
+    },
+    "font-weight": {
+      "$value": "{font-weight.semi-bold}"
+    },
+    "letter-spacing": {
+      "$value": "{letter-spacing.wider}"
+    },
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "padding-block": {
+      "$value": "{space.xxs}"
+    }
+  },
+  "float": {
+    "$type": "object",
+    "bg": {
+      "$value": "{color.bg.surface}"
+    },
+    "border-color": {
+      "$value": "{color.border.default}"
+    },
+    "shadow": {
+      "$value": "{shadow.lg}"
+    },
+    "border-radius": {
+      "$value": "{border-radius.lg}"
+    },
+    "min-width": {
+      "$value": "180px"
+    },
+    "z-index": {
+      "$value": "{z-index.4}"
+    }
+  },
+  "toggle": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.default}"
+    },
+    "bg-hover": {
+      "$value": "{color.bg.surface-hover}"
+    },
+    "border-radius": {
+      "$value": "{border-radius.md}"
+    },
+    "icon-size": {
+      "$value": "1.25rem"
+    }
+  }
+}

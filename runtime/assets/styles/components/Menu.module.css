@@ -1,0 +1,492 @@
+/* ==========================================================================
+   Menu Component
+   A versatile navigation widget supporting vertical/horizontal orientations,
+   collapsible sidebars, accordion and floating sub-menus, sticky separators.
+   ========================================================================== */
+
+.menu {
+  /* -- Local Token Mappings -- */
+  --local-bg: v('menu.bg');
+  --local-border-color: v('menu.border-color');
+  --local-border-radius: v('menu.border-radius');
+  --local-width: v('menu.width');
+  --local-width-collapsed: v('menu.width-collapsed');
+  --local-transition: v('menu.transition');
+  --local-z-index: v('menu.z-index');
+
+  /* -- Item Tokens -- */
+  --local-item-padding-block: v('menu.item.padding-block');
+  --local-item-padding-inline: v('menu.item.padding-inline');
+  --local-item-radius: v('menu.item.border-radius');
+  --local-item-color: v('menu.item.color');
+  --local-item-color-active: v('menu.item.color-active');
+  --local-item-color-disabled: v('menu.item.color-disabled');
+  --local-item-bg-hover: v('menu.item.bg-hover');
+  --local-item-bg-active: v('menu.item.bg-active');
+  --local-item-icon-size: v('menu.item.icon-size');
+  --local-item-font-size: v('menu.item.font-size');
+  --local-item-font-weight: v('menu.item.font-weight');
+  --local-item-font-weight-active: v('menu.item.font-weight-active');
+
+  /* -- Separator Tokens -- */
+  --local-sep-color: v('menu.separator.color');
+  --local-sep-font-size: v('menu.separator.font-size');
+  --local-sep-font-weight: v('menu.separator.font-weight');
+  --local-sep-letter-spacing: v('menu.separator.letter-spacing');
+  --local-sep-border-color: v('menu.separator.border-color');
+  --local-sep-padding-block: v('menu.separator.padding-block');
+
+  /* -- Float Panel Tokens -- */
+  --local-float-bg: v('menu.float.bg');
+  --local-float-border-color: v('menu.float.border-color');
+  --local-float-shadow: v('menu.float.shadow');
+  --local-float-radius: v('menu.float.border-radius');
+  --local-float-min-width: v('menu.float.min-width');
+  --local-float-z-index: v('menu.float.z-index');
+
+  /* -- Toggle Tokens -- */
+  --local-toggle-color: v('menu.toggle.color');
+  --local-toggle-bg-hover: v('menu.toggle.bg-hover');
+  --local-toggle-radius: v('menu.toggle.border-radius');
+  --local-toggle-icon-size: v('menu.toggle.icon-size');
+
+  /* -- Layout -- */
+  display: flex;
+  flex-direction: column;
+  inline-size: var(--local-width);
+  transition: inline-size var(--local-transition);
+  overflow: hidden; /* Ensures labels fade on collapse */
+  position: relative;
+
+  /* -- Defensive CSS -- */
+  min-inline-size: 0;
+}
+
+/* ---- Horizontal orientation ---- */
+.menu[data-orientation='horizontal'] {
+  flex-direction: row;
+  inline-size: auto;
+  block-size: auto;
+  align-items: center;
+  overflow: visible;
+}
+
+/* ---- Collapsed state (vertical only) ---- */
+.menu[data-collapsed] {
+  inline-size: var(--local-width-collapsed);
+}
+
+.menu[data-collapsed] .toggle {
+  margin-inline-start: 0;
+  align-self: center;
+}
+
+.menu[data-collapsed] .link {
+  padding-inline: 0;
+  justify-content: center;
+}
+
+.menu[data-collapsed] .separator {
+  padding-inline: 0;
+  align-items: center;
+}
+
+.menu[data-collapsed] .separatorLine {
+  inline-size: 2rem; /* reduced explicit line width for colapsed mode */
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-block-size: 0;
+}
+
+.menu[data-orientation='horizontal'] > .list {
+  flex-direction: row;
+  align-items: center;
+  overflow: visible;
+}
+
+/* ==========================================================================
+   Toggle Button (internal sidebar collapse trigger)
+   ========================================================================== */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: none;
+  background: transparent;
+  color: var(--local-toggle-color);
+  border-radius: var(--local-toggle-radius);
+  cursor: pointer;
+  transition: background-color v('transition.fast'), color v('transition.fast'), transform v('transition.base');
+  flex-shrink: 0;
+  margin-block-end: v('space.xxs');
+  margin-inline-start: auto;
+
+  &:hover {
+    background-color: var(--local-toggle-bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--local-item-color-active);
+    outline-offset: 2px;
+  }
+}
+
+.toggleIcon {
+  font-size: var(--local-toggle-icon-size);
+  transition: transform var(--local-transition);
+}
+
+/* Rotate icon when collapsed */
+.menu[data-collapsed] .toggleIcon {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Separator
+   ========================================================================== */
+
+.separator {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-block: var(--local-sep-padding-block);
+  padding-inline: var(--local-item-padding-inline);
+
+  /* Sticky within scroll container */
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background-color: var(--local-bg);
+}
+
+.separatorLine {
+  display: block;
+  block-size: 1px;
+  background-color: var(--local-sep-border-color);
+  inline-size: 100%;
+}
+
+.separatorLabel {
+  display: block;
+  color: var(--local-sep-color);
+  font-size: var(--local-sep-font-size);
+  font-weight: var(--local-sep-font-weight);
+  letter-spacing: var(--local-sep-letter-spacing);
+  text-transform: uppercase;
+  margin-block-end: v('space.xxs');
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Hide text when collapsed (vertical sidebar) */
+  transition: opacity var(--local-transition), max-inline-size var(--local-transition);
+}
+
+.menu[data-collapsed] .separatorLabel {
+  opacity: 0;
+  max-inline-size: 0;
+}
+
+/* Horizontal: separator becomes vertical */
+.menu[data-orientation='horizontal'] .separator {
+  flex-direction: row;
+  align-items: center;
+  block-size: 1.5rem;
+  inline-size: 1px;
+  padding-block: 0;
+  padding-inline: 0;
+  position: static;
+  background-color: transparent;
+}
+
+.menu[data-orientation='horizontal'] .separatorLine {
+  block-size: 100%;
+  inline-size: 1px;
+}
+
+.menu[data-orientation='horizontal'] .separatorLabel {
+  display: none;
+}
+
+/* ==========================================================================
+   Navigation Item
+   ========================================================================== */
+
+.item {
+  list-style: none;
+  min-inline-size: 0;
+}
+
+/* -- The interactive link/button element -- */
+.link {
+  /* Reset */
+  appearance: none;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  width: 100%;
+  text-align: start;
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  gap: v('space.xxs');
+  padding-block: var(--local-item-padding-block);
+  padding-inline: var(--local-item-padding-inline);
+  border-radius: var(--local-item-radius);
+  min-inline-size: 0;
+  overflow: hidden; /* clip label overflow on collapse */
+  flex-wrap: nowrap;
+
+  /* Typography */
+  font-size: var(--local-item-font-size);
+  font-weight: var(--local-item-font-weight);
+  color: var(--local-item-color);
+  font-family: inherit;
+  line-height: 1.4;
+
+  /* Interaction */
+  cursor: pointer;
+  transition:
+    background-color v('transition.fast'),
+    color v('transition.fast');
+
+  &:hover {
+    background-color: var(--local-item-bg-hover);
+    color: var(--local-item-color-active);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--local-item-color-active);
+    outline-offset: -2px;
+  }
+}
+
+/* Active / Selected state */
+.item[data-active] > .link,
+.link[aria-current='page'] {
+  background-color: var(--local-item-bg-active);
+  color: var(--local-item-color-active);
+  font-weight: var(--local-item-font-weight-active);
+}
+
+/* Disabled state */
+.item[data-disabled] > .link {
+  color: var(--local-item-color-disabled);
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   Item Icon
+   ========================================================================== */
+
+.icon {
+  font-size: var(--local-item-icon-size);
+  flex-shrink: 0;
+  transition: color v('transition.fast');
+}
+
+/* ==========================================================================
+   Item Label
+   ========================================================================== */
+
+.label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    opacity var(--local-transition),
+    max-inline-size var(--local-transition);
+}
+
+/* Collapsed: hide label (keep icon visible + title attribute for tooltip) */
+.menu[data-collapsed] .label {
+  opacity: 0;
+  max-inline-size: 0;
+  flex: 0;
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Badge (inside label area)
+   ========================================================================== */
+
+.badge {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  transition: opacity var(--local-transition);
+}
+
+.menu[data-collapsed] .badge {
+  opacity: 0;
+  max-inline-size: 0;
+  overflow: hidden;
+  margin-inline-start: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Chevron (expand/collapse indicator for items with children)
+   ========================================================================== */
+
+.chevron {
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--local-item-color) 60%, transparent);
+  flex-shrink: 0;
+  transition: transform var(--local-transition), opacity var(--local-transition);
+  margin-inline-start: auto;
+}
+
+.item[data-expanded] > .link > .chevron {
+  transform: rotate(90deg);
+}
+
+/* Hide chevron when collapsed */
+.menu[data-collapsed] .chevron {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   Sub-menu — Accordion (CSS Grid Trick)
+   ========================================================================== */
+
+.submenuWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--local-transition);
+}
+
+.item[data-expanded] > .submenuWrapper {
+  grid-template-rows: 1fr;
+}
+
+.submenuInner {
+  overflow: hidden;
+  min-block-size: 0;
+}
+
+/* Sub-items are indented */
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-inline-start: calc(var(--local-item-padding-inline) + var(--local-item-icon-size) + v('space.xxs'));
+  padding-block-end: v('space.xxs');
+}
+
+/* ==========================================================================
+   Sub-menu — Float Panel (CSS Anchor Positioning + JS fallback)
+   ========================================================================== */
+
+.floatPanel {
+  /* -- Base styles -- */
+  list-style: none;
+  margin: 0;
+  padding: v('space.xxs');
+  background-color: var(--local-float-bg);
+  border: 1px solid var(--local-float-border-color);
+  border-radius: var(--local-float-radius);
+  box-shadow: var(--local-float-shadow);
+  min-inline-size: var(--local-float-min-width);
+
+  /* -- a11y + visibility -- */
+  display: none;
+  z-index: var(--local-float-z-index);
+
+  /* -- Position: Fallback (JS will set top/left) -- */
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+
+  /* -- Animation -- */
+  opacity: 0;
+  transform: translateY(-4px) scale(0.97);
+  transform-origin: top left;
+  transition:
+    opacity v('transition.fast'),
+    transform v('transition.fast');
+}
+
+.floatPanel[data-open] {
+  display: block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* CSS Anchor Positioning — progressive enhancement */
+@supports (anchor-name: --a) {
+  .floatAnchor {
+    anchor-name: var(--anchor-name);
+  }
+
+  .floatPanel {
+    position: absolute;
+    position-anchor: var(--anchor-name);
+    position-area: inline-end span-block-end;
+    position-try-fallbacks: block-end span-inline-end, block-start span-inline-end;
+    inset-block-start: anchor(block-start);
+    inset-inline-start: anchor(inline-end);
+    margin-inline-start: v('space.xxs');
+  }
+}
+
+/* Horizontal: float opens below */
+.menu[data-orientation='horizontal'] .floatPanel {
+  @supports (anchor-name: --a) {
+    position-area: block-end span-inline-end;
+    inset-block-start: anchor(block-end);
+    inset-inline-start: anchor(inline-start);
+    margin-block-start: v('space.xxs');
+    margin-inline-start: 0;
+  }
+}
+
+/* Nested float panel: opens to the side of parent float */
+.floatPanel .floatPanel {
+  @supports (anchor-name: --a) {
+    position-area: inline-end span-block-end;
+    inset-block-start: anchor(block-start);
+    inset-inline-start: anchor(inline-end);
+    margin-inline-start: v('space.xxs');
+    margin-block-start: 0;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .menu,
+  .link,
+  .label,
+  .badge,
+  .chevron,
+  .toggle,
+  .toggleIcon,
+  .separatorLabel,
+  .submenuWrapper,
+  .floatPanel {
+    transition: none;
+  }
+}
