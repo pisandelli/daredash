@@ -49,7 +49,7 @@ Arranges children in a wrapping row with consistent spacing (gap). Great for but
 
 ```vue
 <template>
-  <dd-cluster justify="center" align="center">
+  <dd-cluster center>
     <dd-button>One</dd-button>
     <dd-button>Two</dd-button>
     <dd-button>Three</dd-button>
@@ -59,11 +59,20 @@ Arranges children in a wrapping row with consistent spacing (gap). Great for but
 
 ### Props/Attrs
 
+*Note: Items are aligned to the `center` vertically by default.*
+
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `justify` | `String` | CSS `justify-content` value (start, center, end, space-between). |
-| `align` | `String` | CSS `align-items` value. |
-| `narrow` | `Boolean` | Reduces the gap. |
+| `center` | `Boolean` | Justifies content to the center. |
+| `end` | `Boolean` | Justifies content to the end (flex-end). |
+| `between` | `Boolean` | Justifies content using space-between. |
+| `around` | `Boolean` | Justifies content using space-around. |
+| `evenly` | `Boolean` | Justifies content using space-evenly. |
+| `narrow` | `Boolean` | Reduces the gap between items. |
+| `wide` | `Boolean` | Increases the gap between items. |
+| `nowrap` | `Boolean` | Prevents items from wrapping to the next line. |
+| `stretch` | `Boolean` | Changes alignment to stretch items vertically. |
+| `nogap` | `Boolean` | Removes the gap entirely. |
 
 ## Grid (`<dd-grid>`)
 
