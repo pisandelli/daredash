@@ -1,0 +1,63 @@
+# daredash - LLM Agent Guide
+
+This file provides a concise summary of the `daredash` Nuxt module, specifically designed for LLMs to understand the architecture, naming conventions, and best practices when working with this codebase.
+
+## 1. Core Architecture
+
+`daredash` is a Nuxt module for Design System management. It is divided into:
+- **Build Phase (`src/`)**: Parses tokens, configures PostCSS, registers components dynamically via `addComponent`.
+- **Runtime Phase (`runtime/`)**: Contains the Vue components, composables, and styles (`.module.css`).
+
+There are two main categories of UI elements:
+- **Primitives**: Simple, often functional components (e.g., Button, Badge, Layouts). They delegate styling to `.module.css`. Found in `runtime/components/primitives/`.
+- **Widgets**: Complex Vue SFCs with internal state and heavier logic (e.g., Accordion, Modal, Tabs). Found in `runtime/components/widgets/`.
+
+## 2. Dynamic Prefixing (Crucial)
+
+The module uses a **configurable prefix** for all components and CSS variables. By default, this is `dd`.
+
+**Rules:**
+- **Components:** `<dd-button>`, `<dd-layout>`, `<dd-box>`.
+- **CSS Variables:** `--dd-color-primary`, `--dd-button-bg`.
+
+*Context for LLMs:* If the user specifies they are using a different prefix (e.g., `acme`), you must adjust all component tags (`<acme-button>`) and CSS variable names (`--acme-color-primary`) accordingly in your generated code.
+
+## 3. Design Tokens
+
+Tokens are defined in JSON files (e.g., `tokens.json`). They drive the entire styling system.
+
+- **Global Tokens:** Injected into `:root` as CSS Custom Properties (`--dd-color-primary`).
+- **PostCSS `v()` function:** In CSS files (`.module.css`), tokens MUST be accessed using the `v()` function.
+  - *Correct:* `color: v('color.primary');`
+  - *Incorrect:* `color: var(--dd-color-primary);` (when writing module CSS, use `v()`).
+
+## 4. Token Layering (Golden Rule for Styling)
+
+When modifying or overriding component styles, follow the Token Layering rule to prevent global style leaks:
+
+1. **Global Token:** `v('color.error')`
+2. **Component/Local Mapping:** Map the token to a local variable.
+3. **Usage:**
+```css
+/* Inside .module.css or <style scoped> */
+.my-custom-element {
+  --local-bg: v('color.error'); /* Override specific behavior */
+  background-color: var(--local-bg);
+}
+```
+**NEVER** use `!important` to force styles. Always override the specific CSS variable exposed by the component.
+
+## 5. Forms and Integration
+
+- **Basic Forms:** `<dd-input>`, `<dd-select>` are styled native elements.
+- **VeeValidate Forms:** Prefixed with `Form` (e.g., `<dd-form-input>`). These are integrated with `vee-validate` for robust error handling and state management.
+
+## 6. Feedback System
+
+Notifications use the `<dd-toaster>` component and `useToaster` composable.
+- The `<dd-toaster>` must exist **once** at the layout root (e.g., `app.vue`).
+- Use `const { showToast } = useToaster()` in setup scripts to trigger notifications.
+
+## 7. Icons
+
+The library is icon-agnostic but relies on `@nuxt/icon`. Any string compatible with Iconify (e.g., `mdi:home`, `heroicons:check`) can be passed to the `icon` props of components like Button or Avatar.

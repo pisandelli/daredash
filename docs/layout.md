@@ -26,7 +26,7 @@ A generic container for grouping content. Useful for applying padding, borders, 
 
 ## Center (`<dd-center>`)
 
-centers content horizontally using `margin-inline: auto`. Can also center text or children vertically/horizontally using flexbox properties.
+Centers content horizontally using `margin-inline: auto`. Can also center text or children vertically/horizontally using flexbox properties.
 
 ```vue
 <template>
@@ -37,8 +37,11 @@ centers content horizontally using `margin-inline: auto`. Can also center text o
 ```
 
 ### Props/Attrs
--   `intrinsic`: If present, centers the content based on its intrinsic width.
--   `text`: Centers text alignment.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `intrinsic` | `Boolean` | If present, centers the content based on its intrinsic width. |
+| `text` | `Boolean` | Centers text alignment. |
 
 ## Cluster (`<dd-cluster>`)
 
@@ -46,7 +49,7 @@ Arranges children in a wrapping row with consistent spacing (gap). Great for but
 
 ```vue
 <template>
-  <dd-cluster>
+  <dd-cluster center>
     <dd-button>One</dd-button>
     <dd-button>Two</dd-button>
     <dd-button>Three</dd-button>
@@ -55,9 +58,21 @@ Arranges children in a wrapping row with consistent spacing (gap). Great for but
 ```
 
 ### Props/Attrs
--   `justify`: CSS `justify-content` value (start, center, end, space-between).
--   `align`: CSS `align-items` value.
--   `narrow`: Reduces the gap.
+
+*Note: Items are aligned to the `center` vertically by default.*
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `center` | `Boolean` | Justifies content to the center. |
+| `end` | `Boolean` | Justifies content to the end (flex-end). |
+| `between` | `Boolean` | Justifies content using space-between. |
+| `around` | `Boolean` | Justifies content using space-around. |
+| `evenly` | `Boolean` | Justifies content using space-evenly. |
+| `narrow` | `Boolean` | Reduces the gap between items. |
+| `wide` | `Boolean` | Increases the gap between items. |
+| `nowrap` | `Boolean` | Prevents items from wrapping to the next line. |
+| `stretch` | `Boolean` | Changes alignment to stretch items vertically. |
+| `nogap` | `Boolean` | Removes the gap entirely. |
 
 ## Grid (`<dd-grid>`)
 
@@ -75,8 +90,10 @@ Creates a CSS Grid layout.
 ### Customization
 Use CSS custom properties to control columns:
 ```css
---dd-grid-min-item-size: 200px;
---dd-grid-gap: 1.5rem;
+.my-grid {
+  --dd-grid-min-item-size: 200px;
+  --dd-grid-gap: 1.5rem;
+}
 ```
 
 ## Stack (`<dd-stack>`)
@@ -85,7 +102,7 @@ Arranges children vertically with consistent spacing (gap). A foundational verti
 
 ```vue
 <template>
-  <dd-stack>
+  <dd-stack compact>
     <h2>Heading</h2>
     <p>Paragraph text.</p>
     <dd-button>Action</dd-button>
@@ -94,10 +111,13 @@ Arranges children vertically with consistent spacing (gap). A foundational verti
 ```
 
 ### Props/Attrs
--   `compact`: Reduces the vertical gap.
--   `nogap`: Removes the gap entirely.
--   `recursive`: Applies stack spacing to nested elements.
--   `split-after`: Applies `margin-block-end: auto` to the nth child, pushing subsequent items to the bottom.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `compact` | `Boolean` | Reduces the vertical gap. |
+| `nogap` | `Boolean` | Removes the gap entirely. |
+| `recursive` | `Boolean` | Applies stack spacing to nested elements. |
+| `split-after` | `Number/String` | Applies `margin-block-end: auto` to the nth child, pushing subsequent items to the bottom. |
 
 ## Sidebar (`<dd-sidebar>`)
 
@@ -105,7 +125,7 @@ Arranges elements horizontally, placing a sidebar alongside a main content area.
 
 ```vue
 <template>
-  <dd-sidebar>
+  <dd-sidebar right>
     <aside>Sidebar Nav</aside>
     <div>Main Content</div>
   </dd-sidebar>
@@ -113,10 +133,13 @@ Arranges elements horizontally, placing a sidebar alongside a main content area.
 ```
 
 ### Props/Attrs
--   `right`: Reverses the order, placing the sidebar on the right instead of the left.
--   `start`: Aligns items to the top (flex-start).
--   `end`: Aligns items to the bottom (flex-end).
--   `nogap`: Removes the gap between the sidebar and the main content.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `right` | `Boolean` | Reverses the order, placing the sidebar on the right instead of the left. |
+| `start` | `Boolean` | Aligns items to the top (flex-start). |
+| `end` | `Boolean` | Aligns items to the bottom (flex-end). |
+| `nogap` | `Boolean` | Removes the gap between the sidebar and the main content. |
 
 ## Layout (`<dd-layout>`)
 
@@ -130,25 +153,3 @@ Root layout component often used for page structures (Sidebar + Main Content).
   </dd-layout>
 </template>
 ```
-
-## Modal (`<dd-modal>`)
-
-A native Popover-based modal dialog.
-
-```vue
-<template>
-  <dd-button @click="isOpen = true">Open Modal</dd-button>
-
-  <dd-modal v-model:open="isOpen" title="My Modal">
-    <p>This is a native popover modal.</p>
-    <template #header>
-      <!-- Optional custom header -->
-    </template>
-  </dd-modal>
-</template>
-```
-
-### Props
--   `open`: Boolean (v-model).
--   `title`: String for the header title.
-
