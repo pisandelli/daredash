@@ -1,24 +1,28 @@
-import { h, resolveComponent, type VNode, type ComponentPublicInstance } from 'vue'
+import { h, resolveComponent, type VNode, type ComponentPublicInstance, type ComputedRef, type Ref } from 'vue'
+import { NuxtLink, Icon } from '#components'
 import getPrefixName from '#dd/utils/getPrefixName'
 import type { MenuEntry, MenuItem, MenuSeparator } from './types'
+import type { useMenuFloat } from './useMenuFloat'
 
 interface UseMenuRenderOptions {
-  isCollapsed: ReturnType<typeof import('vue').computed<boolean>>
-  resolvedActiveKey: ReturnType<typeof import('vue').computed<string | undefined>>
-  usesCssAnchor: ReturnType<typeof import('vue').computed<boolean>>
-  openFloatKey: ReturnType<typeof import('vue').ref<string | null>>
-  expandedKeys: ReturnType<typeof import('vue').ref<Set<string>>>
-  floatPositions: ReturnType<typeof import('vue').ref<Map<string, { top: number; left: number }>>>
-  anchorRefs: ReturnType<typeof import('vue').ref<Map<string, HTMLElement>>>
-  floatPanelRefs: ReturnType<typeof import('vue').ref<Map<string, HTMLElement>>>
-  toggleExpand: (key: string) => void
-  toggleFloat: (key: string) => void
+  isCollapsed: ComputedRef<boolean>
+  resolvedActiveKey: ComputedRef<string | undefined>
+  usesCssAnchor: ComputedRef<boolean>
+  openFloatKey: ReturnType<typeof useMenuFloat>['openFloatKey']
+  expandedKeys: ReturnType<typeof useMenuFloat>['expandedKeys']
+  floatPositions: ReturnType<typeof useMenuFloat>['floatPositions']
+  anchorRefs: ReturnType<typeof useMenuFloat>['anchorRefs']
+  floatPanelRefs: ReturnType<typeof useMenuFloat>['floatPanelRefs']
+  toggleExpand: ReturnType<typeof useMenuFloat>['toggleExpand']
+  toggleFloat: ReturnType<typeof useMenuFloat>['toggleFloat']
+  scheduleOpenFloat: ReturnType<typeof useMenuFloat>['scheduleOpenFloat']
+  scheduleCloseFloat: ReturnType<typeof useMenuFloat>['scheduleCloseFloat']
   emit: (event: 'select', payload: { key: string; item: MenuItem }) => void
 }
 
 interface UseMenuRenderReturn {
   renderSeparator: (entry: MenuSeparator, index: number) => VNode
-  renderLinkContent: (item: MenuItem) => VNode[]
+  renderLinkContent: (item: MenuItem, hideLabel: boolean) => VNode[]
   renderItems: (entries: MenuEntry[], depth: number) => VNode[]
 }
 
@@ -27,7 +31,6 @@ export function useMenuRender(
   options: UseMenuRenderOptions
 ): UseMenuRenderReturn {
   const DdBadge = resolveComponent(getPrefixName('Badge', { type: 'component' }))
-  const Icon = resolveComponent('Icon')
 
   const renderSeparator = (entry: MenuSeparator, index: number): VNode => {
     const children: VNode[] = []
@@ -50,7 +53,7 @@ export function useMenuRender(
     }, children)
   }
 
-  const renderLinkContent = (item: MenuItem): VNode[] => {
+  const renderLinkContent = (item: MenuItem, hideLabel: boolean): VNode[] => {
     const nodes: VNode[] = []
 
     if (item.icon) {
@@ -63,18 +66,18 @@ export function useMenuRender(
       )
     }
 
-    if (!options.isCollapsed.value) {
+    if (!hideLabel) {
       nodes.push(
         h('span', { class: styles.label }, item.label)
       )
     }
 
-    if (item.badge && !options.isCollapsed.value) {
+    if (item.badge && !hideLabel) {
       nodes.push(
         h(DdBadge, {
           class: styles.badge,
-          ...(item.badge.color ? { color: item.badge.color } : {})
-        }, () => String(item.badge.label))
+          ...(item.badge!.color ? { color: item.badge!.color } : {})
+        }, () => String(item.badge!.label))
       )
     }
 
@@ -83,20 +86,22 @@ export function useMenuRender(
 
   const renderItems = (entries: MenuEntry[], depth: number): VNode[] => {
     return entries.map((entry, index) => {
-      if (entry.type === 'separator') {
-        return renderSeparator(entry, index)
+      if ('type' in entry && entry.type === 'separator') {
+        return renderSeparator(entry as MenuSeparator, index)
       }
 
       const item = entry as MenuItem
       const isActive = options.resolvedActiveKey.value === item.key || item.active === true
       const hasChildren = !!item.children?.length
-      const isExpanded = options.expandedKeys.value.has(item.key)
+      const isExpanded = options.expandedKeys?.value?.has(item.key) ?? false
 
       const isFloat = item.float || (options.isCollapsed.value && hasChildren)
       const anchorName = `--dd-menu-anchor-${item.key}`
       const floatIsOpen = options.openFloatKey.value === item.key
 
-      const chevronNode = (hasChildren && !options.isCollapsed.value)
+      const hideLabel = options.isCollapsed.value && depth === 0
+
+      const chevronNode = (hasChildren && !hideLabel)
         ? h(Icon, {
             name: 'heroicons:chevron-right',
             class: styles.chevron,
@@ -107,7 +112,7 @@ export function useMenuRender(
       let linkElement: VNode
 
       if (item.action.type === 'link') {
-        linkElement = h(resolveComponent('NuxtLink'), {
+        linkElement = h(NuxtLink, {
           class: [
             styles.link,
             isFloat && options.usesCssAnchor.value ? styles.floatAnchor : ''
@@ -116,11 +121,11 @@ export function useMenuRender(
           ...(item.action.target ? { target: item.action.target } : {}),
           'aria-current': isActive ? 'page' : undefined,
           'aria-disabled': item.disabled ? 'true' : undefined,
-          title: options.isCollapsed.value ? item.label : undefined,
+          title: hideLabel ? item.label : undefined,
           ...(isFloat && !options.usesCssAnchor.value
             ? {
                 ref: (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
-                  if (el && el instanceof HTMLElement) options.anchorRefs.value.set(item.key, el)
+                  if (el && el instanceof HTMLElement) options.anchorRefs?.value?.set(item.key, el)
                 }
               }
             : {}),
@@ -132,7 +137,7 @@ export function useMenuRender(
             : hasChildren
               ? (e: Event) => { e.preventDefault(); options.toggleExpand(item.key) }
               : undefined
-        }, { default: () => [...renderLinkContent(item), chevronNode] })
+        }, { default: () => [...renderLinkContent(item, hideLabel), chevronNode] })
       } else {
         linkElement = h('button', {
           type: 'button',
@@ -144,13 +149,13 @@ export function useMenuRender(
           'aria-expanded': hasChildren ? String(isFloat ? floatIsOpen : isExpanded) : undefined,
           'aria-controls': hasChildren ? `dd-submenu-${item.key}` : undefined,
           'aria-haspopup': hasChildren && isFloat ? 'true' : undefined,
-          title: options.isCollapsed.value ? item.label : undefined,
+          title: hideLabel ? item.label : undefined,
           style: isFloat && options.usesCssAnchor.value
             ? { anchorName }
             : undefined,
           ref: isFloat && !options.usesCssAnchor.value
             ? (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
-                if (el && el instanceof HTMLElement) options.anchorRefs.value.set(item.key, el)
+                if (el && el instanceof HTMLElement) options.anchorRefs?.value?.set(item.key, el)
               }
             : undefined,
           onClick: item.disabled
@@ -163,14 +168,14 @@ export function useMenuRender(
                   options.emit('select', { key: item.key, item })
                 }
               }
-        }, [...renderLinkContent(item), chevronNode])
+        }, [...renderLinkContent(item, hideLabel), chevronNode])
       }
 
       let subMenu: VNode | null = null
 
       if (hasChildren && item.children) {
         if (isFloat) {
-          const pos = options.floatPositions.value.get(item.key)
+          const pos = options.floatPositions?.value?.get(item.key)
           subMenu = h('ul', {
             id: `dd-submenu-${item.key}`,
             class: styles.floatPanel,
@@ -185,8 +190,8 @@ export function useMenuRender(
                   : { display: 'none' }
             ],
             ref: (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
-              if (el && el instanceof HTMLElement) options.floatPanelRefs.value.set(item.key, el)
-              else if (!el) options.floatPanelRefs.value.delete(item.key)
+              if (el && el instanceof HTMLElement) options.floatPanelRefs?.value?.set(item.key, el)
+              else if (!el) options.floatPanelRefs?.value?.delete(item.key)
             }
           }, renderItems(item.children, depth + 1))
         } else {
@@ -213,7 +218,13 @@ export function useMenuRender(
         'data-disabled': item.disabled ? '' : undefined,
         'data-expanded': !isFloat && isExpanded ? '' : undefined,
         'data-has-children': hasChildren ? '' : undefined,
-        'data-float': isFloat ? '' : undefined
+        'data-float': isFloat ? '' : undefined,
+        ...(isFloat && hasChildren
+          ? {
+              onMouseenter: () => options.scheduleOpenFloat(item.key),
+              onMouseleave: () => options.scheduleCloseFloat()
+            }
+          : {})
       }, [linkElement, subMenu])
     })
   }

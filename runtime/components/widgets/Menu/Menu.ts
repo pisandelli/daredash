@@ -2,7 +2,6 @@ import { defineNuxtComponent } from 'nuxt/app'
 import { h, resolveComponent, type PropType } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Menu.module.css'
-import { NuxtLink } from '#components'
 import type { MenuEntry } from './types'
 import { useMenuState } from './useMenuState'
 import { useMenuFloat } from './useMenuFloat'
@@ -110,6 +109,8 @@ export default defineNuxtComponent({
       floatPanelRefs: float.floatPanelRefs,
       toggleExpand: float.toggleExpand,
       toggleFloat: float.toggleFloat,
+      scheduleOpenFloat: float.scheduleOpenFloat,
+      scheduleCloseFloat: float.scheduleCloseFloat,
       emit
     })
 

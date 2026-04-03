@@ -21,6 +21,7 @@ export const useToaster = () => {
 
     const defaults: Omit<ToastMessage, 'id' | 'message'> = {
       type: 'info', // Default type
+      position: 'top-right',
       duration: 5000
     }
 

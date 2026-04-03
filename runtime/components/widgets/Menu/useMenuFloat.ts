@@ -1,4 +1,4 @@
-import { ref, computed, onMounted, onUnmounted, nextTick, type PropType, type ComponentPublicInstance } from 'vue'
+import { ref, computed, type ComputedRef, onMounted, onUnmounted, nextTick, type PropType, type ComponentPublicInstance } from 'vue'
 import type { MenuEntry } from './types'
 
 interface UseMenuFloatOptions {
@@ -11,10 +11,12 @@ interface UseMenuFloatReturn {
   floatPositions: ReturnType<typeof ref<Map<string, { top: number; left: number }>>>
   anchorRefs: ReturnType<typeof ref<Map<string, HTMLElement>>>
   floatPanelRefs: ReturnType<typeof ref<Map<string, HTMLElement>>>
-  usesCssAnchor: ReturnType<typeof computed<boolean>>
+  usesCssAnchor: ComputedRef<boolean>
   toggleExpand: (key: string) => void
   openFloat: (key: string) => Promise<void>
   closeFloat: () => void
+  scheduleOpenFloat: (key: string) => void
+  scheduleCloseFloat: () => void
   toggleFloat: (key: string) => void
 }
 
@@ -27,6 +29,7 @@ export function useMenuFloat(
   const floatPositions = ref<Map<string, { top: number; left: number }>>(new Map())
   const anchorRefs = ref<Map<string, HTMLElement>>(new Map())
   const floatPanelRefs = ref<Map<string, HTMLElement>>(new Map())
+  let floatTimeout: ReturnType<typeof setTimeout> | null = null
 
   const usesCssAnchor = computed(() => {
     if (typeof CSS === 'undefined') return false
@@ -63,13 +66,29 @@ export function useMenuFloat(
   }
 
   const openFloat = async (key: string) => {
+    if (floatTimeout) clearTimeout(floatTimeout)
     openFloatKey.value = key
     await nextTick()
     updateFloatPosition(key)
   }
 
   const closeFloat = () => {
+    if (floatTimeout) clearTimeout(floatTimeout)
     openFloatKey.value = null
+  }
+
+  const scheduleOpenFloat = (key: string) => {
+    if (floatTimeout) clearTimeout(floatTimeout)
+    floatTimeout = setTimeout(() => {
+      openFloat(key)
+    }, 80)
+  }
+
+  const scheduleCloseFloat = () => {
+    if (floatTimeout) clearTimeout(floatTimeout)
+    floatTimeout = setTimeout(() => {
+      closeFloat()
+    }, 150)
   }
 
   const toggleFloat = (key: string) => {
@@ -129,6 +148,8 @@ export function useMenuFloat(
     toggleExpand,
     openFloat,
     closeFloat,
+    scheduleOpenFloat,
+    scheduleCloseFloat,
     toggleFloat
   }
 }

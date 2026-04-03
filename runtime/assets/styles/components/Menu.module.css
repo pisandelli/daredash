@@ -55,7 +55,7 @@
   flex-direction: column;
   inline-size: var(--local-width);
   transition: inline-size var(--local-transition);
-  overflow: hidden; /* Ensures labels fade on collapse */
+  /* overflow: hidden; Removed to prevent clipping anchored float panels */
   position: relative;
 
   /* -- Defensive CSS -- */
@@ -81,17 +81,17 @@
   align-self: center;
 }
 
-.menu[data-collapsed] .link {
+.menu[data-collapsed] > .list > .item > .link {
   padding-inline: 0;
   justify-content: center;
 }
 
-.menu[data-collapsed] .separator {
+.menu[data-collapsed] > .list > .separator {
   padding-inline: 0;
   align-items: center;
 }
 
-.menu[data-collapsed] .separatorLine {
+.menu[data-collapsed] > .list > .separator > .separatorLine {
   inline-size: 2rem; /* reduced explicit line width for colapsed mode */
 }
 
@@ -197,7 +197,7 @@
   transition: opacity var(--local-transition), max-inline-size var(--local-transition);
 }
 
-.menu[data-collapsed] .separatorLabel {
+.menu[data-collapsed] > .list > .separator > .separatorLabel {
   opacity: 0;
   max-inline-size: 0;
 }
@@ -319,7 +319,7 @@
 }
 
 /* Collapsed: hide label (keep icon visible + title attribute for tooltip) */
-.menu[data-collapsed] .label {
+.menu[data-collapsed] > .list > .item > .link .label {
   opacity: 0;
   max-inline-size: 0;
   flex: 0;
@@ -337,7 +337,7 @@
   transition: opacity var(--local-transition);
 }
 
-.menu[data-collapsed] .badge {
+.menu[data-collapsed] > .list > .item > .link .badge {
   opacity: 0;
   max-inline-size: 0;
   overflow: hidden;
@@ -362,7 +362,7 @@
 }
 
 /* Hide chevron when collapsed */
-.menu[data-collapsed] .chevron {
+.menu[data-collapsed] > .list > .item > .link .chevron {
   opacity: 0;
 }
 

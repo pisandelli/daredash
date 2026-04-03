@@ -15,6 +15,12 @@
     },
     "right": {
       "$value": "{space.md}"
+    },
+    "bottom": {
+      "$value": "{space.md}"
+    },
+    "left": {
+      "$value": "{space.md}"
     }
   }
 }

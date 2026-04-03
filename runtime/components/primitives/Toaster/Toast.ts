@@ -84,6 +84,7 @@ export default defineNuxtComponent({
         'div',
         {
           ...processedAttrs.value,
+          'data-has-title': !!props.title || undefined,
           class: [styles.toast, attrs.class]
         },
         [iconNode, contentNode, closeButton]
