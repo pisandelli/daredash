@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { h, nextTick } from 'vue'
 import Menu from './Menu'
-import type { MenuEntry } from './Menu'
+import type { MenuEntry } from './types'
 
 // ---------------------------------------------------------------------------
 // Mock data

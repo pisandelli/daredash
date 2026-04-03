@@ -89,7 +89,7 @@ const hasData = computed(() => props.data && props.data.length > 0)
           <td :class="styles.td" :colspan="columns.length">
             <div :class="styles['empty-state']">
               <Icon :name="globalIcons.tableError || 'heroicons:exclamation-triangle'" size="2rem" />
-              <span style="margin-block-start: 0.5rem">{{ props.errorMessage || 'An error occurred while fetching data.'
+              <span>{{ props.errorMessage || 'An error occurred while fetching data.'
                 }}</span>
             </div>
           </td>
@@ -111,7 +111,7 @@ const hasData = computed(() => props.data && props.data.length > 0)
               <!-- Empty Slot Override -->
               <slot name="empty">
                 <Icon :name="globalIcons.emptyTable || 'heroicons:inbox'" size="2rem" />
-                <span style="margin-block-start: 0.5rem">No data available</span>
+                <span>No data available</span>
               </slot>
             </div>
           </td>

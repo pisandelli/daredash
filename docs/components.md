@@ -341,6 +341,124 @@ A small information balloon anchored to an element.
 </template>
 ```
 
+### 3.8 Menu (`<dd-menu>`)
+
+A versatile navigation component supporting vertical/horizontal orientations, collapsible sidebars, accordion and floating sub-menus, and sticky separators.
+
+```vue
+<template>
+  <dd-menu :items="menuItems" />
+</template>
+
+<script setup>
+const menuItems = [
+  { key: 'home', label: 'Home', icon: 'heroicons:home', action: { type: 'link', to: '/' } },
+  { key: 'settings', label: 'Settings', action: { type: 'action', handler: () => {} } },
+  { type: 'separator', label: 'Reports' },
+  {
+    key: 'reports',
+    label: 'Reports',
+    icon: 'heroicons:chart-bar',
+    action: { type: 'none' },
+    children: [
+      { key: 'monthly', label: 'Monthly', action: { type: 'link', to: '/reports/monthly' } },
+      { key: 'annual', label: 'Annual', action: { type: 'link', to: '/reports/annual' } }
+    ]
+  }
+]
+</script>
+```
+
+#### Collapsible Sidebar
+
+```vue
+<template>
+  <dd-menu
+    :items="menuItems"
+    collapsible
+    toggle-button
+    v-model:collapsed="isCollapsed"
+  />
+</template>
+```
+
+#### Props
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `MenuEntry[]` | Required | Array of menu items and separators. |
+| `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Menu orientation. |
+| `collapsible` | `Boolean` | `false` | Allows the menu to be collapsed. |
+| `collapsed` | `Boolean` | `false` | Controlled collapsed state (use `v-model:collapsed`). |
+| `toggleButton` | `Boolean` | `false` | Renders a built-in toggle button. |
+| `activeKey` | `String` | `undefined` | Overrides automatic active detection. |
+| `maxHeight` | `String` | `undefined` | Fixed height with overflow scroll (vertical only). |
+| `maxWidth` | `String` | `undefined` | Fixed width with overflow scroll (horizontal only). |
+
+#### Events
+
+| Event | Payload | Description |
+| :--- | :--- | :--- |
+| `update:collapsed` | `boolean` | Fired when collapsed state changes. |
+| `select` | `{ key: string, item: MenuItem }` | Fired when an action item is clicked. |
+
+#### Types
+
+```typescript
+type MenuItemActionType =
+  | { type: 'link'; to: string; target?: '_blank' | '_self' | '_parent' | '_top' }
+  | { type: 'action'; handler: () => void }
+  | { type: 'none' }
+
+interface MenuItem {
+  key: string
+  label: string
+  icon?: string
+  badge?: { label: string | number; color?: string }
+  disabled?: boolean
+  active?: boolean
+  float?: boolean
+  children?: MenuEntry[]
+  action: MenuItemActionType
+}
+
+interface MenuSeparator {
+  type: 'separator'
+  label?: string
+  icon?: string
+}
+
+type MenuEntry = MenuItem | MenuSeparator
+```
+
+### 3.9 Anchor (`<dd-anchor>`)
+
+A scroll-to-position component that creates navigation anchors with smooth scrolling.
+
+```vue
+<template>
+  <dd-anchor>
+    <dd-cluster>
+      <a href="#section-1">Section 1</a>
+      <a href="#section-2">Section 2</a>
+      <a href="#section-3">Section 3</a>
+    </dd-cluster>
+  </dd-anchor>
+</template>
+```
+
+#### Props
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `scroll-behavior` | `'smooth' \| 'auto'` | `'smooth'` | Scroll behavior when clicking anchors. |
+| `offset` | `Number` | `0` | Offset from the top of the viewport. |
+| `active-key` | `String` | `undefined` | Currently active anchor key. |
+
+#### Slots
+
+* `default`: The trigger links/buttons.
+
 ---
 
 ## 4. Feedback and Notifications

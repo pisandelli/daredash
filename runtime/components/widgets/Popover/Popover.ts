@@ -16,10 +16,28 @@ export default defineNuxtComponent({
   name: 'Popover',
   inheritAttrs: false,
   props: {
+    /**
+     * Title text displayed in the popover header.
+     */
     title: { type: String, default: undefined },
+    /**
+     * Trigger event to show the popover.
+     * @default 'hover'
+     */
     trigger: { type: String as PropType<PopoverTrigger>, default: 'hover' },
+    /**
+     * Position of the popover relative to the trigger element.
+     * @default 'top'
+     */
     placement: { type: String as PropType<PopoverPlacement>, default: 'top' },
+    /**
+     * Offset distance between trigger and popover.
+     * @default 8
+     */
     offset: { type: Number, default: 8 },
+    /**
+     * Callback fired when the popover closes.
+     */
     onClose: { type: Function as PropType<() => void>, default: undefined }
   },
   setup(props, { slots, attrs }) {

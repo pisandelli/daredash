@@ -108,3 +108,54 @@ Every data-driven or interactive component **MUST** visually handle:
 
 ## Iconography (Agnostic)
 The module is icon-agnostic. It provides defaults (usually `heroicons:`) but allows consumers to override any icon key via `appConfig.daredash.icons` using any `@nuxt/icon` compatible string.
+
+## Contributing
+
+### Creating a New Component
+
+1. **Choose the right directory**:
+   - `runtime/components/primitives/` - For simple, foundational components (Button, Badge, etc.)
+   - `runtime/components/widgets/` - For complex, stateful components (Modal, Table, etc.)
+
+2. **Create the component file**:
+   - Use `defineNuxtComponent` for all components
+   - Set `inheritAttrs: false` and use `useBaseComponent`
+
+3. **Create the CSS Module**:
+   - File: `runtime/assets/styles/components/{ComponentName}.module.css`
+   - Use `v('token.path')` for all token values
+   - Use logical properties (block-start, inline-start, etc.)
+
+4. **Register the component**:
+   - Add to `components.config.ts` for automatic registration
+
+5. **Create tokens** (if needed):
+   - File: `runtime/assets/styles/tokens/default-theme/components/{component}.json`
+
+### Running Tests
+
+```bash
+# Run all tests
+pnpm test
+
+# Run specific component tests
+pnpm test -- modules/daredash/test/components/primitives/Button.spec.ts
+```
+
+### Code Style Rules
+
+All contributors should follow the rules defined in `.agent/rules/code-style.md`:
+
+- Use `getPrefixName` for dynamic prefixing (never hardcode "dd-")
+- Use JSDoc for all props
+- Keep components under 300 lines
+- Use data attributes for styling variants
+- Follow the 5 States rule (Loading, Error, Empty, Ideal, Partial)
+
+### Before Submitting a PR
+
+1. Run tests: `pnpm test`
+2. Verify all props have JSDoc documentation
+3. Check that the component is under 300 lines
+4. Ensure CSS uses tokens via `v()` function
+5. Add unit tests for components with logic branching

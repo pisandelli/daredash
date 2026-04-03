@@ -15,8 +15,9 @@ interface PrefixOptions {
    * - `css-var`: Returns `var(--prefix-name)`. Default.
    * - `component`: Returns PascalCase name (e.g. `PrefixName`).
    * - `css-var-decl`: Returns the variable name declaration (e.g. `--prefix-name`).
+   * - `css-var-name`: Returns the variable name without dashes (e.g. `prefix-name`).
    */
-  type?: 'css-var' | 'component' | 'css-var-decl'
+  type?: 'css-var' | 'component' | 'css-var-decl' | 'css-var-name'
   /**
    * Optional fallback value for CSS variables.
    */
@@ -43,21 +44,22 @@ export default function getPrefixName(
   const prefix = options.prefix || config.public.daredash?.prefix || 'dd'
 
   if (options.type === 'component') {
-    // Convert prefix to TitleCase for components (e.g. dd -> Dd)
     const titlePrefix = prefix.charAt(0).toUpperCase() + prefix.slice(1)
-    // Ensure name is TitleCase
     const titleName = name.charAt(0).toUpperCase() + name.slice(1)
     return `${titlePrefix}${titleName}`
   }
 
-  const variable = `--${prefix}-${name}`
+  const variableName = `${prefix}-${name}`
+  const variable = `--${variableName}`
 
-  // If type is 'css-var-decl', return the variable name directly (e.g. --dd-color)
+  if (options.type === 'css-var-name') {
+    return variableName
+  }
+
   if (options.type === 'css-var-decl') {
     return variable
   }
 
-  // Default to css-var (wrapped in var())
   if (options.fallback) {
     return `var(${variable}, ${options.fallback})`
   }

@@ -35,6 +35,121 @@ export default defineNuxtConfig({
 
 For more details on setup, custom configurations, fonts, and global styles, see the [Installation Guide](./docs/installation.md).
 
+## Quick Examples
+
+### Basic Button
+
+```vue
+<template>
+  <dd-button>Click Me</dd-button>
+</template>
+```
+
+### Form Input
+
+```vue
+<template>
+  <dd-form-input
+    name="email"
+    label="Email Address"
+    type="email"
+    required
+  />
+</template>
+```
+
+### Layout with Sidebar
+
+```vue
+<template>
+  <dd-layout>
+    <dd-sidebar>
+      <dd-menu :items="menuItems" collapsible />
+    </dd-sidebar>
+    <dd-box>
+      <h1>Welcome</h1>
+      <p>Your content here.</p>
+    </dd-box>
+  </dd-layout>
+</template>
+```
+
+### Data Table
+
+```vue
+<template>
+  <dd-table :columns="columns" :data="rows" />
+</template>
+
+<script setup>
+const columns = [
+  { key: 'name', title: 'Name' },
+  { key: 'email', title: 'Email' },
+  { key: 'status', title: 'Status' }
+]
+const rows = [
+  { name: 'John Doe', email: 'john@example.com', status: 'Active' }
+]
+</script>
+```
+
+## Available Components
+
+### Primitives
+| Component | Description |
+| :--- | :--- |
+| `<dd-button>` | Button with variants, icons, and link support |
+| `<dd-card>` | Container with elevation/border |
+| `<dd-badge>` | Label/tag component |
+| `<dd-avatar>` | User image or initials |
+| `<dd-alert>` | Alert message box |
+| `<dd-progress>` | Linear progress bar |
+| `<dd-loading>` | Loading spinner |
+| `<dd-breadcrumb>` | Breadcrumb navigation |
+| `<dd-video-player>` | Video.js wrapper |
+
+### Layout
+| Component | Description |
+| :--- | :--- |
+| `<dd-box>` | Generic container |
+| `<dd-center>` | Content centering |
+| `<dd-cluster>` | Wrapping row with gap |
+| `<dd-grid>` | CSS Grid layout |
+| `<dd-stack>` | Vertical stacking |
+| `<dd-sidebar>` | Sidebar pattern |
+| `<dd-layout>` | Page layout wrapper |
+
+### Forms
+| Component | Description |
+| :--- | :--- |
+| `<dd-input>` | Text input |
+| `<dd-textarea>` | Multiline input |
+| `<dd-select>` | Dropdown select |
+| `<dd-checkbox>` | Checkbox |
+| `<dd-radio>` | Radio button |
+| `<dd-toggle>` | Switch toggle |
+| `<dd-input-search>` | Search-optimized input |
+| `<dd-form-*>` | VeeValidate integrated forms |
+
+### Widgets
+| Component | Description |
+| :--- | :--- |
+| `<dd-accordion>` | Expandable panels |
+| `<dd-modal>` | Dialog modal |
+| `<dd-drawer>` | Slide-out panel |
+| `<dd-tabs>` | Tab navigation |
+| `<dd-table>` | Data table |
+| `<dd-pagination>` | Page controls |
+| `<dd-popover>` | Floating tooltip |
+| `<dd-menu>` | Navigation menu |
+| `<dd-anchor>` | Scroll-to anchors |
+
+### Feedback
+| Component | Description |
+| :--- | :--- |
+| `<dd-toaster>` | Global notifications |
+| `<dd-toast>` | Individual toast |
+
 ## Features
 
 - **Design Token Management**: Centralize your design system's values (colors, fonts, spacing, etc.) in structured JSON files.
