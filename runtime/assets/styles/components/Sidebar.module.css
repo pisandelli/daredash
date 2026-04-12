@@ -10,6 +10,11 @@
   flex-wrap: wrap;
   gap: var(--local-gap);
 
+  &[data-fill] {
+    flex: 1;
+    min-block-size: 0;
+  }
+
   &[data-nogap] {
     --local-gap: 0;
   }

@@ -10,4 +10,9 @@
   & > [data-body] {
     flex: 1;
   }
+
+  &:has(> [data-body] > [data-fill]) > [data-body] {
+    display: flex;
+    min-block-size: 0;
+  }
 }

@@ -44,6 +44,7 @@ export const customAttributes = new Set([
   'wide',
   'nowrap',
   'stretch',
+  'fill',
   // from stack.module.css
   'recursive',
   'compact',

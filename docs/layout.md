@@ -132,6 +132,27 @@ Arranges elements horizontally, placing a sidebar alongside a main content area.
 </template>
 ```
 
+Use `fill` when the sidebar should occupy the available vertical space inside a parent layout:
+
+```vue
+<template>
+  <dd-layout>
+    <header>Header</header>
+
+    <div data-body>
+      <dd-sidebar fill>
+        <aside>Sidebar Nav</aside>
+        <main>Main Content</main>
+      </dd-sidebar>
+    </div>
+
+    <footer>Footer</footer>
+  </dd-layout>
+</template>
+```
+
+In this case, `dd-layout` detects `fill` and automatically turns `data-body` into a flex container so the sidebar can stretch without fixed heights.
+
 ### Props/Attrs
 
 | Property | Type | Description |
@@ -139,6 +160,7 @@ Arranges elements horizontally, placing a sidebar alongside a main content area.
 | `right` | `Boolean` | Reverses the order, placing the sidebar on the right instead of the left. |
 | `start` | `Boolean` | Aligns items to the top (flex-start). |
 | `end` | `Boolean` | Aligns items to the bottom (flex-end). |
+| `fill` | `Boolean` | Makes the sidebar grow to fill the available vertical space. Inside `dd-layout`, this automatically promotes `data-body` to a flex container. |
 | `nogap` | `Boolean` | Removes the gap between the sidebar and the main content. |
 
 ## Layout (`<dd-layout>`)
