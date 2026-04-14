@@ -90,51 +90,5 @@
         }
       }
     }
-  },
-  "radar": {
-    "$description": "Daredevil Accessibility Theme (High Contrast)",
-    "color": {
-      "text": {
-        "default": {
-          "$value": "{color.white}"
-        },
-        "muted": {
-          "$value": "{color.crimson.100}"
-        },
-        "inverse": {
-          "$value": "{color.black}"
-        }
-      },
-      "bg": {
-        "canvas": {
-          "$value": "{color.crimson.950}"
-        },
-        "surface": {
-          "$value": "{color.black}"
-        },
-        "surface-hover": {
-          "$value": "{color.crimson.900}"
-        }
-      },
-      "border": {
-        "default": {
-          "$value": "{color.crimson.700}"
-        },
-        "active": {
-          "$value": "{color.crimson.400}"
-        }
-      },
-      "primary": {
-        "default": {
-          "$value": "{color.crimson.500}"
-        },
-        "fg": {
-          "$value": "{color.white}"
-        },
-        "hover": {
-          "$value": "{color.crimson.400}"
-        }
-      }
-    }
   }
 }

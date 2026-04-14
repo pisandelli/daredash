@@ -81,7 +81,79 @@
       },
       "$value": "{color.secondary.600}"
     },
-    "crimson": {
+    "accent": {
+      "50": {
+        "$value": "#fff0fc"
+      },
+      "100": {
+        "$value": "#ffe0f8"
+      },
+      "200": {
+        "$value": "#ffc2f1"
+      },
+      "300": {
+        "$value": "#ff94e7"
+      },
+      "400": {
+        "$value": "#ff6fe1"
+      },
+      "500": {
+        "$value": "#ff4dde"
+      },
+      "600": {
+        "$value": "#ed26c1"
+      },
+      "700": {
+        "$value": "#c8149d"
+      },
+      "800": {
+        "$value": "#a3177e"
+      },
+      "900": {
+        "$value": "#861967"
+      },
+      "950": {
+        "$value": "#5a083f"
+      },
+      "$value": "{color.accent.500}"
+    },
+    "success": {
+      "50": {
+        "$value": "#ecfdf3"
+      },
+      "100": {
+        "$value": "#d1fae0"
+      },
+      "200": {
+        "$value": "#a7f3c7"
+      },
+      "300": {
+        "$value": "#6ee7a8"
+      },
+      "400": {
+        "$value": "#3fd483"
+      },
+      "500": {
+        "$value": "#22c55e"
+      },
+      "600": {
+        "$value": "#16a34a"
+      },
+      "700": {
+        "$value": "#15803d"
+      },
+      "800": {
+        "$value": "#166534"
+      },
+      "900": {
+        "$value": "#14532d"
+      },
+      "950": {
+        "$value": "#052e16"
+      },
+      "$value": "{color.success.600}"
+    },
+    "danger": {
       "50": {
         "$value": "#fef2f2"
       },
@@ -115,27 +187,115 @@
       "950": {
         "$value": "#450a0a"
       },
-      "$value": "{color.crimson.500}"
-    },
-    "accent": {
-      "500": {
-        "$value": "#fdcb6e"
-      }
-    },
-    "success": {
-      "$value": "#22c55e"
-    },
-    "danger": {
-      "$value": "{color.crimson}"
+      "$value": "{color.danger.600}"
     },
     "error": {
-      "$value": "{color.danger}"
+      "50": {
+        "$value": "{color.danger.50}"
+      },
+      "100": {
+        "$value": "{color.danger.100}"
+      },
+      "200": {
+        "$value": "{color.danger.200}"
+      },
+      "300": {
+        "$value": "{color.danger.300}"
+      },
+      "400": {
+        "$value": "{color.danger.400}"
+      },
+      "500": {
+        "$value": "{color.danger.500}"
+      },
+      "600": {
+        "$value": "{color.danger.600}"
+      },
+      "700": {
+        "$value": "{color.danger.700}"
+      },
+      "800": {
+        "$value": "{color.danger.800}"
+      },
+      "900": {
+        "$value": "{color.danger.900}"
+      },
+      "950": {
+        "$value": "{color.danger.950}"
+      },
+      "$value": "{color.error.600}"
     },
     "info": {
-      "$value": "#3b82f6"
+      "50": {
+        "$value": "#eff6ff"
+      },
+      "100": {
+        "$value": "#dbeafe"
+      },
+      "200": {
+        "$value": "#bfdbfe"
+      },
+      "300": {
+        "$value": "#93c5fd"
+      },
+      "400": {
+        "$value": "#60a5fa"
+      },
+      "500": {
+        "$value": "#3b82f6"
+      },
+      "600": {
+        "$value": "#2563eb"
+      },
+      "700": {
+        "$value": "#1d4ed8"
+      },
+      "800": {
+        "$value": "#1e40af"
+      },
+      "900": {
+        "$value": "#1e3a8a"
+      },
+      "950": {
+        "$value": "#172554"
+      },
+      "$value": "{color.info.600}"
     },
     "warning": {
-      "$value": "#eab308"
+      "50": {
+        "$value": "#fffbeb"
+      },
+      "100": {
+        "$value": "#fef3c7"
+      },
+      "200": {
+        "$value": "#fde68a"
+      },
+      "300": {
+        "$value": "#fcd34d"
+      },
+      "400": {
+        "$value": "#fbbf24"
+      },
+      "500": {
+        "$value": "#eab308"
+      },
+      "600": {
+        "$value": "#ca8a04"
+      },
+      "700": {
+        "$value": "#a16207"
+      },
+      "800": {
+        "$value": "#854d0e"
+      },
+      "900": {
+        "$value": "#713f12"
+      },
+      "950": {
+        "$value": "#422006"
+      },
+      "$value": "{color.warning.600}"
     },
     "light-gray": {
       "$value": "#dbe1e6"

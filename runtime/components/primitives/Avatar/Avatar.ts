@@ -42,15 +42,15 @@ export default defineNuxtComponent({
 
     // Palette colors for random backgrounds (lighter pastel shades)
     const palette = [
-      '#fee2e2', // crimson-100
-      '#ffedd5', // orange-100 (approx)
-      '#fef9c3', // warning-100 (approx / yellow)
-      '#dcfce7', // success-100 (green)
-      '#cffafe', // cyan-100
-      '#dbeafe', // primary-100 (blue)
-      '#ede9fe', // violet-100
-      '#fae8ff', // fuchsia-100
-      '#ffe4e6' // rose-100
+      '#fee2e2',
+      '#ffedd5',
+      '#fef9c3',
+      '#dcfce7',
+      '#cffafe',
+      '#dbeafe',
+      '#ede9fe',
+      '#fae8ff',
+      '#ffe4e6'
     ]
 
     const backgroundColor = computed(() => {

@@ -73,7 +73,7 @@
   "error-state": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.crimson.50}"
+      "$value": "{color.danger.50}"
     },
     "color": {
       "$value": "{color.danger}"

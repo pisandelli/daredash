@@ -1,32 +1,16 @@
-import { ref, watch, readonly, type Ref } from 'vue'
+import { ref, computed, readonly, type Ref } from 'vue'
 import { useRuntimeConfig } from '#app'
+import { tokenValue } from '../studio/tokens'
+import type { StudioTabDefinition, StudioTokenGroup } from '../studio/types'
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-export type TokenInputType = 'color' | 'text' | 'select'
-
-export interface TokenField {
-  /** Dot-notation path in the tokens JSON (e.g. `color.primary.600`) */
-  path: string
-  /** Human-readable label */
-  label: string
-  /** Input control type */
-  type: TokenInputType
-  /** Options list — only used when type === 'select' */
-  options?: string[]
-  /** Default value shown in the form */
-  defaultValue: string
-}
-
-export interface TokenGroup {
-  id: string
-  label: string
-  fields: TokenField[]
-}
-
 export type TokenValues = Record<string, string>
+export type TokenEditorMode = 'literal' | 'reference'
+
+type TokenModeValues = Record<string, TokenEditorMode>
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -65,134 +49,102 @@ function setNestedValue(obj: Record<string, unknown>, path: string, value: strin
 }
 
 // ---------------------------------------------------------------------------
-// Token group definitions
-// ---------------------------------------------------------------------------
-
-const BASE_TOKENS: TokenField[] = [
-  { path: 'color.primary.600', label: 'Primary (600)', type: 'color', defaultValue: '#0984e3' },
-  { path: 'color.primary.500', label: 'Primary (500)', type: 'color', defaultValue: '#34a7ff' },
-  { path: 'color.success',     label: 'Success',       type: 'color', defaultValue: '#22c55e' },
-  { path: 'color.warning',     label: 'Warning',       type: 'color', defaultValue: '#eab308' },
-  { path: 'color.info',        label: 'Info',          type: 'color', defaultValue: '#3b82f6' },
-  { path: 'color.gray',        label: 'Gray',          type: 'color', defaultValue: '#9ca3af' },
-  { path: 'color.light-gray',  label: 'Light Gray',    type: 'color', defaultValue: '#dbe1e6' },
-  { path: 'color.darker-gray', label: 'Darker Gray',   type: 'color', defaultValue: '#111827' },
-  { path: 'border-radius.base', label: 'Radius Base',  type: 'text',  defaultValue: '0.25rem' },
-  { path: 'border-radius.md',   label: 'Radius MD',    type: 'text',  defaultValue: '0.375rem' },
-  { path: 'border-radius.lg',   label: 'Radius LG',    type: 'text',  defaultValue: '0.5rem' },
-  { path: 'border-radius.full', label: 'Radius Full',  type: 'text',  defaultValue: '9999px' },
-  { path: 'font-size.xs', label: 'Font Size XS', type: 'text', defaultValue: 'clamp(0.51rem, 0.46rem + 0.21vw, 0.64rem)' },
-  { path: 'font-size.sm', label: 'Font Size SM', type: 'text', defaultValue: 'clamp(0.71rem, 0.67rem + 0.19vw, 0.89rem)' },
-  { path: 'font-size.md', label: 'Font Size MD', type: 'text', defaultValue: 'clamp(1rem, 0.94rem + 0.26vw, 1.25rem)' },
-]
-
-const BUTTON_TOKENS: TokenField[] = [
-  { path: 'button.base-color',            label: 'Base Color',          type: 'color',  defaultValue: '#0984e3' },
-  { path: 'button.border-radius',          label: 'Border Radius',       type: 'text',   defaultValue: '0.25rem' },
-  { path: 'button.text-transform',         label: 'Text Transform',      type: 'select', options: ['uppercase', 'none', 'capitalize', 'lowercase'], defaultValue: 'uppercase' },
-  { path: 'button.sizes.regular.height',   label: 'Height (regular)',     type: 'text',   defaultValue: '2.5rem' },
-  { path: 'button.sizes.regular.padding',  label: 'Padding X (regular)', type: 'text',   defaultValue: '1rem' },
-  { path: 'button.sizes.small.height',     label: 'Height (small)',       type: 'text',   defaultValue: '2rem' },
-  { path: 'button.sizes.large.height',     label: 'Height (large)',       type: 'text',   defaultValue: '3rem' },
-  { path: 'button.primary.base-color',     label: 'Primary Color',       type: 'color',  defaultValue: '#0984e3' },
-  { path: 'button.success.base-color',     label: 'Success Color',       type: 'color',  defaultValue: '#22c55e' },
-  { path: 'button.warning.base-color',     label: 'Warning Color',       type: 'color',  defaultValue: '#eab308' },
-  { path: 'button.danger.base-color',      label: 'Danger Color',        type: 'color',  defaultValue: '#ef4444' },
-  { path: 'button.info.base-color',        label: 'Info Color',          type: 'color',  defaultValue: '#3b82f6' },
-]
-
-const BADGE_TOKENS: TokenField[] = [
-  { path: 'badge.base-color',         label: 'Base Color',      type: 'color',  defaultValue: '#9ca3af' },
-  { path: 'badge.border-radius',      label: 'Border Radius',   type: 'text',   defaultValue: '0.375rem' },
-  { path: 'badge.font-size',          label: 'Font Size',       type: 'text',   defaultValue: 'clamp(0.71rem, 0.67rem + 0.19vw, 0.89rem)' },
-  { path: 'badge.font-weight',        label: 'Font Weight',     type: 'text',   defaultValue: '300' },
-  { path: 'badge.text-transform',     label: 'Text Transform',  type: 'select', options: ['none', 'uppercase', 'capitalize', 'lowercase'], defaultValue: 'none' },
-  { path: 'badge.padding.inline',     label: 'Padding Inline',  type: 'text',   defaultValue: 'clamp(0.71rem, 0.67rem + 0.19vw, 0.89rem)' },
-  { path: 'badge.padding.block',      label: 'Padding Block',   type: 'text',   defaultValue: '0.25rem' },
-  { path: 'badge.primary.base-color', label: 'Primary Color',   type: 'color',  defaultValue: '#0984e3' },
-  { path: 'badge.success.base-color', label: 'Success Color',   type: 'color',  defaultValue: '#22c55e' },
-  { path: 'badge.warning.base-color', label: 'Warning Color',   type: 'color',  defaultValue: '#eab308' },
-  { path: 'badge.danger.base-color',  label: 'Danger Color',    type: 'color',  defaultValue: '#ef4444' },
-  { path: 'badge.info.base-color',    label: 'Info Color',      type: 'color',  defaultValue: '#3b82f6' },
-]
-
-export const TOKEN_GROUPS: TokenGroup[] = [
-  { id: 'base',   label: 'Base',   fields: BASE_TOKENS   },
-  { id: 'button', label: 'Button', fields: BUTTON_TOKENS },
-  { id: 'badge',  label: 'Badge',  fields: BADGE_TOKENS  },
-]
-
-// ---------------------------------------------------------------------------
 // Composable
 // ---------------------------------------------------------------------------
 
-export function useThemeEditor() {
+export function useThemeEditor(tabs: StudioTabDefinition[]) {
   const config = useRuntimeConfig()
   const prefix = (config.public.daredash as { prefix: string })?.prefix ?? 'dd'
 
   /** All fields from every group, keyed by token path */
-  const allFields = TOKEN_GROUPS.flatMap((g) => g.fields)
+  const allFields = tabs.flatMap((tab) => tab.fields)
 
   /** Lookup map for O(1) field retrieval by path */
   const fieldsMap = Object.fromEntries(allFields.map((f) => [f.path, f]))
+  const groupMap = new Map<string, StudioTokenGroup>(
+    tabs.flatMap((tab) => tab.fields.map((field) => [field.path, tab.tokenGroup]))
+  )
 
-  /** Reactive map of { tokenPath → currentValue } */
-  const values: Ref<TokenValues> = ref(
+  /** Reactive map of { tokenPath → currentLiteralValue } */
+  const literalValues: Ref<TokenValues> = ref(
     Object.fromEntries(allFields.map((f) => [f.path, f.defaultValue]))
   )
+  const references: Ref<TokenValues> = ref(
+    Object.fromEntries(allFields.map((f) => [f.path, f.referencePath ?? '']))
+  )
+  const modes: Ref<TokenModeValues> = ref(
+    Object.fromEntries(
+      allFields.map((f) => [f.path, f.referencePath ? 'reference' : 'literal'])
+    ) as TokenModeValues
+  )
+
+  function normalizeReferencePath(path: string, value: string): string {
+    const normalized = value.trim().replace(/^\{|\}$/g, '')
+    if (!normalized) return ''
+
+    if (path.startsWith('color.') && !normalized.startsWith('color.')) {
+      return `color.${normalized}`
+    }
+
+    return normalized
+  }
+
+  function resolveValue(path: string, visited = new Set<string>()): string {
+    if (visited.has(path)) {
+      return literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+    }
+
+    const mode = modes.value[path] ?? 'literal'
+    const literalValue = literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+
+    if (mode !== 'reference') return literalValue
+
+    const referencePath = normalizeReferencePath(path, references.value[path] ?? '')
+    if (!referencePath) return literalValue
+
+    if (referencePath in fieldsMap) {
+      visited.add(path)
+      return resolveValue(referencePath, visited)
+    }
+
+    return tokenValue(referencePath, literalValue)
+  }
+
+  const values = computed<TokenValues>(() =>
+    Object.fromEntries(allFields.map((field) => [field.path, resolveValue(field.path)]))
+  )
+
+  function rawValueForPath(path: string): string {
+    const mode = modes.value[path] ?? 'literal'
+    if (mode === 'reference') {
+      const referencePath = normalizeReferencePath(path, references.value[path] ?? '')
+      if (referencePath) return `{${referencePath}}`
+    }
+
+    return literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+  }
+
+  function defaultRawValue(path: string): string {
+    const field = fieldsMap[path]
+    return field?.rawDefaultValue ?? field?.defaultValue ?? ''
+  }
+
+  function isFieldChanged(path: string): boolean {
+    return rawValueForPath(path) !== defaultRawValue(path)
+  }
 
   /** Computed flag — true when any value differs from its default */
-  const hasChanges = ref(false)
+  const hasChanges = computed(() => allFields.some((f) => isFieldChanged(f.path)))
 
-  // -------------------------------------------------------------------------
-  // DOM Injection
-  // -------------------------------------------------------------------------
-
-  const STYLE_ID = 'dd-theme-override'
-
-  function buildCss(vals: TokenValues): string {
-    const overrides = Object.entries(vals)
-      .filter(([path, val]) => {
-        const field = fieldsMap[path]
-        return field && val !== field.defaultValue
-      })
-      .map(([path, val]) => `  ${pathToCssVar(path, prefix)}: ${val};`)
-      .join('\n')
-
-    if (!overrides) return ''
-    return `:root {\n${overrides}\n}`
-  }
-
-  function applyOverrides(vals: TokenValues): void {
-    if (typeof document === 'undefined') return
-
-    let el = document.getElementById(STYLE_ID) as HTMLStyleElement | null
-
-    const css = buildCss(vals)
-
-    if (!css) {
-      el?.remove()
-      return
+  const previewStyle = computed(() => {
+    const style: Record<string, string> = {}
+    for (const [path, val] of Object.entries(values.value)) {
+      const field = fieldsMap[path]
+      if (!field || !isFieldChanged(path)) continue
+      style[pathToCssVar(path, prefix)] = val
     }
-
-    if (!el) {
-      el = document.createElement('style')
-      el.id = STYLE_ID
-      document.head.appendChild(el)
-    }
-
-    el.textContent = css
-  }
-
-  // Watch and apply on every change
-  watch(
-    values,
-    (vals) => {
-      applyOverrides(vals)
-      hasChanges.value = allFields.some((f) => vals[f.path] !== f.defaultValue)
-    },
-    { deep: true }
-  )
+    return style
+  })
 
   // -------------------------------------------------------------------------
   // Export — generates tokens JSON following the default-theme.tokens.json model
@@ -208,20 +160,19 @@ export function useThemeEditor() {
       $description: 'Custom theme overrides — generated by DareDash Studio',
     }
 
-    for (const [path, val] of Object.entries(values.value)) {
+    for (const path of Object.keys(fieldsMap)) {
       const field = fieldsMap[path]
-      if (!field || val === field.defaultValue) continue
+      if (!field || !isFieldChanged(path)) continue
 
-      // Determine the section: base fields live at root level of the JSON,
-      // component fields (button.*, badge.*) belong to `components`.
-      const isComponent = path.startsWith('button.') || path.startsWith('badge.')
+      const group = groupMap.get(path)
+      const rawValue = rawValueForPath(path)
 
-      if (isComponent) {
+      if (group === 'components') {
         if (!overrides['components']) overrides['components'] = {}
-        setNestedValue(overrides['components'] as Record<string, unknown>, path, val)
+        setNestedValue(overrides['components'] as Record<string, unknown>, path, rawValue)
       } else {
         if (!overrides['primitives']) overrides['primitives'] = {}
-        setNestedValue(overrides['primitives'] as Record<string, unknown>, path, val)
+        setNestedValue(overrides['primitives'] as Record<string, unknown>, path, rawValue)
       }
     }
 
@@ -245,18 +196,37 @@ export function useThemeEditor() {
 
   function reset(): void {
     for (const field of allFields) {
-      values.value[field.path] = field.defaultValue
+      literalValues.value[field.path] = field.defaultValue
+      references.value[field.path] = field.referencePath ?? ''
+      modes.value[field.path] = field.referencePath ? 'reference' : 'literal'
     }
-    document.getElementById(STYLE_ID)?.remove()
-    hasChanges.value = false
+  }
+
+  function setLiteralValue(path: string, value: string): void {
+    literalValues.value[path] = value
+  }
+
+  function setReferencePath(path: string, value: string): void {
+    references.value[path] = normalizeReferencePath(path, value)
+  }
+
+  function setMode(path: string, mode: TokenEditorMode): void {
+    modes.value[path] = mode
   }
 
   return {
     values,
+    literalValues,
+    references,
+    modes,
     hasChanges: readonly(hasChanges),
-    groups: TOKEN_GROUPS,
+    previewStyle,
     reset,
     downloadTokens,
     exportTokensJson,
+    isFieldChanged,
+    setLiteralValue,
+    setReferencePath,
+    setMode
   }
 }
