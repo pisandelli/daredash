@@ -1,16 +1,37 @@
 import { defineNuxtPlugin } from '#app'
 import { modLabel } from './utils'
 import typedTokens from '#build/design-tokens.json'
+import type { TypedTokenValue } from './types'
 
-export default defineNuxtPlugin(async (nuxtApp) => {
-  if (!typedTokens || !Array.isArray(typedTokens) || typedTokens.length === 0) {
+interface TypedToken {
+  name: string
+  value: TypedTokenValue
+}
+
+interface CssPropertyRegistry {
+  registerProperty?: (property: {
+    name: string
+    syntax: string
+    inherits: boolean
+    initialValue: string
+  }) => void
+}
+
+export default defineNuxtPlugin(() => {
+  const tokens = Array.isArray(typedTokens)
+    ? (typedTokens as TypedToken[])
+    : []
+
+  if (tokens.length === 0) {
     return
   }
 
-  if ('CSS' in window && 'registerProperty' in CSS) {
-    for (const token of typedTokens) {
+  const css = window.CSS as CssPropertyRegistry | undefined
+
+  if (typeof css?.registerProperty === 'function') {
+    for (const token of tokens) {
       try {
-        CSS.registerProperty({
+        css.registerProperty({
           name: token.name,
           syntax: token.value.syntax.replace(/'/g, ''),
           inherits: token.value.inherits ?? false,
