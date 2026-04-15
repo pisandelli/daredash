@@ -1,21 +1,32 @@
 import type { StudioTabDefinition } from './types'
 import BasePreview from './previews/BasePreview.vue'
+import TypographyPreview from './previews/TypographyPreview.vue'
 import ButtonPreview from './previews/ButtonPreview.vue'
 import BadgePreview from './previews/BadgePreview.vue'
 import AlertPreview from './previews/AlertPreview.vue'
-import { primitiveStudioFields, tokenValue } from './tokens'
+import { primitiveStudioFields, tokenValue, typographyStudioFields } from './tokens'
 
 export const STUDIO_TABS: StudioTabDefinition[] = [
   {
     id: 'base',
     label: 'Base',
+    navigationKind: 'foundation',
     tokenGroup: 'primitives',
     preview: BasePreview,
     fields: primitiveStudioFields()
   },
   {
+    id: 'typography',
+    label: 'Typography',
+    navigationKind: 'foundation',
+    tokenGroup: 'primitives',
+    preview: TypographyPreview,
+    fields: typographyStudioFields()
+  },
+  {
     id: 'button',
     label: 'Button',
+    navigationKind: 'component',
     tokenGroup: 'components',
     preview: ButtonPreview,
     fields: [
@@ -151,6 +162,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   {
     id: 'badge',
     label: 'Badge',
+    navigationKind: 'component',
     tokenGroup: 'components',
     preview: BadgePreview,
     fields: [
@@ -258,6 +270,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   {
     id: 'alert',
     label: 'Alert',
+    navigationKind: 'component',
     tokenGroup: 'components',
     preview: AlertPreview,
     fields: [

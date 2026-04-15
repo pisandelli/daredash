@@ -37,6 +37,19 @@ describe('DareDash Studio registry', () => {
     expect(baseTab!.fields.some((field) => field.path === 'max-width')).toBe(true)
   })
 
+  it('keeps typography primitives in the typography foundation tab', () => {
+    const typographyTab = STUDIO_TABS.find((tab) => tab.id === 'typography')
+
+    expect(typographyTab).toBeDefined()
+    expect(typographyTab!.navigationKind).toBe('foundation')
+    expect(typographyTab!.fields.some((field) => field.path === 'font.base')).toBe(true)
+    expect(typographyTab!.fields.some((field) => field.path === 'font-size.md')).toBe(true)
+    expect(typographyTab!.fields.some((field) => field.path === 'font-weight.bold')).toBe(true)
+    expect(typographyTab!.fields.some((field) => field.path === 'line-height.normal')).toBe(true)
+    expect(typographyTab!.fields.some((field) => field.path === 'letter-spacing.wide')).toBe(true)
+    expect(typographyTab!.fields.some((field) => field.path === 'space.md')).toBe(false)
+  })
+
   it('preserves primitive alias metadata for studio fields', () => {
     const baseTab = STUDIO_TABS.find((tab) => tab.id === 'base')
     const errorAlias = baseTab?.fields.find((field) => field.path === 'color.error.500')

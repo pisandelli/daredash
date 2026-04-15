@@ -23,6 +23,7 @@ describe('useThemeEditor', () => {
     {
       id: 'base',
       label: 'Base',
+      navigationKind: 'foundation',
       tokenGroup: 'primitives',
       preview: {} as any,
       fields: [
@@ -51,6 +52,7 @@ describe('useThemeEditor', () => {
     {
       id: 'button',
       label: 'Button',
+      navigationKind: 'component',
       tokenGroup: 'components',
       preview: {} as any,
       fields: [

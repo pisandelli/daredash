@@ -93,6 +93,14 @@ const PRIMITIVE_SECTION_META: Record<string, string> = {
   'max-width': 'Max Width'
 }
 
+const TYPOGRAPHY_SECTION_META: Record<string, string> = {
+  font: 'Font Family',
+  'font-size': 'Font Size',
+  'font-weight': 'Font Weight',
+  'line-height': 'Line Height',
+  'letter-spacing': 'Letter Spacing'
+}
+
 const TYPOGRAPHY_SECTIONS = new Set([
   'font',
   'font-size',
@@ -169,6 +177,29 @@ export function primitiveStudioFields(): StudioFieldDefinition[] {
         rawDefaultValue: rawTokenValue(path),
         referencePath: tokenReference(path),
         group: PRIMITIVE_SECTION_META[section] ?? toTitleCase(section)
+      }
+    })
+}
+
+export function typographyStudioFields(): StudioFieldDefinition[] {
+  return collectLeafPaths(primitives)
+    .filter((path) => {
+      const [section] = path.split('.')
+      return TYPOGRAPHY_SECTIONS.has(section)
+    })
+    .map((path) => {
+      const [section] = path.split('.')
+      return {
+        path,
+        label: labelForPrimitivePath(path),
+        type: 'text',
+        defaultValue: tokenValue(path),
+        rawDefaultValue: rawTokenValue(path),
+        referencePath: tokenReference(path),
+        description: section === 'font'
+          ? 'Font family changes only render when the browser already has that font available or loaded by the app.'
+          : undefined,
+        group: TYPOGRAPHY_SECTION_META[section] ?? toTitleCase(section)
       }
     })
 }

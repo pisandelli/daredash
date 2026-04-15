@@ -9,9 +9,30 @@ definePageMeta({ layout: false })
 
 const tabs = STUDIO_TABS
 const activeTabId = ref(tabs[0]?.id ?? 'base')
+const componentSearch = ref('')
+const isComponentPickerOpen = ref(false)
 
 const activeTab = computed<StudioTabDefinition>(() => {
   return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0]!
+})
+
+const foundationTabs = computed(() =>
+  tabs.filter((tab) => tab.navigationKind === 'foundation')
+)
+
+const componentTabs = computed(() =>
+  tabs.filter((tab) => tab.navigationKind === 'component')
+)
+
+const activeComponentTab = computed(() => {
+  if (activeTab.value.navigationKind === 'component') return activeTab.value
+  return componentTabs.value[0] ?? null
+})
+
+const filteredComponentTabs = computed(() => {
+  const query = componentSearch.value.trim().toLowerCase()
+  if (!query) return componentTabs.value
+  return componentTabs.value.filter((tab) => tab.label.toLowerCase().includes(query))
 })
 
 const {
@@ -41,6 +62,10 @@ const tabChangeCount = (tab: StudioTabDefinition) =>
     return isFieldChanged(field.path) ? count + 1 : count
   }, 0)
 
+const componentChangeCount = computed(() =>
+  componentTabs.value.reduce((count, tab) => count + tabChangeCount(tab), 0)
+)
+
 const groupedFields = computed(() => {
   const map = new Map<string, StudioFieldDefinition[]>()
   for (const field of activeTab.value.fields) {
@@ -56,6 +81,71 @@ const groupedFields = computed(() => {
 
 function eventValue(event: Event): string {
   return (event.target as HTMLInputElement | HTMLSelectElement | null)?.value ?? ''
+}
+
+function pathHasAny(path: string, fragments: string[]): boolean {
+  return fragments.some((fragment) => path.includes(fragment))
+}
+
+function referencePlaceholder(field: StudioFieldDefinition): string {
+  if (field.referencePath) return field.referencePath
+
+  const pathParts = field.path.split('.')
+  const root = pathParts[0] ?? ''
+  const semanticColor = pathParts.find((part) =>
+    ['primary', 'secondary', 'accent', 'success', 'danger', 'error', 'warning', 'info'].includes(part)
+  )
+
+  if (field.type === 'color' || field.path.includes('color')) {
+    return semanticColor ? `color.${semanticColor}.500` : 'color.primary.500'
+  }
+
+  switch (root) {
+    case 'font':
+      return 'font.base'
+    case 'font-size':
+      return 'font-size.md'
+    case 'font-weight':
+      return 'font-weight.bold'
+    case 'line-height':
+      return 'line-height.normal'
+    case 'letter-spacing':
+      return 'letter-spacing.wide'
+    case 'border-radius':
+      return 'border-radius.md'
+    case 'border-width':
+      return 'border-width.sm'
+    case 'transition':
+      return 'transition.base'
+    case 'shadow':
+      return 'shadow.md'
+    case 'space':
+      return 'space.md'
+    default:
+      break
+  }
+
+  if (pathHasAny(field.path, ['font-size', 'icon-size'])) return 'font-size.md'
+  if (pathHasAny(field.path, ['font-weight'])) return 'font-weight.bold'
+  if (pathHasAny(field.path, ['line-height'])) return 'line-height.normal'
+  if (pathHasAny(field.path, ['letter-spacing'])) return 'letter-spacing.wide'
+  if (pathHasAny(field.path, ['border-radius'])) return 'border-radius.md'
+  if (pathHasAny(field.path, ['border-width'])) return 'border-width.sm'
+  if (pathHasAny(field.path, ['transition'])) return 'transition.base'
+  if (pathHasAny(field.path, ['shadow'])) return 'shadow.md'
+  if (pathHasAny(field.path, ['padding', 'gap', 'height', 'size'])) return 'space.md'
+
+  return 'token.path'
+}
+
+function selectTab(tab: StudioTabDefinition): void {
+  activeTabId.value = tab.id
+  isComponentPickerOpen.value = false
+}
+
+function toggleComponentPicker(): void {
+  isComponentPickerOpen.value = !isComponentPickerOpen.value
+  if (isComponentPickerOpen.value) componentSearch.value = ''
 }
 
 async function focusField(path: string) {
@@ -121,20 +211,79 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
       <aside class="dde-panel dde-panel-form">
         <nav class="dde-tabs" role="tablist" aria-label="Token groups">
           <button
-            v-for="tab in tabs"
+            v-for="tab in foundationTabs"
             :key="tab.id"
             role="tab"
             class="dde-tab"
             :class="{ 'dde-tab-active': activeTabId === tab.id }"
             :aria-selected="activeTabId === tab.id"
             type="button"
-            @click="activeTabId = tab.id"
+            @click="selectTab(tab)"
           >
             <span>{{ tab.label }}</span>
             <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
               {{ tabChangeCount(tab) }}
             </span>
           </button>
+          <div class="dde-component-picker">
+            <button
+              type="button"
+              class="dde-tab dde-component-trigger"
+              :class="{ 'dde-tab-active': activeTab.navigationKind === 'component' }"
+              :aria-expanded="isComponentPickerOpen"
+              aria-haspopup="listbox"
+              @click="toggleComponentPicker"
+            >
+              <span>Components</span>
+              <span v-if="componentChangeCount" class="dde-tab-badge">
+                {{ componentChangeCount }}
+              </span>
+              <span class="dde-component-trigger-icon">⌄</span>
+            </button>
+
+            <div
+              v-if="isComponentPickerOpen"
+              class="dde-component-menu"
+            >
+              <input
+                v-model="componentSearch"
+                class="dde-component-search"
+                type="search"
+                placeholder="Search components..."
+                autocomplete="off"
+              />
+              <div class="dde-component-list" role="listbox">
+                <button
+                  v-for="tab in filteredComponentTabs"
+                  :key="tab.id"
+                  type="button"
+                  class="dde-component-option"
+                  :class="{ 'dde-component-option-active': activeTabId === tab.id }"
+                  role="option"
+                  :aria-selected="activeTabId === tab.id"
+                  @click="selectTab(tab)"
+                >
+                  <span class="dde-component-option-label">
+                    {{ tab.label }}
+                    <span
+                      v-if="activeTabId === tab.id"
+                      class="dde-component-selected-dot"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
+                    {{ tabChangeCount(tab) }}
+                  </span>
+                </button>
+                <p
+                  v-if="!filteredComponentTabs.length"
+                  class="dde-component-empty"
+                >
+                  No components found.
+                </p>
+              </div>
+            </div>
+          </div>
         </nav>
 
         <div class="dde-fields" role="tabpanel">
@@ -229,7 +378,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     type="text"
                     class="dde-input dde-field-focus-target"
                     spellcheck="false"
-                    placeholder="color.success.500"
+                    :placeholder="referencePlaceholder(field)"
                     @input="setReferencePath(field.path, eventValue($event))"
                   />
                 </div>
@@ -276,7 +425,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     type="text"
                     class="dde-input dde-field-focus-target"
                     spellcheck="false"
-                    placeholder="color.success.500"
+                    :placeholder="referencePlaceholder(field)"
                     @input="setReferencePath(field.path, eventValue($event))"
                   />
                 </div>
@@ -456,11 +605,14 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   border-block-end: 1px solid var(--studio-border);
   background: var(--studio-panel);
   flex-shrink: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  position: relative;
+  z-index: 4;
 }
 
 .dde-tab {
-  padding-inline: 0.85rem;
+  flex: 0 0 auto;
+  padding-inline: 0.78rem;
   padding-block: 0.45rem;
   border-radius: var(--studio-radius-sm) var(--studio-radius-sm) 0 0;
   font-family: inherit;
@@ -475,6 +627,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .dde-tab:hover {
@@ -508,6 +661,113 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-size: 0.65rem;
   background: rgba(255 255 255 / 0.08);
   color: var(--studio-text);
+}
+
+.dde-component-picker {
+  position: relative;
+  min-inline-size: 0;
+}
+
+.dde-component-trigger {
+  padding-inline-end: 0.65rem;
+}
+
+.dde-component-trigger-icon {
+  color: var(--studio-text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  transform: translateY(-0.05rem);
+}
+
+.dde-component-menu {
+  position: absolute;
+  inset-block-start: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  inline-size: min(18rem, calc(100vw - 2rem));
+  padding: 0.6rem;
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-md);
+  background: #11151e;
+  box-shadow: 0 18px 45px rgba(0 0 0 / 0.32);
+}
+
+.dde-component-search {
+  inline-size: 100%;
+  block-size: 2.2rem;
+  padding-inline: 0.7rem;
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  background: var(--studio-field);
+  color: var(--studio-text);
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.dde-component-search:focus {
+  outline: none;
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 3px var(--studio-accent-glow);
+}
+
+.dde-component-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-block-size: 16rem;
+  overflow-y: auto;
+  margin-block-start: 0.55rem;
+}
+
+.dde-component-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  inline-size: 100%;
+  min-block-size: 2.25rem;
+  padding-inline: 0.65rem;
+  border: 0;
+  border-radius: var(--studio-radius-sm);
+  background: transparent;
+  color: var(--studio-text-muted);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dde-component-option-label {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 0;
+  gap: 0.45rem;
+}
+
+.dde-component-selected-dot {
+  flex: 0 0 auto;
+  inline-size: 0.42rem;
+  block-size: 0.42rem;
+  border-radius: 999px;
+  background: var(--studio-accent);
+  box-shadow: 0 0 0 3px rgba(47 155 143 / 0.14);
+}
+
+.dde-component-option:hover,
+.dde-component-option-active {
+  background: rgba(255 255 255 / 0.06);
+  color: var(--studio-text);
+}
+
+.dde-component-option-active {
+  color: var(--studio-accent);
+}
+
+.dde-component-empty {
+  margin: 0;
+  padding: 0.8rem 0.5rem;
+  color: var(--studio-text-muted);
+  font-size: 0.8rem;
 }
 
 .dde-fields {

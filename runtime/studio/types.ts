@@ -15,10 +15,12 @@ export interface StudioFieldDefinition {
 }
 
 export type StudioTokenGroup = 'primitives' | 'components'
+export type StudioNavigationKind = 'foundation' | 'component'
 
 export interface StudioTabDefinition {
   id: string
   label: string
+  navigationKind: StudioNavigationKind
   tokenGroup: StudioTokenGroup
   fields: StudioFieldDefinition[]
   preview: Component

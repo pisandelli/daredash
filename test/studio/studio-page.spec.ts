@@ -32,14 +32,21 @@ describe('DareDash Studio page', () => {
     expect(errorRampSwatch.attributes('style')).toContain('background: #ffee00;')
   })
 
-  it('switches tabs and renders the alert pilot preview', async () => {
+  it('selects components through the searchable component picker', async () => {
     const wrapper = await mountSuspended(StudioPage)
-    const tabs = wrapper.findAll('.dde-tab')
-    const alertTab = tabs.find((tab) => tab.text().includes('Alert'))
+    const componentTrigger = wrapper.find('.dde-component-trigger')
 
-    expect(alertTab).toBeDefined()
+    await componentTrigger.trigger('click')
 
-    await alertTab!.trigger('click')
+    const search = wrapper.find('.dde-component-search')
+    await search.setValue('alert')
+
+    const alertOption = wrapper.findAll('.dde-component-option')
+      .find((option) => option.text().includes('Alert'))
+
+    expect(alertOption).toBeDefined()
+
+    await alertOption!.trigger('click')
 
     expect(wrapper.text()).toContain('Primary alert')
     expect(wrapper.text()).toContain('Success alert')
