@@ -22,7 +22,7 @@
 
   /* -- Typography -- */
   font-family: v('font.base');
-  font-weight: v('font.weight.medium');
+  font-weight: v('font-weight.medium');
   font-size: var(--local-font-size);
   user-select: none;
 

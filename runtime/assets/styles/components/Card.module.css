@@ -38,7 +38,7 @@
   padding-inline: var(--local-padding);
   padding-block: var(--local-padding);
   border-block-end: v('card.header.border-width') solid v('card.header.border-color');
-  font-weight: v('font.weight.bold');
+  font-weight: v('font-weight.bold');
 }
 
 .body {

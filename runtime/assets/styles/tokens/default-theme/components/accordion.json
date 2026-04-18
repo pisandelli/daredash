@@ -25,10 +25,10 @@
       "$value": "{font.base}"
     },
     "font-size": {
-      "$value": "{font-size.lg}"
+      "$value": "{font-size.base}"
     },
     "font-weight": {
-      "$value": "{font.weight.bold}"
+      "$value": "{font-weight.bold}"
     },
     "icon-size": {
       "$description": "Size of the icon (e.g., chevron)",

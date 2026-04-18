@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { flattenTokens, resolveTokenValue } from '../../src/utils/tokens'
 import { STUDIO_TABS } from '../../runtime/studio/registry'
 import primitives from '../../runtime/assets/styles/tokens/default-theme/primitives.json'
+import accordion from '../../runtime/assets/styles/tokens/default-theme/components/accordion.json'
 import button from '../../runtime/assets/styles/tokens/default-theme/components/button.json'
 import badge from '../../runtime/assets/styles/tokens/default-theme/components/badge.json'
 import alert from '../../runtime/assets/styles/tokens/default-theme/components/alert.json'
@@ -11,6 +12,7 @@ describe('DareDash Studio registry', () => {
     const rawTokens = {
       primitives,
       components: {
+        accordion,
         button,
         badge,
         alert
@@ -57,5 +59,16 @@ describe('DareDash Studio registry', () => {
 
     expect(errorAlias?.referencePath).toBe('color.danger.500')
     expect(borderAlias?.referencePath).toBe('color.light-gray')
+  })
+
+  it('registers accordion with preserved token references', () => {
+    const accordionTab = STUDIO_TABS.find((tab) => tab.id === 'accordion')
+    const headerPadding = accordionTab?.fields.find((field) => field.path === 'accordion.header.padding')
+    const contentPadding = accordionTab?.fields.find((field) => field.path === 'accordion.content.padding')
+
+    expect(accordionTab).toBeDefined()
+    expect(accordionTab!.navigationKind).toBe('component')
+    expect(headerPadding?.referencePath).toBe('space.md')
+    expect(contentPadding?.referencePath).toBe('accordion.header.padding')
   })
 })

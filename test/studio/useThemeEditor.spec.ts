@@ -66,16 +66,20 @@ describe('useThemeEditor', () => {
     }
   ]
 
-  it('tracks changes and exposes preview styles', () => {
-    const { values, hasChanges, previewStyle, setLiteralValue } = useThemeEditor(tabs)
+  it('tracks changes and exposes scoped preview overrides', () => {
+    const { hasChanges, previewStyle, previewCss, setLiteralValue } = useThemeEditor(tabs)
 
     expect(hasChanges.value).toBe(false)
     expect(Object.keys(previewStyle.value).length).toBe(0)
+    expect(previewCss.value).toBe('')
 
     setLiteralValue('color.primary.600', '#000000')
 
     expect(hasChanges.value).toBe(true)
     expect(previewStyle.value['--dd-color-primary-600']).toBe('#000000')
+    expect(previewCss.value).toContain('.dd-studio-root .dd-studio-preview-scope *')
+    expect(previewCss.value).toContain('--dd-color-primary-600: #000000;')
+    expect(previewCss.value).not.toContain(':root')
   })
 
   it('exports delta tokens grouped by primitives/components', () => {

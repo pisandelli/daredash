@@ -61,7 +61,7 @@
     "$value": "{font-size.sm}"
   },
   "font-weight": {
-    "$value": "{font.weight.regular}"
+    "$value": "{font-weight.regular}"
   },
   "padding": {
     "inline": {
@@ -90,7 +90,7 @@
       "$value": "{font-size.sm}"
     },
     "font-weight": {
-      "$value": "{font.weight.medium}"
+      "$value": "{font-weight.medium}"
     }
   },
   "focus": {
@@ -131,7 +131,7 @@
       "$value": "{font.system}"
     },
     "font-weight": {
-      "$value": "{font.weight.black}"
+      "$value": "{font-weight.black}"
     },
     "color": {
       "$value": "{color.error}"

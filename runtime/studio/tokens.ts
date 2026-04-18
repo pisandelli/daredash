@@ -1,4 +1,5 @@
 import primitives from '../assets/styles/tokens/default-theme/primitives.json'
+import accordion from '../assets/styles/tokens/default-theme/components/accordion.json'
 import button from '../assets/styles/tokens/default-theme/components/button.json'
 import badge from '../assets/styles/tokens/default-theme/components/badge.json'
 import alert from '../assets/styles/tokens/default-theme/components/alert.json'
@@ -57,7 +58,7 @@ function flattenTokens(
   return flat
 }
 
-function tokenReference(path: string): string | undefined {
+export function tokenReference(path: string): string | undefined {
   const node = getTokenNode(flatTokens, path)
   const rawValue = node?.$value
 
@@ -67,7 +68,7 @@ function tokenReference(path: string): string | undefined {
   return match?.[1]
 }
 
-function rawTokenValue(path: string): string | undefined {
+export function rawTokenValue(path: string): string | undefined {
   const node = getTokenNode(flatTokens, path)
   if (node?.$value == null) return undefined
   return String(node.$value)
@@ -76,6 +77,7 @@ function rawTokenValue(path: string): string | undefined {
 const flatTokens = flattenTokens({
   primitives,
   components: {
+    accordion,
     button,
     badge,
     alert
@@ -146,9 +148,13 @@ function fieldTypeForPath(path: string): 'color' | 'text' {
 }
 
 function labelForPrimitivePath(path: string): string {
-  const [section, ...parts] = path.split('.')
+  const parts = path.split('.')
+  const section = parts[0]
+
+  if (!section) return toTitleCase(path)
+
   const sectionLabel = PRIMITIVE_SECTION_META[section] ?? toTitleCase(section)
-  const tokenLabel = parts.map((part) => toTitleCase(part)).join(' ')
+  const tokenLabel = parts.slice(1).map((part) => toTitleCase(part)).join(' ')
 
   return tokenLabel ? `${sectionLabel} ${tokenLabel}` : sectionLabel
 }
@@ -164,11 +170,11 @@ export function tokenValue(path: string, fallback?: string): string {
 export function primitiveStudioFields(): StudioFieldDefinition[] {
   return collectLeafPaths(primitives)
     .filter((path) => {
-      const [section] = path.split('.')
-      return !TYPOGRAPHY_SECTIONS.has(section)
+      const section = path.split('.')[0]
+      return section ? !TYPOGRAPHY_SECTIONS.has(section) : false
     })
     .map((path) => {
-      const [section] = path.split('.')
+      const section = path.split('.')[0] ?? ''
       return {
         path,
         label: labelForPrimitivePath(path),
@@ -184,11 +190,11 @@ export function primitiveStudioFields(): StudioFieldDefinition[] {
 export function typographyStudioFields(): StudioFieldDefinition[] {
   return collectLeafPaths(primitives)
     .filter((path) => {
-      const [section] = path.split('.')
-      return TYPOGRAPHY_SECTIONS.has(section)
+      const section = path.split('.')[0]
+      return section ? TYPOGRAPHY_SECTIONS.has(section) : false
     })
     .map((path) => {
-      const [section] = path.split('.')
+      const section = path.split('.')[0] ?? ''
       return {
         path,
         label: labelForPrimitivePath(path),

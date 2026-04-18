@@ -21,7 +21,9 @@ const foundationTabs = computed(() =>
 )
 
 const componentTabs = computed(() =>
-  tabs.filter((tab) => tab.navigationKind === 'component')
+  [...tabs]
+    .filter((tab) => tab.navigationKind === 'component')
+    .sort((a, b) => a.label.localeCompare(b.label))
 )
 
 const activeComponentTab = computed(() => {
@@ -42,6 +44,7 @@ const {
   modes,
   hasChanges,
   previewStyle,
+  previewCss,
   reset,
   downloadTokens,
   isFieldChanged,
@@ -178,6 +181,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 
 <template>
   <div class="dd-studio-root">
+    <component
+      :is="'style'"
+      v-if="previewCss"
+      type="text/css"
+      v-text="previewCss"
+    />
+
     <header class="dde-header">
       <div class="dde-header-brand">
         <span class="dde-header-logo">◈</span>

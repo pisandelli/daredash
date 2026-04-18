@@ -25,6 +25,10 @@ function pathToCssVar(path: string, prefix: string): string {
   return `--${prefix}-${kebab}`
 }
 
+function sanitizeCssValue(value: string): string {
+  return value.replace(/[;{}]/g, '').trim()
+}
+
 /**
  * Sets a deeply nested value in an object using a dot-notation path.
  * Ensures `$value` is set at the leaf node.
@@ -146,6 +150,21 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     return style
   })
 
+  const previewCss = computed(() => {
+    const declarations = Object.entries(previewStyle.value)
+      .map(([name, val]) => `  ${name}: ${sanitizeCssValue(val)};`)
+      .join('\n')
+
+    if (!declarations) return ''
+
+    return [
+      '.dd-studio-root .dd-studio-preview-scope,',
+      '.dd-studio-root .dd-studio-preview-scope * {',
+      declarations,
+      '}'
+    ].join('\n')
+  })
+
   // -------------------------------------------------------------------------
   // Export — generates tokens JSON following the default-theme.tokens.json model
   // -------------------------------------------------------------------------
@@ -221,6 +240,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     modes,
     hasChanges: readonly(hasChanges),
     previewStyle,
+    previewCss,
     reset,
     downloadTokens,
     exportTokensJson,

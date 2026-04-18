@@ -1,10 +1,36 @@
 import type { StudioTabDefinition } from './types'
 import BasePreview from './previews/BasePreview.vue'
 import TypographyPreview from './previews/TypographyPreview.vue'
+import AccordionPreview from './previews/AccordionPreview.vue'
 import ButtonPreview from './previews/ButtonPreview.vue'
 import BadgePreview from './previews/BadgePreview.vue'
 import AlertPreview from './previews/AlertPreview.vue'
-import { primitiveStudioFields, tokenValue, typographyStudioFields } from './tokens'
+import {
+  primitiveStudioFields,
+  rawTokenValue,
+  tokenReference,
+  tokenValue,
+  typographyStudioFields
+} from './tokens'
+import type { StudioFieldDefinition } from './types'
+
+function componentField(
+  path: string,
+  label: string,
+  type: StudioFieldDefinition['type'],
+  group: string,
+  fallback?: string
+): StudioFieldDefinition {
+  return {
+    path,
+    label,
+    type,
+    defaultValue: tokenValue(path, fallback),
+    rawDefaultValue: rawTokenValue(path),
+    referencePath: tokenReference(path),
+    group
+  }
+}
 
 export const STUDIO_TABS: StudioTabDefinition[] = [
   {
@@ -22,6 +48,28 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     tokenGroup: 'primitives',
     preview: TypographyPreview,
     fields: typographyStudioFields()
+  },
+  {
+    id: 'accordion',
+    label: 'Accordion',
+    navigationKind: 'component',
+    tokenGroup: 'components',
+    preview: AccordionPreview,
+    fields: [
+      componentField('accordion.border-width', 'Border Width', 'text', 'Core'),
+      componentField('accordion.border-color', 'Border Color', 'color', 'Core'),
+      componentField('accordion.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('accordion.header.background-color', 'Header Background', 'color', 'Header'),
+      componentField('accordion.header.background-color-hover', 'Header Hover Background', 'color', 'Header'),
+      componentField('accordion.header.padding', 'Header Padding', 'text', 'Header'),
+      componentField('accordion.header.font-family', 'Header Font Family', 'text', 'Header'),
+      componentField('accordion.header.font-size', 'Header Font Size', 'text', 'Header'),
+      componentField('accordion.header.font-weight', 'Header Font Weight', 'text', 'Header'),
+      componentField('accordion.header.icon-size', 'Header Icon Size', 'text', 'Header'),
+      componentField('accordion.content.padding', 'Content Padding', 'text', 'Content'),
+      componentField('accordion.content.background-color', 'Content Background', 'color', 'Content'),
+      componentField('accordion.content.font-family', 'Content Font Family', 'text', 'Content')
+    ]
   },
   {
     id: 'button',

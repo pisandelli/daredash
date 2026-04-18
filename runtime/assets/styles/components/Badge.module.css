@@ -43,5 +43,5 @@
 
 .icon {
   font-size: var(--local-icon-size);
-  font-weight: v('font.weight.regular');
+  font-weight: v('font-weight.regular');
 }

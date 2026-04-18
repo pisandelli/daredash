@@ -23,7 +23,7 @@
     "$value": "{font-size.md}"
   },
   "font-weight": {
-    "$value": "{font.weight.bold}"
+    "$value": "{font-weight.bold}"
   },
   "sm": {
     "$type": "object",
