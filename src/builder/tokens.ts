@@ -110,9 +110,15 @@ export async function setupTokens(
   if (cssContent.length > 0) {
     const template = addTemplate({
       filename: 'styles/main.css',
-      getContents: () => cssContent
+      getContents: () => cssContent,
+      write: true
     })
-    nuxt.options.css.unshift(template.dst)
+
+    // Only add to CSS array if not already present to avoid duplicates during HMR
+    if (!nuxt.options.css.includes(template.dst)) {
+      nuxt.options.css.unshift(template.dst)
+    }
+
     if (debugMode) {
       debugLog(`Virtual global CSS Custom Properties registered`)
     }

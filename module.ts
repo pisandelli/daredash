@@ -168,5 +168,21 @@ export default defineNuxtModule<ModuleOptions>().with({
         src: '/studio'
       }
     })
+
+    /**
+     * HMR for Design Tokens
+     * Watches the tokens directory and regenerates CSS/JSON when a file changes.
+     */
+    const tokensDir = resolver.resolve(options.tokens)
+    nuxt.options.watch.push(tokensDir)
+
+    nuxt.hook('builder:watch', async (event, path) => {
+      if (path.startsWith(tokensDir) && path.endsWith('.json')) {
+        if (debugMode) {
+          debugLog(`Token file ${event}: ${path}. Regenerating...`, 'info')
+        }
+        await setupTokens(options, nuxt, resolver)
+      }
+    })
   }
 })

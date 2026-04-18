@@ -6,8 +6,8 @@
     </header>
 
     <div class="dd-studio-preview-block">
-      <h3>Grouped</h3>
-      <DdAccordionGroup accent-color="color.primary.600">
+      <h3>Grouped (Default)</h3>
+      <DdAccordionGroup>
         <DdAccordion
           title="Token-driven interaction"
           icon="heroicons:sparkles"
@@ -20,12 +20,6 @@
         >
           The group uses native details name behavior to keep one panel open at a time.
         </DdAccordion>
-        <DdAccordion
-          title="Accent-aware states"
-          icon="heroicons:paint-brush"
-        >
-          Hover and open states inherit the accent color while preserving local component tokens.
-        </DdAccordion>
       </DdAccordionGroup>
     </div>
 
@@ -33,19 +27,47 @@
       <h3>Variants</h3>
       <div class="dd-studio-preview-stack">
         <DdAccordion
-          title="Success accent"
-          accent-color="color.success.600"
-          icon="heroicons:check-circle"
+          title="Primary accent"
+          primary
+          icon="heroicons:star"
           open
+        >
+          The standard primary semantic color.
+        </DdAccordion>
+        <DdAccordion
+          title="Info accent"
+          info
+          icon="heroicons:information-circle"
+        >
+          Used to highlight neutral or educational information.
+        </DdAccordion>
+        <DdAccordion
+          title="Success accent"
+          success
+          icon="heroicons:check-circle"
         >
           Useful for checklist-like disclosure patterns.
         </DdAccordion>
         <DdAccordion
           title="Warning accent"
-          accent-color="color.warning.600"
+          warning
           icon="heroicons:exclamation-triangle"
         >
           Helpful when the disclosed content changes the user's next step.
+        </DdAccordion>
+        <DdAccordion
+          title="Danger accent"
+          danger
+          icon="heroicons:shield-exclamation"
+        >
+          Used for destructive actions or critical privacy settings.
+        </DdAccordion>
+        <DdAccordion
+          title="Custom accent"
+          accent-color="#9333ea"
+          icon="heroicons:paint-brush"
+        >
+          An injected HEX color string bypassing the theme tokens.
         </DdAccordion>
       </div>
     </div>

@@ -8,6 +8,7 @@
     <div class="dd-studio-preview-block">
       <h3>Semantic</h3>
       <div class="dd-studio-preview-row">
+        <DdButton>Default</DdButton>
         <DdButton primary>Primary</DdButton>
         <DdButton success>Success</DdButton>
         <DdButton warning>Warning</DdButton>
@@ -30,9 +31,11 @@
     <div class="dd-studio-preview-block">
       <h3>Sizes</h3>
       <div class="dd-studio-preview-row">
+        <DdButton primary tiny>Tiny</DdButton>
         <DdButton primary small>Small</DdButton>
         <DdButton primary>Regular</DdButton>
         <DdButton primary large>Large</DdButton>
+        <DdButton primary xlarge>X-Large</DdButton>
       </div>
     </div>
 

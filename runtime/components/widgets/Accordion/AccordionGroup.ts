@@ -41,9 +41,21 @@ export default defineNuxtComponent({
       ? undefined
       : `accordion-group-${Math.random().toString(36).substring(2, 9)}`
 
+    let injectedAccentColor = props.accentColor
+
+    if (!injectedAccentColor) {
+      const semanticVariants = ['primary', 'success', 'warning', 'danger', 'info']
+      for (const variant of semanticVariants) {
+        if (`data-${variant}` in processedAttrs.value) {
+          injectedAccentColor = variant
+          break
+        }
+      }
+    }
+
     provide(AccordionGroupInjectionKey, {
       name: groupName,
-      accentColor: props.accentColor
+      accentColor: injectedAccentColor
     })
 
     return () => {

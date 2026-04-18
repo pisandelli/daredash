@@ -10,6 +10,9 @@
   "border-radius": {
     "$value": "{border-radius.base}"
   },
+  "accent-color": {
+    "$value": "{color.primary.600}"
+  },
   "header": {
     "$type": "object",
     "background-color": {
@@ -33,6 +36,15 @@
     "icon-size": {
       "$description": "Size of the icon (e.g., chevron)",
       "$value": "1em"
+    },
+    "chevron-size": {
+      "$value": "1.125rem"
+    },
+    "gap": {
+      "$value": "0.75rem"
+    },
+    "title-gap": {
+      "$value": "0.625rem"
     }
   },
   "content": {
@@ -45,6 +57,31 @@
     },
     "font-family": {
       "$value": "{font.system}"
+    }
+  },
+  "primary": {
+    "accent-color": {
+      "$value": "{color.primary.600}"
+    }
+  },
+  "success": {
+    "accent-color": {
+      "$value": "{color.success}"
+    }
+  },
+  "warning": {
+    "accent-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "danger": {
+    "accent-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "info": {
+    "accent-color": {
+      "$value": "{color.info}"
     }
   }
 }

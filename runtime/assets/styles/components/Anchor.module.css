@@ -3,8 +3,16 @@
   --local-active-color: v('anchor.active-color');
   --local-border-color: v('anchor.border-color');
   --local-indicator-color: v('anchor.indicator-color');
+  --local-indicator-color-hover: v('anchor.indicator-color-hover');
   --local-link-color: v('anchor.link-color');
   --local-link-color-hover: v('anchor.link-color-hover');
+  --local-item-bg-hover: v('anchor.item-bg-hover');
+  --local-item-radius: v('anchor.item-radius');
+  --local-font-family: v('anchor.font-family');
+  --local-font-size: v('anchor.font-size');
+  --local-padding-block: v('anchor.padding-block');
+  --local-padding-inline: v('anchor.padding-inline');
+  --local-indicator-width: v('anchor.indicator-width');
   
   position: sticky;
   top: 0;
@@ -22,14 +30,14 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  border-inline-start: 2px solid var(--local-border-color);
+  border-inline-start: var(--local-indicator-width) solid var(--local-border-color);
   position: relative;
 }
 
 .anchor[data-horizontal] .list {
   flex-direction: row;
   border-inline-start: none;
-  border-block-end: 2px solid var(--local-border-color);
+  border-block-end: var(--local-indicator-width) solid var(--local-border-color);
 }
 
 .item {
@@ -38,15 +46,19 @@
 
 .link {
   display: block;
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
+  padding-inline: var(--local-padding-inline);
+  padding-block: var(--local-padding-block);
+  border-radius: var(--local-item-radius);
   color: var(--local-link-color);
+  font-family: var(--local-font-family);
+  font-size: var(--local-font-size);
   text-decoration: none;
-  transition: color 0.2s ease, font-weight 0.2s ease;
+  transition: color 0.2s ease, font-weight 0.2s ease, background-color 0.2s ease;
 }
 
 .link:hover {
   color: var(--local-link-color-hover);
+  background-color: var(--local-item-bg-hover);
 }
 
 /* Active State */
@@ -60,21 +72,25 @@
   content: '';
   position: absolute;
   block-size: 100%;
-  inline-size: 2px;
+  inline-size: var(--local-indicator-width);
   background-color: transparent;
-  inset-inline-start: -2px; /* Pull it over the border */
+  inset-inline-start: calc(var(--local-indicator-width) * -1); /* Pull it over the border */
   top: 0;
   transition: background-color 0.2s ease;
 }
 
 .anchor[data-horizontal] .item::before {
-  block-size: 2px;
+  block-size: var(--local-indicator-width);
   inline-size: 100%;
-  inset-block-end: -2px;
+  inset-block-end: calc(var(--local-indicator-width) * -1);
   inset-inline-start: 0;
   top: auto;
 }
 
 .item[data-active]::before {
   background-color: var(--local-indicator-color);
+}
+
+.item:not([data-active]):hover::before {
+  background-color: var(--local-indicator-color-hover);
 }

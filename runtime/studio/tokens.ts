@@ -3,6 +3,7 @@ import accordion from '../assets/styles/tokens/default-theme/components/accordio
 import button from '../assets/styles/tokens/default-theme/components/button.json'
 import badge from '../assets/styles/tokens/default-theme/components/badge.json'
 import alert from '../assets/styles/tokens/default-theme/components/alert.json'
+import anchor from '../assets/styles/tokens/default-theme/components/anchor.json'
 import type { StudioFieldDefinition } from './types'
 
 function getTokenNode(tokens: any, path: string): Record<string, any> | null {
@@ -80,7 +81,8 @@ const flatTokens = flattenTokens({
     accordion,
     button,
     badge,
-    alert
+    alert,
+    anchor
   }
 })
 

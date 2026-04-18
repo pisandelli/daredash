@@ -5,6 +5,7 @@ import AccordionPreview from './previews/AccordionPreview.vue'
 import ButtonPreview from './previews/ButtonPreview.vue'
 import BadgePreview from './previews/BadgePreview.vue'
 import AlertPreview from './previews/AlertPreview.vue'
+import AnchorPreview from './previews/AnchorPreview.vue'
 import {
   primitiveStudioFields,
   rawTokenValue,
@@ -56,6 +57,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     tokenGroup: 'components',
     preview: AccordionPreview,
     fields: [
+      componentField('accordion.accent-color', 'Accent Color', 'color', 'Core'),
       componentField('accordion.border-width', 'Border Width', 'text', 'Core'),
       componentField('accordion.border-color', 'Border Color', 'color', 'Core'),
       componentField('accordion.border-radius', 'Border Radius', 'text', 'Core'),
@@ -66,6 +68,9 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('accordion.header.font-size', 'Header Font Size', 'text', 'Header'),
       componentField('accordion.header.font-weight', 'Header Font Weight', 'text', 'Header'),
       componentField('accordion.header.icon-size', 'Header Icon Size', 'text', 'Header'),
+      componentField('accordion.header.chevron-size', 'Chevron Size', 'text', 'Header'),
+      componentField('accordion.header.gap', 'Header Gap', 'text', 'Header'),
+      componentField('accordion.header.title-gap', 'Title Gap', 'text', 'Header'),
       componentField('accordion.content.padding', 'Content Padding', 'text', 'Content'),
       componentField('accordion.content.background-color', 'Content Background', 'color', 'Content'),
       componentField('accordion.content.font-family', 'Content Font Family', 'text', 'Content')
@@ -78,133 +83,45 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     tokenGroup: 'components',
     preview: ButtonPreview,
     fields: [
-      {
-        path: 'button.base-color',
-        label: 'Base Color',
-        type: 'color',
-        defaultValue: tokenValue('button.base-color'),
-        group: 'Core'
-      },
-      {
-        path: 'button.border-radius',
-        label: 'Border Radius',
-        type: 'text',
-        defaultValue: tokenValue('button.border-radius'),
-        group: 'Core'
-      },
-      {
-        path: 'button.font-family',
-        label: 'Font Family',
-        type: 'text',
-        defaultValue: tokenValue('button.font-family'),
-        group: 'Core'
-      },
-      {
-        path: 'button.font-weight',
-        label: 'Font Weight',
-        type: 'text',
-        defaultValue: tokenValue('button.font-weight', '700'),
-        group: 'Core'
-      },
+      componentField('button.base-color', 'Base Color', 'color', 'Core'),
+      componentField('button.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('button.font-family', 'Font Family', 'text', 'Core'),
+      componentField('button.font-weight', 'Font Weight', 'text', 'Core', '700'),
       {
         path: 'button.text-transform',
         label: 'Text Transform',
         type: 'select',
         options: ['uppercase', 'none', 'capitalize', 'lowercase'],
         defaultValue: tokenValue('button.text-transform'),
+        rawDefaultValue: rawTokenValue('button.text-transform'),
+        referencePath: tokenReference('button.text-transform'),
         group: 'Core'
       },
-      {
-        path: 'button.sizes.tiny.height',
-        label: 'Height (tiny)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.tiny.height'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.tiny.padding',
-        label: 'Padding (tiny)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.tiny.padding'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.small.height',
-        label: 'Height (small)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.small.height'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.small.padding',
-        label: 'Padding (small)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.small.padding'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.regular.height',
-        label: 'Height (regular)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.regular.height'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.regular.padding',
-        label: 'Padding (regular)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.regular.padding'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.large.height',
-        label: 'Height (large)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.large.height'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.sizes.large.padding',
-        label: 'Padding (large)',
-        type: 'text',
-        defaultValue: tokenValue('button.sizes.large.padding'),
-        group: 'Sizes'
-      },
-      {
-        path: 'button.primary.base-color',
-        label: 'Primary Color',
-        type: 'color',
-        defaultValue: tokenValue('button.primary.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'button.success.base-color',
-        label: 'Success Color',
-        type: 'color',
-        defaultValue: tokenValue('button.success.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'button.warning.base-color',
-        label: 'Warning Color',
-        type: 'color',
-        defaultValue: tokenValue('button.warning.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'button.danger.base-color',
-        label: 'Danger Color',
-        type: 'color',
-        defaultValue: tokenValue('button.danger.base-color', '#ef4444'),
-        group: 'Semantic'
-      },
-      {
-        path: 'button.info.base-color',
-        label: 'Info Color',
-        type: 'color',
-        defaultValue: tokenValue('button.info.base-color'),
-        group: 'Semantic'
-      }
+      componentField('button.sizes.tiny.height', 'Height (tiny)', 'text', 'Sizes'),
+      componentField('button.sizes.tiny.padding', 'Padding (tiny)', 'text', 'Sizes'),
+      componentField('button.sizes.tiny.font-size', 'Font Size (tiny)', 'text', 'Sizes'),
+      componentField('button.sizes.tiny.icon-size', 'Icon Size (tiny)', 'text', 'Sizes'),
+      componentField('button.sizes.small.height', 'Height (small)', 'text', 'Sizes'),
+      componentField('button.sizes.small.padding', 'Padding (small)', 'text', 'Sizes'),
+      componentField('button.sizes.small.font-size', 'Font Size (small)', 'text', 'Sizes'),
+      componentField('button.sizes.small.icon-size', 'Icon Size (small)', 'text', 'Sizes'),
+      componentField('button.sizes.regular.height', 'Height (regular)', 'text', 'Sizes'),
+      componentField('button.sizes.regular.padding', 'Padding (regular)', 'text', 'Sizes'),
+      componentField('button.sizes.regular.font-size', 'Font Size (regular)', 'text', 'Sizes'),
+      componentField('button.sizes.regular.icon-size', 'Icon Size (regular)', 'text', 'Sizes'),
+      componentField('button.sizes.large.height', 'Height (large)', 'text', 'Sizes'),
+      componentField('button.sizes.large.padding', 'Padding (large)', 'text', 'Sizes'),
+      componentField('button.sizes.large.font-size', 'Font Size (large)', 'text', 'Sizes'),
+      componentField('button.sizes.large.icon-size', 'Icon Size (large)', 'text', 'Sizes'),
+      componentField('button.sizes.xlarge.height', 'Height (xlarge)', 'text', 'Sizes'),
+      componentField('button.sizes.xlarge.padding', 'Padding (xlarge)', 'text', 'Sizes'),
+      componentField('button.sizes.xlarge.font-size', 'Font Size (xlarge)', 'text', 'Sizes'),
+      componentField('button.sizes.xlarge.icon-size', 'Icon Size (xlarge)', 'text', 'Sizes'),
+      componentField('button.primary.base-color', 'Primary Color', 'color', 'Semantic'),
+      componentField('button.success.base-color', 'Success Color', 'color', 'Semantic'),
+      componentField('button.warning.base-color', 'Warning Color', 'color', 'Semantic'),
+      componentField('button.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
+      componentField('button.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
   },
   {
@@ -214,105 +131,30 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     tokenGroup: 'components',
     preview: BadgePreview,
     fields: [
-      {
-        path: 'badge.base-color',
-        label: 'Base Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.base-color'),
-        group: 'Core'
-      },
-      {
-        path: 'badge.border-radius',
-        label: 'Border Radius',
-        type: 'text',
-        defaultValue: tokenValue('badge.border-radius'),
-        group: 'Core'
-      },
-      {
-        path: 'badge.font-size',
-        label: 'Font Size',
-        type: 'text',
-        defaultValue: tokenValue('badge.font-size'),
-        group: 'Typography'
-      },
-      {
-        path: 'badge.font-weight',
-        label: 'Font Weight',
-        type: 'text',
-        defaultValue: tokenValue('badge.font-weight'),
-        group: 'Typography'
-      },
-      {
-        path: 'badge.letter-spacing',
-        label: 'Letter Spacing',
-        type: 'text',
-        defaultValue: tokenValue('badge.letter-spacing'),
-        group: 'Typography'
-      },
+      componentField('badge.base-color', 'Base Color', 'color', 'Core'),
+      componentField('badge.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('badge.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('badge.font-weight', 'Font Weight', 'text', 'Typography'),
+      componentField('badge.letter-spacing', 'Letter Spacing', 'text', 'Typography'),
       {
         path: 'badge.text-transform',
         label: 'Text Transform',
         type: 'select',
         options: ['none', 'uppercase', 'capitalize', 'lowercase'],
         defaultValue: tokenValue('badge.text-transform'),
+        rawDefaultValue: rawTokenValue('badge.text-transform'),
+        referencePath: tokenReference('badge.text-transform'),
         group: 'Typography'
       },
-      {
-        path: 'badge.icon-size',
-        label: 'Icon Size',
-        type: 'text',
-        defaultValue: tokenValue('badge.icon-size'),
-        group: 'Typography'
-      },
-      {
-        path: 'badge.padding.inline',
-        label: 'Padding Inline',
-        type: 'text',
-        defaultValue: tokenValue('badge.padding.inline'),
-        group: 'Spacing'
-      },
-      {
-        path: 'badge.padding.block',
-        label: 'Padding Block',
-        type: 'text',
-        defaultValue: tokenValue('badge.padding.block'),
-        group: 'Spacing'
-      },
-      {
-        path: 'badge.primary.base-color',
-        label: 'Primary Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.primary.base-color', '#0984e3'),
-        group: 'Semantic'
-      },
-      {
-        path: 'badge.success.base-color',
-        label: 'Success Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.success.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'badge.warning.base-color',
-        label: 'Warning Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.warning.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'badge.danger.base-color',
-        label: 'Danger Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.danger.base-color', '#ef4444'),
-        group: 'Semantic'
-      },
-      {
-        path: 'badge.info.base-color',
-        label: 'Info Color',
-        type: 'color',
-        defaultValue: tokenValue('badge.info.base-color'),
-        group: 'Semantic'
-      }
+      componentField('badge.icon-size', 'Icon Size', 'text', 'Typography'),
+      componentField('badge.gap', 'Gap', 'text', 'Spacing'),
+      componentField('badge.padding.inline', 'Padding Inline', 'text', 'Spacing'),
+      componentField('badge.padding.block', 'Padding Block', 'text', 'Spacing'),
+      componentField('badge.primary.base-color', 'Primary Color', 'color', 'Semantic', '#0984e3'),
+      componentField('badge.success.base-color', 'Success Color', 'color', 'Semantic'),
+      componentField('badge.warning.base-color', 'Warning Color', 'color', 'Semantic'),
+      componentField('badge.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
+      componentField('badge.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
   },
   {
@@ -322,139 +164,47 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     tokenGroup: 'components',
     preview: AlertPreview,
     fields: [
-      {
-        path: 'alert.base-color',
-        label: 'Base Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.base-color'),
-        group: 'Core'
-      },
-      {
-        path: 'alert.border-radius',
-        label: 'Border Radius',
-        type: 'text',
-        defaultValue: tokenValue('alert.border-radius'),
-        group: 'Core'
-      },
-      {
-        path: 'alert.padding',
-        label: 'Padding',
-        type: 'text',
-        defaultValue: tokenValue('alert.padding'),
-        group: 'Core'
-      },
-      {
-        path: 'alert.gap',
-        label: 'Gap',
-        type: 'text',
-        defaultValue: tokenValue('alert.gap'),
-        group: 'Core'
-      },
-      {
-        path: 'alert.font-family',
-        label: 'Font Family',
-        type: 'text',
-        defaultValue: tokenValue('alert.font-family'),
-        group: 'Typography'
-      },
-      {
-        path: 'alert.font-size',
-        label: 'Font Size',
-        type: 'text',
-        defaultValue: tokenValue('alert.font-size'),
-        group: 'Typography'
-      },
-      {
-        path: 'alert.line-height',
-        label: 'Line Height',
-        type: 'text',
-        defaultValue: tokenValue('alert.line-height'),
-        group: 'Typography'
-      },
-      {
-        path: 'alert.icon-size',
-        label: 'Icon Size',
-        type: 'text',
-        defaultValue: tokenValue('alert.icon-size'),
-        group: 'Typography'
-      },
-      {
-        path: 'alert.title.font-weight',
-        label: 'Title Weight',
-        type: 'text',
-        defaultValue: tokenValue('alert.title.font-weight'),
-        group: 'Title'
-      },
-      {
-        path: 'alert.title.font-size',
-        label: 'Title Size',
-        type: 'text',
-        defaultValue: tokenValue('alert.title.font-size'),
-        group: 'Title'
-      },
-      {
-        path: 'alert.close.size',
-        label: 'Close Size',
-        type: 'text',
-        defaultValue: tokenValue('alert.close.size'),
-        group: 'Close'
-      },
-      {
-        path: 'alert.close.opacity',
-        label: 'Close Opacity',
-        type: 'text',
-        defaultValue: tokenValue('alert.close.opacity'),
-        group: 'Close'
-      },
-      {
-        path: 'alert.close.hover-opacity',
-        label: 'Close Hover Opacity',
-        type: 'text',
-        defaultValue: tokenValue('alert.close.hover-opacity'),
-        group: 'Close'
-      },
-      {
-        path: 'alert.primary.base-color',
-        label: 'Primary Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.primary.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'alert.success.base-color',
-        label: 'Success Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.success.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'alert.warning.base-color',
-        label: 'Warning Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.warning.base-color'),
-        group: 'Semantic'
-      },
-      {
-        path: 'alert.danger.base-color',
-        label: 'Danger Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.danger.base-color', '#ef4444'),
-        group: 'Semantic'
-      },
-      {
-        path: 'alert.error.base-color',
-        label: 'Error Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.error.base-color', '#ef4444'),
-        group: 'Semantic'
-      },
-      {
-        path: 'alert.info.base-color',
-        label: 'Info Color',
-        type: 'color',
-        defaultValue: tokenValue('alert.info.base-color'),
-        group: 'Semantic'
-      }
+      componentField('alert.base-color', 'Base Color', 'color', 'Core'),
+      componentField('alert.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('alert.padding', 'Padding', 'text', 'Core'),
+      componentField('alert.gap', 'Gap', 'text', 'Core'),
+      componentField('alert.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('alert.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('alert.line-height', 'Line Height', 'text', 'Typography'),
+      componentField('alert.icon-size', 'Icon Size', 'text', 'Typography'),
+      componentField('alert.title.font-weight', 'Title Weight', 'text', 'Title'),
+      componentField('alert.title.font-size', 'Title Size', 'text', 'Title'),
+      componentField('alert.close.size', 'Close Size', 'text', 'Close'),
+      componentField('alert.close.opacity', 'Close Opacity', 'text', 'Close'),
+      componentField('alert.close.hover-opacity', 'Close Hover Opacity', 'text', 'Close'),
+      componentField('alert.primary.base-color', 'Primary Color', 'color', 'Semantic'),
+      componentField('alert.success.base-color', 'Success Color', 'color', 'Semantic'),
+      componentField('alert.warning.base-color', 'Warning Color', 'color', 'Semantic'),
+      componentField('alert.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
+      componentField('alert.error.base-color', 'Error Color', 'color', 'Semantic', '#ef4444'),
+      componentField('alert.info.base-color', 'Info Color', 'color', 'Semantic')    ]
+  },
+  {
+    id: 'anchor',
+    label: 'Anchor',
+    navigationKind: 'component',
+    tokenGroup: 'components',
+    preview: AnchorPreview,
+    fields: [
+      componentField('anchor.active-font-weight', 'Active Font Weight', 'text', 'Typography'),
+      componentField('anchor.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('anchor.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('anchor.active-color', 'Active Color', 'color', 'Core'),
+      componentField('anchor.border-color', 'Border Color', 'color', 'Core'),
+      componentField('anchor.indicator-color', 'Indicator Color', 'color', 'Core'),
+      componentField('anchor.indicator-width', 'Indicator Width', 'text', 'Core'),
+      componentField('anchor.link-color', 'Link Color', 'color', 'Core'),
+      componentField('anchor.link-color-hover', 'Link Hover Color', 'color', 'Core'),
+      componentField('anchor.indicator-color-hover', 'Indicator Hover', 'color', 'Core'),
+      componentField('anchor.item-bg-hover', 'Hover Background', 'color', 'Core'),
+      componentField('anchor.item-radius', 'Item Radius', 'text', 'Core'),
+      componentField('anchor.padding-inline', 'Padding Inline', 'text', 'Spacing'),
+      componentField('anchor.padding-block', 'Padding Block', 'text', 'Spacing')
     ]
   }
 ]

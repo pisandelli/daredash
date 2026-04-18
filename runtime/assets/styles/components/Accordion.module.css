@@ -7,18 +7,21 @@
   --local-header-padding: v('accordion.header.padding');
   --local-header-font-family: v('accordion.header.font-family');
   --local-header-font-size: v('accordion.header.font-size');
+  --local-header-gap: v('accordion.header.gap');
+  --local-header-title-gap: v('accordion.header.title-gap');
+  --local-header-chevron-size: v('accordion.header.chevron-size');
   --local-content-padding: v('accordion.content.padding');
   --local-content-bg: v('accordion.content.background-color', v('color.gray.50'));
   --local-content-font-family: v('accordion.content.font-family');
   --local-title-color: v('color.text.default');
-  --local-accent: v('color.primary');
+  --local-accent: v('accordion.accent-color');
 
   /* -- Semantic Variants -- */
-  &[data-primary] { --local-accent: v('color.primary'); }
-  &[data-success] { --local-accent: v('color.success'); }
-  &[data-warning] { --local-accent: v('color.warning'); }
-  &[data-danger]  { --local-accent: v('color.danger'); }
-  &[data-info]    { --local-accent: v('color.info'); }
+  &[data-primary] { --local-accent: v('accordion.primary.accent-color'); }
+  &[data-success] { --local-accent: v('accordion.success.accent-color'); }
+  &[data-warning] { --local-accent: v('accordion.warning.accent-color'); }
+  &[data-danger]  { --local-accent: v('accordion.danger.accent-color'); }
+  &[data-info]    { --local-accent: v('accordion.info.accent-color'); }
 
   /* -- Dynamic Calculations -- */
   --local-header-bg-hover: color-mix(in srgb, var(--local-accent), transparent 90%);
@@ -69,7 +72,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--local-header-gap);
 
   /* -- Typography -- */
   font-family: var(--local-header-font-family);
@@ -109,7 +112,7 @@
 .titlewrapper {
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: var(--local-header-title-gap);
   min-inline-size: 0;
 }
 
@@ -126,7 +129,7 @@
 }
 
 .icon {
-  font-size: 1.125rem;
+  font-size: var(--local-header-chevron-size);
   color: color-mix(in srgb, var(--local-title-color) 68%, transparent);
   transition: transform v('transition.base'), color v('transition.fast');
   display: flex;

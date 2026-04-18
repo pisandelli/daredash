@@ -50,9 +50,12 @@
     }
   },
   "letter-spacing": {
-    "$value": "0.8"
+    "$value": "0.05em"
   },
   "text-transform": {
     "$value": "none"
+  },
+  "gap": {
+    "$value": "{space.xxs}"
   }
 }
