@@ -97,7 +97,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('button.base-color', 'Base Color', 'color', 'Core'),
       componentField('button.border-radius', 'Border Radius', 'text', 'Core'),
       componentField('button.font-family', 'Font Family', 'text', 'Core'),
-      componentField('button.font-weight', 'Font Weight', 'text', 'Core', '700'),
+      componentField('button.font-weight', 'Font Weight', 'text', 'Core', '500'),
       {
         path: 'button.text-transform',
         label: 'Text Transform',

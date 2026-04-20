@@ -11,7 +11,7 @@
     "$value": "{font.base}"
   },
   "font-weight": {
-    "$value": "{font-weight.bold}"
+    "$value": "{font-weight.medium}"
   },
   "text-transform": {
     "$value": "uppercase"
