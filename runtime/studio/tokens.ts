@@ -1,10 +1,6 @@
 import primitives from '../assets/styles/tokens/default-theme/primitives.json'
-import accordion from '../assets/styles/tokens/default-theme/components/accordion.json'
-import button from '../assets/styles/tokens/default-theme/components/button.json'
-import badge from '../assets/styles/tokens/default-theme/components/badge.json'
-import alert from '../assets/styles/tokens/default-theme/components/alert.json'
-import anchor from '../assets/styles/tokens/default-theme/components/anchor.json'
 import type { StudioFieldDefinition } from './types'
+import { STUDIO_COMPONENT_TOKENS } from './componentTokens'
 
 function getTokenNode(tokens: any, path: string): Record<string, any> | null {
   if (!tokens || !path) return null
@@ -77,13 +73,7 @@ export function rawTokenValue(path: string): string | undefined {
 
 const flatTokens = flattenTokens({
   primitives,
-  components: {
-    accordion,
-    button,
-    badge,
-    alert,
-    anchor
-  }
+  components: STUDIO_COMPONENT_TOKENS
 })
 
 const PRIMITIVE_SECTION_META: Record<string, string> = {

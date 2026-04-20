@@ -1,4 +1,5 @@
 import type { StudioTabDefinition } from './types'
+import type { StudioComponentTokenId } from './componentTokens'
 import BasePreview from './previews/BasePreview.vue'
 import TypographyPreview from './previews/TypographyPreview.vue'
 import AccordionPreview from './previews/AccordionPreview.vue'
@@ -14,6 +15,22 @@ import {
   typographyStudioFields
 } from './tokens'
 import type { StudioFieldDefinition } from './types'
+
+function foundationTab(tab: StudioTabDefinition): StudioTabDefinition {
+  return tab
+}
+
+function componentTab(
+  id: StudioComponentTokenId,
+  tab: Omit<StudioTabDefinition, 'id' | 'navigationKind' | 'tokenGroup'>
+): StudioTabDefinition {
+  return {
+    id,
+    navigationKind: 'component',
+    tokenGroup: 'components',
+    ...tab
+  }
+}
 
 function componentField(
   path: string,
@@ -34,27 +51,24 @@ function componentField(
 }
 
 export const STUDIO_TABS: StudioTabDefinition[] = [
-  {
+  foundationTab({
     id: 'base',
     label: 'Base',
     navigationKind: 'foundation',
     tokenGroup: 'primitives',
     preview: BasePreview,
     fields: primitiveStudioFields()
-  },
-  {
+  }),
+  foundationTab({
     id: 'typography',
     label: 'Typography',
     navigationKind: 'foundation',
     tokenGroup: 'primitives',
     preview: TypographyPreview,
     fields: typographyStudioFields()
-  },
-  {
-    id: 'accordion',
+  }),
+  componentTab('accordion', {
     label: 'Accordion',
-    navigationKind: 'component',
-    tokenGroup: 'components',
     preview: AccordionPreview,
     fields: [
       componentField('accordion.accent-color', 'Accent Color', 'color', 'Core'),
@@ -75,12 +89,9 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('accordion.content.background-color', 'Content Background', 'color', 'Content'),
       componentField('accordion.content.font-family', 'Content Font Family', 'text', 'Content')
     ]
-  },
-  {
-    id: 'button',
+  }),
+  componentTab('button', {
     label: 'Button',
-    navigationKind: 'component',
-    tokenGroup: 'components',
     preview: ButtonPreview,
     fields: [
       componentField('button.base-color', 'Base Color', 'color', 'Core'),
@@ -123,12 +134,9 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('button.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
       componentField('button.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
-  },
-  {
-    id: 'badge',
+  }),
+  componentTab('badge', {
     label: 'Badge',
-    navigationKind: 'component',
-    tokenGroup: 'components',
     preview: BadgePreview,
     fields: [
       componentField('badge.base-color', 'Base Color', 'color', 'Core'),
@@ -156,12 +164,9 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('badge.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
       componentField('badge.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
-  },
-  {
-    id: 'alert',
+  }),
+  componentTab('alert', {
     label: 'Alert',
-    navigationKind: 'component',
-    tokenGroup: 'components',
     preview: AlertPreview,
     fields: [
       componentField('alert.base-color', 'Base Color', 'color', 'Core'),
@@ -183,12 +188,9 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('alert.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
       componentField('alert.error.base-color', 'Error Color', 'color', 'Semantic', '#ef4444'),
       componentField('alert.info.base-color', 'Info Color', 'color', 'Semantic')    ]
-  },
-  {
-    id: 'anchor',
+  }),
+  componentTab('anchor', {
     label: 'Anchor',
-    navigationKind: 'component',
-    tokenGroup: 'components',
     preview: AnchorPreview,
     fields: [
       componentField('anchor.active-font-weight', 'Active Font Weight', 'text', 'Typography'),
@@ -206,5 +208,5 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('anchor.padding-inline', 'Padding Inline', 'text', 'Spacing'),
       componentField('anchor.padding-block', 'Padding Block', 'text', 'Spacing')
     ]
-  }
+  })
 ]

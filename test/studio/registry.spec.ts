@@ -2,21 +2,16 @@ import { describe, it, expect } from 'vitest'
 import { flattenTokens, resolveTokenValue } from '../../src/utils/tokens'
 import { STUDIO_TABS } from '../../runtime/studio/registry'
 import primitives from '../../runtime/assets/styles/tokens/default-theme/primitives.json'
-import accordion from '../../runtime/assets/styles/tokens/default-theme/components/accordion.json'
-import button from '../../runtime/assets/styles/tokens/default-theme/components/button.json'
-import badge from '../../runtime/assets/styles/tokens/default-theme/components/badge.json'
-import alert from '../../runtime/assets/styles/tokens/default-theme/components/alert.json'
+import {
+  STUDIO_COMPONENT_TOKENS,
+  type StudioComponentTokenId
+} from '../../runtime/studio/componentTokens'
 
 describe('DareDash Studio registry', () => {
   it('maps every field path to a real token', () => {
     const rawTokens = {
       primitives,
-      components: {
-        accordion,
-        button,
-        badge,
-        alert
-      }
+      components: STUDIO_COMPONENT_TOKENS
     }
     const flat = flattenTokens(rawTokens)
     const fields = STUDIO_TABS.flatMap((tab) => tab.fields)
@@ -59,6 +54,26 @@ describe('DareDash Studio registry', () => {
 
     expect(errorAlias?.referencePath).toBe('color.danger.500')
     expect(borderAlias?.referencePath).toBe('color.light-gray')
+  })
+
+  it('keeps every component tab backed by a shared token source', () => {
+    const componentTabs = STUDIO_TABS.filter((tab) => tab.navigationKind === 'component')
+
+    for (const tab of componentTabs) {
+      expect(STUDIO_COMPONENT_TOKENS[tab.id as StudioComponentTokenId]).toBeDefined()
+    }
+  })
+
+  it('keeps every shared component token exposed by a studio tab', () => {
+    const componentTabIds = new Set(
+      STUDIO_TABS
+        .filter((tab) => tab.navigationKind === 'component')
+        .map((tab) => tab.id)
+    )
+
+    for (const componentId of Object.keys(STUDIO_COMPONENT_TOKENS) as StudioComponentTokenId[]) {
+      expect(componentTabIds.has(componentId)).toBe(true)
+    }
   })
 
   it('registers accordion with preserved token references', () => {

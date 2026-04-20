@@ -93,22 +93,40 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     return normalized
   }
 
-  function resolveValue(path: string, visited = new Set<string>()): string {
+  function defaultModeForPath(path: string): TokenEditorMode {
+    return fieldsMap[path]?.referencePath ? 'reference' : 'literal'
+  }
+
+  function defaultLiteralValueForPath(path: string): string {
+    return fieldsMap[path]?.defaultValue ?? ''
+  }
+
+  function defaultReferencePathForPath(path: string): string {
+    return fieldsMap[path]?.referencePath ?? ''
+  }
+
+  function resolveValue(
+    path: string,
+    visited = new Set<string>(),
+    modeValues: TokenModeValues = modes.value,
+    literalValueMap: TokenValues = literalValues.value,
+    referenceValueMap: TokenValues = references.value
+  ): string {
     if (visited.has(path)) {
-      return literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+      return literalValueMap[path] ?? defaultLiteralValueForPath(path)
     }
 
-    const mode = modes.value[path] ?? 'literal'
-    const literalValue = literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+    const mode = modeValues[path] ?? defaultModeForPath(path)
+    const literalValue = literalValueMap[path] ?? defaultLiteralValueForPath(path)
 
     if (mode !== 'reference') return literalValue
 
-    const referencePath = normalizeReferencePath(path, references.value[path] ?? '')
+    const referencePath = normalizeReferencePath(path, referenceValueMap[path] ?? '')
     if (!referencePath) return literalValue
 
     if (referencePath in fieldsMap) {
       visited.add(path)
-      return resolveValue(referencePath, visited)
+      return resolveValue(referencePath, visited, modeValues, literalValueMap, referenceValueMap)
     }
 
     return tokenValue(referencePath, literalValue)
@@ -137,6 +155,26 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     return rawValueForPath(path) !== defaultRawValue(path)
   }
 
+  const defaultModeValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultModeForPath(field.path)])
+  ) as TokenModeValues
+  const defaultLiteralValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultLiteralValueForPath(field.path)])
+  )
+  const defaultReferenceValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultReferencePathForPath(field.path)])
+  )
+
+  function defaultResolvedValue(path: string): string {
+    return resolveValue(
+      path,
+      new Set<string>(),
+      defaultModeValues,
+      defaultLiteralValues,
+      defaultReferenceValues
+    )
+  }
+
   /** Computed flag — true when any value differs from its default */
   const hasChanges = computed(() => allFields.some((f) => isFieldChanged(f.path)))
 
@@ -144,7 +182,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     const style: Record<string, string> = {}
     for (const [path, val] of Object.entries(values.value)) {
       const field = fieldsMap[path]
-      if (!field || !isFieldChanged(path)) continue
+      if (!field || val === defaultResolvedValue(path)) continue
       style[pathToCssVar(path, prefix)] = val
     }
     return style

@@ -60,13 +60,15 @@ describe('useThemeEditor', () => {
           path: 'button.base-color',
           label: 'Base Color',
           type: 'color',
-          defaultValue: '#0984e3'
+          defaultValue: '#0984e3',
+          rawDefaultValue: '{color.primary.600}',
+          referencePath: 'color.primary.600'
         }
       ]
     }
   ]
 
-  it('tracks changes and exposes scoped preview overrides', () => {
+  it('tracks changes and exposes scoped preview overrides for direct and dependent tokens', () => {
     const { hasChanges, previewStyle, previewCss, setLiteralValue } = useThemeEditor(tabs)
 
     expect(hasChanges.value).toBe(false)
@@ -77,15 +79,18 @@ describe('useThemeEditor', () => {
 
     expect(hasChanges.value).toBe(true)
     expect(previewStyle.value['--dd-color-primary-600']).toBe('#000000')
+    expect(previewStyle.value['--dd-button-base-color']).toBe('#000000')
     expect(previewCss.value).toContain('.dd-studio-root .dd-studio-preview-scope *')
     expect(previewCss.value).toContain('--dd-color-primary-600: #000000;')
+    expect(previewCss.value).toContain('--dd-button-base-color: #000000;')
     expect(previewCss.value).not.toContain(':root')
   })
 
   it('exports delta tokens grouped by primitives/components', () => {
-    const { setLiteralValue, exportTokensJson } = useThemeEditor(tabs)
+    const { setLiteralValue, setMode, exportTokensJson } = useThemeEditor(tabs)
 
     setLiteralValue('color.primary.600', '#101010')
+    setMode('button.base-color', 'literal')
     setLiteralValue('button.base-color', '#202020')
 
     const parsed = JSON.parse(exportTokensJson())
@@ -103,7 +108,7 @@ describe('useThemeEditor', () => {
 
     expect(values.value['color.error.500']).toBe('#aa0000')
     expect(previewStyle.value['--dd-color-danger-500']).toBe('#aa0000')
-    expect(previewStyle.value['--dd-color-error-500']).toBeUndefined()
+    expect(previewStyle.value['--dd-color-error-500']).toBe('#aa0000')
 
     const parsed = JSON.parse(exportTokensJson())
 
