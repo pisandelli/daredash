@@ -30,7 +30,7 @@
   font-size: var(--local-font-size);
   font-family: var(--local-font-family);
   text-decoration: none;
-  transition: color v('transition.duration.normal') ease;
+  transition: color v('transition.base') ease;
 }
 
 .link:hover {

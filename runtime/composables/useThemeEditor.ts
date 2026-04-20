@@ -152,7 +152,18 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   }
 
   function isFieldChanged(path: string): boolean {
-    return rawValueForPath(path) !== defaultRawValue(path)
+    const currentMode = modes.value[path] ?? defaultModeForPath(path)
+    const initialMode = defaultModeForPath(path)
+
+    if (currentMode !== initialMode) return true
+
+    if (currentMode === 'reference') {
+      const currentReference = normalizeReferencePath(path, references.value[path] ?? '')
+      const defaultReference = defaultReferencePathForPath(path)
+      return currentReference !== defaultReference
+    }
+
+    return (literalValues.value[path] ?? '') !== defaultLiteralValueForPath(path)
   }
 
   const defaultModeValues = Object.fromEntries(

@@ -1,12 +1,22 @@
 import type { StudioTabDefinition } from './types'
 import type { StudioComponentTokenId } from './componentTokens'
+import type { StudioComponentCategory } from './types'
 import BasePreview from './previews/BasePreview.vue'
 import TypographyPreview from './previews/TypographyPreview.vue'
 import AccordionPreview from './previews/AccordionPreview.vue'
 import ButtonPreview from './previews/ButtonPreview.vue'
 import BadgePreview from './previews/BadgePreview.vue'
+import BreadcrumbPreview from './previews/BreadcrumbPreview.vue'
+import BoxPreview from './previews/BoxPreview.vue'
 import AlertPreview from './previews/AlertPreview.vue'
 import AnchorPreview from './previews/AnchorPreview.vue'
+import AvatarPreview from './previews/AvatarPreview.vue'
+import CardPreview from './previews/CardPreview.vue'
+import CenterPreview from './previews/CenterPreview.vue'
+import ClusterPreview from './previews/ClusterPreview.vue'
+import GridPreview from './previews/GridPreview.vue'
+import LayoutPreview from './previews/LayoutPreview.vue'
+import StackPreview from './previews/StackPreview.vue'
 import {
   primitiveStudioFields,
   rawTokenValue,
@@ -22,12 +32,14 @@ function foundationTab(tab: StudioTabDefinition): StudioTabDefinition {
 
 function componentTab(
   id: StudioComponentTokenId,
+  category: StudioComponentCategory,
   tab: Omit<StudioTabDefinition, 'id' | 'navigationKind' | 'tokenGroup'>
 ): StudioTabDefinition {
   return {
     id,
     navigationKind: 'component',
     tokenGroup: 'components',
+    componentCategory: category,
     ...tab
   }
 }
@@ -67,7 +79,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     preview: TypographyPreview,
     fields: typographyStudioFields()
   }),
-  componentTab('accordion', {
+  componentTab('accordion', 'widget', {
     label: 'Accordion',
     preview: AccordionPreview,
     fields: [
@@ -90,7 +102,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('accordion.content.font-family', 'Content Font Family', 'text', 'Content')
     ]
   }),
-  componentTab('button', {
+  componentTab('button', 'primitive', {
     label: 'Button',
     preview: ButtonPreview,
     fields: [
@@ -135,7 +147,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('button.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
   }),
-  componentTab('badge', {
+  componentTab('badge', 'primitive', {
     label: 'Badge',
     preview: BadgePreview,
     fields: [
@@ -165,7 +177,92 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('badge.info.base-color', 'Info Color', 'color', 'Semantic')
     ]
   }),
-  componentTab('alert', {
+  componentTab('breadcrumbs', 'primitive', {
+    label: 'Breadcrumbs',
+    preview: BreadcrumbPreview,
+    fields: [
+      componentField('breadcrumbs.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('breadcrumbs.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('breadcrumbs.gap', 'Gap', 'text', 'Spacing'),
+      componentField('breadcrumbs.item.color', 'Item Color', 'color', 'Items'),
+      componentField('breadcrumbs.item.hover-color', 'Item Hover Color', 'color', 'Items'),
+      componentField('breadcrumbs.item-current.color', 'Current Item Color', 'color', 'Current'),
+      componentField('breadcrumbs.item-current.font-weight', 'Current Item Weight', 'text', 'Current', '700'),
+      componentField('breadcrumbs.separator.color', 'Separator Color', 'color', 'Separator')
+    ]
+  }),
+  componentTab('card', 'primitive', {
+    label: 'Card',
+    preview: CardPreview,
+    fields: [
+      componentField('card.background-color', 'Background Color', 'color', 'Core'),
+      componentField('card.color', 'Text Color', 'color', 'Core'),
+      componentField('card.border-color', 'Border Color', 'color', 'Core'),
+      componentField('card.border-width', 'Border Width', 'text', 'Core'),
+      componentField('card.border-style', 'Border Style', 'text', 'Core'),
+      componentField('card.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('card.box-shadow', 'Box Shadow', 'text', 'Core'),
+      componentField('card.max-width', 'Max Width', 'text', 'Layout'),
+      componentField('card.padding', 'Body Padding', 'text', 'Layout'),
+      componentField('card.header.padding', 'Header Padding', 'text', 'Header'),
+      componentField('card.header.border-color', 'Header Border Color', 'color', 'Header'),
+      componentField('card.header.border-width', 'Header Border Width', 'text', 'Header'),
+      componentField('card.footer.padding', 'Footer Padding', 'text', 'Footer'),
+      componentField('card.footer.border-color', 'Footer Border Color', 'color', 'Footer'),
+      componentField('card.footer.border-width', 'Footer Border Width', 'text', 'Footer')
+    ]
+  }),
+  componentTab('center', 'layout', {
+    label: 'Center',
+    preview: CenterPreview,
+    fields: [
+      componentField('center.gap', 'Inline Padding', 'text', 'Layout'),
+      componentField('center.max-width', 'Max Width', 'text', 'Layout')
+    ]
+  }),
+  componentTab('cluster', 'layout', {
+    label: 'Cluster',
+    preview: ClusterPreview,
+    fields: [
+      componentField('cluster.gap', 'Base Gap', 'text', 'Layout'),
+      componentField('cluster.narrow.gap', 'Narrow Gap', 'text', 'Variants'),
+      componentField('cluster.wide.gap', 'Wide Gap', 'text', 'Variants')
+    ]
+  }),
+  componentTab('grid', 'layout', {
+    label: 'Grid',
+    preview: GridPreview,
+    fields: [
+      componentField('grid.column-min-width', 'Column Min Width', 'text', 'Layout'),
+      componentField('grid.gap', 'Gap', 'text', 'Layout')
+    ]
+  }),
+  componentTab('layout', 'layout', {
+    label: 'Layout',
+    preview: LayoutPreview,
+    fields: [
+      componentField('layout.header-height', 'Header Height', 'text', 'Structure'),
+      componentField('layout.gap', 'Section Gap', 'text', 'Structure'),
+      componentField('layout.footer-height', 'Footer Height', 'text', 'Structure')
+    ]
+  }),
+  componentTab('stack', 'layout', {
+    label: 'Stack',
+    preview: StackPreview,
+    fields: [
+      componentField('stack.gap', 'Base Gap', 'text', 'Layout'),
+      componentField('stack.compact.gap', 'Compact Gap', 'text', 'Variants'),
+      componentField('stack.spaced.gap', 'Spaced Gap', 'text', 'Variants')
+    ]
+  }),
+  componentTab('box', 'layout', {
+    label: 'Box',
+    preview: BoxPreview,
+    fields: [
+      componentField('box.gap', 'All-Sides Padding', 'text', 'Core')
+    ]
+  }),
+  componentTab('alert', 'primitive', {
     label: 'Alert',
     preview: AlertPreview,
     fields: [
@@ -189,7 +286,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('alert.error.base-color', 'Error Color', 'color', 'Semantic', '#ef4444'),
       componentField('alert.info.base-color', 'Info Color', 'color', 'Semantic')    ]
   }),
-  componentTab('anchor', {
+  componentTab('anchor', 'widget', {
     label: 'Anchor',
     preview: AnchorPreview,
     fields: [
@@ -207,6 +304,23 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('anchor.item-radius', 'Item Radius', 'text', 'Core'),
       componentField('anchor.padding-inline', 'Padding Inline', 'text', 'Spacing'),
       componentField('anchor.padding-block', 'Padding Block', 'text', 'Spacing')
+    ]
+  }),
+  componentTab('avatar', 'primitive', {
+    label: 'Avatar',
+    preview: AvatarPreview,
+    fields: [
+      componentField('avatar.size', 'Base Size', 'text', 'Core'),
+      componentField('avatar.overlap', 'Group Overlap', 'text', 'Core'),
+      componentField('avatar.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('avatar.background-color', 'Background Color', 'color', 'Colors'),
+      componentField('avatar.color', 'Text Color', 'color', 'Colors'),
+      componentField('avatar.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('avatar.font-weight', 'Font Weight', 'text', 'Typography', '500'),
+      componentField('avatar.sm.size', 'Small Size', 'text', 'Sizes'),
+      componentField('avatar.sm.font-size', 'Small Font Size', 'text', 'Sizes'),
+      componentField('avatar.lg.size', 'Large Size', 'text', 'Sizes'),
+      componentField('avatar.lg.font-size', 'Large Font Size', 'text', 'Sizes')
     ]
   })
 ]

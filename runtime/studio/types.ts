@@ -16,12 +16,14 @@ export interface StudioFieldDefinition {
 
 export type StudioTokenGroup = 'primitives' | 'components'
 export type StudioNavigationKind = 'foundation' | 'component'
+export type StudioComponentCategory = 'layout' | 'primitive' | 'form' | 'widget'
 
 export interface StudioTabDefinition {
   id: string
   label: string
   navigationKind: StudioNavigationKind
   tokenGroup: StudioTokenGroup
+  componentCategory?: StudioComponentCategory
   fields: StudioFieldDefinition[]
   preview: Component
 }

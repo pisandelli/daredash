@@ -17,7 +17,7 @@
   },
   "color": {
     "$description": "Text color (for initials)",
-    "$value": "{color.text-light}"
+    "$value": "{color.white}"
   },
   "font-size": {
     "$value": "{font-size.md}"

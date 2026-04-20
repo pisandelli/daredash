@@ -1,11 +1,7 @@
 .box {
-  /* -- Local Tokens -- */
   --local-gap: v('box.gap');
 
-  /* -- Layout -- */
   padding: var(--local-gap);
-
-  /* -- Variants -- */
   &[data-nogap]:not([data-nogap='false']) {
     --local-gap: 0;
     overflow: clip;

@@ -3,7 +3,11 @@ import { ref, computed, nextTick, provide } from 'vue'
 import { useThemeEditor } from '#dd/composables/useThemeEditor'
 import { STUDIO_TABS } from '../studio/registry'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../studio/interaction'
-import type { StudioFieldDefinition, StudioTabDefinition } from '../studio/types'
+import type {
+  StudioComponentCategory,
+  StudioFieldDefinition,
+  StudioTabDefinition
+} from '../studio/types'
 
 definePageMeta({ layout: false })
 
@@ -35,6 +39,30 @@ const filteredComponentTabs = computed(() => {
   const query = componentSearch.value.trim().toLowerCase()
   if (!query) return componentTabs.value
   return componentTabs.value.filter((tab) => tab.label.toLowerCase().includes(query))
+})
+
+const COMPONENT_CATEGORY_LABELS: Record<StudioComponentCategory, string> = {
+  layout: 'Layout',
+  primitive: 'Primitives',
+  form: 'Forms',
+  widget: 'Widgets'
+}
+
+const COMPONENT_CATEGORY_ORDER: StudioComponentCategory[] = [
+  'layout',
+  'primitive',
+  'form',
+  'widget'
+]
+
+const groupedComponentTabs = computed(() => {
+  return COMPONENT_CATEGORY_ORDER
+    .map((category) => ({
+      category,
+      label: COMPONENT_CATEGORY_LABELS[category],
+      tabs: filteredComponentTabs.value.filter((tab) => tab.componentCategory === category)
+    }))
+    .filter((group) => group.tabs.length > 0)
 })
 
 const {
@@ -263,30 +291,39 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                 autocomplete="off"
               />
               <div class="dde-component-list" role="listbox">
-                <button
-                  v-for="tab in filteredComponentTabs"
-                  :key="tab.id"
-                  type="button"
-                  class="dde-component-option"
-                  :class="{ 'dde-component-option-active': activeTabId === tab.id }"
-                  role="option"
-                  :aria-selected="activeTabId === tab.id"
-                  @click="selectTab(tab)"
+                <div
+                  v-for="group in groupedComponentTabs"
+                  :key="group.category"
+                  class="dde-component-group"
                 >
-                  <span class="dde-component-option-label">
-                    {{ tab.label }}
-                    <span
-                      v-if="activeTabId === tab.id"
-                      class="dde-component-selected-dot"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
-                    {{ tabChangeCount(tab) }}
-                  </span>
-                </button>
+                  <p class="dde-component-separator">
+                    {{ group.label }}
+                  </p>
+                  <button
+                    v-for="tab in group.tabs"
+                    :key="tab.id"
+                    type="button"
+                    class="dde-component-option"
+                    :class="{ 'dde-component-option-active': activeTabId === tab.id }"
+                    role="option"
+                    :aria-selected="activeTabId === tab.id"
+                    @click="selectTab(tab)"
+                  >
+                    <span class="dde-component-option-label">
+                      {{ tab.label }}
+                      <span
+                        v-if="activeTabId === tab.id"
+                        class="dde-component-selected-dot"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
+                      {{ tabChangeCount(tab) }}
+                    </span>
+                  </button>
+                </div>
                 <p
-                  v-if="!filteredComponentTabs.length"
+                  v-if="!groupedComponentTabs.length"
                   class="dde-component-empty"
                 >
                   No components found.
@@ -722,10 +759,45 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 .dde-component-list {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.6rem;
   max-block-size: 16rem;
   overflow-y: auto;
   margin-block-start: 0.55rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255 255 255 / 0.14) transparent;
+}
+
+.dde-component-list::-webkit-scrollbar {
+  inline-size: 0.45rem;
+}
+
+.dde-component-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dde-component-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.14);
+}
+
+.dde-component-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255 255 255 / 0.22);
+}
+
+.dde-component-group {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.dde-component-separator {
+  margin: 0;
+  padding: 0.2rem 0.45rem 0.45rem;
+  border-bottom: 1px solid var(--studio-border);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--studio-text-muted);
 }
 
 .dde-component-option {
@@ -788,6 +860,25 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255 255 255 / 0.14) transparent;
+}
+
+.dde-fields::-webkit-scrollbar {
+  inline-size: 0.45rem;
+}
+
+.dde-fields::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dde-fields::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.14);
+}
+
+.dde-fields::-webkit-scrollbar-thumb:hover {
+  background: rgba(255 255 255 / 0.22);
 }
 
 .dde-field-group {

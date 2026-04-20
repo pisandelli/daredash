@@ -86,4 +86,97 @@ describe('DareDash Studio registry', () => {
     expect(headerPadding?.referencePath).toBe('space.md')
     expect(contentPadding?.referencePath).toBe('accordion.header.padding')
   })
+
+  it('registers avatar with preserved token references', () => {
+    const avatarTab = STUDIO_TABS.find((tab) => tab.id === 'avatar')
+    const avatarSize = avatarTab?.fields.find((field) => field.path === 'avatar.size')
+    const avatarBackground = avatarTab?.fields.find((field) => field.path === 'avatar.background-color')
+
+    expect(avatarTab).toBeDefined()
+    expect(avatarTab!.navigationKind).toBe('component')
+    expect(avatarSize?.referencePath).toBe('space.sl')
+    expect(avatarBackground?.referencePath).toBe('color.gray')
+  })
+
+  it('registers breadcrumbs with preserved token references', () => {
+    const breadcrumbsTab = STUDIO_TABS.find((tab) => tab.id === 'breadcrumbs')
+    const fontSizeField = breadcrumbsTab?.fields.find((field) => field.path === 'breadcrumbs.font-size')
+    const gapField = breadcrumbsTab?.fields.find((field) => field.path === 'breadcrumbs.gap')
+    const hoverField = breadcrumbsTab?.fields.find((field) => field.path === 'breadcrumbs.item.hover-color')
+
+    expect(breadcrumbsTab).toBeDefined()
+    expect(breadcrumbsTab!.navigationKind).toBe('component')
+    expect(fontSizeField?.referencePath).toBe('font-size.sm')
+    expect(gapField?.referencePath).toBe('space.xs')
+    expect(hoverField?.referencePath).toBe('color.primary')
+  })
+
+  it('registers card with preserved token references', () => {
+    const cardTab = STUDIO_TABS.find((tab) => tab.id === 'card')
+    const backgroundField = cardTab?.fields.find((field) => field.path === 'card.background-color')
+    const radiusField = cardTab?.fields.find((field) => field.path === 'card.border-radius')
+    const headerPaddingField = cardTab?.fields.find((field) => field.path === 'card.header.padding')
+
+    expect(cardTab).toBeDefined()
+    expect(cardTab!.navigationKind).toBe('component')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface')
+    expect(radiusField?.referencePath).toBe('border-radius.lg')
+    expect(headerPaddingField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers center with preserved token references', () => {
+    const centerTab = STUDIO_TABS.find((tab) => tab.id === 'center')
+    const gapField = centerTab?.fields.find((field) => field.path === 'center.gap')
+    const maxWidthField = centerTab?.fields.find((field) => field.path === 'center.max-width')
+
+    expect(centerTab).toBeDefined()
+    expect(centerTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.lg')
+    expect(maxWidthField?.referencePath).toBe('max-width')
+  })
+
+  it('registers cluster with preserved token references', () => {
+    const clusterTab = STUDIO_TABS.find((tab) => tab.id === 'cluster')
+    const gapField = clusterTab?.fields.find((field) => field.path === 'cluster.gap')
+
+    expect(clusterTab).toBeDefined()
+    expect(clusterTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers grid with preserved token references', () => {
+    const gridTab = STUDIO_TABS.find((tab) => tab.id === 'grid')
+    const gapField = gridTab?.fields.find((field) => field.path === 'grid.gap')
+
+    expect(gridTab).toBeDefined()
+    expect(gridTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers layout structure tokens', () => {
+    const layoutTab = STUDIO_TABS.find((tab) => tab.id === 'layout')
+    const gapField = layoutTab?.fields.find((field) => field.path === 'layout.gap')
+
+    expect(layoutTab).toBeDefined()
+    expect(layoutTab!.navigationKind).toBe('component')
+    expect(gapField?.defaultValue).toBe('0')
+  })
+
+  it('registers stack with preserved token references', () => {
+    const stackTab = STUDIO_TABS.find((tab) => tab.id === 'stack')
+    const gapField = stackTab?.fields.find((field) => field.path === 'stack.gap')
+
+    expect(stackTab).toBeDefined()
+    expect(stackTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers box with preserved token references', () => {
+    const boxTab = STUDIO_TABS.find((tab) => tab.id === 'box')
+    const gapField = boxTab?.fields.find((field) => field.path === 'box.gap')
+
+    expect(boxTab).toBeDefined()
+    expect(boxTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.lg')
+  })
 })
