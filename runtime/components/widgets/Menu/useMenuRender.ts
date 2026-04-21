@@ -108,6 +108,7 @@ export function useMenuRender(
             'aria-hidden': 'true'
           })
         : null
+      const linkChildren = [...renderLinkContent(item, hideLabel), ...(chevronNode ? [chevronNode] : [])]
 
       let linkElement: VNode
 
@@ -137,7 +138,7 @@ export function useMenuRender(
             : hasChildren
               ? (e: Event) => { e.preventDefault(); options.toggleExpand(item.key) }
               : undefined
-        }, { default: () => [...renderLinkContent(item, hideLabel), chevronNode] })
+        }, { default: () => linkChildren })
       } else {
         linkElement = h('button', {
           type: 'button',
@@ -168,7 +169,7 @@ export function useMenuRender(
                   options.emit('select', { key: item.key, item })
                 }
               }
-        }, [...renderLinkContent(item, hideLabel), chevronNode])
+        }, linkChildren)
       }
 
       let subMenu: VNode | null = null

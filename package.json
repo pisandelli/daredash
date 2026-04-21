@@ -4,7 +4,8 @@
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
   "main": "module.ts",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "lint:ts": "vue-tsc --noEmit -p tsconfig.json"
   },
   "author": "Pedro Pisandelli",
   "license": "ISC",

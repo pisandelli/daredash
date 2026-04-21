@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, type ComputedRef } from 'vue'
 import { useRoute } from 'nuxt/app'
 import type { MenuEntry } from './types'
 
@@ -9,7 +9,7 @@ interface UseMenuStateOptions {
 
 interface UseMenuStateReturn {
   internalCollapsed: ReturnType<typeof ref<boolean>>
-  isCollapsed: ReturnType<typeof computed<boolean>>
+  isCollapsed: ComputedRef<boolean>
   collapse: () => void
   expand: () => void
   toggle: () => void

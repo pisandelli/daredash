@@ -52,8 +52,13 @@ describe('AccordionGroup & Accordion', () => {
     const detailsElements = wrapper.findAll('details')
     expect(detailsElements.length).toBe(2)
 
-    const name1 = detailsElements[0].attributes('name')
-    const name2 = detailsElements[1].attributes('name')
+    const firstDetails = detailsElements[0]
+    const secondDetails = detailsElements[1]
+    expect(firstDetails).toBeDefined()
+    expect(secondDetails).toBeDefined()
+
+    const name1 = firstDetails!.attributes('name')
+    const name2 = secondDetails!.attributes('name')
 
     expect(name1).toBeDefined()
     expect(name1).toBe(name2) // Must share the exact same generated name
@@ -73,9 +78,13 @@ describe('AccordionGroup & Accordion', () => {
     })
 
     const detailsElements = wrapper.findAll('details')
+    const firstDetails = detailsElements[0]
+    const secondDetails = detailsElements[1]
+    expect(firstDetails).toBeDefined()
+    expect(secondDetails).toBeDefined()
 
     // Since multiple is true, no internal default name should be injected
-    expect(detailsElements[0].attributes('name')).toBeUndefined()
-    expect(detailsElements[1].attributes('name')).toBeUndefined()
+    expect(firstDetails!.attributes('name')).toBeUndefined()
+    expect(secondDetails!.attributes('name')).toBeUndefined()
   })
 })

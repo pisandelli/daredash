@@ -1,5 +1,4 @@
-import { ref, computed, type ComputedRef, onMounted, onUnmounted, nextTick, type PropType, type ComponentPublicInstance } from 'vue'
-import type { MenuEntry } from './types'
+import { ref, computed, type ComputedRef, onMounted, onUnmounted, nextTick } from 'vue'
 
 interface UseMenuFloatOptions {
   orientation: 'vertical' | 'horizontal'
@@ -22,7 +21,7 @@ interface UseMenuFloatReturn {
 
 export function useMenuFloat(
   props: { orientation: 'vertical' | 'horizontal' },
-  isCollapsed: ReturnType<typeof computed<boolean>>
+  isCollapsed: ComputedRef<boolean>
 ): UseMenuFloatReturn {
   const expandedKeys = ref<Set<string>>(new Set())
   const openFloatKey = ref<string | null>(null)

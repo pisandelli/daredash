@@ -21,8 +21,10 @@ describe('Anchor Widget', () => {
 
     const links = wrapper.findAll('a')
     expect(links.length).toBe(2)
-    expect(links[0].text()).toBe('Section 1')
-    expect(links[0].attributes('href')).toBe('#section1')
+    const firstLink = links[0]
+    expect(firstLink).toBeDefined()
+    expect(firstLink!.text()).toBe('Section 1')
+    expect(firstLink!.attributes('href')).toBe('#section1')
   })
 
   it('renders VNode title correctly', async () => {
@@ -61,13 +63,16 @@ describe('Anchor Widget', () => {
     })
 
     const firstLink = wrapper.findAll('a')[0]
-    await firstLink.trigger('click')
+    expect(firstLink).toBeDefined()
+    await firstLink!.trigger('click')
 
     const clickEvents = wrapper.emitted('click')
     expect(clickEvents).toBeDefined()
     expect(clickEvents!.length).toBe(1)
     
-    const emittedItem = clickEvents![0][1]
+    const firstEmission = clickEvents![0]
+    expect(firstEmission).toBeDefined()
+    const emittedItem = firstEmission![1]
     expect(emittedItem).toEqual(mockItems[0])
   })
 })

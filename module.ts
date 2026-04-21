@@ -179,7 +179,7 @@ export default defineNuxtModule<ModuleOptions>().with({
     nuxt.hook('builder:watch', async (event, path) => {
       if (path.startsWith(tokensDir) && path.endsWith('.json')) {
         if (debugMode) {
-          debugLog(`Token file ${event}: ${path}. Regenerating...`, 'info')
+          debugLog(`Token file ${event}: ${path}. Regenerating...`)
         }
         await setupTokens(options, nuxt, resolver)
       }
