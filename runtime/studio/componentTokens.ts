@@ -11,7 +11,11 @@ import center from '../assets/styles/tokens/default-theme/components/center.json
 import cluster from '../assets/styles/tokens/default-theme/components/cluster.json'
 import grid from '../assets/styles/tokens/default-theme/components/grid.json'
 import layout from '../assets/styles/tokens/default-theme/components/layout.json'
+import loading from '../assets/styles/tokens/default-theme/components/loading.json'
+import progress from '../assets/styles/tokens/default-theme/components/progress.json'
 import stack from '../assets/styles/tokens/default-theme/components/stack.json'
+import toast from '../assets/styles/tokens/default-theme/components/toast.json'
+import toaster from '../assets/styles/tokens/default-theme/components/toaster.json'
 
 export const STUDIO_COMPONENT_TOKENS = {
   accordion,
@@ -27,7 +31,11 @@ export const STUDIO_COMPONENT_TOKENS = {
   cluster,
   grid,
   layout,
-  stack
+  loading,
+  progress,
+  stack,
+  toast,
+  toaster
 } as const
 
 export type StudioComponentTokenId = keyof typeof STUDIO_COMPONENT_TOKENS

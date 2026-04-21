@@ -162,6 +162,41 @@ describe('DareDash Studio registry', () => {
     expect(gapField?.defaultValue).toBe('0')
   })
 
+  it('registers loading with preserved token references', () => {
+    const loadingTab = STUDIO_TABS.find((tab) => tab.id === 'loading')
+    const colorField = loadingTab?.fields.find((field) => field.path === 'loading.color')
+    const iconSizeField = loadingTab?.fields.find((field) => field.path === 'loading.icon-size')
+
+    expect(loadingTab).toBeDefined()
+    expect(loadingTab!.navigationKind).toBe('component')
+    expect(colorField?.referencePath).toBe('color.secondary')
+    expect(iconSizeField?.referencePath).toBe('space.xl')
+  })
+
+  it('registers progress with preserved token references', () => {
+    const progressTab = STUDIO_TABS.find((tab) => tab.id === 'progress')
+    const trackField = progressTab?.fields.find((field) => field.path === 'progress.background-color')
+    const indicatorField = progressTab?.fields.find((field) => field.path === 'progress.indicator.background-color')
+
+    expect(progressTab).toBeDefined()
+    expect(progressTab!.navigationKind).toBe('component')
+    expect(trackField?.referencePath).toBe('color.light-gray')
+    expect(indicatorField?.referencePath).toBe('color.primary')
+  })
+
+  it('registers toast with preserved token references', () => {
+    const toastTab = STUDIO_TABS.find((tab) => tab.id === 'toast')
+    const paddingField = toastTab?.fields.find((field) => field.path === 'toast.padding')
+    const shadowField = toastTab?.fields.find((field) => field.path === 'toast.box-shadow')
+    const iconField = toastTab?.fields.find((field) => field.path === 'toast.icon-color')
+
+    expect(toastTab).toBeDefined()
+    expect(toastTab!.navigationKind).toBe('component')
+    expect(paddingField?.referencePath).toBe('space.md')
+    expect(shadowField?.referencePath).toBe('card.box-shadow')
+    expect(iconField?.referencePath).toBe('color.info')
+  })
+
   it('registers stack with preserved token references', () => {
     const stackTab = STUDIO_TABS.find((tab) => tab.id === 'stack')
     const gapField = stackTab?.fields.find((field) => field.path === 'stack.gap')
@@ -169,6 +204,17 @@ describe('DareDash Studio registry', () => {
     expect(stackTab).toBeDefined()
     expect(stackTab!.navigationKind).toBe('component')
     expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers toaster with preserved token references', () => {
+    const toasterTab = STUDIO_TABS.find((tab) => tab.id === 'toaster')
+    const zIndexField = toasterTab?.fields.find((field) => field.path === 'toaster.z-index')
+    const gapField = toasterTab?.fields.find((field) => field.path === 'toaster.gap')
+
+    expect(toasterTab).toBeDefined()
+    expect(toasterTab!.navigationKind).toBe('component')
+    expect(zIndexField?.referencePath).toBe('z-index.9')
+    expect(gapField?.referencePath).toBe('space.sm')
   })
 
   it('registers box with preserved token references', () => {

@@ -16,7 +16,11 @@ import CenterPreview from './previews/CenterPreview.vue'
 import ClusterPreview from './previews/ClusterPreview.vue'
 import GridPreview from './previews/GridPreview.vue'
 import LayoutPreview from './previews/LayoutPreview.vue'
+import LoadingPreview from './previews/LoadingPreview.vue'
+import ProgressPreview from './previews/ProgressPreview.vue'
 import StackPreview from './previews/StackPreview.vue'
+import ToastPreview from './previews/ToastPreview.vue'
+import ToasterPreview from './previews/ToasterPreview.vue'
 import {
   primitiveStudioFields,
   rawTokenValue,
@@ -246,6 +250,65 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('layout.footer-height', 'Footer Height', 'text', 'Structure')
     ]
   }),
+  componentTab('loading', 'primitive', {
+    label: 'Loading',
+    preview: LoadingPreview,
+    fields: [
+      componentField('loading.animation', 'Animation', 'text', 'Core'),
+      componentField('loading.color', 'Color', 'color', 'Core'),
+      componentField('loading.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('loading.icon-size', 'Icon Size', 'text', 'Core'),
+      componentField('loading.gap', 'Gap', 'text', 'Spacing')
+    ]
+  }),
+  componentTab('progress', 'primitive', {
+    label: 'Progress',
+    preview: ProgressPreview,
+    fields: [
+      componentField('progress.background-color', 'Track Color', 'color', 'Core'),
+      componentField('progress.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('progress.indicator.background-color', 'Indicator Color', 'color', 'Indicator'),
+      componentField('progress.indicator.transition', 'Indicator Transition', 'text', 'Indicator'),
+      componentField('progress.indicator.primary.base-color', 'Primary Indicator', 'color', 'Semantic'),
+      componentField('progress.indicator.success.base-color', 'Success Indicator', 'color', 'Semantic'),
+      componentField('progress.indicator.warning.base-color', 'Warning Indicator', 'color', 'Semantic'),
+      componentField('progress.indicator.danger.base-color', 'Danger Indicator', 'color', 'Semantic'),
+      componentField('progress.indicator.info.base-color', 'Info Indicator', 'color', 'Semantic'),
+      componentField('progress.label.font-family', 'Label Font Family', 'text', 'Label'),
+      componentField('progress.label.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('progress.label.color', 'Label Color', 'color', 'Label'),
+      componentField('progress.tooltip.background-color', 'Tooltip Background', 'color', 'Tooltip'),
+      componentField('progress.tooltip.color', 'Tooltip Color', 'color', 'Tooltip'),
+      componentField('progress.tooltip.font-size', 'Tooltip Font Size', 'text', 'Tooltip'),
+      componentField('progress.tooltip.border-radius', 'Tooltip Radius', 'text', 'Tooltip'),
+      componentField('progress.tooltip.padding', 'Tooltip Padding', 'text', 'Tooltip'),
+      componentField('progress.tooltip.z-index', 'Tooltip Z-Index', 'text', 'Tooltip'),
+      componentField('progress.height.tiny', 'Height (tiny)', 'text', 'Sizes'),
+      componentField('progress.height.small', 'Height (small)', 'text', 'Sizes'),
+      componentField('progress.height.regular', 'Height (regular)', 'text', 'Sizes'),
+      componentField('progress.height.large', 'Height (large)', 'text', 'Sizes'),
+      componentField('progress.height.xlarge', 'Height (xlarge)', 'text', 'Sizes')
+    ]
+  }),
+  componentTab('toast', 'primitive', {
+    label: 'Toast',
+    preview: ToastPreview,
+    fields: [
+      componentField('toast.padding', 'Padding', 'text', 'Core'),
+      componentField('toast.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('toast.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('toast.box-shadow', 'Box Shadow', 'text', 'Core'),
+      componentField('toast.cluster-gap', 'Content Gap', 'text', 'Layout'),
+      componentField('toast.close-size', 'Close Size', 'text', 'Close'),
+      componentField('toast.bg-color', 'Background Color', 'color', 'Colors'),
+      componentField('toast.color', 'Text Color', 'color', 'Colors'),
+      componentField('toast.border-color', 'Border Color', 'color', 'Colors'),
+      componentField('toast.icon-color', 'Icon Color', 'color', 'Colors'),
+      componentField('toast.close-color', 'Close Color', 'color', 'Close'),
+      componentField('toast.close-hover-color', 'Close Hover Color', 'color', 'Close'),
+      componentField('toast.close-hover-bg', 'Close Hover Background', 'color', 'Close')
+    ]
+  }),
   componentTab('stack', 'layout', {
     label: 'Stack',
     preview: StackPreview,
@@ -260,6 +323,18 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     preview: BoxPreview,
     fields: [
       componentField('box.gap', 'All-Sides Padding', 'text', 'Core')
+    ]
+  }),
+  componentTab('toaster', 'primitive', {
+    label: 'Toaster',
+    preview: ToasterPreview,
+    fields: [
+      componentField('toaster.z-index', 'Z-Index', 'text', 'Core'),
+      componentField('toaster.gap', 'Toast Gap', 'text', 'Core'),
+      componentField('toaster.position.top', 'Top Offset', 'text', 'Position'),
+      componentField('toaster.position.right', 'Right Offset', 'text', 'Position'),
+      componentField('toaster.position.bottom', 'Bottom Offset', 'text', 'Position'),
+      componentField('toaster.position.left', 'Left Offset', 'text', 'Position')
     ]
   }),
   componentTab('alert', 'primitive', {
