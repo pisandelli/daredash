@@ -45,20 +45,25 @@ export async function mergeTokenSource(sourcePath: string): Promise<Record<strin
   if (stats.isDirectory()) {
     const files = await getJsonFiles(sourcePath)
     files.sort() // Ensure deterministic order
-    
+
+    const parsedFiles = await Promise.all(
+      files.map(async (file) => {
+        const content = await readFile(file, 'utf-8')
+        let parsed = JSON.parse(content)
+        parsed = parsed.default || parsed
+        return { file, parsed }
+      })
+    )
+
     let mergedTokens: Record<string, any> = {}
 
-    for (const file of files) {
-      const content = await readFile(file, 'utf-8')
-      let parsed = JSON.parse(content)
-      parsed = parsed.default || parsed
-
+    for (const { file, parsed } of parsedFiles) {
       const relPath = relative(sourcePath, file)
       const keys = relPath
         .replace(/\.json$/, '')
         .split(/[\\/]/)
 
-      let finalKeys = keys
+      const finalKeys = [...keys]
       if (finalKeys[finalKeys.length - 1] === 'index') {
         finalKeys.pop()
       }
