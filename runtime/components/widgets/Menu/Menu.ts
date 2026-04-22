@@ -8,6 +8,11 @@ import { useMenuFloat } from './useMenuFloat'
 import { useMenuActive } from './useMenuActive'
 import { useMenuRender } from './useMenuRender'
 
+const PROP_KEYS = new Set([
+  'items', 'orientation', 'collapsible', 'collapsed',
+  'toggleButton', 'activeKey', 'maxHeight', 'maxWidth'
+])
+
 export default defineNuxtComponent({
   name: 'Menu',
   inheritAttrs: false,
@@ -85,13 +90,13 @@ export default defineNuxtComponent({
   emits: ['update:collapsed', 'select'],
 
   setup(props, { attrs, emit, expose }) {
-    const PROP_KEYS = new Set([
-      'items', 'orientation', 'collapsible', 'collapsed',
-      'toggleButton', 'activeKey', 'maxHeight', 'maxWidth'
-    ])
-    const filteredAttrs = Object.fromEntries(
-      Object.entries(attrs).filter(([key]) => !PROP_KEYS.has(key))
-    )
+    const filteredAttrs: Record<string, unknown> = {}
+    for (const key in attrs) {
+      if (!PROP_KEYS.has(key)) {
+        filteredAttrs[key] = attrs[key]
+      }
+    }
+
     const { processedAttrs, classList } = useBaseComponent(filteredAttrs, styles, 'Menu')
 
     const { isCollapsed, collapse, expand, toggle } = useMenuState(props, emit)
