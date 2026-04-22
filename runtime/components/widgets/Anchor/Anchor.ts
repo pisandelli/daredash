@@ -2,6 +2,7 @@ import { defineNuxtComponent } from 'nuxt/app'
 import { h, ref, onMounted, onUnmounted, type PropType, type VNode } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Anchor.module.css'
+import { sanitizeHref } from '#dd/utils/sanitizeHref'
 
 export interface AnchorItem {
   key: string
@@ -144,7 +145,7 @@ export default defineNuxtComponent({
         }, [
           h('a', {
             class: styles.link,
-            href: item.href,
+            href: sanitizeHref(item.href),
             onClick: (e: MouseEvent) => handleClick(e, item)
           }, titleContent)
         ])

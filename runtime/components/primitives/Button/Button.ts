@@ -4,6 +4,7 @@ import { NuxtLink, Icon } from '#components'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Button.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
+import { sanitizeHref } from '#dd/utils/sanitizeHref'
 
 export default defineNuxtComponent({
   name: 'Button',
@@ -82,7 +83,7 @@ export default defineNuxtComponent({
         ...(defineColor.value ? { style: buttonStyle.value } : {}),
         'data-icon-only': isIconOnly.value ? '' : undefined,
         ...(props.to && { to: props.to }),
-        ...(props.href && { href: props.href })
+        ...(props.href && { href: sanitizeHref(props.href) })
       }
 
       return h(component.value as any, renderProps, {
