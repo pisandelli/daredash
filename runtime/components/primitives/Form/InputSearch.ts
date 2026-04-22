@@ -64,7 +64,7 @@ export default defineNuxtComponent({
   emits: ['update:modelValue', 'search'],
   setup(props, { attrs, emit }) {
     const { processedAttrs } = useBaseComponent(attrs, styles, 'InputSearch')
-    const appConfig = useAppConfig() as any
+    const appConfig = useAppConfig()
     const globalIcons = appConfig.daredash?.icons || {}
 
     const DdCluster = resolveComponent(

@@ -63,7 +63,7 @@ const DdCluster = resolveComponent(
   getPrefixName('Cluster', { type: 'component' })
 )
 
-const appConfig = useAppConfig() as any
+const appConfig = useAppConfig()
 const globalIcons = appConfig.daredash?.icons || {}
 
 const totalPages = computed(() => {
