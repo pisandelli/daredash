@@ -82,7 +82,7 @@ const handleClose = () => {
 
 // Check which string variance attribute we have by looking at processedAttrs keys
 const semanticIcon = computed(() => {
-  const appConfig = useAppConfig() as any
+  const appConfig = useAppConfig()
   const globalIcons = appConfig.daredash?.icons || {}
 
   // `processedAttrs` returns things like `{'data-success': ''}`
@@ -121,7 +121,7 @@ const resolvedIcon = computed(() => {
     </div>
 
     <button v-if="props.closable" type="button" :class="styles.close" aria-label="Close alert" @click="handleClose">
-      <Icon :name="(useAppConfig() as any).daredash?.icons?.toastClose || 'heroicons:x-mark'" />
+      <Icon :name="useAppConfig().daredash?.icons?.toastClose || 'heroicons:x-mark'" />
     </button>
   </div>
 </template>

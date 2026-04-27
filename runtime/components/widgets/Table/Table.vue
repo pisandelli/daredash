@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
 const attrs = useAttrs()
 const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Table')
 
-const appConfig = useAppConfig() as any
+const appConfig = useAppConfig()
 const globalIcons = appConfig.daredash?.icons || {}
 
 const DdLoading = resolveComponent(getPrefixName('Loading', { type: 'component' }))
