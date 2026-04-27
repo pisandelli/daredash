@@ -4,7 +4,7 @@ import { addComponent } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../types'
-import { debugLog } from '../utils'
+import { debugLog, resolveTokenPaths } from '../utils'
 import { flattenTokens } from '../utils/tokens'
 import { mergeTokenSource } from '../utils/token-merger'
 import { createPostCSSVPlugin } from '../postcss/postcss-v-function'
@@ -58,12 +58,11 @@ export async function setupComponents(
     if (!options.tokens) {
       if (debugMode) debugLog('No tokens file specified for CSS fallbacks.', 'warn')
     } else {
-      const projectPath = resolve(
+      const { projectPath, modulePath } = resolveTokenPaths(
         nuxt.options.rootDir,
-        'app/assets/styles/tokens',
+        resolver,
         options.tokens
       )
-      const modulePath = resolver.resolve(options.tokens)
 
       let rawTokens
       try {
