@@ -3,6 +3,7 @@ import { h, inject, onMounted, onUnmounted, computed, resolveComponent } from 'v
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import getPrefixName from '#dd/utils/getPrefixName'
 import styles from '#dd/styles/Tabs.module.css'
+import { sanitizeHref } from '#dd/utils/sanitizeHref'
 import { Icon } from '#components'
 import { TabsContextKey, type TabsContext } from './Tabs'
 
@@ -111,7 +112,7 @@ export default defineNuxtComponent({
       }
 
       if (props.to) tabAttrs.to = props.to
-      if (props.href) tabAttrs.href = props.href
+      if (props.href) tabAttrs.href = sanitizeHref(props.href)
 
       const children = []
 

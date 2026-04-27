@@ -4,6 +4,7 @@ import { NuxtLink, Icon } from '#components'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Breadcrumb.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
+import { sanitizeHref } from '#dd/utils/sanitizeHref'
 
 export interface BreadcrumbItem {
   label: string;
@@ -77,7 +78,7 @@ export default defineNuxtComponent({
             NuxtLink as any,
             {
               to: item.to,
-              href: item.href,
+              href: sanitizeHref(item.href),
               class: [styles.item, styles.link],
               style: renderItemDynamicStyle(item),
               ...(item.disabled ? { disabled: true, 'aria-disabled': 'true' } : {})
