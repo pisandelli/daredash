@@ -19,8 +19,9 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Layout</h2>
       <p>Page shell primitive for stacking header, body and footer regions.</p>
       <div class="dd-layout-note">
-        <strong>What to look at</strong>
-        <span>This preview illustrates vertical rhythm between major regions. The colored blocks are only guides for header, body and footer slots.</span>
+        <strong>How to read this preview</strong>
+        <span><b>Token-driven:</b> `layout.header-height`, `layout.gap` and `layout.footer-height` control the shell rhythm between regions.</span>
+        <span><b>Preview-only:</b> the tinted header, body and footer blocks are just guides for the three layout slots.</span>
       </div>
     </header>
 
@@ -55,8 +56,8 @@ function resolveFieldValue(path: string, fallback: string) {
   margin-top: 0.8rem;
   padding: 0.8rem 0.9rem;
   border-radius: 0.9rem;
-  border: 1px solid rgba(15 23 42 / 0.1);
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.98), rgba(241 245 249 / 0.96));
+  border: 1px solid rgba(14 116 144 / 0.15);
+  background: linear-gradient(180deg, rgba(240 249 255 / 0.96), rgba(224 242 254 / 0.9));
   color: #0f172a;
 }
 
@@ -72,6 +73,10 @@ function resolveFieldValue(path: string, fallback: string) {
   font-size: 0.84rem;
   line-height: 1.45;
   color: #334155;
+}
+
+.dd-layout-note b {
+  color: #0f172a;
 }
 
 .dd-layout-stage {

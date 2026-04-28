@@ -23,96 +23,152 @@ function resolveFieldValue(path: string, fallback: string) {
         <span>
           This tab styles the toast itself: surface, spacing, icon and close action. Positioning and stack offsets still belong to the separate `Toaster` container.
         </span>
+        <span>
+          Icon colors are token-driven here, but the icon glyphs themselves still come from `appConfig.daredash.icons`. Changing the actual symbol for `success`, `danger`, `error`, `warning` or `info` is not part of the current token flow yet.
+        </span>
       </div>
     </header>
 
     <div class="dd-studio-preview-block">
       <h3>Standard toasts</h3>
       <div class="dd-toast-stack">
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.bg-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Workspace saved">
             Token updates were persisted and are ready to export.
           </DdToast>
-        </button>
+          <div class="dd-toast-callout">
+            <strong>General shell</strong>
+            <span>
+              Use this first toast to adjust shared surface tokens like background, text, border and close action. Those values apply to every standard toast below.
+            </span>
+            <span>
+              `Background` accepts a plain color or a full CSS background value such as `linear-gradient(...)`.
+            </span>
+          </div>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.background')">Background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.color')">Text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.icon-color')">Default icon</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.close-color')">Close</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.icon-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Published successfully" success>
             The latest studio adjustments are now available to the team.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.success.icon-color')">Success icon</button>
+          </div>
+        </div>
+
+        <div class="dd-toast-shell">
+          <DdToast title="Needs attention" warning>
+            Review the pending changes before publishing this release.
+          </DdToast>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.warning.icon-color')">Warning icon</button>
+          </div>
+        </div>
+
+        <div class="dd-toast-shell">
+          <DdToast title="Connection lost" danger>
+            Danger helps call attention to destructive or blocking failures.
+          </DdToast>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.danger.icon-color')">Danger icon</button>
+          </div>
+        </div>
+
+        <div class="dd-toast-shell">
+          <DdToast title="Request failed" error>
+            Error mirrors the critical path and can diverge from danger when needed.
+          </DdToast>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.error.icon-color')">Error icon</button>
+          </div>
+        </div>
+
+        <div class="dd-toast-shell">
+          <DdToast title="Release notes available" info>
+            Informational toasts can stay lighter while still feeling distinct.
+          </DdToast>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.info.icon-color')">Info icon</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="dd-studio-preview-block">
       <h3>Solid variants</h3>
       <div class="dd-toast-stack">
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.bg-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Primary update" solid>
             Default solid toast without a semantic override.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.primary.background')">Primary background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.primary.color')">Primary text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.primary.icon-color')">Primary icon</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.icon-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Published successfully" success solid>
             Success validates semantic icon and surface treatment together.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.success.background')">Success background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.success.color')">Success text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.success.icon-color')">Success icon</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.close-hover-bg')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Needs attention" warning solid>
             Warning toasts reuse the toast shell but change foreground rules for contrast.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.warning.background')">Warning background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.warning.color')">Warning text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.warning.icon-color')">Warning icon</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.warning.close-hover-bg')">Warning close hover</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.border-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Connection lost" danger solid>
             Danger highlights blocking failures with a stronger semantic surface.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.danger.background')">Danger background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.danger.color')">Danger text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.danger.icon-color')">Danger icon</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.close-color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Connection lost" error solid>
             Error toasts help validate border, close action and semantic icon treatment.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.error.background')">Error background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.error.icon-color')">Error solid icon</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.error.icon-color')">Error default icon</button>
+          </div>
+        </div>
 
-        <button
-          type="button"
-          class="dd-toast-shell"
-          @click="focusField('toast.color')"
-        >
+        <div class="dd-toast-shell">
           <DdToast title="Release notes available" info solid>
             Info keeps the informative blue tone with the solid card treatment.
           </DdToast>
-        </button>
+          <div class="dd-toast-actions">
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.info.background')">Info background</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.info.color')">Info text</button>
+            <button type="button" class="dd-toast-action" @click="focusField('toast.solid.info.icon-color')">Info icon</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -191,18 +247,71 @@ function resolveFieldValue(path: string, fallback: string) {
   gap: 1rem;
 }
 
-.dd-toast-shell,
+.dd-toast-shell {
+  display: grid;
+  gap: 0.7rem;
+}
+
 .dd-toast-token {
   width: 100%;
   padding: 0;
   border: 0;
   background: transparent;
   text-align: left;
-  cursor: pointer;
 }
 
 .dd-toast-token-grid {
   grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.dd-toast-callout {
+  display: grid;
+  gap: 0.22rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(15 23 42 / 0.08);
+  background: linear-gradient(180deg, rgba(248 250 252 / 0.98), rgba(241 245 249 / 0.96));
+}
+
+.dd-toast-callout strong {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+
+.dd-toast-callout span {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: #334155;
+}
+
+.dd-toast-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.dd-toast-action {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(15 23 42 / 0.1);
+  border-radius: 999px;
+  background: rgba(248 250 252 / 0.9);
+  color: #334155;
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.dd-toast-action:hover {
+  border-color: rgba(47 155 143 / 0.35);
+  background: rgba(240 253 250 / 0.96);
+  color: #0f766e;
 }
 
 .dd-toast-token {
@@ -216,13 +325,7 @@ function resolveFieldValue(path: string, fallback: string) {
   color: #0f172a;
   transition:
     border-color 160ms ease,
-    transform 160ms ease,
     box-shadow 160ms ease;
-}
-
-.dd-toast-shell:hover,
-.dd-toast-token:hover {
-  transform: translateY(-1px);
 }
 
 .dd-toast-token:hover {

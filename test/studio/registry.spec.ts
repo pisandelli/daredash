@@ -76,6 +76,44 @@ describe('DareDash Studio registry', () => {
     }
   })
 
+  it('keeps the primitive studio category complete for current tokenized components', () => {
+    const primitiveTabIds = STUDIO_TABS
+      .filter((tab) => tab.navigationKind === 'component' && tab.componentCategory === 'primitive')
+      .map((tab) => tab.id)
+      .sort()
+
+    expect(primitiveTabIds).toEqual([
+      'alert',
+      'avatar',
+      'badge',
+      'breadcrumbs',
+      'button',
+      'card',
+      'loading',
+      'progress',
+      'toast',
+      'toaster'
+    ])
+  })
+
+  it('keeps the form studio category complete for current tokenized components', () => {
+    const formTabIds = STUDIO_TABS
+      .filter((tab) => tab.navigationKind === 'component' && tab.componentCategory === 'form')
+      .map((tab) => tab.id)
+      .sort()
+
+    expect(formTabIds).toEqual([
+      'checkbox',
+      'input',
+      'input-group',
+      'input-search',
+      'radio',
+      'select',
+      'switch',
+      'textarea'
+    ])
+  })
+
   it('registers accordion with preserved token references', () => {
     const accordionTab = STUDIO_TABS.find((tab) => tab.id === 'accordion')
     const headerPadding = accordionTab?.fields.find((field) => field.path === 'accordion.header.padding')
@@ -95,7 +133,7 @@ describe('DareDash Studio registry', () => {
     expect(avatarTab).toBeDefined()
     expect(avatarTab!.navigationKind).toBe('component')
     expect(avatarSize?.referencePath).toBe('space.sl')
-    expect(avatarBackground?.referencePath).toBe('color.gray')
+    expect(avatarBackground?.referencePath).toBe('color.primary.100')
   })
 
   it('registers breadcrumbs with preserved token references', () => {
@@ -133,6 +171,17 @@ describe('DareDash Studio registry', () => {
     expect(centerTab!.navigationKind).toBe('component')
     expect(gapField?.referencePath).toBe('space.lg')
     expect(maxWidthField?.referencePath).toBe('max-width')
+  })
+
+  it('registers checkbox with preserved token references', () => {
+    const checkboxTab = STUDIO_TABS.find((tab) => tab.id === 'checkbox')
+    const sizeField = checkboxTab?.fields.find((field) => field.path === 'checkbox.size')
+    const checkedBgField = checkboxTab?.fields.find((field) => field.path === 'checkbox.checked.bg')
+
+    expect(checkboxTab).toBeDefined()
+    expect(checkboxTab!.navigationKind).toBe('component')
+    expect(sizeField?.defaultValue).toBe('1.25rem')
+    expect(checkedBgField?.referencePath).toBe('color.primary.600')
   })
 
   it('registers cluster with preserved token references', () => {
@@ -173,6 +222,39 @@ describe('DareDash Studio registry', () => {
     expect(iconSizeField?.referencePath).toBe('space.xl')
   })
 
+  it('registers input with preserved token references', () => {
+    const inputTab = STUDIO_TABS.find((tab) => tab.id === 'input')
+    const lineHeightField = inputTab?.fields.find((field) => field.path === 'input.line-height')
+    const warningField = inputTab?.fields.find((field) => field.path === 'input.warning-state.border-color')
+
+    expect(inputTab).toBeDefined()
+    expect(inputTab!.navigationKind).toBe('component')
+    expect(lineHeightField?.referencePath).toBe('line-height.normal')
+    expect(warningField?.referencePath).toBe('color.warning')
+  })
+
+  it('registers input group with preserved token references', () => {
+    const inputGroupTab = STUDIO_TABS.find((tab) => tab.id === 'input-group')
+    const borderField = inputGroupTab?.fields.find((field) => field.path === 'input-group.border-radius')
+    const addonField = inputGroupTab?.fields.find((field) => field.path === 'input-group.addon.font-size')
+
+    expect(inputGroupTab).toBeDefined()
+    expect(inputGroupTab!.navigationKind).toBe('component')
+    expect(borderField?.referencePath).toBe('input.border-radius')
+    expect(addonField?.referencePath).toBe('input.font-size')
+  })
+
+  it('registers input search with preserved token references', () => {
+    const inputSearchTab = STUDIO_TABS.find((tab) => tab.id === 'input-search')
+    const primaryField = inputSearchTab?.fields.find((field) => field.path === 'input-search.button.background-color')
+    const neutralField = inputSearchTab?.fields.find((field) => field.path === 'input-search.button.neutral.background-color')
+
+    expect(inputSearchTab).toBeDefined()
+    expect(inputSearchTab!.navigationKind).toBe('component')
+    expect(primaryField?.referencePath).toBe('button.primary.base-color')
+    expect(neutralField?.referencePath).toBe('color.secondary-100')
+  })
+
   it('registers progress with preserved token references', () => {
     const progressTab = STUDIO_TABS.find((tab) => tab.id === 'progress')
     const trackField = progressTab?.fields.find((field) => field.path === 'progress.background-color')
@@ -189,12 +271,20 @@ describe('DareDash Studio registry', () => {
     const paddingField = toastTab?.fields.find((field) => field.path === 'toast.padding')
     const shadowField = toastTab?.fields.find((field) => field.path === 'toast.box-shadow')
     const iconField = toastTab?.fields.find((field) => field.path === 'toast.icon-color')
+    const successIconField = toastTab?.fields.find((field) => field.path === 'toast.success.icon-color')
+    const backgroundField = toastTab?.fields.find((field) => field.path === 'toast.background')
+    const solidDangerField = toastTab?.fields.find((field) => field.path === 'toast.solid.danger.background')
+    const solidWarningTextField = toastTab?.fields.find((field) => field.path === 'toast.solid.warning.color')
 
     expect(toastTab).toBeDefined()
     expect(toastTab!.navigationKind).toBe('component')
     expect(paddingField?.referencePath).toBe('space.md')
     expect(shadowField?.referencePath).toBe('card.box-shadow')
+    expect(backgroundField?.referencePath).toBe('color.white')
     expect(iconField?.referencePath).toBe('color.info')
+    expect(successIconField?.referencePath).toBe('color.success')
+    expect(solidDangerField?.referencePath).toBe('color.danger')
+    expect(solidWarningTextField?.referencePath).toBe('color.text.default')
   })
 
   it('registers stack with preserved token references', () => {
@@ -204,6 +294,50 @@ describe('DareDash Studio registry', () => {
     expect(stackTab).toBeDefined()
     expect(stackTab!.navigationKind).toBe('component')
     expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers radio with preserved token references', () => {
+    const radioTab = STUDIO_TABS.find((tab) => tab.id === 'radio')
+    const sizeField = radioTab?.fields.find((field) => field.path === 'radio.size')
+    const dotField = radioTab?.fields.find((field) => field.path === 'radio.checked.dot-color')
+
+    expect(radioTab).toBeDefined()
+    expect(radioTab!.navigationKind).toBe('component')
+    expect(sizeField?.referencePath).toBe('checkbox.size')
+    expect(dotField?.referencePath).toBe('color.primary.600')
+  })
+
+  it('registers select with preserved token references', () => {
+    const selectTab = STUDIO_TABS.find((tab) => tab.id === 'select')
+    const lineHeightField = selectTab?.fields.find((field) => field.path === 'select.line-height')
+    const hoverField = selectTab?.fields.find((field) => field.path === 'select.hover.border-color')
+
+    expect(selectTab).toBeDefined()
+    expect(selectTab!.navigationKind).toBe('component')
+    expect(lineHeightField?.referencePath).toBe('input.line-height')
+    expect(hoverField?.referencePath).toBe('color.border-hover')
+  })
+
+  it('registers switch with preserved token references', () => {
+    const switchTab = STUDIO_TABS.find((tab) => tab.id === 'switch')
+    const focusField = switchTab?.fields.find((field) => field.path === 'switch.focus')
+    const activeField = switchTab?.fields.find((field) => field.path === 'switch.track.background-color-active')
+
+    expect(switchTab).toBeDefined()
+    expect(switchTab!.navigationKind).toBe('component')
+    expect(focusField?.referencePath).toBe('input.focus.box-shadow')
+    expect(activeField?.referencePath).toBe('color.success')
+  })
+
+  it('registers textarea with preserved token references', () => {
+    const textareaTab = STUDIO_TABS.find((tab) => tab.id === 'textarea')
+    const labelField = textareaTab?.fields.find((field) => field.path === 'textarea.label.color')
+    const successField = textareaTab?.fields.find((field) => field.path === 'textarea.success-state.border-color')
+
+    expect(textareaTab).toBeDefined()
+    expect(textareaTab!.navigationKind).toBe('component')
+    expect(labelField?.referencePath).toBe('input.label.color')
+    expect(successField?.referencePath).toBe('color.success')
   })
 
   it('registers toaster with preserved token references', () => {

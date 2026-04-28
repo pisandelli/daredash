@@ -33,9 +33,12 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Avatar</h2>
       <p>Size, radius, overlap and fallback-initials typography.</p>
       <div class="dd-avatar-preview-note">
-        <strong>Color note</strong>
+        <strong>Color behavior</strong>
         <span>
-          Initial-only avatars still use the component's generated palette in the live preview. The fallback color swatch below shows the actual `avatar.background-color` and `avatar.color` tokens.
+          Fallback avatars use the theme tokens `avatar.background-color` and `avatar.color` by default. Edit those two tokens to control the default initials background and text color your theme ships with.
+        </span>
+        <span>
+          Use the optional `random` variant only when you want the component to ignore those theme tokens and generate its own pastel color pair.
         </span>
       </div>
     </header>
@@ -119,6 +122,13 @@ function resolveFieldValue(path: string, fallback: string) {
           <span>{{ resolveFieldValue('avatar.background-color', 'var(--dd-avatar-background-color)') }}</span>
           <small>{{ resolveFieldValue('avatar.color', 'var(--dd-avatar-color)') }}</small>
         </button>
+
+        <div class="dd-avatar-color-card dd-avatar-color-card-muted">
+          <DdAvatar alt="RN" random />
+          <strong>Optional random variant</strong>
+          <span>Uses the generated palette only when `random` is set on the component.</span>
+          <small>Not controlled by theme tokens</small>
+        </div>
       </div>
     </div>
 
@@ -226,7 +236,8 @@ function resolveFieldValue(path: string, fallback: string) {
 
 .dd-avatar-color-row {
   display: grid;
-  grid-template-columns: minmax(0, 15rem);
+  grid-template-columns: repeat(auto-fit, minmax(0, 15rem));
+  gap: 1rem;
 }
 
 .dd-avatar-color-card {
@@ -235,6 +246,17 @@ function resolveFieldValue(path: string, fallback: string) {
   gap: 0.55rem;
   padding: 1rem;
   background: linear-gradient(180deg, rgba(255 255 255 / 0.98), rgba(248 250 252 / 0.98));
+}
+
+.dd-avatar-color-card-muted {
+  cursor: default;
+  border-style: dashed;
+}
+
+.dd-avatar-color-card-muted:hover {
+  border-color: rgba(15 23 42 / 0.08);
+  transform: none;
+  box-shadow: none;
 }
 
 .dd-avatar-color-sample {

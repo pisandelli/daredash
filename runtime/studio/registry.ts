@@ -13,14 +13,22 @@ import AnchorPreview from './previews/AnchorPreview.vue'
 import AvatarPreview from './previews/AvatarPreview.vue'
 import CardPreview from './previews/CardPreview.vue'
 import CenterPreview from './previews/CenterPreview.vue'
+import CheckboxPreview from './previews/CheckboxPreview.vue'
 import ClusterPreview from './previews/ClusterPreview.vue'
 import GridPreview from './previews/GridPreview.vue'
+import InputGroupPreview from './previews/InputGroupPreview.vue'
+import InputPreview from './previews/InputPreview.vue'
+import InputSearchPreview from './previews/InputSearchPreview.vue'
 import LayoutPreview from './previews/LayoutPreview.vue'
 import LoadingPreview from './previews/LoadingPreview.vue'
 import ProgressPreview from './previews/ProgressPreview.vue'
+import RadioPreview from './previews/RadioPreview.vue'
+import SelectPreview from './previews/SelectPreview.vue'
 import StackPreview from './previews/StackPreview.vue'
+import TextareaPreview from './previews/TextareaPreview.vue'
 import ToastPreview from './previews/ToastPreview.vue'
 import ToasterPreview from './previews/ToasterPreview.vue'
+import TogglePreview from './previews/TogglePreview.vue'
 import {
   primitiveStudioFields,
   rawTokenValue,
@@ -64,6 +72,19 @@ function componentField(
     referencePath: tokenReference(path),
     group
   }
+}
+
+function toastSemanticIconField(variant: string, label: string): StudioFieldDefinition {
+  return componentField(`toast.${variant}.icon-color`, `${label} Icon Color`, 'color', 'Semantic Icons')
+}
+
+function toastSolidVariantFields(variant: string, label: string): StudioFieldDefinition[] {
+  return [
+    componentField(`toast.solid.${variant}.background`, `${label} Background`, 'text', `Solid ${label}`),
+    componentField(`toast.solid.${variant}.color`, `${label} Text`, 'color', `Solid ${label}`),
+    componentField(`toast.solid.${variant}.icon-color`, `${label} Icon`, 'color', `Solid ${label}`),
+    componentField(`toast.solid.${variant}.close-hover-bg`, `${label} Close Hover`, 'color', `Solid ${label}`)
+  ]
 }
 
 export const STUDIO_TABS: StudioTabDefinition[] = [
@@ -300,13 +321,24 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('toast.box-shadow', 'Box Shadow', 'text', 'Core'),
       componentField('toast.cluster-gap', 'Content Gap', 'text', 'Layout'),
       componentField('toast.close-size', 'Close Size', 'text', 'Close'),
-      componentField('toast.bg-color', 'Background Color', 'color', 'Colors'),
+      componentField('toast.background', 'Background', 'text', 'Colors'),
       componentField('toast.color', 'Text Color', 'color', 'Colors'),
       componentField('toast.border-color', 'Border Color', 'color', 'Colors'),
       componentField('toast.icon-color', 'Icon Color', 'color', 'Colors'),
+      toastSemanticIconField('success', 'Success'),
+      toastSemanticIconField('warning', 'Warning'),
+      toastSemanticIconField('danger', 'Danger'),
+      toastSemanticIconField('error', 'Error'),
+      toastSemanticIconField('info', 'Info'),
       componentField('toast.close-color', 'Close Color', 'color', 'Close'),
       componentField('toast.close-hover-color', 'Close Hover Color', 'color', 'Close'),
-      componentField('toast.close-hover-bg', 'Close Hover Background', 'color', 'Close')
+      componentField('toast.close-hover-bg', 'Close Hover Background', 'color', 'Close'),
+      ...toastSolidVariantFields('primary', 'Primary'),
+      ...toastSolidVariantFields('success', 'Success'),
+      ...toastSolidVariantFields('warning', 'Warning'),
+      ...toastSolidVariantFields('danger', 'Danger'),
+      ...toastSolidVariantFields('error', 'Error'),
+      ...toastSolidVariantFields('info', 'Info')
     ]
   }),
   componentTab('stack', 'layout', {
@@ -396,6 +428,242 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('avatar.sm.font-size', 'Small Font Size', 'text', 'Sizes'),
       componentField('avatar.lg.size', 'Large Size', 'text', 'Sizes'),
       componentField('avatar.lg.font-size', 'Large Font Size', 'text', 'Sizes')
+    ]
+  }),
+  componentTab('checkbox', 'form', {
+    label: 'Checkbox',
+    preview: CheckboxPreview,
+    fields: [
+      componentField('checkbox.size', 'Size', 'text', 'Core'),
+      componentField('checkbox.gap', 'Gap', 'text', 'Core'),
+      componentField('checkbox.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('checkbox.bg', 'Background', 'color', 'Colors'),
+      componentField('checkbox.border', 'Border Color', 'color', 'Colors'),
+      componentField('checkbox.hover.border', 'Hover Border', 'color', 'States'),
+      componentField('checkbox.checked.bg', 'Checked Background', 'color', 'States'),
+      componentField('checkbox.checked.border', 'Checked Border', 'color', 'States'),
+      componentField('checkbox.disabled.bg', 'Disabled Background', 'color', 'States'),
+      componentField('checkbox.disabled.border', 'Disabled Border', 'color', 'States'),
+      componentField('checkbox.transition', 'Transition', 'text', 'States'),
+      componentField('checkbox.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('checkbox.color', 'Label Color', 'color', 'Label'),
+      componentField('checkbox.line-height', 'Label Line Height', 'text', 'Label')
+    ]
+  }),
+  componentTab('input', 'form', {
+    label: 'Input',
+    preview: InputPreview,
+    fields: [
+      componentField('input.background-color', 'Background Color', 'color', 'Core'),
+      componentField('input.height', 'Height', 'text', 'Core'),
+      componentField('input.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('input.border-width', 'Border Width', 'text', 'Core'),
+      componentField('input.border-style', 'Border Style', 'text', 'Core'),
+      componentField('input.border-color', 'Border Color', 'color', 'Core'),
+      componentField('input.color', 'Text Color', 'color', 'Core'),
+      componentField('input.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('input.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('input.font-weight', 'Font Weight', 'text', 'Typography'),
+      componentField('input.line-height', 'Line Height', 'text', 'Typography'),
+      componentField('input.placeholder.color', 'Placeholder Color', 'color', 'Typography'),
+      componentField('input.padding.inline.start', 'Padding Inline Start', 'text', 'Spacing'),
+      componentField('input.padding.inline.end', 'Padding Inline End', 'text', 'Spacing'),
+      componentField('input.padding.block.start', 'Padding Block Start', 'text', 'Spacing'),
+      componentField('input.padding.block.end', 'Padding Block End', 'text', 'Spacing'),
+      componentField('input.size.small.height', 'Small Height', 'text', 'Sizes'),
+      componentField('input.size.small.font-size', 'Small Font Size', 'text', 'Sizes'),
+      componentField('input.size.small.padding-inline', 'Small Padding Inline', 'text', 'Sizes'),
+      componentField('input.size.large.height', 'Large Height', 'text', 'Sizes'),
+      componentField('input.size.large.font-size', 'Large Font Size', 'text', 'Sizes'),
+      componentField('input.size.large.padding-inline', 'Large Padding Inline', 'text', 'Sizes'),
+      componentField('input.label.color', 'Label Color', 'color', 'Label'),
+      componentField('input.label.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('input.label.font-weight', 'Label Font Weight', 'text', 'Label'),
+      componentField('input.focus.border-color', 'Focus Border Color', 'color', 'Focus'),
+      componentField('input.focus.box-shadow', 'Focus Box Shadow', 'text', 'Focus'),
+      componentField('input.focus.outline', 'Focus Outline', 'text', 'Focus'),
+      componentField('input.disabled.background-color', 'Disabled Background', 'color', 'Disabled'),
+      componentField('input.disabled.color', 'Disabled Text', 'color', 'Disabled'),
+      componentField('input.disabled.cursor', 'Disabled Cursor', 'text', 'Disabled'),
+      componentField('input.error-state.border-color', 'Error Border', 'color', 'Validation'),
+      componentField('input.warning-state.border-color', 'Warning Border', 'color', 'Validation'),
+      componentField('input.success-state.border-color', 'Success Border', 'color', 'Validation'),
+      componentField('input.error-label.font-family', 'Error Font Family', 'text', 'Messages'),
+      componentField('input.error-label.font-weight', 'Error Font Weight', 'text', 'Messages'),
+      componentField('input.error-label.color', 'Error Color', 'color', 'Messages'),
+      componentField('input.error-label.font-size', 'Error Font Size', 'text', 'Messages'),
+      componentField('input.warning-label.color', 'Warning Color', 'color', 'Messages')
+    ]
+  }),
+  componentTab('input-group', 'form', {
+    label: 'Input Group',
+    preview: InputGroupPreview,
+    fields: [
+      componentField('input-group.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('input-group.border-color', 'Border Color', 'color', 'Core'),
+      componentField('input-group.border-width', 'Border Width', 'text', 'Core'),
+      componentField('input-group.border-style', 'Border Style', 'text', 'Core'),
+      componentField('input-group.addon.background-color', 'Addon Background', 'color', 'Addon'),
+      componentField('input-group.addon.color', 'Addon Color', 'color', 'Addon'),
+      componentField('input-group.addon.border-color', 'Addon Border Color', 'color', 'Addon'),
+      componentField('input-group.addon.font-size', 'Addon Font Size', 'text', 'Addon'),
+      componentField('input-group.addon.padding-inline', 'Addon Padding Inline', 'text', 'Addon')
+    ]
+  }),
+  componentTab('input-search', 'form', {
+    label: 'Input Search',
+    preview: InputSearchPreview,
+    fields: [
+      componentField('input-search.group.border-radius', 'Group Border Radius', 'text', 'Group'),
+      componentField('input-search.group.border-color', 'Group Border Color', 'color', 'Group'),
+      componentField('input-search.group.border-width', 'Group Border Width', 'text', 'Group'),
+      componentField('input-search.group.border-style', 'Group Border Style', 'text', 'Group'),
+      componentField('input-search.button.background-color', 'Button Background', 'color', 'Button'),
+      componentField('input-search.button.color', 'Button Text Color', 'color', 'Button'),
+      componentField('input-search.button.border-radius', 'Button Radius', 'text', 'Button'),
+      componentField('input-search.button.hover-background-color', 'Button Hover Background', 'text', 'Button'),
+      componentField('input-search.button.icon-size', 'Button Icon Size', 'text', 'Button'),
+      componentField('input-search.button.font-size', 'Button Font Size', 'text', 'Button'),
+      componentField('input-search.button.font-weight', 'Button Font Weight', 'text', 'Button'),
+      componentField('input-search.button.padding-inline', 'Button Padding Inline', 'text', 'Button'),
+      componentField('input-search.button.success.background-color', 'Success Background', 'color', 'Semantic'),
+      componentField('input-search.button.success.hover-background-color', 'Success Hover', 'text', 'Semantic'),
+      componentField('input-search.button.danger.background-color', 'Danger Background', 'color', 'Semantic'),
+      componentField('input-search.button.danger.hover-background-color', 'Danger Hover', 'text', 'Semantic'),
+      componentField('input-search.button.neutral.background-color', 'Neutral Background', 'color', 'Semantic'),
+      componentField('input-search.button.neutral.color', 'Neutral Text', 'color', 'Semantic'),
+      componentField('input-search.button.neutral.hover-background-color', 'Neutral Hover', 'color', 'Semantic')
+    ]
+  }),
+  componentTab('radio', 'form', {
+    label: 'Radio',
+    preview: RadioPreview,
+    fields: [
+      componentField('radio.size', 'Size', 'text', 'Core'),
+      componentField('radio.gap', 'Gap', 'text', 'Core'),
+      componentField('radio.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('radio.bg', 'Background', 'color', 'Colors'),
+      componentField('radio.border', 'Border Color', 'color', 'Colors'),
+      componentField('radio.hover.border', 'Hover Border', 'color', 'States'),
+      componentField('radio.checked.border', 'Checked Border', 'color', 'States'),
+      componentField('radio.checked.dot-color', 'Checked Dot Color', 'color', 'States'),
+      componentField('radio.checked.dot-color-svg', 'Checked Dot Color SVG', 'text', 'States'),
+      componentField('radio.disabled.bg', 'Disabled Background', 'color', 'States'),
+      componentField('radio.disabled.border', 'Disabled Border', 'color', 'States'),
+      componentField('radio.disabled.dot-color-svg', 'Disabled Dot SVG', 'text', 'States'),
+      componentField('radio.transition', 'Transition', 'text', 'States'),
+      componentField('radio.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('radio.color', 'Label Color', 'color', 'Label'),
+      componentField('radio.line-height', 'Label Line Height', 'text', 'Label')
+    ]
+  }),
+  componentTab('select', 'form', {
+    label: 'Select',
+    preview: SelectPreview,
+    fields: [
+      componentField('select.indicator-padding-inline-end', 'Indicator Padding End', 'text', 'Core'),
+      componentField('select.height', 'Height', 'text', 'Core'),
+      componentField('select.background-color', 'Background Color', 'color', 'Core'),
+      componentField('select.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('select.border-width', 'Border Width', 'text', 'Core'),
+      componentField('select.border-style', 'Border Style', 'text', 'Core'),
+      componentField('select.border-color', 'Border Color', 'color', 'Core'),
+      componentField('select.color', 'Text Color', 'color', 'Core'),
+      componentField('select.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('select.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('select.font-weight', 'Font Weight', 'text', 'Typography'),
+      componentField('select.line-height', 'Line Height', 'text', 'Typography'),
+      componentField('select.transition', 'Transition', 'text', 'Typography'),
+      componentField('select.padding.inline.start', 'Padding Inline Start', 'text', 'Spacing'),
+      componentField('select.padding.inline.end', 'Padding Inline End', 'text', 'Spacing'),
+      componentField('select.padding.block.start', 'Padding Block Start', 'text', 'Spacing'),
+      componentField('select.padding.block.end', 'Padding Block End', 'text', 'Spacing'),
+      componentField('select.label.color', 'Label Color', 'color', 'Label'),
+      componentField('select.label.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('select.label.font-weight', 'Label Font Weight', 'text', 'Label'),
+      componentField('select.hover.border-color', 'Hover Border Color', 'color', 'Focus'),
+      componentField('select.focus.border-color', 'Focus Border Color', 'color', 'Focus'),
+      componentField('select.focus.box-shadow', 'Focus Box Shadow', 'text', 'Focus'),
+      componentField('select.focus.outline', 'Focus Outline', 'text', 'Focus'),
+      componentField('select.disabled.background-color', 'Disabled Background', 'color', 'Disabled'),
+      componentField('select.disabled.color', 'Disabled Text', 'color', 'Disabled'),
+      componentField('select.disabled.cursor', 'Disabled Cursor', 'text', 'Disabled'),
+      componentField('select.disabled.border-color', 'Disabled Border', 'color', 'Disabled'),
+      componentField('select.error-state.border-color', 'Error Border', 'color', 'Validation'),
+      componentField('select.success-state.border-color', 'Success Border', 'color', 'Validation'),
+      componentField('select.warning-state.border-color', 'Warning Border', 'color', 'Validation'),
+      componentField('select.error-label.font-family', 'Error Font Family', 'text', 'Messages'),
+      componentField('select.error-label.font-weight', 'Error Font Weight', 'text', 'Messages'),
+      componentField('select.error-label.color', 'Error Color', 'color', 'Messages'),
+      componentField('select.error-label.font-size', 'Error Font Size', 'text', 'Messages'),
+      componentField('select.arrow.color', 'Arrow Color', 'color', 'Arrow'),
+      componentField('select.arrow.size', 'Arrow Size', 'text', 'Arrow'),
+      componentField('select.menu.background-color', 'Menu Background', 'color', 'Menu'),
+      componentField('select.menu.border-radius', 'Menu Radius', 'text', 'Menu'),
+      componentField('select.menu.box-shadow', 'Menu Shadow', 'text', 'Menu'),
+      componentField('select.menu.z-index', 'Menu Z-Index', 'text', 'Menu'),
+      componentField('select.option.padding', 'Option Padding', 'text', 'Options'),
+      componentField('select.option.hover-background-color', 'Option Hover Background', 'color', 'Options'),
+      componentField('select.option.selected-background-color', 'Selected Background', 'color', 'Options')
+    ]
+  }),
+  componentTab('switch', 'form', {
+    label: 'Toggle',
+    preview: TogglePreview,
+    fields: [
+      componentField('switch.font-size', 'Base Font Size', 'text', 'Core'),
+      componentField('switch.transition', 'Transition', 'text', 'Core'),
+      componentField('switch.thumb.size', 'Thumb Size', 'text', 'Thumb'),
+      componentField('switch.thumb.background-color', 'Thumb Background', 'color', 'Thumb'),
+      componentField('switch.thumb.box-shadow', 'Thumb Shadow', 'text', 'Thumb'),
+      componentField('switch.thumb.translate-x', 'Thumb Translate X', 'text', 'Thumb'),
+      componentField('switch.track.width', 'Track Width', 'text', 'Track'),
+      componentField('switch.track.height', 'Track Height', 'text', 'Track'),
+      componentField('switch.track.padding', 'Track Padding', 'text', 'Track'),
+      componentField('switch.track.border-radius', 'Track Radius', 'text', 'Track'),
+      componentField('switch.track.background-color', 'Track Background', 'color', 'Track'),
+      componentField('switch.track.background-color-active', 'Track Active Background', 'color', 'Track'),
+      componentField('switch.focus', 'Focus Ring', 'text', 'States'),
+      componentField('switch.disabled.opacity', 'Disabled Opacity', 'text', 'Disabled'),
+      componentField('switch.disabled.cursor', 'Disabled Cursor', 'text', 'Disabled')
+    ]
+  }),
+  componentTab('textarea', 'form', {
+    label: 'Textarea',
+    preview: TextareaPreview,
+    fields: [
+      componentField('textarea.background-color', 'Background Color', 'color', 'Core'),
+      componentField('textarea.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('textarea.border-width', 'Border Width', 'text', 'Core'),
+      componentField('textarea.border-style', 'Border Style', 'text', 'Core'),
+      componentField('textarea.border-color', 'Border Color', 'color', 'Core'),
+      componentField('textarea.color', 'Text Color', 'color', 'Core'),
+      componentField('textarea.font-family', 'Font Family', 'text', 'Typography'),
+      componentField('textarea.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('textarea.font-weight', 'Font Weight', 'text', 'Typography'),
+      componentField('textarea.padding.inline.start', 'Padding Inline Start', 'text', 'Spacing'),
+      componentField('textarea.padding.inline.end', 'Padding Inline End', 'text', 'Spacing'),
+      componentField('textarea.padding.block.start', 'Padding Block Start', 'text', 'Spacing'),
+      componentField('textarea.padding.block.end', 'Padding Block End', 'text', 'Spacing'),
+      componentField('textarea.label.color', 'Label Color', 'color', 'Label'),
+      componentField('textarea.label.font-size', 'Label Font Size', 'text', 'Label'),
+      componentField('textarea.label.font-weight', 'Label Font Weight', 'text', 'Label'),
+      componentField('textarea.focus.border-color', 'Focus Border Color', 'color', 'Focus'),
+      componentField('textarea.focus.box-shadow', 'Focus Box Shadow', 'text', 'Focus'),
+      componentField('textarea.focus.outline', 'Focus Outline', 'text', 'Focus'),
+      componentField('textarea.disabled.background-color', 'Disabled Background', 'color', 'Disabled'),
+      componentField('textarea.disabled.color', 'Disabled Text', 'color', 'Disabled'),
+      componentField('textarea.disabled.cursor', 'Disabled Cursor', 'text', 'Disabled'),
+      componentField('textarea.disabled.border-color', 'Disabled Border', 'color', 'Disabled'),
+      componentField('textarea.error-state.border-color', 'Error Border', 'color', 'Validation'),
+      componentField('textarea.success-state.border-color', 'Success Border', 'color', 'Validation'),
+      componentField('textarea.warning-state.border-color', 'Warning Border', 'color', 'Validation'),
+      componentField('textarea.error-label.font-family', 'Error Font Family', 'text', 'Messages'),
+      componentField('textarea.error-label.font-weight', 'Error Font Weight', 'text', 'Messages'),
+      componentField('textarea.error-label.color', 'Error Color', 'color', 'Messages'),
+      componentField('textarea.error-label.font-size', 'Error Font Size', 'text', 'Messages'),
+      componentField('textarea.min-height', 'Minimum Height', 'text', 'Layout'),
+      componentField('textarea.resize', 'Resize Mode', 'text', 'Layout')
     ]
   })
 ]

@@ -49,7 +49,7 @@
     }
   },
   "focus": {
-    "$value": "{checkbox.focus}"
+    "$value": "{input.focus.box-shadow}"
   },
   "disabled": {
     "$type": "object",

@@ -19,9 +19,12 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Center</h2>
       <p>Layout primitive for constrained width and balanced inline breathing room.</p>
       <div class="dd-center-preview-note">
-        <strong>What to look at</strong>
+        <strong>How to read this preview</strong>
         <span>
-          The shell below is only a guide. `Center` controls the content measure and the horizontal padding inside that measure. Border, tint and helper labels belong to the preview host, not to the layout primitive itself.
+          <b>Token-driven:</b> `center.max-width` defines the readable measure and `center.gap` defines the inline padding inside that measure.
+        </span>
+        <span>
+          <b>Preview-only:</b> the dashed frame, tint and helper labels belong to the preview host, not to `Center` itself.
         </span>
       </div>
     </header>

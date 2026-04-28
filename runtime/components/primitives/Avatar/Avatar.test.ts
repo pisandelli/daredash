@@ -59,21 +59,32 @@ describe('Avatar Primitive', () => {
     expect(wrapper.attributes('data-online')).toBeDefined()
   })
 
-  it('calculates consistent background colors using CSS variables for fallback initials', async () => {
+  it('uses theme tokens by default for fallback initials', async () => {
     const wrapper = await mountSuspended(Avatar, {
       props: {
         alt: 'John Doe'
       }
     })
 
+    expect(wrapper.attributes('style')).toBeUndefined()
+  })
+
+  it('can opt into the random fallback palette explicitly', async () => {
+    const wrapper = await mountSuspended(Avatar, {
+      props: {
+        alt: 'John Doe',
+        random: true
+      }
+    })
+
     const styleAttr = wrapper.attributes('style')
     expect(styleAttr).toBeDefined()
-    // It should bind variable using dynamic prefix
     expect(styleAttr).toContain(
       getPrefixName('avatar-background-color', { type: 'css-var-decl' })
     )
     expect(styleAttr).toContain(
       getPrefixName('avatar-color', { type: 'css-var-decl' })
     )
+    expect(wrapper.attributes('data-random')).toBeDefined()
   })
 })

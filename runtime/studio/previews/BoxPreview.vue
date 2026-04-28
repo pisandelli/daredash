@@ -19,9 +19,12 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Box</h2>
       <p>Intrinsic spacing wrapper inspired by Every Layout's Box primitive.</p>
       <div class="dd-box-preview-note">
-        <strong>What to look at</strong>
+        <strong>How to read this preview</strong>
         <span>
-          The card shell below is only a host so the Box has something recognizable to wrap. Border, background, radius and shadow belong to the Card. The only Box token here is the internal all-sides spacing: `box.gap`.
+          <b>Token-driven:</b> `box.gap` controls the internal padding on every side of the Box.
+        </span>
+        <span>
+          <b>Preview-only:</b> the card shell, border, background, radius and shadow belong to the host `Card`, not to `Box`.
         </span>
       </div>
     </header>
@@ -100,8 +103,8 @@ function resolveFieldValue(path: string, fallback: string) {
   margin-top: 0.8rem;
   padding: 0.8rem 0.9rem;
   border-radius: 0.9rem;
-  border: 1px solid rgba(148 163 184 / 0.2);
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.96), rgba(241 245 249 / 0.94));
+  border: 1px solid rgba(14 116 144 / 0.15);
+  background: linear-gradient(180deg, rgba(240 249 255 / 0.96), rgba(224 242 254 / 0.9));
   color: #0f172a;
 }
 

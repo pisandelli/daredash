@@ -19,8 +19,9 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Stack</h2>
       <p>Vertical spacing primitive for sections, forms and content flows.</p>
       <div class="dd-layout-note">
-        <strong>What to look at</strong>
-        <span>The content blocks are only markers. The interesting part is the vertical distance between siblings in the base, compact and spaced variants.</span>
+        <strong>How to read this preview</strong>
+        <span><b>Token-driven:</b> `stack.gap`, `stack.compact.gap` and `stack.spaced.gap` control the vertical distance between siblings.</span>
+        <span><b>Preview-only:</b> the row blocks are only markers so the spacing is easy to compare across variants.</span>
       </div>
     </header>
 
@@ -57,8 +58,8 @@ function resolveFieldValue(path: string, fallback: string) {
   margin-top: 0.8rem;
   padding: 0.8rem 0.9rem;
   border-radius: 0.9rem;
-  border: 1px solid rgba(15 23 42 / 0.1);
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.98), rgba(241 245 249 / 0.96));
+  border: 1px solid rgba(14 116 144 / 0.15);
+  background: linear-gradient(180deg, rgba(240 249 255 / 0.96), rgba(224 242 254 / 0.9));
   color: #0f172a;
 }
 
@@ -74,6 +75,10 @@ function resolveFieldValue(path: string, fallback: string) {
   font-size: 0.84rem;
   line-height: 1.45;
   color: #334155;
+}
+
+.dd-layout-note b {
+  color: #0f172a;
 }
 
 .dd-stack-grid {

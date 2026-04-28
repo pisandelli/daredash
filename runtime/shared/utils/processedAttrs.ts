@@ -25,6 +25,7 @@ export const customAttributes = new Set([
   'offline',
   'busy',
   'away',
+  'random',
   'xxs', // New token support
   'nogap',
   // from center.module.css

@@ -35,6 +35,7 @@ export default defineNuxtComponent({
     })
 
     const hasImage = computed(() => props.src && !imgError.value)
+    const usesRandomPalette = computed(() => attrs.random !== undefined && attrs.random !== false)
 
     const onError = () => {
       imgError.value = true
@@ -54,7 +55,7 @@ export default defineNuxtComponent({
     ]
 
     const backgroundColor = computed(() => {
-      if (hasImage.value) return undefined
+      if (hasImage.value || !usesRandomPalette.value) return undefined
 
       // Generate a consistent index based on the initials string
       const str = initials.value || ''
@@ -79,10 +80,12 @@ export default defineNuxtComponent({
           class: styles.avatar,
           role: 'img',
           'aria-label': props.alt || 'Avatar',
-          style: {
-            [bgVar]: backgroundColor.value,
-            [colorVar]: backgroundColor.value ? '#111827' : undefined // darker-gray for contrast
-          }
+          style: backgroundColor.value
+            ? {
+                [bgVar]: backgroundColor.value,
+                [colorVar]: '#111827'
+              }
+            : undefined
         },
         [
           // Image or Initials

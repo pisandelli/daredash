@@ -19,8 +19,9 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Grid</h2>
       <p>Responsive auto-fit layout for cards, media blocks and galleries.</p>
       <div class="dd-layout-note">
-        <strong>What to look at</strong>
-        <span>The grid is driven by just two tokens: item spacing and the minimum width each column is allowed to keep before the layout wraps.</span>
+        <strong>How to read this preview</strong>
+        <span><b>Token-driven:</b> `grid.gap` controls the spacing between items and `grid.column-min-width` controls when the layout wraps into fewer columns.</span>
+        <span><b>Preview-only:</b> the sample cards, their borders and their background treatment are only host content for the grid.</span>
       </div>
     </header>
 
@@ -51,8 +52,8 @@ function resolveFieldValue(path: string, fallback: string) {
   margin-top: 0.8rem;
   padding: 0.8rem 0.9rem;
   border-radius: 0.9rem;
-  border: 1px solid rgba(15 23 42 / 0.1);
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.98), rgba(241 245 249 / 0.96));
+  border: 1px solid rgba(14 116 144 / 0.15);
+  background: linear-gradient(180deg, rgba(240 249 255 / 0.96), rgba(224 242 254 / 0.9));
   color: #0f172a;
 }
 
@@ -68,6 +69,10 @@ function resolveFieldValue(path: string, fallback: string) {
   font-size: 0.84rem;
   line-height: 1.45;
   color: #334155;
+}
+
+.dd-layout-note b {
+  color: #0f172a;
 }
 
 .dd-layout-stage {

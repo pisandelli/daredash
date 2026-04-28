@@ -19,8 +19,9 @@ function resolveFieldValue(path: string, fallback: string) {
       <h2>Cluster</h2>
       <p>Inline grouping primitive for pills, actions and wrapped collections.</p>
       <div class="dd-layout-note">
-        <strong>What to look at</strong>
-        <span>The chips are only host elements. The real token behavior here is spacing between inline items across the base, narrow and wide cluster variants.</span>
+        <strong>How to read this preview</strong>
+        <span><b>Token-driven:</b> `cluster.gap`, `cluster.narrow.gap` and `cluster.wide.gap` control the spacing between inline siblings.</span>
+        <span><b>Preview-only:</b> the chips, their fill color and their rounded shape are just host elements so the spacing is easy to compare.</span>
       </div>
     </header>
 
@@ -60,8 +61,8 @@ function resolveFieldValue(path: string, fallback: string) {
   margin-top: 0.8rem;
   padding: 0.8rem 0.9rem;
   border-radius: 0.9rem;
-  border: 1px solid rgba(15 23 42 / 0.1);
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.98), rgba(241 245 249 / 0.96));
+  border: 1px solid rgba(14 116 144 / 0.15);
+  background: linear-gradient(180deg, rgba(240 249 255 / 0.96), rgba(224 242 254 / 0.9));
   color: #0f172a;
 }
 
@@ -77,6 +78,10 @@ function resolveFieldValue(path: string, fallback: string) {
   font-size: 0.84rem;
   line-height: 1.45;
   color: #334155;
+}
+
+.dd-layout-note b {
+  color: #0f172a;
 }
 
 .dd-layout-stage,

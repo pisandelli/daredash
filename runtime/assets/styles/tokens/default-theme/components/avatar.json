@@ -13,11 +13,11 @@
     "$value": "{border-radius.full}"
   },
   "background-color": {
-    "$value": "{color.gray}"
+    "$value": "{color.primary.100}"
   },
   "color": {
     "$description": "Text color (for initials)",
-    "$value": "{color.white}"
+    "$value": "{color.primary.800}"
   },
   "font-size": {
     "$value": "{font-size.md}"

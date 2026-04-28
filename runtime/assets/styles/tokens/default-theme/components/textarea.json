@@ -47,7 +47,16 @@
     }
   },
   "label": {
-    "$value": "{input.label}"
+    "$type": "object",
+    "color": {
+      "$value": "{input.label.color}"
+    },
+    "font-size": {
+      "$value": "{input.label.font-size}"
+    },
+    "font-weight": {
+      "$value": "{input.label.font-weight}"
+    }
   },
   "focus": {
     "$type": "object",
