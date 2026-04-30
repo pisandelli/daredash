@@ -1,5 +1,5 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, provide, type VNode } from 'vue'
+import { h, provide, type VNode, useId } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import getPrefixName from '#dd/utils/getPrefixName'
 import { resolveComponent } from 'vue'
@@ -37,9 +37,7 @@ export default defineNuxtComponent({
     )
 
     // Provide context to descendant Accordion items
-    const groupName = props.multiple
-      ? undefined
-      : `accordion-group-${Math.random().toString(36).substring(2, 9)}`
+    const groupName = props.multiple ? undefined : useId()
 
     provide(AccordionGroupInjectionKey, {
       name: groupName,
