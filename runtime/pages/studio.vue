@@ -223,7 +223,17 @@ function selectTab(tab: StudioTabDefinition): void {
 
 function toggleComponentPicker(): void {
   isComponentPickerOpen.value = !isComponentPickerOpen.value
-  if (isComponentPickerOpen.value) componentSearch.value = ''
+  if (isComponentPickerOpen.value) {
+    componentSearch.value = ''
+
+    nextTick(() => {
+      const activeOption = document.querySelector('.dde-component-option-active') as HTMLElement | null
+      activeOption?.scrollIntoView({
+        block: 'start',
+        inline: 'nearest'
+      })
+    })
+  }
 }
 
 async function focusField(path: string) {
