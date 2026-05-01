@@ -82,6 +82,9 @@ const {
 } = useThemeEditor(tabs)
 
 const isDownloading = ref(false)
+const focusedFieldPath = ref('')
+let clearFocusedFieldTimer: ReturnType<typeof setTimeout> | null = null
+
 async function handleDownload() {
   isDownloading.value = true
   await downloadTokens()
@@ -169,6 +172,50 @@ function referencePlaceholder(field: StudioFieldDefinition): string {
   return 'token.path'
 }
 
+function currentReferencePath(field: StudioFieldDefinition): string {
+  return references.value[field.path] || field.referencePath || ''
+}
+
+function currentReferenceRelation(field: StudioFieldDefinition): string {
+  const referencePath = currentReferencePath(field)
+  if (!referencePath) return field.path
+  return `${field.path} -> ${referencePath}`
+}
+
+function isDetachedFromDefaultReference(field: StudioFieldDefinition): boolean {
+  return Boolean(field.referencePath) && modes.value[field.path] !== 'reference'
+}
+
+function referenceSummaryLabel(field: StudioFieldDefinition): string {
+  if (isDetachedFromDefaultReference(field)) return 'Detached from default'
+  if (modes.value[field.path] === 'reference') return 'Inherits from'
+  if (field.referencePath) return 'Default reference'
+  return 'Reference'
+}
+
+function resolvedValueLabel(field: StudioFieldDefinition): string {
+  if (field.type === 'color') return 'Resolved color'
+  return 'Resolved value'
+}
+
+function referenceSuggestions(field: StudioFieldDefinition): string[] {
+  return [...new Set(
+    [field.referencePath, referencePlaceholder(field)]
+      .map((value) => value?.trim() ?? '')
+      .filter(Boolean)
+  )]
+}
+
+function applyReference(field: StudioFieldDefinition, referencePath: string): void {
+  setReferencePath(field.path, referencePath)
+  setMode(field.path, 'reference')
+}
+
+function referenceSuggestionLabel(field: StudioFieldDefinition, suggestion: string): string {
+  if (field.referencePath === suggestion) return `Use default: ${suggestion}`
+  return `Use ${suggestion}`
+}
+
 function selectTab(tab: StudioTabDefinition): void {
   activeTabId.value = tab.id
   isComponentPickerOpen.value = false
@@ -180,6 +227,9 @@ function toggleComponentPicker(): void {
 }
 
 async function focusField(path: string) {
+  focusedFieldPath.value = path
+  if (clearFocusedFieldTimer) clearTimeout(clearFocusedFieldTimer)
+
   const ownerTab = tabs.find((tab) => tab.fields.some((field) => field.path === path))
   if (ownerTab && ownerTab.id !== activeTabId.value) {
     activeTabId.value = ownerTab.id
@@ -199,6 +249,10 @@ async function focusField(path: string) {
   requestAnimationFrame(() => {
     target.focus({ preventScroll: true })
   })
+
+  clearFocusedFieldTimer = setTimeout(() => {
+    if (focusedFieldPath.value === path) focusedFieldPath.value = ''
+  }, 2200)
 }
 
 provide(STUDIO_PREVIEW_CONTEXT_KEY, {
@@ -339,13 +393,18 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
             :key="group.label"
             class="dde-field-group"
           >
-            <h3 class="dde-field-group-title">{{ group.label }}</h3>
+            <h3 class="dde-field-group-title">
+              <span>{{ group.label }}</span>
+              <span class="dde-field-group-count">{{ group.fields.length }}</span>
+            </h3>
             <div class="dde-field-group-body">
               <div
                 v-for="field in group.fields"
                 :key="field.path"
                 class="dde-field"
+                :class="{ 'dde-field-focused': focusedFieldPath === field.path }"
                 :data-field-path="field.path"
+                @focusin="focusedFieldPath = field.path"
               >
                 <label class="dde-field-label" :for="`field-${field.path}`">
                   <span>{{ field.label }}</span>
@@ -366,6 +425,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     class="dde-field-mode-option"
                     :class="{ 'dde-field-mode-option-active': modes[field.path] === 'literal' }"
                     :aria-selected="modes[field.path] === 'literal'"
+                    title="Edit the token with a raw CSS value"
                     @click="setMode(field.path, 'literal')"
                   >
                     Literal
@@ -375,6 +435,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     class="dde-field-mode-option"
                     :class="{ 'dde-field-mode-option-active': modes[field.path] === 'reference' }"
                     :aria-selected="modes[field.path] === 'reference'"
+                    title="Point this token to another token path"
                     @click="setMode(field.path, 'reference')"
                   >
                     Reference
@@ -481,8 +542,47 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                   v-if="references[field.path] || field.referencePath"
                   class="dde-field-meta"
                 >
-                  <span class="dde-field-meta-badge">Reference</span>
-                  <code>{{ references[field.path] || field.referencePath }}</code>
+                  <span class="dde-field-meta-badge">
+                    {{ referenceSummaryLabel(field) }}
+                  </span>
+                  <div class="dde-field-meta-panel">
+                    <div class="dde-field-meta-row">
+                      <span class="dde-field-meta-key">Relation</span>
+                      <code class="dde-field-meta-value">
+                        {{ currentReferenceRelation(field) }}
+                      </code>
+                    </div>
+                    <div
+                      v-if="modes[field.path] === 'reference'"
+                      class="dde-field-meta-row"
+                    >
+                      <span class="dde-field-meta-key">{{ resolvedValueLabel(field) }}</span>
+                      <code class="dde-field-meta-value">
+                        {{ values[field.path] }}
+                      </code>
+                    </div>
+                    <p
+                      v-else-if="field.referencePath"
+                      class="dde-field-meta-hint"
+                    >
+                      This field started as a reference, but it is currently using a literal value.
+                    </p>
+                    <div
+                      v-if="referenceSuggestions(field).length"
+                      class="dde-field-actions"
+                    >
+                      <button
+                        v-for="suggestion in referenceSuggestions(field)"
+                        :key="`${field.path}-${suggestion}`"
+                        type="button"
+                        class="dde-field-action"
+                        :disabled="modes[field.path] === 'reference' && currentReferencePath(field) === suggestion"
+                        @click="applyReference(field, suggestion)"
+                      >
+                        {{ referenceSuggestionLabel(field, suggestion) }}
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 <span
@@ -888,16 +988,41 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 }
 
 .dde-field-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 0.74rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--studio-text-muted);
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  margin: 0;
+  padding-block: 0.2rem 0.35rem;
+  background: linear-gradient(180deg, rgba(21 24 33 / 0.96), rgba(21 24 33 / 0.88));
+  backdrop-filter: blur(8px);
+}
+
+.dde-field-group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.35rem;
+  min-block-size: 1.1rem;
+  padding-inline: 0.38rem;
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.08);
+  color: var(--studio-text);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .dde-field-group-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .dde-field {
@@ -911,6 +1036,15 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   border: 1px solid rgba(255 255 255 / 0.05);
   border-radius: var(--studio-radius-md);
   background: rgba(255 255 255 / 0.02);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.dde-field-focused {
+  border-color: rgba(47 155 143 / 0.44);
+  background: rgba(255 255 255 / 0.035);
+  box-shadow:
+    0 0 0 1px rgba(47 155 143 / 0.18),
+    0 0 0 4px rgba(47 155 143 / 0.08);
 }
 
 .dde-field-label {
@@ -974,9 +1108,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 
 .dde-field-meta {
   grid-column: 1 / -1;
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
   gap: 0.4rem;
   margin-top: -0.05rem;
   color: var(--studio-text-muted);
@@ -1002,6 +1134,67 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-family: var(--studio-code-font);
   color: var(--studio-text-code);
   font-size: 0.72rem;
+}
+
+.dde-field-meta-panel {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid rgba(255 255 255 / 0.05);
+  border-radius: var(--studio-radius-sm);
+  background: rgba(255 255 255 / 0.025);
+}
+
+.dde-field-meta-row {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.dde-field-meta-key {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--studio-text-muted);
+}
+
+.dde-field-meta-value {
+  word-break: break-word;
+}
+
+.dde-field-meta-hint {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.dde-field-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.dde-field-action {
+  border: 1px solid var(--studio-border);
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.03);
+  color: var(--studio-text);
+  padding: 0.36rem 0.65rem;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.dde-field-action:hover:not(:disabled) {
+  background: rgba(47 155 143 / 0.12);
+  border-color: rgba(47 155 143 / 0.36);
+  color: #d8fffa;
+}
+
+.dde-field-action:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
 .dde-field-changed {

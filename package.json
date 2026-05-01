@@ -5,7 +5,9 @@
   "main": "module.ts",
   "scripts": {
     "test": "vitest",
-    "lint:ts": "vue-tsc --noEmit -p tsconfig.json"
+    "lint:ts": "vue-tsc --noEmit -p tsconfig.json",
+    "test:studio": "vitest run test/studio/registry.spec.ts test/studio/useThemeEditor.spec.ts test/studio/studio-page.spec.ts",
+    "verify:studio": "npm run lint:ts && npm run test:studio"
   },
   "author": "Pedro Pisandelli",
   "license": "ISC",

@@ -17,6 +17,7 @@ export interface StudioFieldDefinition {
 export type StudioTokenGroup = 'primitives' | 'components'
 export type StudioNavigationKind = 'foundation' | 'component'
 export type StudioComponentCategory = 'layout' | 'primitive' | 'form' | 'widget'
+export type StudioPreviewMode = 'real' | 'guided'
 
 export interface StudioTabDefinition {
   id: string
@@ -24,6 +25,8 @@ export interface StudioTabDefinition {
   navigationKind: StudioNavigationKind
   tokenGroup: StudioTokenGroup
   componentCategory?: StudioComponentCategory
+  previewMode?: StudioPreviewMode
+  previewMessage?: string
   fields: StudioFieldDefinition[]
   preview: Component
 }

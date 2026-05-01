@@ -46,7 +46,10 @@ import {
 import type { StudioFieldDefinition } from './types'
 
 function foundationTab(tab: StudioTabDefinition): StudioTabDefinition {
-  return tab
+  return {
+    previewMode: 'real',
+    ...tab
+  }
 }
 
 function componentTab(
@@ -59,6 +62,7 @@ function componentTab(
     navigationKind: 'component',
     tokenGroup: 'components',
     componentCategory: category,
+    previewMode: 'real',
     ...tab
   }
 }
@@ -136,6 +140,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('drawer', 'widget', {
     label: 'Drawer',
+    previewMode: 'guided',
+    previewMessage: 'This preview opens the real drawer inside the Studio sandbox, using a staged page context to make backdrop, shadow and size easier to evaluate.',
     preview: DrawerPreview,
     fields: [
       componentField('drawer.bg', 'Background', 'color', 'Core'),
@@ -268,6 +274,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('center', 'layout', {
     label: 'Center',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses helper frames and content shells to reveal spacing and measure. The framing itself is not part of the Center primitive.',
     preview: CenterPreview,
     fields: [
       componentField('center.gap', 'Inline Padding', 'text', 'Layout'),
@@ -276,6 +284,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('cluster', 'layout', {
     label: 'Cluster',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses helper chips and staged rows to show wrapping and gap behavior. Those shells are only there to expose the layout tokens.',
     preview: ClusterPreview,
     fields: [
       componentField('cluster.gap', 'Base Gap', 'text', 'Layout'),
@@ -285,6 +295,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('grid', 'layout', {
     label: 'Grid',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses sample cards to show auto-fit columns and gaps. The cards are preview-only scaffolding, not part of the Grid primitive.',
     preview: GridPreview,
     fields: [
       componentField('grid.column-min-width', 'Column Min Width', 'text', 'Layout'),
@@ -293,6 +305,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('layout', 'layout', {
     label: 'Layout',
+    previewMode: 'guided',
+    previewMessage: 'This preview stages a simple app shell so you can read header, content and footer rhythm. The chrome is illustrative, while the spacing tokens are the real subject.',
     preview: LayoutPreview,
     fields: [
       componentField('layout.header-height', 'Header Height', 'text', 'Structure'),
@@ -372,6 +386,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('stack', 'layout', {
     label: 'Stack',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses sample blocks to expose vertical rhythm and variant spacing. The blocks are only visual hosts for the Stack primitive.',
     preview: StackPreview,
     fields: [
       componentField('stack.gap', 'Base Gap', 'text', 'Layout'),
@@ -381,6 +397,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('box', 'layout', {
     label: 'Box',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses a host card to show intrinsic padding. Surface, border and shadow belong to the host shell, while Box only controls internal spacing.',
     preview: BoxPreview,
     fields: [
       componentField('box.gap', 'All-Sides Padding', 'text', 'Core')
@@ -388,6 +406,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('toaster', 'primitive', {
     label: 'Toaster',
+    previewMode: 'guided',
+    previewMessage: 'This preview focuses on toast container placement, offsets and stack rhythm. The toast cards are payload examples from the separate Toast component.',
     preview: ToasterPreview,
     fields: [
       componentField('toaster.z-index', 'Z-Index', 'text', 'Core'),
@@ -485,6 +505,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('modal', 'widget', {
     label: 'Modal',
+    previewMode: 'guided',
+    previewMessage: 'This preview stages a real modal shell inside the Studio sandbox so you can inspect surface, backdrop and layout without leaving DevTools.',
     preview: ModalPreview,
     fields: [
       componentField('modal.border-radius', 'Border Radius', 'text', 'Core'),
@@ -525,6 +547,8 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
   }),
   componentTab('popover', 'widget', {
     label: 'Popover',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses a staged trigger and shell to make arrow, shadow and spacing visible. The surrounding trigger context is illustrative.',
     preview: PopoverPreview,
     fields: [
       componentField('popover.bg', 'Background', 'color', 'Core'),
