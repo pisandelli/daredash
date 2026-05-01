@@ -17,7 +17,7 @@ export const useToaster = () => {
    * @param options An optional configuration object for the toast.
    */
   const showToast = (message: string, options: ToastOptions = {}) => {
-    const id = Date.now() + Math.random() // Unique ID
+    const id = crypto.randomUUID() // Unique ID
 
     const defaults: Omit<ToastMessage, 'id' | 'message'> = {
       type: 'info', // Default type
@@ -46,7 +46,7 @@ export const useToaster = () => {
    *
    * @param id The unique identifier of the notification to be dismissed.
    */
-  const dismissToast = (id: number) => {
+  const dismissToast = (id: string) => {
     const index: number = notifications.value.findIndex(
       (n: ToastMessage) => n.id === id
     )
