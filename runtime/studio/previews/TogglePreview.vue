@@ -34,7 +34,7 @@ function focusField(path: string) {
       <div class="dd-form-note">
         <strong>How to read this preview</strong>
         <span><b>Token-driven here:</b> default switch geometry, thumb styling, base track colors and disabled behavior.</span>
-        <span><b>Inherited from foundations:</b> semantic variants like `success` and `danger` still use the shared primitive colors.</span>
+        <span><b>Token-driven per variant:</b> `primary`, `success`, `warning`, `danger` and `info` now have their own active-track tokens.</span>
         <span><b>Not tokenized yet:</b> checked/unchecked inner content and the loading icon come from slots/runtime behavior, not from theme tokens.</span>
       </div>
     </header>
@@ -88,23 +88,23 @@ function focusField(path: string) {
       <div class="dd-form-grid">
         <div class="dd-form-card">
           <DdToggle id="studio-toggle-primary" label="Primary state" v-model="toggleState.primary" data-primary />
-          <button type="button" class="dd-form-link" @click="focusField('switch.track.background-color-active')">Uses primary foundation color</button>
+          <button type="button" class="dd-form-link" @click="focusField('switch.primary.track.background-color-active')">Edit primary active track</button>
         </div>
         <div class="dd-form-card">
           <DdToggle id="studio-toggle-success" label="Success state" v-model="toggleState.success" data-success />
-          <button type="button" class="dd-form-link" @click="focusField('switch.track.background-color-active')">Uses success foundation color</button>
+          <button type="button" class="dd-form-link" @click="focusField('switch.success.track.background-color-active')">Edit success active track</button>
         </div>
         <div class="dd-form-card">
           <DdToggle id="studio-toggle-warning" label="Warning state" v-model="toggleState.warning" data-warning />
-          <button type="button" class="dd-form-link" @click="focusField('switch.track.background-color-active')">Uses warning foundation color</button>
+          <button type="button" class="dd-form-link" @click="focusField('switch.warning.track.background-color-active')">Edit warning active track</button>
         </div>
         <div class="dd-form-card">
           <DdToggle id="studio-toggle-danger" label="Danger state" v-model="toggleState.danger" data-danger />
-          <button type="button" class="dd-form-link" @click="focusField('switch.track.background-color-active')">Uses danger foundation color</button>
+          <button type="button" class="dd-form-link" @click="focusField('switch.danger.track.background-color-active')">Edit danger active track</button>
         </div>
         <div class="dd-form-card">
           <DdToggle id="studio-toggle-info" label="Info state" v-model="toggleState.info" data-info />
-          <button type="button" class="dd-form-link" @click="focusField('switch.track.background-color-active')">Uses info foundation color</button>
+          <button type="button" class="dd-form-link" @click="focusField('switch.info.track.background-color-active')">Edit info active track</button>
         </div>
       </div>
     </div>

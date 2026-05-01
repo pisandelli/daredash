@@ -114,6 +114,25 @@ describe('DareDash Studio registry', () => {
     ])
   })
 
+  it('keeps the widget studio category complete for current tokenized components', () => {
+    const widgetTabIds = STUDIO_TABS
+      .filter((tab) => tab.navigationKind === 'component' && tab.componentCategory === 'widget')
+      .map((tab) => tab.id)
+      .sort()
+
+    expect(widgetTabIds).toEqual([
+      'accordion',
+      'anchor',
+      'drawer',
+      'menu',
+      'modal',
+      'pagination',
+      'popover',
+      'table',
+      'tabs'
+    ])
+  })
+
   it('registers accordion with preserved token references', () => {
     const accordionTab = STUDIO_TABS.find((tab) => tab.id === 'accordion')
     const headerPadding = accordionTab?.fields.find((field) => field.path === 'accordion.header.padding')
@@ -193,6 +212,17 @@ describe('DareDash Studio registry', () => {
     expect(gapField?.referencePath).toBe('space.lg')
   })
 
+  it('registers drawer with preserved token references', () => {
+    const drawerTab = STUDIO_TABS.find((tab) => tab.id === 'drawer')
+    const backgroundField = drawerTab?.fields.find((field) => field.path === 'drawer.bg')
+    const shadowField = drawerTab?.fields.find((field) => field.path === 'drawer.box-shadow')
+
+    expect(drawerTab).toBeDefined()
+    expect(drawerTab!.navigationKind).toBe('component')
+    expect(backgroundField?.referencePath).toBe('color.white')
+    expect(shadowField?.referencePath).toBe('shadow.xl')
+  })
+
   it('registers grid with preserved token references', () => {
     const gridTab = STUDIO_TABS.find((tab) => tab.id === 'grid')
     const gapField = gridTab?.fields.find((field) => field.path === 'grid.gap')
@@ -220,6 +250,50 @@ describe('DareDash Studio registry', () => {
     expect(loadingTab!.navigationKind).toBe('component')
     expect(colorField?.referencePath).toBe('color.secondary')
     expect(iconSizeField?.referencePath).toBe('space.xl')
+  })
+
+  it('registers menu with preserved token references', () => {
+    const menuTab = STUDIO_TABS.find((tab) => tab.id === 'menu')
+    const activeField = menuTab?.fields.find((field) => field.path === 'menu.item.bg-active')
+    const floatField = menuTab?.fields.find((field) => field.path === 'menu.float.shadow')
+
+    expect(menuTab).toBeDefined()
+    expect(menuTab!.navigationKind).toBe('component')
+    expect(activeField?.referencePath).toBe('color.primary.50')
+    expect(floatField?.referencePath).toBe('shadow.lg')
+  })
+
+  it('registers modal with preserved token references', () => {
+    const modalTab = STUDIO_TABS.find((tab) => tab.id === 'modal')
+    const radiusField = modalTab?.fields.find((field) => field.path === 'modal.border-radius')
+    const shadowField = modalTab?.fields.find((field) => field.path === 'modal.box-shadow')
+
+    expect(modalTab).toBeDefined()
+    expect(modalTab!.navigationKind).toBe('component')
+    expect(radiusField?.referencePath).toBe('border-radius.xl')
+    expect(shadowField?.referencePath).toBe('card.box-shadow')
+  })
+
+  it('registers pagination with preserved token references', () => {
+    const paginationTab = STUDIO_TABS.find((tab) => tab.id === 'pagination')
+    const colorField = paginationTab?.fields.find((field) => field.path === 'pagination.color')
+    const activeField = paginationTab?.fields.find((field) => field.path === 'pagination.color-active')
+
+    expect(paginationTab).toBeDefined()
+    expect(paginationTab!.navigationKind).toBe('component')
+    expect(colorField?.referencePath).toBe('color.dark-gray')
+    expect(activeField?.referencePath).toBe('color.primary')
+  })
+
+  it('registers popover with preserved token references', () => {
+    const popoverTab = STUDIO_TABS.find((tab) => tab.id === 'popover')
+    const backgroundField = popoverTab?.fields.find((field) => field.path === 'popover.bg')
+    const shadowField = popoverTab?.fields.find((field) => field.path === 'popover.shadow')
+
+    expect(popoverTab).toBeDefined()
+    expect(popoverTab!.navigationKind).toBe('component')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface')
+    expect(shadowField?.referencePath).toBe('shadow.md')
   })
 
   it('registers input with preserved token references', () => {
@@ -322,11 +396,13 @@ describe('DareDash Studio registry', () => {
     const switchTab = STUDIO_TABS.find((tab) => tab.id === 'switch')
     const focusField = switchTab?.fields.find((field) => field.path === 'switch.focus')
     const activeField = switchTab?.fields.find((field) => field.path === 'switch.track.background-color-active')
+    const warningField = switchTab?.fields.find((field) => field.path === 'switch.warning.track.background-color-active')
 
     expect(switchTab).toBeDefined()
     expect(switchTab!.navigationKind).toBe('component')
     expect(focusField?.referencePath).toBe('input.focus.box-shadow')
     expect(activeField?.referencePath).toBe('color.success')
+    expect(warningField?.referencePath).toBe('color.warning')
   })
 
   it('registers textarea with preserved token references', () => {
@@ -338,6 +414,38 @@ describe('DareDash Studio registry', () => {
     expect(textareaTab!.navigationKind).toBe('component')
     expect(labelField?.referencePath).toBe('input.label.color')
     expect(successField?.referencePath).toBe('color.success')
+  })
+
+  it('registers table with preserved token references', () => {
+    const tableTab = STUDIO_TABS.find((tab) => tab.id === 'table')
+    const colorField = tableTab?.fields.find((field) => field.path === 'table.color')
+    const borderField = tableTab?.fields.find((field) => field.path === 'table.border-color')
+    const borderWidthField = tableTab?.fields.find((field) => field.path === 'table.border-width')
+    const headerField = tableTab?.fields.find((field) => field.path === 'table.header.background-color')
+    const headerColorField = tableTab?.fields.find((field) => field.path === 'table.header.color')
+    const cellBorderField = tableTab?.fields.find((field) => field.path === 'table.cell.border-color')
+    const cellBorderWidthField = tableTab?.fields.find((field) => field.path === 'table.cell.border-width')
+
+    expect(tableTab).toBeDefined()
+    expect(tableTab!.navigationKind).toBe('component')
+    expect(colorField?.referencePath).toBe('color.text.default')
+    expect(borderField?.referencePath).toBe('color.secondary.100')
+    expect(borderWidthField?.defaultValue).toBe('1px')
+    expect(headerField?.referencePath).toBe('color.secondary.50')
+    expect(headerColorField?.referencePath).toBe('color.dark-gray')
+    expect(cellBorderField?.referencePath).toBe('table.border-color')
+    expect(cellBorderWidthField?.referencePath).toBe('table.border-width')
+  })
+
+  it('registers tabs with preserved token references', () => {
+    const tabsTab = STUDIO_TABS.find((tab) => tab.id === 'tabs')
+    const paddingField = tabsTab?.fields.find((field) => field.path === 'tabs.trigger.padding')
+    const indicatorField = tabsTab?.fields.find((field) => field.path === 'tabs.trigger.indicator.color')
+
+    expect(tabsTab).toBeDefined()
+    expect(tabsTab!.navigationKind).toBe('component')
+    expect(paddingField?.referencePath).toBe('tabs.trigger.size.regular.padding')
+    expect(indicatorField?.referencePath).toBe('color.primary')
   })
 
   it('registers toaster with preserved token references', () => {

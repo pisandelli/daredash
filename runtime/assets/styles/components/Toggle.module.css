@@ -24,19 +24,19 @@
   }
 
   &[data-primary] {
-    --local-track-active-bg: v('color.primary');
+    --local-track-active-bg: v('switch-primary-track-background-color-active');
   }
   &[data-success] {
-    --local-track-active-bg: v('color.success');
+    --local-track-active-bg: v('switch-success-track-background-color-active');
   }
   &[data-warning] {
-    --local-track-active-bg: v('color.warning');
+    --local-track-active-bg: v('switch-warning-track-background-color-active');
   }
   &[data-danger] {
-    --local-track-active-bg: v('color.danger');
+    --local-track-active-bg: v('switch-danger-track-background-color-active');
   }
   &[data-info] {
-    --local-track-active-bg: v('color.info');
+    --local-track-active-bg: v('switch-info-track-background-color-active');
   }
 
   &[data-disabled],

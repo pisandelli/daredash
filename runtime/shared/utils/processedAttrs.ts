@@ -73,6 +73,7 @@ export const customAttributes = new Set([
   'simple',
   // table states
   'striped',
+  'striped-odd',
   // from Progress.module.css
   'indeterminate'
 ])

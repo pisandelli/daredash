@@ -15,16 +15,23 @@ import CardPreview from './previews/CardPreview.vue'
 import CenterPreview from './previews/CenterPreview.vue'
 import CheckboxPreview from './previews/CheckboxPreview.vue'
 import ClusterPreview from './previews/ClusterPreview.vue'
+import DrawerPreview from './previews/DrawerPreview.vue'
 import GridPreview from './previews/GridPreview.vue'
 import InputGroupPreview from './previews/InputGroupPreview.vue'
 import InputPreview from './previews/InputPreview.vue'
 import InputSearchPreview from './previews/InputSearchPreview.vue'
 import LayoutPreview from './previews/LayoutPreview.vue'
 import LoadingPreview from './previews/LoadingPreview.vue'
+import MenuPreview from './previews/MenuPreview.vue'
+import ModalPreview from './previews/ModalPreview.vue'
+import PaginationPreview from './previews/PaginationPreview.vue'
+import PopoverPreview from './previews/PopoverPreview.vue'
 import ProgressPreview from './previews/ProgressPreview.vue'
 import RadioPreview from './previews/RadioPreview.vue'
 import SelectPreview from './previews/SelectPreview.vue'
 import StackPreview from './previews/StackPreview.vue'
+import TablePreview from './previews/TablePreview.vue'
+import TabsPreview from './previews/TabsPreview.vue'
 import TextareaPreview from './previews/TextareaPreview.vue'
 import ToastPreview from './previews/ToastPreview.vue'
 import ToasterPreview from './previews/ToasterPreview.vue'
@@ -125,6 +132,28 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('accordion.content.padding', 'Content Padding', 'text', 'Content'),
       componentField('accordion.content.background-color', 'Content Background', 'color', 'Content'),
       componentField('accordion.content.font-family', 'Content Font Family', 'text', 'Content')
+    ]
+  }),
+  componentTab('drawer', 'widget', {
+    label: 'Drawer',
+    preview: DrawerPreview,
+    fields: [
+      componentField('drawer.bg', 'Background', 'color', 'Core'),
+      componentField('drawer.box-shadow', 'Box Shadow', 'text', 'Core'),
+      componentField('drawer.z-index', 'Z-Index', 'text', 'Core'),
+      componentField('drawer.padding', 'Padding', 'text', 'Core'),
+      componentField('drawer.size', 'Drawer Size', 'text', 'Core'),
+      componentField('drawer.close-size', 'Close Size', 'text', 'Header'),
+      componentField('drawer.title.font-size', 'Title Font Size', 'text', 'Header'),
+      componentField('drawer.title.font-weight', 'Title Font Weight', 'text', 'Header'),
+      componentField('drawer.header.border-color', 'Header Border Color', 'color', 'Header'),
+      componentField('drawer.header.border-style', 'Header Border Style', 'text', 'Header'),
+      componentField('drawer.header.border-width', 'Header Border Width', 'text', 'Header'),
+      componentField('drawer.footer.border-color', 'Footer Border Color', 'color', 'Footer'),
+      componentField('drawer.footer.border-style', 'Footer Border Style', 'text', 'Footer'),
+      componentField('drawer.footer.border-width', 'Footer Border Width', 'text', 'Footer'),
+      componentField('drawer.backdrop.background-color', 'Backdrop Background', 'text', 'Backdrop'),
+      componentField('drawer.backdrop.filter', 'Backdrop Filter', 'text', 'Backdrop')
     ]
   }),
   componentTab('button', 'primitive', {
@@ -413,6 +442,101 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('anchor.padding-block', 'Padding Block', 'text', 'Spacing')
     ]
   }),
+  componentTab('menu', 'widget', {
+    label: 'Menu',
+    preview: MenuPreview,
+    fields: [
+      componentField('menu.bg', 'Background', 'color', 'Core'),
+      componentField('menu.border-color', 'Border Color', 'color', 'Core'),
+      componentField('menu.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('menu.width', 'Expanded Width', 'text', 'Core'),
+      componentField('menu.width-collapsed', 'Collapsed Width', 'text', 'Core'),
+      componentField('menu.transition', 'Transition', 'text', 'Core'),
+      componentField('menu.z-index', 'Z-Index', 'text', 'Core'),
+      componentField('menu.item.padding-block', 'Item Padding Block', 'text', 'Items'),
+      componentField('menu.item.padding-inline', 'Item Padding Inline', 'text', 'Items'),
+      componentField('menu.item.border-radius', 'Item Radius', 'text', 'Items'),
+      componentField('menu.item.color', 'Item Color', 'color', 'Items'),
+      componentField('menu.item.color-active', 'Item Active Color', 'color', 'Items'),
+      componentField('menu.item.color-disabled', 'Item Disabled Color', 'color', 'Items'),
+      componentField('menu.item.bg-hover', 'Item Hover Background', 'color', 'Items'),
+      componentField('menu.item.bg-active', 'Item Active Background', 'color', 'Items'),
+      componentField('menu.item.icon-size', 'Item Icon Size', 'text', 'Items'),
+      componentField('menu.item.font-size', 'Item Font Size', 'text', 'Items'),
+      componentField('menu.item.font-weight', 'Item Font Weight', 'text', 'Items'),
+      componentField('menu.item.font-weight-active', 'Item Active Weight', 'text', 'Items'),
+      componentField('menu.separator.color', 'Separator Color', 'color', 'Separator'),
+      componentField('menu.separator.font-size', 'Separator Font Size', 'text', 'Separator'),
+      componentField('menu.separator.font-weight', 'Separator Font Weight', 'text', 'Separator'),
+      componentField('menu.separator.letter-spacing', 'Separator Letter Spacing', 'text', 'Separator'),
+      componentField('menu.separator.border-color', 'Separator Border Color', 'color', 'Separator'),
+      componentField('menu.separator.padding-block', 'Separator Padding', 'text', 'Separator'),
+      componentField('menu.float.bg', 'Float Background', 'color', 'Float'),
+      componentField('menu.float.border-color', 'Float Border Color', 'color', 'Float'),
+      componentField('menu.float.shadow', 'Float Shadow', 'text', 'Float'),
+      componentField('menu.float.border-radius', 'Float Radius', 'text', 'Float'),
+      componentField('menu.float.min-width', 'Float Min Width', 'text', 'Float'),
+      componentField('menu.float.z-index', 'Float Z-Index', 'text', 'Float'),
+      componentField('menu.toggle.color', 'Toggle Color', 'color', 'Toggle'),
+      componentField('menu.toggle.bg-hover', 'Toggle Hover Background', 'color', 'Toggle'),
+      componentField('menu.toggle.border-radius', 'Toggle Radius', 'text', 'Toggle'),
+      componentField('menu.toggle.icon-size', 'Toggle Icon Size', 'text', 'Toggle')
+    ]
+  }),
+  componentTab('modal', 'widget', {
+    label: 'Modal',
+    preview: ModalPreview,
+    fields: [
+      componentField('modal.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('modal.box-shadow', 'Box Shadow', 'text', 'Core'),
+      componentField('modal.inline-size', 'Inline Size', 'text', 'Core'),
+      componentField('modal.max-inline-size', 'Max Inline Size', 'text', 'Core'),
+      componentField('modal.z-index', 'Z-Index', 'text', 'Core'),
+      componentField('modal.close-size', 'Close Size', 'text', 'Header'),
+      componentField('modal.backdrop.filter', 'Backdrop Filter', 'text', 'Backdrop'),
+      componentField('modal.backdrop.background-color', 'Backdrop Background', 'text', 'Backdrop'),
+      componentField('modal.title.font-size', 'Title Font Size', 'text', 'Header'),
+      componentField('modal.title.font-weight', 'Title Font Weight', 'text', 'Header'),
+      componentField('modal.body.font-family', 'Body Font Family', 'text', 'Body'),
+      componentField('modal.padding', 'Padding', 'text', 'Core')
+    ]
+  }),
+  componentTab('pagination', 'widget', {
+    label: 'Pagination',
+    preview: PaginationPreview,
+    fields: [
+      componentField('pagination.font-size', 'Font Size', 'text', 'Core'),
+      componentField('pagination.color', 'Color', 'color', 'Core'),
+      componentField('pagination.bg', 'Background', 'text', 'Core'),
+      componentField('pagination.border-color', 'Border Color', 'color', 'Core'),
+      componentField('pagination.color-hover', 'Hover Color', 'color', 'Hover'),
+      componentField('pagination.bg-hover', 'Hover Background', 'text', 'Hover'),
+      componentField('pagination.border-hover', 'Hover Border', 'color', 'Hover'),
+      componentField('pagination.color-active', 'Active Color', 'color', 'Active'),
+      componentField('pagination.bg-active', 'Active Background', 'text', 'Active'),
+      componentField('pagination.border-active', 'Active Border', 'color', 'Active'),
+      componentField('pagination.color-disabled', 'Disabled Color', 'color', 'Disabled'),
+      componentField('pagination.bg-disabled', 'Disabled Background', 'color', 'Disabled'),
+      componentField('pagination.border-disabled', 'Disabled Border', 'color', 'Disabled'),
+      componentField('pagination.size', 'Default Size', 'text', 'Sizing'),
+      componentField('pagination.size-small', 'Small Size', 'text', 'Sizing'),
+      componentField('pagination.radius', 'Radius', 'text', 'Sizing')
+    ]
+  }),
+  componentTab('popover', 'widget', {
+    label: 'Popover',
+    preview: PopoverPreview,
+    fields: [
+      componentField('popover.bg', 'Background', 'color', 'Core'),
+      componentField('popover.border-color', 'Border Color', 'color', 'Core'),
+      componentField('popover.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('popover.shadow', 'Shadow', 'text', 'Core'),
+      componentField('popover.padding', 'Padding', 'text', 'Core'),
+      componentField('popover.arrow-size', 'Arrow Size', 'text', 'Core'),
+      componentField('popover.color', 'Text Color', 'color', 'Core'),
+      componentField('popover.z-index', 'Z-Index', 'text', 'Core')
+    ]
+  }),
   componentTab('avatar', 'primitive', {
     label: 'Avatar',
     preview: AvatarPreview,
@@ -623,6 +747,11 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('switch.track.border-radius', 'Track Radius', 'text', 'Track'),
       componentField('switch.track.background-color', 'Track Background', 'color', 'Track'),
       componentField('switch.track.background-color-active', 'Track Active Background', 'color', 'Track'),
+      componentField('switch.primary.track.background-color-active', 'Primary Active Background', 'color', 'Semantic'),
+      componentField('switch.success.track.background-color-active', 'Success Active Background', 'color', 'Semantic'),
+      componentField('switch.warning.track.background-color-active', 'Warning Active Background', 'color', 'Semantic'),
+      componentField('switch.danger.track.background-color-active', 'Danger Active Background', 'color', 'Semantic'),
+      componentField('switch.info.track.background-color-active', 'Info Active Background', 'color', 'Semantic'),
       componentField('switch.focus', 'Focus Ring', 'text', 'States'),
       componentField('switch.disabled.opacity', 'Disabled Opacity', 'text', 'Disabled'),
       componentField('switch.disabled.cursor', 'Disabled Cursor', 'text', 'Disabled')
@@ -664,6 +793,68 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('textarea.error-label.font-size', 'Error Font Size', 'text', 'Messages'),
       componentField('textarea.min-height', 'Minimum Height', 'text', 'Layout'),
       componentField('textarea.resize', 'Resize Mode', 'text', 'Layout')
+    ]
+  }),
+  componentTab('table', 'widget', {
+    label: 'Table',
+    preview: TablePreview,
+    fields: [
+      componentField('table.width', 'Width', 'text', 'Core'),
+      componentField('table.color', 'Text Color', 'color', 'Core'),
+      componentField('table.border-color', 'Border Color', 'color', 'Core'),
+      componentField('table.border-width', 'Border Width', 'text', 'Core'),
+      componentField('table.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('table.border-collapse', 'Border Collapse', 'text', 'Core'),
+      componentField('table.header.background-color', 'Header Background', 'color', 'Header'),
+      componentField('table.header.color', 'Header Color', 'color', 'Header'),
+      componentField('table.header.font-family', 'Header Font Family', 'text', 'Header'),
+      componentField('table.header.font-weight', 'Header Font Weight', 'text', 'Header'),
+      componentField('table.header.text-transform', 'Header Transform', 'text', 'Header'),
+      componentField('table.header.text-align', 'Header Align', 'text', 'Header'),
+      componentField('table.header.padding', 'Header Padding', 'text', 'Header'),
+      componentField('table.cell.padding', 'Cell Padding', 'text', 'Cell'),
+      componentField('table.cell.border-color', 'Cell Border Color', 'color', 'Cell'),
+      componentField('table.cell.border-width', 'Cell Border Width', 'text', 'Cell'),
+      componentField('table.cell.text-align', 'Cell Align', 'text', 'Cell'),
+      componentField('table.row-striped.background-color', 'Striped Row Background', 'color', 'Rows'),
+      componentField('table.row-hover.background-color', 'Hover Row Background', 'color', 'Rows'),
+      componentField('table.empty-state.color', 'Empty State Color', 'color', 'Feedback'),
+      componentField('table.error-state.background-color', 'Error Background', 'color', 'Feedback'),
+      componentField('table.error-state.color', 'Error Text', 'color', 'Feedback')
+    ]
+  }),
+  componentTab('tabs', 'widget', {
+    label: 'Tabs',
+    preview: TabsPreview,
+    fields: [
+      componentField('tabs.list.border-color', 'List Border Color', 'color', 'List'),
+      componentField('tabs.list.border-width', 'List Border Width', 'text', 'List'),
+      componentField('tabs.list.gap', 'List Gap', 'text', 'List'),
+      componentField('tabs.list.padding', 'List Padding', 'text', 'List'),
+      componentField('tabs.trigger.base-color', 'Trigger Base Color', 'color', 'Trigger'),
+      componentField('tabs.trigger.padding', 'Trigger Padding', 'text', 'Trigger'),
+      componentField('tabs.trigger.font-family', 'Trigger Font Family', 'text', 'Trigger'),
+      componentField('tabs.trigger.font-size', 'Trigger Font Size', 'text', 'Trigger'),
+      componentField('tabs.trigger.font-weight', 'Trigger Font Weight', 'text', 'Trigger'),
+      componentField('tabs.trigger.color', 'Trigger Color', 'color', 'Trigger'),
+      componentField('tabs.trigger.bg', 'Trigger Background', 'text', 'Trigger'),
+      componentField('tabs.trigger.border-width', 'Trigger Border Width', 'text', 'Trigger'),
+      componentField('tabs.trigger.border-radius', 'Trigger Radius', 'text', 'Trigger'),
+      componentField('tabs.trigger.icon-size', 'Trigger Icon Size', 'text', 'Trigger'),
+      componentField('tabs.trigger.hover.color', 'Hover Color', 'color', 'Hover'),
+      componentField('tabs.trigger.hover.bg', 'Hover Background', 'text', 'Hover'),
+      componentField('tabs.trigger.active.color', 'Active Color', 'color', 'Active'),
+      componentField('tabs.trigger.active.border-color', 'Active Border Color', 'color', 'Active'),
+      componentField('tabs.trigger.active.bg', 'Active Background', 'text', 'Active'),
+      componentField('tabs.trigger.indicator.color', 'Indicator Color', 'color', 'Indicator'),
+      componentField('tabs.trigger.indicator.size', 'Indicator Size', 'text', 'Indicator'),
+      componentField('tabs.trigger.size.small.padding', 'Small Padding', 'text', 'Sizes'),
+      componentField('tabs.trigger.size.small.font-size', 'Small Font Size', 'text', 'Sizes'),
+      componentField('tabs.trigger.size.regular.padding', 'Regular Padding', 'text', 'Sizes'),
+      componentField('tabs.trigger.size.regular.font-size', 'Regular Font Size', 'text', 'Sizes'),
+      componentField('tabs.trigger.size.large.padding', 'Large Padding', 'text', 'Sizes'),
+      componentField('tabs.trigger.size.large.font-size', 'Large Font Size', 'text', 'Sizes'),
+      componentField('tabs.panel.padding', 'Panel Padding', 'text', 'Panel')
     ]
   })
 ]

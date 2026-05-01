@@ -13,6 +13,9 @@
   "border-radius": {
     "$value": "{border-radius.base}"
   },
+  "color": {
+    "$value": "{color.text.default}"
+  },
   "border-collapse": {
     "$value": "collapse"
   },
@@ -20,6 +23,9 @@
     "$type": "object",
     "background-color": {
       "$value": "{color.secondary.50}"
+    },
+    "color": {
+      "$value": "{color.dark-gray}"
     },
     "font-family": {
       "$value": "{font.base}"
