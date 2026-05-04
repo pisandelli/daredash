@@ -60,7 +60,7 @@ export default defineNuxtComponent({
     )
 
     // AppConfig icons fallback
-    const appConfig = useAppConfig() as Record<string, any>
+    const appConfig = useAppConfig()
     const globalIcons = appConfig.daredash?.icons || {}
 
     // Resolve DareDash components dynamically

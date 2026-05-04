@@ -44,4 +44,21 @@ describe('Breadcrumb Security', () => {
     // The text content should contain the payload as literal text
     expect(wrapper.html()).toContain('&lt;script id="xss-separator"&gt;alert("xss-separator")&lt;/script&gt;')
   })
+
+  it('sanitizes javascript: URIs in href', async () => {
+    const xssPayload = 'javascript:alert("xss")'
+    const wrapper = await mountSuspended(Breadcrumb, {
+      props: {
+        config: {
+          routes: [
+            { label: 'Home', href: xssPayload },
+            { label: 'End' }
+          ]
+        }
+      }
+    })
+
+    const link = wrapper.find('a')
+    expect(link.attributes('href')).toBe('about:blank')
+  })
 })

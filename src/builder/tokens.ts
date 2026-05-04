@@ -4,7 +4,7 @@ import { addTemplate, addPlugin } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions, TokensFile, TypedTokenValue } from '../types'
-import { debugLog } from '../utils'
+import { debugLog, resolveTokenPaths } from '../utils'
 import { mergeTokenSource } from '../utils/token-merger'
 import { parseTokens } from '../parser'
 
@@ -26,12 +26,11 @@ export async function setupTokens(
       return
     }
 
-    const projectPath = resolve(
+    const { projectPath, modulePath } = resolveTokenPaths(
       nuxt.options.rootDir,
-      'app/assets/styles/tokens',
+      resolver,
       options.tokens
     )
-    const modulePath = resolver.resolve(options.tokens)
 
     try {
       filePath = projectPath

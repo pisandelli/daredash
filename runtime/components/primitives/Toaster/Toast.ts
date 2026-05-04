@@ -29,7 +29,7 @@ export default defineNuxtComponent({
   emits: ['close'],
   setup(props, { slots, attrs, emit }): () => VNode {
     const { processedAttrs, classList } = useBaseComponent(attrs, styles)
-    const appConfig = useAppConfig() as any
+    const appConfig = useAppConfig()
     const globalIcons = appConfig.daredash?.icons || {}
 
     const iconName = computed(() => {
