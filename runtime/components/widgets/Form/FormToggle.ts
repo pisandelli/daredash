@@ -7,6 +7,7 @@ import getPrefixName from '#dd/utils/getPrefixName'
 export default defineNuxtComponent({
   name: 'FormToggle',
   inheritAttrs: false,
+  emits: ['update:modelValue'],
   props: {
     /**
      * Required name for the toggle input. Used for forms and vee-validate binding.

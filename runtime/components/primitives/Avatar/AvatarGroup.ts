@@ -18,7 +18,11 @@ export default defineComponent({
     const { processedAttrs } = useBaseComponent(attrs, styles)
 
     return () => {
-      // Future implementation can filter slots/children to handle 'limit'.
+      const children = slots.default?.() ?? []
+      const limitedChildren = props.limit > 0
+        ? children.slice(0, props.limit)
+        : children
+
       return h(
         'div',
         {
@@ -26,7 +30,7 @@ export default defineComponent({
           class: styles.avatarGroup,
           role: 'group'
         },
-        slots.default?.()
+        limitedChildren
       )
     }
   }

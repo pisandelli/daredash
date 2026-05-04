@@ -4,7 +4,6 @@ import { Icon } from '#components'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Badge.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
-import hasDefaultColor from '#dd/utils/hasDefaultColor'
 
 export default defineNuxtComponent({
   name: 'Badge',

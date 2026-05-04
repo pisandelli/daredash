@@ -1,5 +1,5 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, Teleport, TransitionGroup, type VNode, resolveComponent } from 'vue'
+import { computed, h, Teleport, TransitionGroup, type VNode, resolveComponent } from 'vue'
 import { useToaster } from '#dd/composables/useToaster'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import getPrefixName from '#dd/utils/getPrefixName'

@@ -7,6 +7,7 @@ import getPrefixName from '#dd/utils/getPrefixName'
 export default defineNuxtComponent({
   name: 'FormSelect',
   inheritAttrs: false,
+  emits: ['update:modelValue'],
   props: {
     /**
      * Required name for the select element. Used for forms and vee-validate binding.

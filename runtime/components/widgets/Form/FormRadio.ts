@@ -7,6 +7,7 @@ import getPrefixName from '#dd/utils/getPrefixName'
 export default defineNuxtComponent({
   name: 'FormRadio',
   inheritAttrs: false,
+  emits: ['update:modelValue'],
   props: {
     /**
      * Required name for the radio group. All radios in the same group must share this name.

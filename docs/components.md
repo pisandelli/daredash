@@ -1,196 +1,382 @@
-# UI Components & Primitives
+# UI Components
 
-`daredash` provides an extensive collection of User Interface Primitives and complex Widgets to build Nuxt applications.
+`daredash` ships a set of primitives, form wrappers, and interactive widgets for Nuxt applications.
 
-**Note:** The examples assume the default `dd` prefix. If you have configured a different prefix (e.g., `rtv`), replace `dd-` with `rtv-`.
+All examples assume the default `dd` prefix.
 
----
+## 1. Primitives
 
-## 1. Primitives (Base Components)
+### Button (`<dd-button>`)
 
-These components are simple building blocks, mostly Functional (TS), meaning they are lightweight and delegate styling strictly to CSS Modules.
-
-### 1.1 Button (`<dd-button>`)
-
-A button component with support for state variations, icons, and link behavior.
+Use `dd-button` for actions, links, and simple call-to-action patterns.
 
 ```vue
 <template>
   <dd-cluster>
-    <dd-button @click="handleClick">Default Button</dd-button>
-    <dd-button warning>Warning</dd-button>
-    <dd-button href="/home" icon="mdi:home">Link to Home</dd-button>
+    <dd-button primary icon="heroicons:plus">New</dd-button>
+    <dd-button outline href="/docs">Docs</dd-button>
   </dd-cluster>
 </template>
 ```
 
-#### API (Props / Attributes)
+#### Props
 
-| Property | Type | Description |
+| Prop | Type | Description |
 | :--- | :--- | :--- |
-| `warning` | `Boolean` | Styles the button with the warning color (yellow/orange). |
-| `info` | `Boolean` | Styles the button with the info color (light blue). |
-| `success` | `Boolean` | Styles the button with the success color (green). |
-| `error` | `Boolean` | Styles the button with the error color (red). |
-| `href`/`to` | `String` | Renders the button as a `<NuxtLink>` or `<a>`. |
-| `icon` | `String` | Name of the icon to be rendered before the text (uses `@nuxt/icon`). |
-| `disabled` | `Boolean` | Disables interactions and applies opacity. |
+| `color` | `string` | Overrides the base button color directly. |
+| `icon` | `string` | Left-side icon name. |
+| `to` | `string \| object` | Renders the button as a Nuxt link. |
+| `href` | `string` | Renders the button as an external/internal href link. |
 
-### 1.2 Card (`<dd-card>`)
+#### Common attrs
 
-A generic container to group content with default elevation/border styling.
+- semantic attrs such as `primary`, `success`, `warning`, `danger`, `info`
+- visual attrs such as `ghost`, `outline`, `full`, `icon-right`, `icon-only`
+- size attrs such as `tiny`, `small`, `large`, `xlarge`
+
+### Card (`<dd-card>`)
+
+Use `dd-card` to group related content.
 
 ```vue
 <template>
   <dd-card>
-    <h3>Card Title</h3>
-    <p>Detailed card content goes here.</p>
+    <template #header>Account</template>
+    <p>Detailed content goes here.</p>
+    <template #footer>
+      <dd-button primary>Save</dd-button>
+    </template>
   </dd-card>
 </template>
 ```
 
-### 1.3 Badge (`<dd-badge>`)
+#### Slots
 
-A small label or text tag.
+- `header`
+- `default`
+- `footer`
+
+### Badge (`<dd-badge>`)
+
+Small label for status or metadata.
 
 ```vue
 <template>
   <dd-cluster>
     <dd-badge>New</dd-badge>
-    <dd-badge success>Completed</dd-badge>
-    <dd-badge error>Failed</dd-badge>
+    <dd-badge success>Done</dd-badge>
+    <dd-badge danger icon="heroicons:x-mark">Failed</dd-badge>
   </dd-cluster>
 </template>
 ```
 
-#### API (Props / Attributes)
+#### Props
 
-| Property | Type | Description |
+| Prop | Type | Description |
 | :--- | :--- | :--- |
-| `warning` | `Boolean` | Warning style. |
-| `info` | `Boolean` | Informative style. |
-| `success` | `Boolean` | Success style. |
-| `error` | `Boolean` | Error style. |
+| `icon` | `string` | Optional icon. |
+| `color` | `string` | Custom badge color override. |
 
-### 1.4 Avatar (`<dd-avatar>` & `<dd-avatar-group>`)
+### Avatar (`<dd-avatar>` and `<dd-avatar-group>`)
 
-Displays a profile picture or user initials.
+Displays profile images or initials.
 
 ```vue
 <template>
-  <dd-avatar-group>
-    <dd-avatar src="https://example.com/photo1.jpg" alt="Maria" />
-    <dd-avatar fallback="JD" />
-    <dd-avatar icon="mdi:account" />
+  <dd-avatar-group :limit="3">
+    <dd-avatar src="https://example.com/photo1.jpg" alt="Maria Souza" />
+    <dd-avatar alt="Joao Dias" />
+    <dd-avatar alt="Ana Lima" random />
+    <dd-avatar alt="Extra User" />
   </dd-avatar-group>
 </template>
 ```
 
-### 1.5 Alert (`<dd-alert>`)
+#### `dd-avatar` props
 
-Displays an important message to the user.
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `src` | `string` | Avatar image URL. |
+| `alt` | `string` | Accessible label and initials source. |
+
+#### `dd-avatar-group` props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `limit` | `number` | `5` | Maximum number of rendered avatar children. |
+
+### Alert (`<dd-alert>`)
+
+Inline contextual message.
 
 ```vue
 <template>
-  <dd-alert title="Attention" warning>
+  <dd-alert title="Attention" warning closable>
     Your session will expire in 5 minutes.
   </dd-alert>
 </template>
 ```
 
-### 1.6 Progress (`<dd-progress>`)
+#### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `modelValue` | `boolean` | `true` | Controls visibility. |
+| `color` | `string` | `undefined` | Custom alert color. |
+| `title` | `string` | `undefined` | Alert title. |
+| `closable` | `boolean` | `true` | Enables close button. |
+| `icon` | `boolean \| string` | `false` | Shows a default or custom icon. |
+
+#### Emits
+
+- `update:modelValue`
+- `close`
+
+#### Slots
+
+- `title`
+- `default`
+
+### Progress (`<dd-progress>`)
 
 Linear progress bar.
 
 ```vue
 <template>
-  <dd-progress :value="50" max="100" />
+  <dd-progress :value="50" :max="100" label="Upload" />
 </template>
 ```
 
-### 1.7 Loading (`<dd-loading>`)
+#### Props
 
-A visual indicator (spinner) for ongoing processes.
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `value` | `number` | `undefined` |
+| `min` | `number` | `0` |
+| `max` | `number` | `100` |
+| `color` | `string` | `undefined` |
+| `ranges` | `ProgressRange[]` | `undefined` |
+| `label` | `string` | `undefined` |
+| `indeterminate` | `boolean` | `false` |
+
+#### Slots
+
+- `label`
+- `tooltip` with `{ percentage }`
+
+### Loading (`<dd-loading>`)
+
+Loading indicator.
 
 ```vue
 <template>
-  <dd-loading v-if="isLoading" />
+  <dd-loading label="Loading data" />
 </template>
 ```
 
-### 1.8 Breadcrumb (`<dd-breadcrumb>`)
+#### Props
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `label` | `string` | `'Loading...'` |
+| `icon` | `string` | `'svg-spinners:gooey-balls-2'` |
+
+#### Slots
+
+- `default`
+
+### Breadcrumb (`<dd-breadcrumb>`)
 
 Breadcrumb navigation trail.
 
 ```vue
 <template>
-  <dd-breadcrumb :items="[{ label: 'Home', href: '/' }, { label: 'Docs', href: '/docs' }]" />
+  <dd-breadcrumb
+    :config="{
+      routes: [
+        { label: 'Home', to: '/' },
+        { label: 'Docs', to: '/docs' },
+        { label: 'Components' }
+      ]
+    }"
+  />
 </template>
 ```
 
-### 1.9 VideoPlayer (`<dd-video-player>`)
+#### Props
 
-A responsive wrapper for Video.js.
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `config` | `BreadcrumbConfig` | Configuration object with `routes` and optional `separator`. |
+
+## 2. Form primitives
+
+### Input (`<dd-input>`)
+
+Styled text input.
 
 ```vue
 <template>
-  <dd-video-player src="https://example.com/video.m3u8" poster="/cover.jpg" />
+  <dd-input
+    name="email"
+    label="Email"
+    type="email"
+    placeholder="email@example.com"
+  />
 </template>
 ```
 
----
+Key props:
 
-## 2. Forms & Inputs
+- `name`
+- `label`
+- `type`
+- `id`
+- `placeholder`
+- `icon`
+- `iconRight`
+- `modelValue`
+- `isInvalid`
+- `errorMessage`
 
-### 2.1 Basic Primitives
+### Textarea (`<dd-textarea>`)
 
-These are styled HTML form elements (without attached validation).
+Styled multiline text field.
 
-* `<dd-input>`: Generic text field.
-* `<dd-textarea>`: Multiline text field.
-* `<dd-select>`: Native dropdown menu.
-* `<dd-checkbox>`: Checkbox.
-* `<dd-radio>`: Radio button.
-* `<dd-toggle>`: Switch.
-* `<dd-input-search>`: Field optimized for search.
+Key props:
+
+- `name`
+- `label`
+- `id`
+- `placeholder`
+- `modelValue`
+- `maxLength`
+- `rows`
+- `isInvalid`
+- `errorMessage`
+- `useValidation`
+
+### Select (`<dd-select>`)
+
+Styled native select element.
 
 ```vue
 <template>
-  <dd-form-label text="Your Name">
-    <dd-input placeholder="e.g., John Doe" />
-  </dd-form-label>
+  <dd-select
+    name="role"
+    label="Role"
+    :options="[
+      { label: 'Editor', value: 'editor' },
+      { label: 'Admin', value: 'admin' }
+    ]"
+  />
 </template>
 ```
 
-#### Add-ons (InputGroup)
-To add icons or buttons next to the input.
+Key props:
+
+- `name`
+- `label`
+- `id`
+- `options`
+- `placeholder`
+- `modelValue`
+- `isInvalid`
+- `errorMessage`
+
+### Checkbox (`<dd-checkbox>`)
+
+Checkbox for boolean or array-based selection.
+
+### Radio (`<dd-radio>`)
+
+Radio option for a mutually exclusive group.
+
+### Toggle (`<dd-toggle>`)
+
+Binary switch component.
+
+### InputSearch (`<dd-input-search>`)
+
+Search field with built-in trigger button.
 
 ```vue
 <template>
-  <dd-input-group>
-    <template #leading>
-      <dd-icon name="mdi:email" />
-    </template>
+  <dd-input-search
+    v-model="query"
+    button-label="Search"
+    @search="runSearch"
+  />
+</template>
+```
+
+#### Emits
+
+- `update:modelValue`
+- `search`
+
+### InputGroup (`<dd-input-group>`)
+
+Wraps a field with optional pre/post content.
+
+```vue
+<template>
+  <dd-input-group label="Email" error-message="Invalid email" error>
+    <template #pre>@</template>
     <dd-input type="email" placeholder="email@example.com" />
-    <template #trailing>
+    <template #post>
       <dd-button>Send</dd-button>
     </template>
   </dd-input-group>
 </template>
 ```
 
-### 2.2 Form Wrappers (VeeValidate Integration)
+#### Props
 
-For complete forms with robust validation, `daredash` provides wrappers prefixed with `Form` that integrate seamlessly with the `vee-validate` library.
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `label` | `string` | Group label. |
+| `id` | `string` | Label association target. |
+| `pre` | `string` | Text sugar for the `#pre` slot. |
+| `post` | `string` | Text sugar for the `#post` slot. |
+| `errorMessage` | `string` | Error message. |
+| `warningMessage` | `string` | Warning message. |
 
-They manage error messages and states (dirty, touched) automatically.
+#### Slots
 
-* `<dd-form-input>`
-* `<dd-form-textarea>`
-* `<dd-form-select>`
-* `<dd-form-checkbox>`
-* `<dd-form-radio>`
-* `<dd-form-toggle>`
+- `default`
+- `pre`
+- `post`
+
+### FormLabel (`<dd-form-label>`)
+
+Styled label wrapper.
+
+```vue
+<template>
+  <dd-form-label>Email</dd-form-label>
+</template>
+```
+
+## 3. Form wrappers (`vee-validate`)
+
+These wrappers forward most fallthrough attrs to the underlying primitive while integrating with `vee-validate`.
+
+Available wrappers:
+
+- `<dd-form-input>`
+- `<dd-form-textarea>`
+- `<dd-form-select>`
+- `<dd-form-checkbox>`
+- `<dd-form-radio>`
+- `<dd-form-toggle>`
+
+Shared documented props:
+
+- `name` (required)
+- `modelValue` (wrapper-dependent)
+
+Example:
 
 ```vue
 <template>
@@ -198,34 +384,20 @@ They manage error messages and states (dirty, touched) automatically.
     name="email"
     label="Email Address"
     type="email"
-    required
   />
 </template>
 ```
 
-#### Wrappers API (Props)
+## 4. Widgets
 
-| Property | Type | Description |
-| :--- | :--- | :--- |
-| `name` | `String` | Name of the field in the form (required for validation). |
-| `label` | `String` | Text of the visual label. |
-| `placeholder` | `String` | Hint text for the field. |
-| `type` | `String` | Type of input (text, email, password, etc.). |
+### Accordion (`<dd-accordion>` and `<dd-accordion-group>`)
 
----
-
-## 3. Widgets (Complex Components)
-
-Widgets are more sophisticated interactive components (Vue SFCs), usually containing internal state and heavy logic.
-
-### 3.1 Accordion (`<dd-accordion>` & `<dd-accordion-group>`)
-
-Native expandable panels based on `<details>` and `<summary>` tags.
+Native expandable panels built on `<details>` and `<summary>`.
 
 ```vue
 <template>
   <dd-accordion-group>
-    <dd-accordion title="Question 1" open>
+    <dd-accordion title="Question 1">
       Detailed answer...
     </dd-accordion>
     <dd-accordion title="Question 2">
@@ -235,77 +407,111 @@ Native expandable panels based on `<details>` and `<summary>` tags.
 </template>
 ```
 
-#### API (Props)
-* `title`: The visible summary text.
-* `open`: Boolean that dictates the initial state of the panel.
+#### `dd-accordion` props
 
-### 3.2 Modal (`<dd-modal>`)
+- `title`
+- `icon`
+- `accentColor`
+- `name`
 
-A dialog box using the native browser Popover API (when applicable) and `dialog` behaviors.
+#### `dd-accordion-group` props
+
+- `multiple`
+- `accentColor`
+
+### Modal (`<dd-modal>`)
+
+Dialog built on native `<dialog>`.
 
 ```vue
 <template>
-  <dd-button @click="isOpen = true">Open Modal</dd-button>
-
-  <dd-modal v-model:open="isOpen" title="Confirm Action">
+  <dd-modal :open="isOpen" title="Confirm Action" @update:open="isOpen = $event">
     <p>Are you sure you want to delete this item?</p>
     <template #footer>
-      <dd-cluster justify="end">
-        <dd-button warning @click="isOpen = false">Cancel</dd-button>
-        <dd-button success>Confirm</dd-button>
+      <dd-cluster end>
+        <dd-button ghost>Cancel</dd-button>
+        <dd-button primary>Confirm</dd-button>
       </dd-cluster>
     </template>
   </dd-modal>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-const isOpen = ref(false)
-</script>
 ```
 
+#### Props
+
+- `open`
+- `title`
+- `closeOnBackdrop`
+
+#### Emits
+
+- `close`
+- `update:open`
+
 #### Slots
-* `header`: Replaces the default header (where the title is).
-* `default`: Main body of the modal.
-* `footer`: Bottom area, generally used for action buttons.
 
-### 3.3 Drawer (`<dd-drawer>`)
+- `default`
+- `footer`
 
-Sliding panel (Off-canvas).
+### Drawer (`<dd-drawer>`)
+
+Sliding panel built on native `<dialog>`.
 
 ```vue
 <template>
-  <dd-drawer v-model:open="isOpen" side="right">
-    Sidebar menu content...
+  <dd-drawer :open="isOpen" position="right" @update:open="isOpen = $event">
+    <template #header>Sidebar Menu</template>
+    Drawer content...
   </dd-drawer>
 </template>
 ```
 
-#### API (Props)
-* `side`: 'left', 'right', 'top', 'bottom' (default: 'right').
+#### Props
 
-### 3.4 Tabs (`<dd-tabs>`)
+- `open`
+- `title`
+- `closeOnBackdrop`
+- `position`
 
-Tab navigation.
+#### Emits
+
+- `close`
+- `update:open`
+
+#### Slots
+
+- `header`
+- `default`
+- `footer`
+
+### Tabs
+
+Tabs are split into:
+
+- `<dd-tabs>`
+- `<dd-tab-list>`
+- `<dd-tab>`
+- `<dd-tab-panels>`
+- `<dd-tab-panel>`
 
 ```vue
 <template>
-  <dd-tabs>
+  <dd-tabs v-model="activeTab">
     <dd-tab-list>
-      <dd-tab>Profile</dd-tab>
-      <dd-tab>Settings</dd-tab>
+      <dd-tab value="profile">Profile</dd-tab>
+      <dd-tab value="settings">Settings</dd-tab>
     </dd-tab-list>
     <dd-tab-panels>
-      <dd-tab-panel>Profile data...</dd-tab-panel>
-      <dd-tab-panel>System options...</dd-tab-panel>
+      <dd-tab-panel value="profile">Profile data...</dd-tab-panel>
+      <dd-tab-panel value="settings">System options...</dd-tab-panel>
     </dd-tab-panels>
   </dd-tabs>
 </template>
 ```
 
-### 3.5 Table (`<dd-table>`)
+### Table (`<dd-table>`)
 
-Styled data table.
+Styled data table with empty, loading, and error states.
 
 ```vue
 <template>
@@ -313,37 +519,79 @@ Styled data table.
 </template>
 ```
 
-### 3.6 Pagination (`<dd-pagination>`)
+#### Props
 
-Controls to navigate between pages of results.
+- `columns`
+- `data`
+- `rowKey`
+- `loading`
+- `isInvalid`
+- `errorMessage`
+
+#### Slots
+
+- `empty`
+- `header-${column.key}`
+- `cell-${column.key}`
+
+### Pagination (`<dd-pagination>`)
+
+Pagination controls.
 
 ```vue
 <template>
-  <dd-pagination :total="100" :per-page="10" v-model:page="currentPage" />
+  <dd-pagination :total="100" :page-size="10" v-model="currentPage" />
 </template>
 ```
 
-### 3.7 Popover (`<dd-popover>`)
+#### Props
 
-A small information balloon anchored to an element.
+- `disabled`
+- `total`
+- `modelValue`
+- `pageSize`
+- `siblingCount`
+
+#### Emits
+
+- `update:modelValue`
+
+### Popover (`<dd-popover>`)
+
+Small contextual layer attached to a trigger.
 
 ```vue
 <template>
-  <dd-popover>
-    <template #trigger>
-      <dd-button>More options</dd-button>
+  <dd-popover title="More options" trigger="click">
+    <dd-button>More options</dd-button>
+
+    <template #content>
+      <ul>
+        <li>Option A</li>
+        <li>Option B</li>
+      </ul>
     </template>
-    <ul>
-      <li>Option A</li>
-      <li>Option B</li>
-    </ul>
   </dd-popover>
 </template>
 ```
 
-### 3.8 Menu (`<dd-menu>`)
+#### Props
 
-A versatile navigation component supporting vertical/horizontal orientations, collapsible sidebars, accordion and floating sub-menus, and sticky separators.
+- `title`
+- `trigger`
+- `placement`
+- `offset`
+- `onClose`
+
+#### Slots
+
+- `default`
+- `header`
+- `content`
+
+### Menu (`<dd-menu>`)
+
+Navigation component supporting vertical/horizontal modes, collapsible sidebars, submenus, and separators.
 
 ```vue
 <template>
@@ -369,42 +617,27 @@ const menuItems = [
 </script>
 ```
 
-#### Collapsible Sidebar
-
-```vue
-<template>
-  <dd-menu
-    :items="menuItems"
-    collapsible
-    toggle-button
-    v-model:collapsed="isCollapsed"
-  />
-</template>
-```
-
 #### Props
 
-| Property | Type | Default | Description |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `items` | `MenuEntry[]` | Required | Array of menu items and separators. |
+| `items` | `MenuEntry[]` | required | Menu entries and separators. |
 | `orientation` | `'vertical' \| 'horizontal'` | `'vertical'` | Menu orientation. |
-| `collapsible` | `Boolean` | `false` | Allows the menu to be collapsed. |
-| `collapsed` | `Boolean` | `false` | Controlled collapsed state (use `v-model:collapsed`). |
-| `toggleButton` | `Boolean` | `false` | Renders a built-in toggle button. |
-| `activeKey` | `String` | `undefined` | Overrides automatic active detection. |
-| `maxHeight` | `String` | `undefined` | Fixed height with overflow scroll (vertical only). |
-| `maxWidth` | `String` | `undefined` | Fixed width with overflow scroll (horizontal only). |
+| `collapsible` | `boolean` | `false` | Allows collapsing in vertical mode. |
+| `collapsed` | `boolean` | `false` | Controlled collapsed state. |
+| `toggleButton` | `boolean` | `false` | Renders a built-in collapse toggle. |
+| `activeKey` | `string` | `undefined` | Overrides automatic active detection. |
+| `maxHeight` | `string` | `undefined` | Scrollable max block size in vertical mode. |
+| `maxWidth` | `string` | `undefined` | Scrollable max inline size in horizontal mode. |
 
-#### Events
+#### Emits
 
-| Event | Payload | Description |
-| :--- | :--- | :--- |
-| `update:collapsed` | `boolean` | Fired when collapsed state changes. |
-| `select` | `{ key: string, item: MenuItem }` | Fired when an action item is clicked. |
+- `update:collapsed`
+- `select`
 
 #### Types
 
-```typescript
+```ts
 type MenuItemActionType =
   | { type: 'link'; to: string; target?: '_blank' | '_self' | '_parent' | '_top' }
   | { type: 'action'; handler: () => void }
@@ -431,74 +664,69 @@ interface MenuSeparator {
 type MenuEntry = MenuItem | MenuSeparator
 ```
 
-### 3.9 Anchor (`<dd-anchor>`)
+### Anchor (`<dd-anchor>`)
 
-A scroll-to-position component that creates navigation anchors with smooth scrolling.
+Anchor navigation component that tracks the current section while scrolling.
 
 ```vue
 <template>
-  <dd-anchor>
-    <dd-cluster>
-      <a href="#section-1">Section 1</a>
-      <a href="#section-2">Section 2</a>
-      <a href="#section-3">Section 3</a>
-    </dd-cluster>
-  </dd-anchor>
+  <dd-anchor
+    :items="[
+      { key: 'intro', href: '#intro', title: 'Introduction' },
+      { key: 'usage', href: '#usage', title: 'Usage' },
+      { key: 'api', href: '#api', title: 'API' }
+    ]"
+  />
 </template>
 ```
 
 #### Props
 
-| Property | Type | Default | Description |
+| Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `scroll-behavior` | `'smooth' \| 'auto'` | `'smooth'` | Scroll behavior when clicking anchors. |
-| `offset` | `Number` | `0` | Offset from the top of the viewport. |
-| `active-key` | `String` | `undefined` | Currently active anchor key. |
+| `items` | `AnchorItem[]` | `[]` | Anchor entries to render. |
+| `horizontal` | `boolean` | `false` | Changes layout to horizontal. |
+| `offset` | `number` | `0` | Offset used for active item detection. |
+| `affix` | `boolean` | `false` | Uses fixed positioning behavior. |
+| `container` | `string \| HTMLElement \| Window` | `window` | Scrollable container. |
 
-#### Slots
+#### Emits
 
-* `default`: The trigger links/buttons.
+- `click`
+- `change`
 
----
+## 5. Feedback and notifications
 
-## 4. Feedback and Notifications
+### Toaster (`<dd-toaster>` and `useToaster`)
 
-### Toaster (`<dd-toaster>` & `useToaster`)
+Global toast system.
 
-Global notification system (Toast messages).
-
-**Initial Setup:**
-Place the `<dd-toaster>` component **only once** in your base layout (usually in `app.vue` or within layouts like `default.vue`).
+Place `<dd-toaster>` once near the root of the app:
 
 ```vue
-<!-- app.vue -->
 <template>
   <NuxtLayout>
     <NuxtPage />
-    <dd-toaster /> <!-- Single global instance -->
+    <dd-toaster />
   </NuxtLayout>
 </template>
 ```
 
-**Use in Components/Pages:**
-Use the `useToaster` composable to trigger notifications from anywhere in your application.
+Use `useToaster()` to create notifications:
 
 ```vue
 <script setup>
 const { showToast } = useToaster()
 
-const save = async () => {
-  try {
-    await asyncOperation()
-    showToast('Operation performed successfully!', { type: 'success' })
-  } catch (err) {
-    showToast('An error occurred while saving.', { type: 'error', duration: 5000 })
-  }
-}
+showToast('Operation performed successfully!', {
+  type: 'success',
+  title: 'Success'
+})
 </script>
 ```
 
-#### Toast Options
-* `type`: 'success', 'error', 'warning', 'info' (Default: 'info').
-* `duration`: Time in milliseconds before disappearing (Default: 3000ms). Use `0` for persistent toasts (closed manually).
-* `title`: Bold title above the main message.
+#### Toast defaults
+
+- `type: 'info'`
+- `position: 'top-right'`
+- `duration: 5000`
