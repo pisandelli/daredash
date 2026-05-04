@@ -7,6 +7,7 @@ import getPrefixName from '#dd/utils/getPrefixName'
 export default defineNuxtComponent({
   name: 'FormTextarea',
   inheritAttrs: false,
+  emits: ['update:modelValue'],
   props: {
     /**
      * Required name for the textarea element. Used for forms and vee-validate binding.

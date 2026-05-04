@@ -109,11 +109,7 @@ export default defineNuxtComponent({
     
     const hide = () => {
       if (popoverRef.value && popoverRef.value.matches(':popover-open')) {
-        if (props.onClose) {
-          props.onClose()
-        } else {
-          popoverRef.value.hidePopover()
-        }
+        popoverRef.value.hidePopover()
         window.removeEventListener('scroll', updatePosition)
         window.removeEventListener('resize', updatePosition)
       }
@@ -194,10 +190,7 @@ export default defineNuxtComponent({
           if (evt.newState === 'closed') {
             window.removeEventListener('scroll', updatePosition)
             window.removeEventListener('resize', updatePosition)
-            if (props.onClose) {
-              e.preventDefault() // Block native closing
-              props.onClose() // Let user code handle closing
-            }
+            props.onClose?.()
           }
         })
       }

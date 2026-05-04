@@ -1,55 +1,81 @@
 # Layout Primitives
 
-The `daredash` module provides a set of layout primitives to handle common CSS patterns. These components rely heavily on CSS custom properties for configuration.
+`daredash` includes a small set of layout primitives built around CSS Modules, tokenized spacing, and attribute-driven variants.
 
-**Note**: All component names are prefixed based on your configuration (default: `dd`, example: `rtv`). The examples below assume the default `dd` prefix.
+All examples below assume the default `dd` prefix.
+
+## Shared rule
+
+All layout primitives:
+
+- are auto-registered by the Nuxt module;
+- render a neutral wrapper by default;
+- accept `tag` to change the root HTML element;
+- use boolean or valued attrs to activate layout variants.
+
+Example:
+
+```vue
+<dd-box tag="section">
+  Content
+</dd-box>
+```
 
 ## Box (`<dd-box>`)
 
-A generic container for grouping content. Useful for applying padding, borders, and background colors.
+A generic wrapper for grouping content with internal padding.
 
 ```vue
 <template>
-  <dd-box class="my-box">
+  <dd-box>
     Content goes here
   </dd-box>
 </template>
-
-<style scoped>
-.my-box {
-  /* Override tokens */
-  --dd-box-padding: 2rem;
-  --dd-box-background-color: white;
-}
-</style>
 ```
+
+### Props
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `tag` | `string` | `'div'` |
+
+### Relevant attrs
+
+| Attr | Description |
+| :--- | :--- |
+| `nogap` | Removes internal spacing. |
 
 ## Center (`<dd-center>`)
 
-Centers content horizontally using `margin-inline: auto`. Can also center text or children vertically/horizontally using flexbox properties.
+Centers content horizontally and constrains width using tokens.
 
 ```vue
 <template>
   <dd-center intrinsic>
-    <p>This content is centered within the parent.</p>
+    <p>This content is centered.</p>
   </dd-center>
 </template>
 ```
 
-### Props/Attrs
+### Props
 
-| Property | Type | Description |
+| Prop | Type | Default |
 | :--- | :--- | :--- |
-| `intrinsic` | `Boolean` | If present, centers the content based on its intrinsic width. |
-| `text` | `Boolean` | Centers text alignment. |
+| `tag` | `string` | `'div'` |
+
+### Relevant attrs
+
+| Attr | Description |
+| :--- | :--- |
+| `intrinsic` | Keeps the content centered based on its intrinsic size. |
 
 ## Cluster (`<dd-cluster>`)
 
-Arranges children in a wrapping row with consistent spacing (gap). Great for button groups, tags, or navigation links.
+Places children in a wrapping horizontal row with gap control.
 
 ```vue
 <template>
-  <dd-cluster center>
+  <dd-cluster between>
     <dd-button>One</dd-button>
     <dd-button>Two</dd-button>
     <dd-button>Three</dd-button>
@@ -57,48 +83,60 @@ Arranges children in a wrapping row with consistent spacing (gap). Great for but
 </template>
 ```
 
-### Props/Attrs
+### Props
 
-*Note: Items are aligned to the `center` vertically by default.*
-
-| Property | Type | Description |
+| Prop | Type | Default |
 | :--- | :--- | :--- |
-| `center` | `Boolean` | Justifies content to the center. |
-| `end` | `Boolean` | Justifies content to the end (flex-end). |
-| `between` | `Boolean` | Justifies content using space-between. |
-| `around` | `Boolean` | Justifies content using space-around. |
-| `evenly` | `Boolean` | Justifies content using space-evenly. |
-| `narrow` | `Boolean` | Reduces the gap between items. |
-| `wide` | `Boolean` | Increases the gap between items. |
-| `nowrap` | `Boolean` | Prevents items from wrapping to the next line. |
-| `stretch` | `Boolean` | Changes alignment to stretch items vertically. |
-| `nogap` | `Boolean` | Removes the gap entirely. |
+| `tag` | `string` | `'div'` |
+
+### Relevant attrs
+
+| Attr | Description |
+| :--- | :--- |
+| `center` | Centers items horizontally. |
+| `end` | Aligns items to the end. |
+| `between` | Uses `space-between`. |
+| `around` | Uses `space-around`. |
+| `evenly` | Uses `space-evenly`. |
+| `narrow` | Reduces the gap. |
+| `wide` | Increases the gap. |
+| `nowrap` | Prevents wrapping. |
+| `stretch` | Stretches items vertically. |
+| `nogap` | Removes the gap. |
 
 ## Grid (`<dd-grid>`)
 
-Creates a CSS Grid layout.
+Creates a responsive CSS grid based on tokenized gap and minimum column width.
 
 ```vue
 <template>
   <dd-grid>
-    <div>Column 1</div>
-    <div>Column 2</div>
+    <dd-card>A</dd-card>
+    <dd-card>B</dd-card>
   </dd-grid>
 </template>
 ```
 
+### Props
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `tag` | `string` | `'div'` |
+
 ### Customization
-Use CSS custom properties to control columns:
+
+Use local overrides when needed:
+
 ```css
 .my-grid {
-  --dd-grid-min-item-size: 200px;
+  --dd-grid-column-min-width: 200px;
   --dd-grid-gap: 1.5rem;
 }
 ```
 
 ## Stack (`<dd-stack>`)
 
-Arranges children vertically with consistent spacing (gap). A foundational vertical layout component.
+Stacks children vertically using tokenized spacing.
 
 ```vue
 <template>
@@ -110,29 +148,49 @@ Arranges children vertically with consistent spacing (gap). A foundational verti
 </template>
 ```
 
-### Props/Attrs
+`split-after` is useful when one item should push the rest downward:
 
-| Property | Type | Description |
+```vue
+<template>
+  <dd-stack split-after="2" style="min-height: 14rem;">
+    <header>Toolbar</header>
+    <nav>Filters</nav>
+    <footer>Actions pinned to the bottom</footer>
+  </dd-stack>
+</template>
+```
+
+### Props
+
+| Prop | Type | Default |
 | :--- | :--- | :--- |
-| `compact` | `Boolean` | Reduces the vertical gap. |
-| `nogap` | `Boolean` | Removes the gap entirely. |
-| `recursive` | `Boolean` | Applies stack spacing to nested elements. |
-| `split-after` | `Number/String` | Applies `margin-block-end: auto` to the nth child, pushing subsequent items to the bottom. |
+| `tag` | `string` | `'div'` |
+
+### Relevant attrs
+
+| Attr | Description |
+| :--- | :--- |
+| `compact` | Reduces the vertical gap. |
+| `spaced` | Uses a larger gap. |
+| `nogap` | Removes the gap. |
+| `recursive` | Applies stack spacing inside nested children. |
+| `reverse` | Reverses visual order. |
+| `split-after` | Applies `margin-block-end: auto` to the nth child. |
 
 ## Sidebar (`<dd-sidebar>`)
 
-Arranges elements horizontally, placing a sidebar alongside a main content area. Based on Every Layout's "The Sidebar" pattern. It automatically wraps into a stacked layout when the main content would fall below its minimum threshold width.
+Creates a sidebar/content pattern that can wrap when space gets tight.
 
 ```vue
 <template>
   <dd-sidebar right>
     <aside>Sidebar Nav</aside>
-    <div>Main Content</div>
+    <main>Main Content</main>
   </dd-sidebar>
 </template>
 ```
 
-Use `fill` when the sidebar should occupy the available vertical space inside a parent layout:
+Use `fill` when the sidebar area should occupy available vertical space inside a larger page layout:
 
 ```vue
 <template>
@@ -151,27 +209,45 @@ Use `fill` when the sidebar should occupy the available vertical space inside a 
 </template>
 ```
 
-In this case, `dd-layout` detects `fill` and automatically turns `data-body` into a flex container so the sidebar can stretch without fixed heights.
+### Props
 
-### Props/Attrs
-
-| Property | Type | Description |
+| Prop | Type | Default |
 | :--- | :--- | :--- |
-| `right` | `Boolean` | Reverses the order, placing the sidebar on the right instead of the left. |
-| `start` | `Boolean` | Aligns items to the top (flex-start). |
-| `end` | `Boolean` | Aligns items to the bottom (flex-end). |
-| `fill` | `Boolean` | Makes the sidebar grow to fill the available vertical space. Inside `dd-layout`, this automatically promotes `data-body` to a flex container. |
-| `nogap` | `Boolean` | Removes the gap between the sidebar and the main content. |
+| `tag` | `string` | `'div'` |
+
+### Relevant attrs
+
+| Attr | Description |
+| :--- | :--- |
+| `right` | Places the sidebar on the right side. |
+| `start` | Aligns items to the top. |
+| `end` | Aligns items to the bottom. |
+| `fill` | Expands the layout to occupy available vertical space. |
+| `nogap` | Removes the gap. |
 
 ## Layout (`<dd-layout>`)
 
-Root layout component often used for page structures (Sidebar + Main Content).
+High-level page layout wrapper.
 
 ```vue
 <template>
   <dd-layout>
-    <aside>Sidebar</aside>
-    <main>Main Content</main>
+    <dd-sidebar>
+      <aside>Sidebar</aside>
+      <main>Main Content</main>
+    </dd-sidebar>
   </dd-layout>
 </template>
 ```
+
+### Props
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `tag` | `string` | `'div'` |
+
+### Important note
+
+`dd-layout` itself does not expose a formal `body` or `fill` prop API. Instead, some CSS behaviors react to descendants carrying `data-body` and `data-fill`.
+
+Use that pattern only when you really need the page body to stretch inside a larger shell.

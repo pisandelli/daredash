@@ -51,6 +51,7 @@ export const customAttributes = new Set([
   'compact',
   'spaced',
   'reverse',
+  'split-after',
   // from Card.vue
   'noborder',
   'flat',
