@@ -1,161 +1,346 @@
-# daredash Module - Developer Guide
+# DareDash Developer Guide
 
-This guide is intended for contributors and maintainers of the `daredash` Nuxt module. It details the internal architecture, core utilities, and coding standards.
+This README is for contributors and maintainers.
 
-## Architecture Overview
+If you want to understand how the library is structured, where core responsibilities live, and how to safely extend the system, start here.
 
-The module is split into two main phases:
+For a higher-level architectural explanation aimed at broader audiences, see [docs/architecture.md](./docs/architecture.md).
 
-1.  **Build Phase (`src/`)**: Runs during `nuxt prepare` or `nuxt dev`. It handles parsing tokens, configuring PostCSS, and generating component wrappers.
-2.  **Runtime Phase (`runtime/`)**: Code that runs in the consumer application. Contains Vue components, composables, and shared utilities.
+## Documentation TOC
 
-### Directory Structure
+### Product and usage docs
 
-```
-modules/daredash/
-├── module.ts           # Entry point. Defines options, hooks, and setup.
-├── components.config.ts # Component definitions map (name, style path, file path).
-├── src/
-│   ├── builder/        # Build-time logic.
-│   │   ├── components.ts # Component orchestration and factory.
-│   │   └── tokens.ts     # Token parsing and CSS generation.
-│   ├── postcss/        # Custom PostCSS plugins (v-function).
-│   └── utils/          # Build-time utilities.
-└── runtime/
-    ├── assets/
-    │   └── styles/
-    │       ├── components/ # CSS Modules (.module.css).
-    │       └── tokens/     # Source token JSON files.
-    ├── components/     # Vue component implementations (TS or SFC).
-    ├── composables/    # runtime logic (useBaseComponent).
-    └── shared/
-        └── utils/
-            ├── getPrefixName.ts  # Dynamic naming & CSS var resolution.
-            └── processedAttrs.ts # Attribute mapping & prefixing.
-```
+- [README](./README.md)
+- [Installation Guide](./docs/installation.md)
+- [Layout Primitives](./docs/layout.md)
+- [UI Components](./docs/components.md)
+- [Features](./docs/features.md)
+- [Architecture](./docs/architecture.md)
 
-## Key Concepts
+### AI and maintainer docs
 
-### 1. Dynamic Prefixes
-The module supports a configurable prefix (default: `dd`). This is handled by **`getPrefixName`**.
+- [LLM Guide](./llms.md)
+- [Compact AI Guide](./docs/LLM.md)
+- [Developer Guide](./README.DEV.md)
 
-- **CSS Variables**: Generates `--dd-color-primary`.
-- **Component Names**: Generates `DdButton`.
-- **Runtime Resolution**: Consumers can resolve components and variables using the current prefix without hardcoding.
+## What DareDash Is
 
-**Implementation**:
-- **Build Time**: `module.ts` passes the prefix to the builder, which registers components using Nuxt's `addComponent`.
-- **Runtime**: `runtimeConfig.public.daredash` exposes the prefix. `getPrefixName` consumes this to resolve names dynamically.
+DareDash is a Nuxt-first UI library with four tightly connected parts:
 
-### 2. Design Tokens Architecture
-The module consumes JSON files to build the design system. The `tokens` setting in `module.ts` can point to a **single JSON file** or a **Directory of JSON files**.
-- **Directory Support**: If a directory is provided, the module recursively finds all `.json` files and performs an in-memory Deep Merge.
-- **File Namespace Matching**: The directory structure dictates the JSON namespace. A file at `components/button.json` is automatically injected into the `{"components": {"button": {...}}}` object.
+- a **Nuxt module** that wires everything into the app
+- a **component system** made of primitives, wrappers, and widgets
+- a **design token pipeline** that generates CSS variables and themes
+- a **Studio** that helps inspect, preview, and export visual system changes
 
-### 3. PostCSS `v()` Hook
-We use a custom PostCSS plugin (`postcss-v-function`) to handle design tokens in CSS.
+The important mental model is:
 
-- **Function**: `color: v('color.primary');`
-- **Output**: `color: var(--dd-color-primary, #fallback);`
-- **Native Support**: Unlike Stylus/Sass, this runs in the standard PostCSS pipeline, allowing us to use native modern CSS features like `color-mix()` and `hsl` Relative Color Syntax directly.
+- the module prepares the system
+- tokens define the system
+- components render the system
+- Studio helps evolve the system
 
-### 3. Core Utilities
+## High-Level Architecture
 
-#### `processedAttrs`
-Maps boolean properties and standard attributes to `data-*` attributes for styling.
-- **Boolean mapping**: `<Button primary>` -> `data-primary`.
-- **Security**: Strips `false` values to prevent selector mismatches.
-- **Stability**: Excludes native accessibility attributes (`disabled`, `required`, etc.) to preserve browser behavior.
+### Build layer
 
-#### `baseComponent`
-A high-order component factory for **Functional Components**.
-- Orchestrates `processedAttrs`.
-- Binds CSS Modules automatically.
-- Ensures consistent attribute inheritance and class merging.
+The build layer lives mainly in `src/`.
 
-## Component Architecture
+Its responsibilities include:
 
-### Functional Components (TS) vs SFC
-- **Functional (Pure TS)**: Preferred for foundational **Primitives** (Buttons, Badges, Layouts). They are faster, lighter, and keep styling logic strictly in `.module.css`.
-- **SFC (Vue)**: Reserved for complex **Widgets** or components with heavy internal logic, intricate templates, or third-party integrations (e.g., specific form wrappers with VeeValidate).
+- reading token sources
+- resolving references
+- generating CSS variable output
+- registering the PostCSS `v()` hook
+- registering components with the current prefix
 
-### Token Layering (The Golden Rule)
-To prevent style leaks and allow safe overrides:
-1.  **Global Token**: Defined in `default-theme.tokens.json`.
-2.  **Component Token**: Defined in CSS mapping the global token.
-3.  **Local Scope**: Inside the component, map to a `--local-` variable.
-    ```css
-    .button {
-      --local-bg: v('button.bg');
-      background: var(--local-bg);
-    }
-    ```
+Key files:
 
-## Code Standards
+- `module.ts`
+- `src/builder/tokens.ts`
+- `src/builder/components.ts`
+- `src/parser.ts`
+- `src/postcss/postcss-v-function.ts`
 
-### 1. Templates & Styling
-- **HTML**: Standard HTML templates only.
-- **PostCSS**: CSS Modules (`.module.css`) are mandatory. No global/scoped `<style>` tags in SFCs.
-- **Logical Properties**: ALWAYS replace physical directions (e.g., `padding-inline-start` instead of `padding-left`).
+### Runtime layer
 
-### 2. UX Engineering (The 5 States)
-Every data-driven or interactive component **MUST** visually handle:
-1.  **Loading**: Skeletons or spinners.
-2.  **Error**: Clear messages and retry actions.
-3.  **Empty**: Status feedback for "No Results".
-4.  **Ideal**: The standard content.
-5.  **Partial**: Scenarios like pagination or "Load More".
+The runtime layer lives mainly in `runtime/`.
 
-## Iconography (Agnostic)
-The module is icon-agnostic. It provides defaults (usually `heroicons:`) but allows consumers to override any icon key via `appConfig.daredash.icons` using any `@nuxt/icon` compatible string.
+It contains:
 
-## Contributing
+- Vue/Nuxt components
+- composables
+- CSS Modules
+- shared utilities
+- Studio pages and previews
 
-### Creating a New Component
+Key folders:
 
-1. **Choose the right directory**:
-   - `runtime/components/primitives/` - For simple, foundational components (Button, Badge, etc.)
-   - `runtime/components/widgets/` - For complex, stateful components (Modal, Table, etc.)
+- `runtime/components/`
+- `runtime/composables/`
+- `runtime/assets/styles/`
+- `runtime/shared/`
+- `runtime/studio/`
 
-2. **Create the component file**:
-   - Use `defineNuxtComponent` for all components
-   - Set `inheritAttrs: false` and use `useBaseComponent`
+## Core Relationships
 
-3. **Create the CSS Module**:
-   - File: `runtime/assets/styles/components/{ComponentName}.module.css`
-   - Use `v('token.path')` for all token values
-   - Use logical properties (block-start, inline-start, etc.)
+### 1. Module -> Tokens
 
-4. **Register the component**:
-   - Add to `components.config.ts` for automatic registration
+The Nuxt module loads token sources through the configured `tokens` path.
 
-5. **Create tokens** (if needed):
-   - File: `runtime/assets/styles/tokens/default-theme/components/{component}.json`
+Those tokens are parsed and converted into:
 
-### Running Tests
+- root-level CSS custom properties
+- theme selectors such as `[data-theme="light"]`
+- typed token metadata for client-side registration
+
+### 2. Module -> Components
+
+The module reads `components.config.ts` and registers components with the configured prefix.
+
+That registration supports two paths:
+
+- **generated wrappers**
+  - for simpler style-driven components
+- **direct registration**
+  - for more complex components with dedicated implementation files
+
+### 3. Components -> Composables
+
+Components rely on composables and shared utilities for consistency.
+
+Examples:
+
+- `useBaseComponent`
+  - shared attr/class handling
+- `useToaster`
+  - global toast state
+- `useThemeEditor`
+  - Studio-oriented token editing workflow
+
+### 4. Components -> Tokens
+
+Components do not hardcode most visual values.
+
+Instead, CSS Modules consume token-generated custom properties, often through local variable mapping. This keeps the system themeable and easier to evolve.
+
+### 5. Studio -> Everything
+
+Studio is not a side feature. It sits on top of the same token and component infrastructure used by the runtime.
+
+That makes it valuable for:
+
+- internal development
+- product review
+- theme experimentation
+- design-system iteration
+
+## Component Model
+
+The component catalog is intentionally layered.
+
+### Layout primitives
+
+Examples:
+
+- `Box`
+- `Stack`
+- `Cluster`
+- `Grid`
+- `Sidebar`
+- `Layout`
+
+These are mostly structural building blocks with small APIs.
+
+### UI primitives
+
+Examples:
+
+- `Button`
+- `Badge`
+- `Input`
+- `Select`
+- `Checkbox`
+- `Alert`
+- `Progress`
+
+These are the main reusable UI elements.
+
+### Form wrappers
+
+Examples:
+
+- `FormInput`
+- `FormSelect`
+- `FormCheckbox`
+
+These are thin `vee-validate` adapters around primitives.
+
+### Widgets
+
+Examples:
+
+- `Modal`
+- `Drawer`
+- `Tabs`
+- `Menu`
+- `Table`
+- `Popover`
+- `Anchor`
+
+These components typically contain more coordination logic and richer runtime behavior.
+
+## Prefix Strategy
+
+The prefix system is fundamental to the library.
+
+Default prefix:
+
+- `dd`
+
+Examples:
+
+- component name: `DdButton`
+- CSS variable: `--dd-color-primary`
+
+Never hardcode the prefix in new logic when a helper already exists for dynamic resolution.
+
+The main runtime helper for this is `getPrefixName`.
+
+## Token System
+
+Tokens are defined in JSON and can come from:
+
+- a single file
+- or a directory tree of JSON files
+
+The build pipeline:
+
+1. resolves the token source
+2. merges JSON when directories are used
+3. parses standard and typed token values
+4. emits CSS variable output
+5. emits theme blocks
+6. registers the client token plugin
+
+This architecture gives DareDash its consistency and extensibility.
+
+## Styling Rules
+
+### Use `v()` in module CSS
+
+When authoring CSS for the library:
+
+- use `v('token.path')`
+- do not manually hardcode the generated CSS variable name when the intent is a token reference
+
+### Prefer token layering
+
+The safest styling model is:
+
+1. global token
+2. component token mapping
+3. local usage
+
+This reduces leakage and makes overrides more predictable.
+
+### Use attr-driven variants
+
+The library relies heavily on attrs that become `data-*` states.
+
+This is part of the system design, not an incidental implementation detail.
+
+## Studio
+
+Studio is one of the most important differentiators in the repository.
+
+For contributors, it matters because it provides a fast feedback loop for:
+
+- component previews
+- theme previews
+- token inspection
+- exporting token overrides
+
+From an internal architecture perspective, Studio proves that the token pipeline and component system are reusable beyond normal page rendering.
+
+Studio is exposed through:
+
+- `/studio`
+- a Nuxt DevTools tab
+
+## Public vs Internal Surface
+
+### Safe public surface
+
+- registered components
+- module options: `tokens`, `prefix`, `debug`
+- `useToaster`
+- icon overrides in `appConfig.daredash.icons`
+
+### Internal or tooling-oriented surface
+
+- `useBaseComponent`
+- `useThemeEditor`
+- `runtime/shared/utils/*`
+- `src/*`
+- `#dd/*` aliases as a primary app API
+- `runtime/components/widgets/Menu/useMenu*.ts`
+
+When documenting or extending the project, keep this boundary explicit.
+
+## Extending the Library
+
+### Add a new component
+
+Typical workflow:
+
+1. create the runtime implementation
+2. create the CSS Module
+3. add the component to `components.config.ts`
+4. add tokens if the component needs its own token namespace
+5. add tests when logic branches exist
+
+### Add or evolve tokens
+
+Typical workflow:
+
+1. add or update token JSON
+2. keep naming aligned with existing namespaces
+3. verify output in Studio
+4. verify CSS usage through `v()`
+
+### Add a more complex widget
+
+Use the widget path when the component needs:
+
+- significant internal coordination
+- overlay/dialog logic
+- keyboard interaction
+- composition across multiple subcomponents
+
+## Validation
+
+After TypeScript or component API changes:
 
 ```bash
-# Run all tests
-pnpm test
-
-# Run specific component tests
-pnpm test -- modules/daredash/test/components/primitives/Button.spec.ts
+pnpm --dir modules/daredash run lint:ts
 ```
 
-### Code Style Rules
+After Studio-related changes:
 
-All contributors should follow the rules defined in `.agent/rules/code-style.md`:
+```bash
+pnpm --dir modules/daredash run test:studio
+```
 
-- Use `getPrefixName` for dynamic prefixing (never hardcode "dd-")
-- Use JSDoc for all props
-- Keep components under 300 lines
-- Use data attributes for styling variants
-- Follow the 5 States rule (Loading, Error, Empty, Ideal, Partial)
+For broader coverage:
 
-### Before Submitting a PR
+```bash
+pnpm --dir modules/daredash test
+```
 
-1. Run tests: `pnpm test`
-2. Verify all props have JSDoc documentation
-3. Check that the component is under 300 lines
-4. Ensure CSS uses tokens via `v()` function
-5. Add unit tests for components with logic branching
+## Practical Contribution Rules
+
+- Keep documentation aligned with `llms.md` when the public API changes.
+- Preserve the distinction between public API and internal tooling.
+- Prefer adding clarity to tokens and variants over adding one-off exceptions.
+- Avoid inventing public APIs that are only implementation details today.
+- Treat Studio as a first-class part of the product story, not just a dev sandbox.
