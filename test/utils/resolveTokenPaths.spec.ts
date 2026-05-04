@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { resolveTokenPaths } from '../../src/utils'
+import { resolveTokenPaths } from '../../src/utils/resolveTokenPaths'
 import { resolve } from 'path'
 
 describe('resolveTokenPaths', () => {
