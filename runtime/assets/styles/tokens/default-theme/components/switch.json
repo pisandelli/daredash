@@ -48,8 +48,48 @@
       "$value": "{color.success}"
     }
   },
+  "primary": {
+    "$type": "object",
+    "track": {
+      "background-color-active": {
+        "$value": "{color.primary}"
+      }
+    }
+  },
+  "success": {
+    "$type": "object",
+    "track": {
+      "background-color-active": {
+        "$value": "{color.success}"
+      }
+    }
+  },
+  "warning": {
+    "$type": "object",
+    "track": {
+      "background-color-active": {
+        "$value": "{color.warning}"
+      }
+    }
+  },
+  "danger": {
+    "$type": "object",
+    "track": {
+      "background-color-active": {
+        "$value": "{color.danger}"
+      }
+    }
+  },
+  "info": {
+    "$type": "object",
+    "track": {
+      "background-color-active": {
+        "$value": "{color.info}"
+      }
+    }
+  },
   "focus": {
-    "$value": "{checkbox.focus}"
+    "$value": "{input.focus.box-shadow}"
   },
   "disabled": {
     "$type": "object",

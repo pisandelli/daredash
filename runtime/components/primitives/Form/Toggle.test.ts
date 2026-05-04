@@ -47,7 +47,7 @@ describe('Toggle Primitive', () => {
     })
 
     const input = wrapper.find('input')
-    await input.setChecked(true)
+    await input.setValue(true)
 
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
@@ -62,7 +62,7 @@ describe('Toggle Primitive', () => {
     })
 
     const input = wrapper.find('input')
-    await input.setChecked(true)
+    await input.setValue(true)
 
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([

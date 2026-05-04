@@ -22,7 +22,7 @@
     "$description": "Internal gap between message and close button",
     "$value": "{space.xs}"
   },
-  "bg-color": {
+  "background": {
     "$value": "{color.white}"
   },
   "color": {
@@ -34,6 +34,31 @@
   "icon-color": {
     "$value": "{color.info}"
   },
+  "success": {
+    "icon-color": {
+      "$value": "{color.success}"
+    }
+  },
+  "warning": {
+    "icon-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "danger": {
+    "icon-color": {
+      "$value": "{color.danger}"
+    }
+  },
+  "error": {
+    "icon-color": {
+      "$value": "{color.error}"
+    }
+  },
+  "info": {
+    "icon-color": {
+      "$value": "{color.info}"
+    }
+  },
   "close-color": {
     "$value": "{color.darker-gray}"
   },
@@ -42,5 +67,91 @@
   },
   "close-hover-bg": {
     "$value": "{color.danger.50}"
+  },
+  "solid": {
+    "primary": {
+      "background": {
+        "$value": "{color.primary}"
+      },
+      "color": {
+        "$value": "{color.white}"
+      },
+      "icon-color": {
+        "$value": "{color.white}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(255, 255, 255, 0.2)"
+      }
+    },
+    "success": {
+      "background": {
+        "$value": "{color.success}"
+      },
+      "color": {
+        "$value": "{color.white}"
+      },
+      "icon-color": {
+        "$value": "{color.white}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(255, 255, 255, 0.2)"
+      }
+    },
+    "warning": {
+      "background": {
+        "$value": "{color.warning}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "icon-color": {
+        "$value": "{color.text.default}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(0, 0, 0, 0.1)"
+      }
+    },
+    "danger": {
+      "background": {
+        "$value": "{color.danger}"
+      },
+      "color": {
+        "$value": "{color.white}"
+      },
+      "icon-color": {
+        "$value": "{color.white}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(255, 255, 255, 0.2)"
+      }
+    },
+    "error": {
+      "background": {
+        "$value": "{color.error}"
+      },
+      "color": {
+        "$value": "{color.white}"
+      },
+      "icon-color": {
+        "$value": "{color.white}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(255, 255, 255, 0.2)"
+      }
+    },
+    "info": {
+      "background": {
+        "$value": "{color.info}"
+      },
+      "color": {
+        "$value": "{color.white}"
+      },
+      "icon-color": {
+        "$value": "{color.white}"
+      },
+      "close-hover-bg": {
+        "$value": "rgba(255, 255, 255, 0.2)"
+      }
+    }
   }
 }

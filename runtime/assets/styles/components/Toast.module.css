@@ -8,7 +8,7 @@
   --local-close-size: v('toast.close-size');
   --local-cluster-gap: v('toast.cluster-gap');
 
-  --local-bg-color: v('toast.bg-color');
+  --local-background: v('toast.background');
   --local-color: v('toast.color');
   --local-border-color: v('toast.border-color');
   --local-icon-color: v('toast.icon-color');
@@ -25,7 +25,7 @@
   inline-size: 100%;
   max-inline-size: 24rem;
 
-  background-color: var(--local-bg-color);
+  background: var(--local-background);
   color: var(--local-color);
   border: 1px solid var(--local-border-color);
   border-radius: var(--local-border-radius);
@@ -35,41 +35,68 @@
   font-family: var(--local-font-family);
   overflow: hidden;
 
-  &[data-success] { --local-icon-color: v('color.success'); }
-  &[data-warning] { --local-icon-color: v('color.warning'); }
-  &[data-error]   { --local-icon-color: v('color.danger'); }
+  &[data-success] { --local-icon-color: v('toast.success.icon-color'); }
+  &[data-warning] { --local-icon-color: v('toast.warning.icon-color'); }
+  &[data-danger]  { --local-icon-color: v('toast.danger.icon-color'); }
+  &[data-error]   { --local-icon-color: v('toast.error.icon-color'); }
+  &[data-info]    { --local-icon-color: v('toast.info.icon-color'); }
 
   &[data-solid] {
-    --local-color: v('color.white');
     --local-border-color: transparent;
 
-    --local-close-color: v('color.white');
-    --local-close-hover-color: v('color.white');
-    --local-close-hover-bg: rgba(255, 255, 255, 0.2);
-
     &[data-info],
-    &:not([data-success]):not([data-warning]):not([data-error]) {
-      --local-bg-color: v('color.info');
-      --local-icon-color: v('color.white');
+    &:not([data-success]):not([data-warning]):not([data-danger]):not([data-error]) {
+      --local-background: v('toast.solid.primary.background');
+      --local-color: v('toast.solid.primary.color');
+      --local-icon-color: v('toast.solid.primary.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.primary.close-hover-bg');
+    }
+
+    &[data-info] {
+      --local-background: v('toast.solid.info.background');
+      --local-color: v('toast.solid.info.color');
+      --local-icon-color: v('toast.solid.info.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.info.close-hover-bg');
     }
 
     &[data-success] {
-      --local-bg-color: v('color.success');
-      --local-icon-color: v('color.white');
+      --local-background: v('toast.solid.success.background');
+      --local-color: v('toast.solid.success.color');
+      --local-icon-color: v('toast.solid.success.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.success.close-hover-bg');
     }
 
     &[data-warning] {
-      --local-bg-color: v('color.warning');
-      --local-color: v('color.text.default');
-      --local-icon-color: v('color.text.default');
-      --local-close-color: v('color.text.default');
-      --local-close-hover-color: v('color.text.default');
-      --local-close-hover-bg: rgba(0, 0, 0, 0.1);
+      --local-background: v('toast.solid.warning.background');
+      --local-color: v('toast.solid.warning.color');
+      --local-icon-color: v('toast.solid.warning.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.warning.close-hover-bg');
+    }
+
+    &[data-danger] {
+      --local-background: v('toast.solid.danger.background');
+      --local-color: v('toast.solid.danger.color');
+      --local-icon-color: v('toast.solid.danger.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.danger.close-hover-bg');
     }
 
     &[data-error] {
-      --local-bg-color: v('color.danger');
-      --local-icon-color: v('color.white');
+      --local-background: v('toast.solid.error.background');
+      --local-color: v('toast.solid.error.color');
+      --local-icon-color: v('toast.solid.error.icon-color');
+      --local-close-color: var(--local-color);
+      --local-close-hover-color: var(--local-color);
+      --local-close-hover-bg: v('toast.solid.error.close-hover-bg');
     }
   }
 

@@ -31,7 +31,7 @@
       "$value": "{tabs.trigger.size.regular.font-size}"
     },
     "font-weight": {
-      "$value": "{font.weight.medium}"
+      "$value": "{font-weight.medium}"
     },
     "color": {
       "$value": "{color.gray}"

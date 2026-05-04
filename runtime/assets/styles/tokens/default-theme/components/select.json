@@ -34,6 +34,12 @@
   "font-weight": {
     "$value": "{input.font-weight}"
   },
+  "line-height": {
+    "$value": "{input.line-height}"
+  },
+  "transition": {
+    "$value": "{transition.base}"
+  },
   "padding": {
     "inline": {
       "start": {
@@ -53,7 +59,22 @@
     }
   },
   "label": {
-    "$value": "{input.label}"
+    "$type": "object",
+    "color": {
+      "$value": "{input.label.color}"
+    },
+    "font-size": {
+      "$value": "{input.label.font-size}"
+    },
+    "font-weight": {
+      "$value": "{input.label.font-weight}"
+    }
+  },
+  "hover": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.border-hover}"
+    }
   },
   "focus": {
     "$type": "object",
@@ -86,6 +107,18 @@
     "$type": "object",
     "border-color": {
       "$value": "{input.error-state.border-color}"
+    }
+  },
+  "success-state": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{input.success-state.border-color}"
+    }
+  },
+  "warning-state": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{input.warning-state.border-color}"
     }
   },
   "error-label": {

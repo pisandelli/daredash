@@ -7,6 +7,6 @@
   },
   "max-width": {
     "$description": "Max width for centered content",
-    "$value": "{primitives.max-width}"
+    "$value": "{max-width}"
   }
 }

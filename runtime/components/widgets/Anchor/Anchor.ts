@@ -100,7 +100,8 @@ export default defineNuxtComponent({
 
       // Fallback: Default to first item if we haven't scrolled past it yet
       if (!currentKey && props.items.length > 0) {
-         currentKey = props.items[0].key
+        const firstItem = props.items[0]
+        if (firstItem) currentKey = firstItem.key
       }
 
       if (currentKey !== activeKey.value) {

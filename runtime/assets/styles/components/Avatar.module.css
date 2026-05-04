@@ -2,6 +2,7 @@
   /* -- Local Tokens -- */
   --local-size: v('avatar.size');
   --local-font-size: v('avatar.font-size');
+  --local-font-weight: v('avatar.font-weight');
   --local-radius: v('avatar.border-radius');
   --local-bg: v('avatar.background-color');
   --local-text: v('avatar.color');
@@ -22,7 +23,7 @@
 
   /* -- Typography -- */
   font-family: v('font.base');
-  font-weight: v('font.weight.medium');
+  font-weight: var(--local-font-weight);
   font-size: var(--local-font-size);
   user-select: none;
 

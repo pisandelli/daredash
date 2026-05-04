@@ -13,6 +13,9 @@
   "border-radius": {
     "$value": "{border-radius.base}"
   },
+  "color": {
+    "$value": "{color.text.default}"
+  },
   "border-collapse": {
     "$value": "collapse"
   },
@@ -21,11 +24,14 @@
     "background-color": {
       "$value": "{color.secondary.50}"
     },
+    "color": {
+      "$value": "{color.dark-gray}"
+    },
     "font-family": {
       "$value": "{font.base}"
     },
     "font-weight": {
-      "$value": "{font.weight.bold}"
+      "$value": "{font-weight.bold}"
     },
     "text-transform": {
       "$value": "uppercase"
@@ -73,7 +79,7 @@
   "error-state": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.crimson.50}"
+      "$value": "{color.danger.50}"
     },
     "color": {
       "$value": "{color.danger}"

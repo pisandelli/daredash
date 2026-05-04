@@ -64,23 +64,14 @@ export default defineNuxtComponent({
         class: classList.value
       }
 
-      // Inject inline accent token override logic securely using getPrefixName
+      // Map custom color to the public component token or standard semantic data attribute
       if (finalAccentColor) {
-        const isLiteralColor =
-          finalAccentColor.startsWith('#') ||
-          finalAccentColor.startsWith('rgb') ||
-          finalAccentColor.startsWith('hsl') ||
-          finalAccentColor.startsWith('var(')
-
-        if (isLiteralColor) {
-          detailsAttrs.style = {
-            '--local-accent': finalAccentColor
-          }
+        const semanticVariants = ['primary', 'success', 'warning', 'danger', 'info']
+        if (semanticVariants.includes(finalAccentColor)) {
+          detailsAttrs[`data-${finalAccentColor}`] = ''
         } else {
-          const tokenName = finalAccentColor.replace(/\./g, '-')
-          const cssVarName = getPrefixName(tokenName, { type: 'css-var-decl' })
           detailsAttrs.style = {
-            '--local-accent': `var(${cssVarName})`
+            [getPrefixName('accordion-accent-color', { type: 'css-var-decl' })]: finalAccentColor
           }
         }
       }

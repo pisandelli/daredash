@@ -116,10 +116,11 @@ export default defineNuxtComponent({
             class: styles.loadingIcon
           })
         : null
+      const thumbChildren = thumbContent ? [thumbContent] : []
 
       const track = h('span', { class: styles.track }, [
         innerContent,
-        h('span', { class: styles.thumb }, thumbContent)
+        h('span', { class: styles.thumb }, thumbChildren)
       ])
 
       const label =
@@ -141,7 +142,7 @@ export default defineNuxtComponent({
           'data-disabled': props.disabled ? '' : undefined,
           'data-loading': props.loading ? '' : undefined
         },
-        [input, track, label]
+        [input, track, ...(label ? [label] : [])]
       )
     }
   }

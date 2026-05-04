@@ -7,12 +7,13 @@
   --local-font-size: v('badge.font-size');
   --local-font-weight: v('badge.font-weight');
   --local-icon-size: v('badge.icon-size');
+  --local-gap: v('badge.gap');
 
   /* -- Layout -- */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: v('space.xxs');
+  gap: var(--local-gap);
 
   inline-size: fit-content;
   padding-block: var(--local-padding-y);
@@ -43,5 +44,5 @@
 
 .icon {
   font-size: var(--local-icon-size);
-  font-weight: v('font.weight.regular');
+  font-weight: v('font-weight.regular');
 }

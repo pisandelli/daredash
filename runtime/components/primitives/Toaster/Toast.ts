@@ -36,6 +36,8 @@ export default defineNuxtComponent({
       if (props.icon) return props.icon
       if (attrs.success !== undefined && attrs.success !== false)
         return globalIcons.success || 'heroicons:check-circle'
+      if (attrs.danger !== undefined && attrs.danger !== false)
+        return globalIcons.error || 'heroicons:x-circle'
       if (attrs.error !== undefined && attrs.error !== false)
         return globalIcons.error || 'heroicons:x-circle'
       if (attrs.warning !== undefined && attrs.warning !== false)

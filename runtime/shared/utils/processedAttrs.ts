@@ -25,6 +25,7 @@ export const customAttributes = new Set([
   'offline',
   'busy',
   'away',
+  'random',
   'xxs', // New token support
   'nogap',
   // from center.module.css
@@ -72,6 +73,7 @@ export const customAttributes = new Set([
   'simple',
   // table states
   'striped',
+  'striped-odd',
   // from Progress.module.css
   'indeterminate'
 ])

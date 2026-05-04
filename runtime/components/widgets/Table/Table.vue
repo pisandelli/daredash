@@ -72,10 +72,15 @@ const hasData = computed(() => props.data && props.data.length > 0)
     <table :class="styles.table">
       <thead>
         <tr :class="styles.tr">
-          <th v-for="column in columns" :key="column.key" :class="styles.th" :style="{
-            textAlign: column.align || 'start',
-            width: column.width
-          }">
+          <th
+            v-for="column in columns"
+            :key="column.key"
+            :class="styles.th"
+            :style="{
+              ...(column.align ? { textAlign: column.align } : {}),
+              ...(column.width ? { width: column.width } : {})
+            }"
+          >
             <!-- Column Title -->
             <slot :name="`header-${column.key}`" :column="column">
               {{ column.title }}
@@ -120,8 +125,12 @@ const hasData = computed(() => props.data && props.data.length > 0)
         <!-- Ideal State: Render rows -->
         <template v-else>
           <tr v-for="(row, rowIndex) in data" :key="getRowKey(row)" :class="styles.tr">
-            <td v-for="column in columns" :key="column.key" :class="styles.td"
-              :style="{ textAlign: column.align || 'start' }">
+            <td
+              v-for="column in columns"
+              :key="column.key"
+              :class="styles.td"
+              :style="column.align ? { textAlign: column.align } : undefined"
+            >
               <!-- Cell Scoped Slot -->
               <slot :name="`cell-${column.key}`" :row="row" :column="column" :index="rowIndex" :value="row[column.key]">
                 {{ row[column.key] }}

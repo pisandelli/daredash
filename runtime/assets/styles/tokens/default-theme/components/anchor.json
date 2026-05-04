@@ -5,18 +5,42 @@
     "$value": "600"
   },
   "active-color": {
-    "$value": "{color.primary}"
+    "$value": "{color.primary.600}"
   },
   "border-color": {
-    "$value": "{color.gray.200}"
+    "$value": "{color.secondary.200}"
   },
   "indicator-color": {
-    "$value": "{color.primary}"
+    "$value": "{color.primary.600}"
+  },
+  "indicator-color-hover": {
+    "$value": "{color.secondary.300}"
   },
   "link-color": {
-    "$value": "{color.gray.500}"
+    "$value": "{color.secondary.500}"
   },
   "link-color-hover": {
-    "$value": "{color.gray.900}"
+    "$value": "{color.secondary.900}"
+  },
+  "font-family": {
+    "$value": "{font.base}"
+  },
+  "item-bg-hover": {
+    "$value": "{color.secondary.50}"
+  },
+  "item-radius": {
+    "$value": "{border-radius.base}"
+  },
+  "font-size": {
+    "$value": "{font-size.base}"
+  },
+  "padding-block": {
+    "$value": "0.5rem"
+  },
+  "padding-inline": {
+    "$value": "1rem"
+  },
+  "indicator-width": {
+    "$value": "2px"
   }
 }

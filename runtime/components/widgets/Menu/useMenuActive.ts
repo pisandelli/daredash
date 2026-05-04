@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { useRoute } from 'nuxt/app'
-import type { MenuEntry } from './types'
+import { isSeparator, type MenuEntry } from './types'
 
 interface UseMenuActiveOptions {
   activeKey: string | undefined
@@ -18,7 +18,7 @@ export function useMenuActive(props: UseMenuActiveOptions) {
 
     const findActive = (entries: MenuEntry[]): string | undefined => {
       for (const entry of entries) {
-        if (entry.type === 'separator') continue
+        if (isSeparator(entry)) continue
         if (entry.action.type === 'link') {
           const to = entry.action.to
           if (to === currentPath || (to !== '/' && currentPath.startsWith(to))) {

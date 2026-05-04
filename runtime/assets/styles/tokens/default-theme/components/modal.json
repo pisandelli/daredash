@@ -39,7 +39,7 @@
       "$value": "{font-size.lg}"
     },
     "font-weight": {
-      "$value": "{font.weight.bold}"
+      "$value": "{font-weight.bold}"
     }
   },
   "body": {

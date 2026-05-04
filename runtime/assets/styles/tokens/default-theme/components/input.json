@@ -61,7 +61,10 @@
     "$value": "{font-size.sm}"
   },
   "font-weight": {
-    "$value": "{font.weight.regular}"
+    "$value": "{font-weight.regular}"
+  },
+  "line-height": {
+    "$value": "{line-height.normal}"
   },
   "padding": {
     "inline": {
@@ -90,7 +93,7 @@
       "$value": "{font-size.sm}"
     },
     "font-weight": {
-      "$value": "{font.weight.medium}"
+      "$value": "{font-weight.medium}"
     }
   },
   "focus": {
@@ -124,6 +127,18 @@
       "$value": "{color.danger}"
     }
   },
+  "warning-state": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.warning}"
+    }
+  },
+  "success-state": {
+    "$type": "object",
+    "border-color": {
+      "$value": "{color.success}"
+    }
+  },
   "error-label": {
     "$description": "Tokens for the error message",
     "$type": "object",
@@ -131,13 +146,28 @@
       "$value": "{font.system}"
     },
     "font-weight": {
-      "$value": "{font.weight.black}"
+      "$value": "{font-weight.black}"
     },
     "color": {
       "$value": "{color.error}"
     },
     "font-size": {
       "$value": "{font-size.xs}"
+    }
+  },
+  "warning-label": {
+    "$type": "object",
+    "font-family": {
+      "$value": "{input.error-label.font-family}"
+    },
+    "font-weight": {
+      "$value": "{input.error-label.font-weight}"
+    },
+    "color": {
+      "$value": "{color.warning}"
+    },
+    "font-size": {
+      "$value": "{input.error-label.font-size}"
     }
   }
 }

@@ -48,7 +48,7 @@ describe('Checkbox Primitive', () => {
 
     const input = wrapper.find('input')
     // Set checked state and trigger change event
-    await input.setChecked(true)
+    await input.setValue(true)
 
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
@@ -63,7 +63,7 @@ describe('Checkbox Primitive', () => {
     })
 
     const input = wrapper.find('input')
-    await input.setChecked(true)
+    await input.setValue(true)
 
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     // It should append 'option2' to the array

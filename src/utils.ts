@@ -12,12 +12,12 @@ export const modLabel = '[DAREDASH] >>>> '
  */
 export function debugLog(
   message: string,
-  type: 'log' | 'warn' | 'error' = 'log',
+  type?: 'log' | 'warn' | 'error' | 'info' | 'debug',
   data?: any
 ) {
   if (process.env.NODE_ENV === 'development') {
-    const logMethod = console[type] || console.log
-    logMethod(`${modLabel} ${message}`, data ?? '')
+    const logMethod = console[type || 'log']
+    logMethod(`${modLabel} ${message}`, data ??  '')
   }
 }
 

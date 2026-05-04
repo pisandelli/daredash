@@ -61,3 +61,9 @@ Notifications use the `<dd-toaster>` component and `useToaster` composable.
 ## 7. Icons
 
 The library is icon-agnostic but relies on `@nuxt/icon`. Any string compatible with Iconify (e.g., `mdi:home`, `heroicons:check`) can be passed to the `icon` props of components like Button or Avatar.
+
+## 8. Validation Routine
+
+- After any code change, run `pnpm --dir modules/daredash run lint:ts`.
+- After any DareDash Studio change, also run `pnpm --dir modules/daredash run test:studio`.
+- Do not consider a Studio task complete without reporting those validation results.

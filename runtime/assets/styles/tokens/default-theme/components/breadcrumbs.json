@@ -26,7 +26,7 @@
       "$value": "{color.darker-gray}"
     },
     "font-weight": {
-      "$value": "{font.weight.bold}"
+      "$value": "{font-weight.bold}"
     }
   },
   "separator": {

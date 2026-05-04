@@ -17,7 +17,7 @@
     "$value": "{font.base}"
   },
   "font-size": {
-    "$value": "{font-size.sm}"
+    "$value": "{font-size.base}"
   },
   "line-height": {
     "$value": "{line-height.snug}"
@@ -31,7 +31,7 @@
       "$value": "{font-weight.bold}"
     },
     "font-size": {
-      "$value": "{font-size.sm}"
+      "$value": "{font-size.base}"
     }
   },
   "close": {
