@@ -133,6 +133,23 @@ describe('DareDash Studio registry', () => {
     ])
   })
 
+  it('keeps the layout studio category complete for current tokenized components', () => {
+    const layoutTabIds = STUDIO_TABS
+      .filter((tab) => tab.navigationKind === 'component' && tab.componentCategory === 'layout')
+      .map((tab) => tab.id)
+      .sort()
+
+    expect(layoutTabIds).toEqual([
+      'box',
+      'center',
+      'cluster',
+      'grid',
+      'layout',
+      'sidebar',
+      'stack'
+    ])
+  })
+
   it('registers accordion with preserved token references', () => {
     const accordionTab = STUDIO_TABS.find((tab) => tab.id === 'accordion')
     const headerPadding = accordionTab?.fields.find((field) => field.path === 'accordion.header.padding')
@@ -368,6 +385,19 @@ describe('DareDash Studio registry', () => {
     expect(stackTab).toBeDefined()
     expect(stackTab!.navigationKind).toBe('component')
     expect(gapField?.referencePath).toBe('space.lg')
+  })
+
+  it('registers sidebar with preserved token references', () => {
+    const sidebarTab = STUDIO_TABS.find((tab) => tab.id === 'sidebar')
+    const gapField = sidebarTab?.fields.find((field) => field.path === 'sidebar.gap')
+    const columnField = sidebarTab?.fields.find((field) => field.path === 'sidebar.column-size')
+    const contentField = sidebarTab?.fields.find((field) => field.path === 'sidebar.content-size')
+
+    expect(sidebarTab).toBeDefined()
+    expect(sidebarTab!.navigationKind).toBe('component')
+    expect(gapField?.referencePath).toBe('space.md')
+    expect(columnField?.defaultValue).toBe('15rem')
+    expect(contentField?.defaultValue).toBe('50%')
   })
 
   it('registers radio with preserved token references', () => {

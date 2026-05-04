@@ -29,6 +29,7 @@ import PopoverPreview from './previews/PopoverPreview.vue'
 import ProgressPreview from './previews/ProgressPreview.vue'
 import RadioPreview from './previews/RadioPreview.vue'
 import SelectPreview from './previews/SelectPreview.vue'
+import SidebarPreview from './previews/SidebarPreview.vue'
 import StackPreview from './previews/StackPreview.vue'
 import TablePreview from './previews/TablePreview.vue'
 import TabsPreview from './previews/TabsPreview.vue'
@@ -393,6 +394,17 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('stack.gap', 'Base Gap', 'text', 'Layout'),
       componentField('stack.compact.gap', 'Compact Gap', 'text', 'Variants'),
       componentField('stack.spaced.gap', 'Spaced Gap', 'text', 'Variants')
+    ]
+  }),
+  componentTab('sidebar', 'layout', {
+    label: 'Sidebar',
+    previewMode: 'guided',
+    previewMessage: 'This preview uses host content shells to expose column width, content threshold and gap. The tinted panes are illustrative, while the wrapping behavior belongs to Sidebar.',
+    preview: SidebarPreview,
+    fields: [
+      componentField('sidebar.gap', 'Gap', 'text', 'Layout'),
+      componentField('sidebar.column-size', 'Sidebar Column Size', 'text', 'Layout'),
+      componentField('sidebar.content-size', 'Content Minimum Size', 'text', 'Layout')
     ]
   }),
   componentTab('box', 'layout', {

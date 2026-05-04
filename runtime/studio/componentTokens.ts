@@ -24,6 +24,7 @@ import popover from '../assets/styles/tokens/default-theme/components/popover.js
 import progress from '../assets/styles/tokens/default-theme/components/progress.json'
 import radio from '../assets/styles/tokens/default-theme/components/radio.json'
 import select from '../assets/styles/tokens/default-theme/components/select.json'
+import sidebar from '../assets/styles/tokens/default-theme/components/sidebar.json'
 import stack from '../assets/styles/tokens/default-theme/components/stack.json'
 import switchComponent from '../assets/styles/tokens/default-theme/components/switch.json'
 import table from '../assets/styles/tokens/default-theme/components/table.json'
@@ -59,6 +60,7 @@ export const STUDIO_COMPONENT_TOKENS = {
   progress,
   radio,
   select,
+  sidebar,
   stack,
   switch: switchComponent,
   table,
