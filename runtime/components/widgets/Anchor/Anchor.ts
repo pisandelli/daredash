@@ -1,5 +1,5 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, ref, onMounted, onUnmounted, type PropType, type VNode } from 'vue'
+import { h, ref, onMounted, onUnmounted, watch, type PropType, type VNode } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Anchor.module.css'
 import { sanitizeHref } from '#dd/utils/sanitizeHref'
@@ -55,8 +55,21 @@ export default defineNuxtComponent({
   setup(props, { emit, attrs }): () => VNode {
     const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Anchor')
     const activeKey = ref<string>('')
+    const elementsCache = new Map<string, HTMLElement | null>()
     
     let scrollContainer: HTMLElement | Window | null = null
+
+    const updateElementsCache = () => {
+      elementsCache.clear()
+      for (const item of props.items) {
+        if (item.href && item.href.startsWith('#')) {
+          const id = item.href.substring(1)
+          if (id) {
+            elementsCache.set(item.key, document.getElementById(id))
+          }
+        }
+      }
+    }
 
     const handleScroll = () => {
       if (!props.items.length) return
@@ -69,11 +82,7 @@ export default defineNuxtComponent({
       }
       
       for (const item of props.items) {
-        if (!item.href || !item.href.startsWith('#')) continue
-        const id = item.href.substring(1)
-        if (!id) continue
-
-        const el = document.getElementById(id)
+        const el = elementsCache.get(item.key)
         if (!el) continue
 
         const rect = el.getBoundingClientRect()
@@ -117,12 +126,19 @@ export default defineNuxtComponent({
         scrollContainer = props.container as HTMLElement | Window
       }
       
+      updateElementsCache()
+
       if (scrollContainer) {
         scrollContainer.addEventListener('scroll', handleScroll, { passive: true })
         // Trigger initial calculation
         setTimeout(handleScroll, 100)
       }
     })
+
+    watch(() => props.items, () => {
+      updateElementsCache()
+      handleScroll()
+    }, { deep: true })
 
     onUnmounted(() => {
       if (scrollContainer) {
