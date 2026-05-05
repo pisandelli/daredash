@@ -39,6 +39,9 @@ function setNestedValue(obj: Record<string, unknown>, path: string, value: strin
 
   for (let i = 0; i < keys.length - 1; i++) {
     const key = keys[i]!
+    if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+      return
+    }
     if (typeof cursor[key] !== 'object' || cursor[key] === null) {
       cursor[key] = {}
     }
@@ -46,6 +49,9 @@ function setNestedValue(obj: Record<string, unknown>, path: string, value: strin
   }
 
   const leaf = keys[keys.length - 1]!
+  if (leaf === '__proto__' || leaf === 'constructor' || leaf === 'prototype') {
+    return
+  }
   if (typeof cursor[leaf] !== 'object' || cursor[leaf] === null) {
     cursor[leaf] = {}
   }
