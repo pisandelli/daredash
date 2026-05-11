@@ -6,3 +6,5 @@ coverage/
 .vitest-cache/
 test/fixtures/**/.nuxt/
 test/fixtures/**/node_modules/
+
+dist/

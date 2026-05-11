@@ -218,6 +218,26 @@ Before closing a documentation or public-surface change:
 - review links and cross-doc references
 - verify props/slots/emits against component code
 - verify attrs against `processedAttrs.ts` and component CSS
+
+## Publishing to npm
+
+The package is prepared to publish as `@pisandelli/daredash`.
+
+Recommended release flow:
+
+1. Ensure you are authenticated with npm:
+   `npm login`
+2. Build the package artifact:
+   `pnpm --filter @pisandelli/daredash prepack`
+3. Review the published contents:
+   `cd modules/daredash && npm pack --dry-run`
+4. Publish the package:
+   `npm publish --access public`
+
+Notes:
+
+- the first public publish for a scoped package must include public access
+- the module consumer installs `@pisandelli/daredash`, but the Nuxt config key remains `daredash`
 - run the relevant checks for the changed area
 
 Useful checks include:

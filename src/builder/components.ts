@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { mkdir, writeFile, readFile } from 'fs/promises'
+import { mkdir, writeFile, readFile, access } from 'fs/promises'
 import { addComponent } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
@@ -113,6 +113,25 @@ export async function setupComponents(
 
   const generationPromises: Promise<void>[] = []
 
+  async function resolvePublishedFilePath(filePath: string) {
+    const candidates = [
+      filePath,
+      filePath.replace(/\.ts$/, '.js'),
+      filePath.replace(/\.ts$/, '.mjs')
+    ]
+
+    for (const candidate of candidates) {
+      try {
+        await access(resolver.resolve(candidate))
+        return candidate
+      } catch {
+        continue
+      }
+    }
+
+    return filePath
+  }
+
   for (const [name, config] of Object.entries(components)) {
     const componentName = config.name || name
     const prefixedName = `${prefix}${componentName}`
@@ -148,7 +167,8 @@ export default baseComponent(styles, '${componentName}')
 
     if (config.filePath) {
       // Complex component: Register existing file directly using alias
-      const filePath = `@daredash/${config.filePath.replace(/^\.\//, '')}`
+      const publishedPath = await resolvePublishedFilePath(config.filePath)
+      const filePath = `@daredash/${publishedPath.replace(/^\.\//, '')}`
 
       addComponent({
         name: prefixedName,

@@ -139,6 +139,6 @@ export async function setupTokens(
       debugLog('No typed tokens found. Generated empty JSON file.', 'warn')
   }
 
-  addPlugin(resolver.resolve('./src/typedTokens.client.ts'))
+  addPlugin(resolver.resolve('./runtime/typedTokens.client'))
   if (debugMode) debugLog(`typedTokens Plugin added to Nuxt.`)
 }
