@@ -7,21 +7,21 @@ Next step after this guide: [Layout Primitives](./layout.md)
 ## 1. Install the module
 
 ```bash
-pnpm add daredash
+pnpm add @pisandelli/daredash
 ```
 
 You can also use a local module path while developing inside a monorepo.
 
 ## 2. Register DareDash in `nuxt.config.ts`
 
-Add `daredash` to the Nuxt `modules` array.
+Add `@pisandelli/daredash` to the Nuxt `modules` array.
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
     [
-      'daredash',
+      '@pisandelli/daredash',
       {
         prefix: 'dd',
         debug: false
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 export default defineNuxtConfig({
   modules: [
     [
-      'daredash',
+      '@pisandelli/daredash',
       {
         tokens: './tokens',
         prefix: 'dd'

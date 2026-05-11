@@ -2,7 +2,7 @@
 
 Token-driven UI library for Nuxt.
 
-`daredash` is a Nuxt-first UI library built around reusable components, JSON design tokens, CSS Modules, semantic attrs, and a built-in Studio for theme exploration. If you want a UI layer that stays consistent while remaining easy to theme and evolve, this is the front door.
+`@pisandelli/daredash` is a Nuxt-first UI library built around reusable components, JSON design tokens, CSS Modules, semantic attrs, and a built-in Studio for theme exploration. If you want a UI layer that stays consistent while remaining easy to theme and evolve, this is the front door.
 
 ## Documentation Map
 
@@ -38,7 +38,7 @@ The result is not just a bag of components. It is a working product system that 
 ### Install
 
 ```bash
-pnpm add daredash
+pnpm add @pisandelli/daredash
 ```
 
 ### Register the module
@@ -48,7 +48,7 @@ pnpm add daredash
 export default defineNuxtConfig({
   modules: [
     [
-      'daredash',
+      '@pisandelli/daredash',
       {
         prefix: 'dd',
         debug: false
@@ -101,7 +101,7 @@ const breadcrumb = {
 
 ## What the Module Provides
 
-When you enable `daredash`, the module:
+When you enable `@pisandelli/daredash`, the module:
 
 - auto-registers the component surface with the configured prefix
 - parses token JSON and emits CSS custom properties
