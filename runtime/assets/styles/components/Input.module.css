@@ -11,6 +11,16 @@
   --local-placeholder-color: v('input.placeholder.color');
   --local-font-size: v('input.font-size');
   --local-font-weight: v('input.font-weight');
+  --local-focus-outline: v('input.focus.outline');
+  --local-focus-box-shadow: v('input.focus.box-shadow');
+  --local-disabled-cursor: v('input.disabled.cursor');
+  --local-label-font-size: v('input.label.font-size');
+  --local-label-font-weight: v('input.label.font-weight');
+  --local-label-color: v('input.label.color');
+  --local-message-font-family: v('input.error-label.font-family');
+  --local-message-font-size: v('input.error-label.font-size');
+  --local-message-font-weight: v('input.error-label.font-weight');
+  --local-message-color: v('input.error-label.color');
   --local-padding-inline-start: v('input.padding.inline.start');
   --local-padding-inline-end: v('input.padding.inline.end');
   --local-padding-block-start: v('input.padding.block.start');
@@ -53,15 +63,15 @@
   }
 
   &:focus {
-    outline: v('input.focus.outline');
+    outline: var(--local-focus-outline);
     --local-border-color: v('input.focus.border-color');
-    box-shadow: v('input.focus.box-shadow');
+    box-shadow: var(--local-focus-box-shadow);
   }
 
   &[disabled] {
     --local-background-color: v('input.disabled.background-color');
     --local-color: v('input.disabled.color');
-    cursor: v('input.disabled.cursor');
+    cursor: var(--local-disabled-cursor);
     --local-border-color: v('color.secondary-200');
   }
 
@@ -134,17 +144,17 @@
 }
 
 .label {
-  font-size: v('input.label.font-size');
-  font-weight: v('input.label.font-weight');
-  color: v('input.label.color');
+  font-size: var(--local-label-font-size);
+  font-weight: var(--local-label-font-weight);
+  color: var(--local-label-color);
 }
 
 .message {
-  font-family: v('input.error-label.font-family');
-  font-size: v('input.error-label.font-size');
-  font-weight: v('input.error-label.font-weight');
+  font-family: var(--local-message-font-family);
+  font-size: var(--local-message-font-size);
+  font-weight: var(--local-message-font-weight);
   min-block-size: 1.25em;
 }
 
-.errorMessage   { color: v('input.error-label.color'); }
+.errorMessage   { color: var(--local-message-color); }
 .warningMessage { color: v('color.warning'); }

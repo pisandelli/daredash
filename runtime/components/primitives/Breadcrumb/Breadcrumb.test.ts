@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import Breadcrumb from './Breadcrumb'
 import getPrefixName from '#dd/utils/getPrefixName'
-import { h } from 'vue'
 
 describe('Breadcrumb Primitive', () => {
   it('renders correct number of items based on routes config', async () => {
@@ -56,16 +55,16 @@ describe('Breadcrumb Primitive', () => {
       }
     })
 
-    const separators = wrapper.findAll('span[aria-hidden="true"]')
+    const separators = wrapper.findAll('li > span[aria-hidden="true"]')
     expect(separators.length).toBe(1)
-    expect(separators[0]!.text()).toContain('➜')
+    expect(separators[0]!.html()).toContain('heroicons:chevron-right')
   })
 
-  it('renders custom separator character', async () => {
+  it('renders custom separator icon override', async () => {
     const wrapper = await mountSuspended(Breadcrumb, {
       props: {
         config: {
-          separator: '/',
+          separator: 'heroicons:chevron-double-right',
           routes: [
             { label: 'A', to: '/a' },
             { label: 'B' }
@@ -74,8 +73,8 @@ describe('Breadcrumb Primitive', () => {
       }
     })
 
-    const separators = wrapper.findAll('span[aria-hidden="true"]')
-    expect(separators[0]!.text()).toBe('/')
+    const separators = wrapper.findAll('li > span[aria-hidden="true"]')
+    expect(separators[0]!.html()).toContain('heroicons:chevron-double-right')
   })
 
   it('applies custom hoverColor via CSS variable interpolation', async () => {

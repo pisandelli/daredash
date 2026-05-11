@@ -34,6 +34,7 @@
   --local-small-font-size: v('input.size.small.font-size');
   --local-large-height: v('input.size.large.height');
   --local-large-font-size: v('input.size.large.font-size');
+  --local-indicator-padding-inline-end: v('select.indicator-padding-inline-end');
 
   appearance: none;
   display: block;
@@ -43,7 +44,7 @@
 
   block-size: var(--local-height);
   padding-inline-start: var(--local-padding-inline-start);
-  padding-inline-end: v('select.indicator-padding-inline-end');
+  padding-inline-end: var(--local-indicator-padding-inline-end);
   border-radius: var(--local-border-radius);
   border: var(--local-border-width) var(--local-border-style) var(--local-border-color);
   background-color: var(--local-background-color);

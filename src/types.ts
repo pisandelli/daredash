@@ -60,7 +60,10 @@ declare module '@nuxt/schema' {
         info?: string
         toastClose?: string
         selectArrow?: string
+        breadcrumbSeparator?: string
         modalClose?: string
+        menuCollapse?: string
+        menuExpand?: string
         [key: string]: string | undefined
       }
     }

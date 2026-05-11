@@ -1,5 +1,25 @@
 # `daredash` LLM Guide
 
+This file is the source of truth for AI agents that use DareDash to build pages, flows, dashboards, forms, and navigation surfaces.
+
+Use it as an operational guide, not just as a component inventory. When examples, instincts, or generic framework habits conflict with this file, prefer this file.
+
+## 0. How to use this file
+
+Read this file in layers:
+
+- Start with the operating rules before generating UI.
+- Use the system guide to understand tokens, theming, and public vs internal APIs.
+- Use the composition patterns when planning a page, not only when picking components.
+- Use the component reference when you need exact props, emits, slots, and restrictions.
+
+If time is short, scan these sections first:
+
+- `3. Operating rules for AI agents`
+- `6. Design tokens and theme`
+- `8. Page composition patterns`
+- `9. Component reference`
+
 ## 1. Library overview
 
 `daredash` is a Nuxt module for UI and design tokens. The module combines:
@@ -123,6 +143,8 @@ Keys explicitly typed in `src/types.ts`:
 - `toastClose`
 - `selectArrow`
 - `modalClose`
+- `menuCollapse`
+- `menuExpand`
 
 Keys also read directly by runtime components:
 
@@ -142,7 +164,9 @@ export default defineAppConfig({
   daredash: {
     icons: {
       modalClose: 'mdi:close',
-      selectArrow: 'mdi:chevron-down'
+      selectArrow: 'mdi:chevron-down',
+      menuCollapse: 'mdi:chevron-left',
+      menuExpand: 'mdi:chevron-right'
     }
   }
 })
@@ -152,7 +176,13 @@ export default defineAppConfig({
 
 Inferred from the code: changing `prefix` requires restarting the dev server so component registration and CSS variable generation update correctly.
 
-## 3. General rules for AI usage
+## 3. Operating rules for AI agents
+
+### Primary mission
+
+- Build pages with DareDash by composing the public component surface instead of inventing custom UI structure first.
+- Prefer existing DareDash primitives and widgets before introducing raw HTML + custom CSS.
+- Use this file to decide what to use, what not to use, and how to compose components together.
 
 ### Confirmed
 
@@ -166,6 +196,18 @@ Inferred from the code: changing `prefix` requires restarting the dev server so 
 - Do not treat `useBaseComponent` or `runtime/shared/utils/*` as public APIs.
 - Do not treat `#dd/*` aliases as the primary recommended app-consumer API.
 - Do not assume official support outside Nuxt.
+
+### Attribute verification protocol
+
+- Do not infer styling APIs from naming intuition alone.
+- Before documenting or generating component usage, verify three layers:
+  - component props and emits in the component TypeScript file;
+  - recognized custom attrs in `runtime/shared/utils/processedAttrs.ts`;
+  - actual selectors and states in the component CSS module.
+- Treat component CSS as a source of truth for visual capabilities. If the CSS supports `data-primary`, `data-outline`, or `data-small`, those are meaningful public styling cues. If it does not, do not invent them.
+- Prefer documented semantic attrs such as `primary`, `success`, `warning`, `danger`, `info`, `ghost`, `outline`, `small`, and `large` over fabricated props such as `color="color-primary"` or `variant="primary"` when the component does not support that API.
+- If a boolean or semantic attribute is missing from CSS and from `processedAttrs.ts`, do not describe it as supported.
+- If the TypeScript API and CSS behavior appear to diverge, document the safe observable behavior and mark the mismatch as `TODO`.
 
 ### Inferred from the code
 
@@ -184,7 +226,39 @@ Inferred from the code: changing `prefix` requires restarting the dev server so 
 - Do not invent props, emits, slots, or unsupported runtime/theme behavior.
 - If something is not explicit, write `TODO`.
 
-## 4. Available public APIs
+### Page-building playbook
+
+- Start from layout primitives such as `DdBox`, `DdStack`, `DdCluster`, `DdGrid`, and `DdCenter`.
+- Use navigation components according to intent:
+  - `DdMenu` for hierarchical or persistent navigation.
+  - `DdTabs` for peer views within the same page context.
+  - `DdBreadcrumb` for contextual hierarchy, never as a menu replacement.
+- Use primitive inputs when you need direct control and `Form*` wrappers when validation wiring matters.
+- Prefer token-driven customization over local hardcoded visual overrides.
+- Do not recreate common application shells if existing DareDash components already express the pattern.
+
+### Output expectations
+
+- Generate Nuxt-first examples.
+- Prefer complete, realistic page snippets over isolated fragments when the user asks for a page or flow.
+- Keep naming semantically aligned with the UI, for example `menuItems`, `breadcrumb`, `columns`, `rows`, `isModalOpen`.
+- Use existing DareDash semantics for state, such as `success`, `warning`, `danger`, `info`, `outline`, `ghost`, `small`, and `large`.
+- Prefer semantic attrs over direct color overrides unless the requirement is explicitly for an arbitrary custom color.
+- Reflect the actual public attributes the component understands; do not replace semantic attrs with made-up value props.
+- If a requirement seems plausible but is not explicit in this file or in the code, do not invent it. Mark it as `TODO`.
+
+### Fast decision matrix
+
+- Need persistent hierarchical navigation: use `DdMenu`.
+- Need local view switching in the same page context: use `DdTabs`.
+- Need contextual hierarchy above the page: use `DdBreadcrumb`.
+- Need grouped content with framing: use `DdCard`.
+- Need a blocking focused task: use `DdModal`.
+- Need side details, filters, or secondary workflows: use `DdDrawer`.
+- Need inline feedback: use `DdAlert` or field-level states.
+- Need transient global feedback: use `useToaster` with one `DdToaster`.
+
+## 4. Public surface and boundaries
 
 ### Public
 
@@ -207,7 +281,7 @@ Inferred from the code: changing `prefix` requires restarting the dev server so 
   - current use: Studio
   - do not treat as a general public application API
 
-## 5. Library core
+## 5. System guide
 
 ### Build phase
 
@@ -298,6 +372,21 @@ Current state:
 
 - runtime theme switching is currently more tied to Studio than to a fully consolidated public app flow.
 
+### Token authoring discipline
+
+- Component CSS should map public component tokens to local `--local-*` variables first.
+- New component-specific spacing, sizing, or visual controls should be added as component tokens instead of being hardcoded in CSS.
+- Recent example in the codebase: menu submenu indentation is exposed as `menu.submenu.padding-inline-start` rather than being embedded directly in the stylesheet.
+
+### Current default palette notes
+
+Confirmed in `runtime/assets/styles/tokens/default-theme/primitives.json` and component tokens:
+
+- semantic scales follow `50` to `950`;
+- public semantic families include `primary`, `accent`, `success`, `info`, `warning`, `danger`, and `secondary`;
+- `error` is currently an alias of `danger`;
+- neutral utility tokens such as `light-gray`, `gray`, `dark-gray`, and `darker-gray` coexist with the `secondary` scale and should not be treated as interchangeable by default.
+
 ### Global variants and sizes
 
 Confirmed in `runtime/shared/utils/processedAttrs.ts`:
@@ -377,7 +466,51 @@ Status:
 
 Do not document as an application API.
 
-## 8. Component documentation
+## 8. Page composition patterns
+
+### Application shells
+
+- For app-level shells, prefer `DdLayout` as the outer frame.
+- Use `DdSidebar` together with `DdMenu` for primary navigation.
+- Put page content in a semantic container such as `DdBox tag="main"` or `DdStack tag="main"`.
+- Use `DdBreadcrumb` at the top of the content area when the page belongs to a deeper hierarchy.
+
+### Dashboards
+
+- Use `DdStack` for vertical page rhythm and `DdGrid` for card-based summaries.
+- Use `DdCard` to frame metrics, charts, lists, and secondary actions.
+- Use `DdBadge`, `DdAlert`, and `DdProgress` for status expression instead of ad hoc label styling.
+- Use `DdTable` when data is truly tabular; use `DdCard` plus layout primitives when it is not.
+
+### Settings and CRUD pages
+
+- Use `DdStack` for the overall page flow and section rhythm.
+- Use `DdCard` to separate logical settings areas.
+- Use `DdTabs` when sections are peer views and `DdAccordion` when the page should stay in one scroll flow.
+- Prefer `Form*` wrappers when the page already uses `vee-validate`.
+
+### Forms
+
+- Use primitive fields for lightweight forms or fully custom state handling.
+- Use `DdFormInput`, `DdFormTextarea`, `DdFormSelect`, `DdFormCheckbox`, `DdFormRadio`, and `DdFormToggle` when validation plumbing should stay standardized.
+- Keep submit actions close to the relevant form region, usually in a trailing `DdCluster` or card footer.
+- Use semantic states and inline guidance instead of relying only on toast messages for validation feedback.
+
+### Navigation and secondary actions
+
+- Use `DdMenu` for navigation trees, not for breadcrumb-like page hierarchy.
+- Use `DdAnchor` for long-document section navigation.
+- Use `DdPopover` for small contextual actions and `DdDrawer` for richer secondary flows.
+- Use `DdModal` only when the interaction should interrupt the page.
+
+### Loading, empty, and error states
+
+- Use `DdLoading` for explicit loading indicators.
+- Use `DdTable` built-in loading, error, and empty states when rendering tables.
+- Use `DdAlert` for inline recoverable issues.
+- Use `useToaster` for transient, action-complete feedback rather than for persistent explanation.
+
+## 9. Component reference
 
 ### Import rule for all components
 
@@ -392,9 +525,35 @@ Inferred from the code:
 - there is no public barrel for direct import from internal files;
 - do not import from `runtime/components/...` in consuming application code.
 
+### How to validate a component entry
+
+Before expanding or editing a component section in this file, verify:
+
+- TypeScript file: props, emits, slots, defaults, and public naming.
+- `processedAttrs.ts`: whether semantic or sizing attrs are recognized and converted to `data-*`.
+- CSS module: which states, variants, and structural modifiers are actually implemented.
+- default theme tokens: whether exposed visual controls are tokenized and therefore safe to describe as themable.
+
+This prevents two common failures:
+
+- omitting real attrs that already exist in CSS;
+- documenting invented attrs or props that are not implemented.
+
+### Writing standard for component entries
+
+Every component entry in this file should prefer the same decision order:
+
+- describe the component intent first;
+- list only real props, emits, and slots;
+- document semantic attrs only when they are actually implemented through the shared attr pipeline and component CSS;
+- distinguish semantic styling attrs from arbitrary override props such as `color`;
+- call out restrictions where agents are likely to overgeneralize from other UI libraries.
+
+If a slot is not explicit in the code, do not describe it just because it would be convenient.
+
 ---
 
-## Layout
+### Layout primitives
 
 ### `DdBox`
 
@@ -496,7 +655,7 @@ Inferred from the code:
 
 ---
 
-## Primitives
+### Core primitives
 
 ### `DdCard`
 
@@ -524,9 +683,13 @@ Inferred from the code:
 - Emits: none explicitly declared.
 - Slots: `default`.
 - Correct example: `<DdBadge success icon="heroicons:check">Active</DdBadge>`.
+- Correct example: `<DdBadge color="#0f766e">Custom</DdBadge>`.
 - Incorrect example: `<DdBadge :count="3" />`.
 - Accessibility notes: does not replace a fuller status description when that is needed.
-- Restrictions: supports semantic variants; `color` allows direct customization.
+- Restrictions:
+  - supports semantic attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
+  - `color` is a real prop for direct custom color, not a semantic alias API;
+  - prefer semantic attrs for status communication and reserve `color` for true one-off overrides.
 
 ### `DdBreadcrumb`
 
@@ -541,7 +704,10 @@ Inferred from the code:
 - Correct example: `<DdBreadcrumb :config="{ routes: [{ label: 'Home', to: '/' }, { label: 'Account', to: '/account' }] }" />`.
 - Incorrect example: `<DdBreadcrumb :items="items" />`.
 - Accessibility notes: uses real links and sanitizes `href`; prefer clear labels.
-- Restrictions: `config` is required.
+- Restrictions:
+  - `config` is required;
+  - `separator` is an icon name override, not free text;
+  - route items may include `label`, `href`, `to`, `disabled`, `icon`, and `hoverColor`.
 
 ### `DdProgress`
 
@@ -604,9 +770,14 @@ Inferred from the code:
 - Slots: `default`.
 - Correct example: `<DdButton primary icon="heroicons:plus">New</DdButton>`.
 - Correct example: `<DdButton href="https://example.com">Open</DdButton>`.
+- Correct example: `<DdButton color="#2563eb">Custom action</DdButton>`.
 - Incorrect example: `<DdButton variant="primary">Save</DdButton>`.
 - Accessibility notes: use visible text; if using `icon-only`, provide `aria-label`.
-- Restrictions: relevant variants/attrs `full`, `ghost`, `outline`, `icon-right`, `icon-only`, `tiny`, `small`, `large`, `xlarge`, semantic attrs, and `color`.
+- Restrictions:
+  - semantic styling is primarily driven by attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
+  - `color` is a real prop for arbitrary custom color overrides and should not be confused with semantic attrs;
+  - prefer semantic attrs in generated page code unless the user explicitly asks for a custom color;
+  - relevant variants/attrs include `full`, `ghost`, `outline`, `icon-right`, `icon-only`, `tiny`, `small`, `large`, and `xlarge`.
 
 ### `DdInput`
 
@@ -629,9 +800,14 @@ Inferred from the code:
   - `update:modelValue`
 - Slots: none explicitly declared.
 - Correct example: `<DdInput v-model="email" name="email" type="email" label="Email" />`.
+- Correct example: `<DdInput v-model="email" small success icon="heroicons:envelope" />`.
 - Incorrect example: `<DdInput :options="options" />`.
 - Accessibility notes: use `label` or provide equivalent labeling.
-- Restrictions: states `error`, `warning`, `success`; sizes `small`, `large`.
+- Restrictions:
+  - supports status attrs `error`, `warning`, and `success`;
+  - supports sizing attrs `small` and `large`;
+  - `error` and `warning` may be passed as booleans or as strings, and string values become visible helper messages;
+  - left and right icons are props (`icon`, `iconRight`), not slots.
 
 ### `DdTextarea`
 
@@ -677,9 +853,14 @@ Inferred from the code:
   - `update:modelValue`
 - Slots: none explicitly declared.
 - Correct example: `<DdSelect v-model="status" :options="statusOptions" label="Status" />`.
+- Correct example: `<DdSelect v-model="status" warning="Review this field" :options="statusOptions" />`.
 - Incorrect example: `<DdSelect :items="statusOptions" />`.
 - Accessibility notes: use `label` when possible.
-- Restrictions: states `error`, `warning`, `success`; sizes `small`, `large`.
+- Restrictions:
+  - supports status attrs `error`, `warning`, and `success`;
+  - supports sizing attrs `small` and `large`;
+  - `error` and `warning` may be passed as strings to surface inline helper text;
+  - options must follow `{ label, value, disabled? }`.
 
 ### `DdCheckbox`
 
@@ -900,7 +1081,7 @@ Inferred from the code:
 
 ---
 
-## Form wrappers
+### Form wrappers
 
 ### `DdFormInput`
 
@@ -1009,7 +1190,7 @@ Inferred from the code:
 
 ---
 
-## Widgets
+### Widgets
 
 ### `DdAccordion`
 
@@ -1066,7 +1247,10 @@ Inferred from the code:
 - Correct example: `<DdTabs v-model="tab"><DdTabList><DdTab value="account">Account</DdTab></DdTabList><DdTabPanels><DdTabPanel value="account">...</DdTabPanel></DdTabPanels></DdTabs>`.
 - Incorrect example: `<DdTabs><DdTabList><DdTab name="account">Account</DdTab></DdTabList></DdTabs>`.
 - Accessibility notes: provides the context for `tablist`, `tab`, and `tabpanel`; keyboard support is handled in the tabs system.
-- Restrictions: tab/panel linkage is based on `value`.
+- Restrictions:
+  - tab/panel linkage is based on `value`;
+  - supports `vertical` and `manualActivation` as real props;
+  - the `close` emit belongs to `DdTabs`, triggered by closable inner tabs.
 
 ### `DdTabList`
 
@@ -1083,7 +1267,9 @@ Inferred from the code:
 - Correct example: `<DdTabList><DdTab value="a">A</DdTab></DdTabList>`.
 - Incorrect example: `<DdTabList />`.
 - Accessibility notes: depends on `DdTabs` context.
-- Restrictions: must be used inside `DdTabs`.
+- Restrictions:
+  - must be used inside `DdTabs`;
+  - `prefix` and `suffix` are real slots rendered outside the tab strip itself.
 
 ### `DdTab`
 
@@ -1105,9 +1291,14 @@ Inferred from the code:
   - `prefix`
   - `suffix`
 - Correct example: `<DdTab value="profile" icon="heroicons:user">Profile</DdTab>`.
+- Correct example: `<DdTab value="logs" closable>Logs</DdTab>`.
 - Incorrect example: `<DdTab name="profile">Profile</DdTab>`.
 - Accessibility notes: participates in `aria-selected`, `aria-controls`, and keyboard navigation.
-- Restrictions: `value` is required.
+- Restrictions:
+  - `value` is required;
+  - `to` and `href` are real navigation props;
+  - when `closable` is used, closing is surfaced through the parent `DdTabs` `close` emit;
+  - semantic and size attrs should be verified against the tabs CSS before documentation or examples.
 
 ### `DdTabPanels`
 
@@ -1159,7 +1350,10 @@ Inferred from the code:
 - Correct example: `<DdModal :open="open" title="Edit" @update:open="open = $event">...</DdModal>`.
 - Incorrect example: `<DdModal><template #header>Top</template></DdModal>`.
 - Accessibility notes: uses `<dialog>`; keep title and closing action clear.
-- Restrictions: there is no `header` slot.
+- Restrictions:
+  - there is no `header` slot;
+  - when `title` is provided, the built-in header and close button are rendered automatically;
+  - when `title` is omitted, only body and optional footer are rendered.
 
 ### `DdDrawer`
 
@@ -1182,7 +1376,10 @@ Inferred from the code:
 - Correct example: `<DdDrawer :open="open" position="left"><template #header>Filters</template>...</DdDrawer>`.
 - Incorrect example: `<DdDrawer side="left" />`.
 - Accessibility notes: uses `<dialog>`; keep the open/close flow clear.
-- Restrictions: use `position`, not `side`.
+- Restrictions:
+  - use `position`, not `side`;
+  - unlike `DdModal`, `DdDrawer` supports a real `header` slot;
+  - if `title` or `header` is provided, the built-in close button is rendered in the header row.
 
 ### `DdPagination`
 
@@ -1225,7 +1422,10 @@ Inferred from the code:
 - Correct example: `<DdTable :columns="columns" :data="rows"><template #cell-status="{ row }"><DdBadge>{{ row.status }}</DdBadge></template></DdTable>`.
 - Incorrect example: `<DdTable :items="rows" />`.
 - Accessibility notes: use clear column titles; custom cell rendering should preserve legibility.
-- Restrictions: variants `striped` and `striped-odd`.
+- Restrictions:
+  - variants `striped` and `striped-odd` are supported via attrs;
+  - `rowKey` may be a property name or a function;
+  - loading with existing data renders an updating row instead of replacing the table body entirely.
 
 ### `DdPopover`
 
@@ -1295,13 +1495,23 @@ Inferred from the code:
 - Restrictions:
   - `items` is required;
   - each item must follow `MenuEntry`;
-  - actions are modeled as `action: { type: 'link' | 'action' | 'none' }`.
+  - actions are modeled as `action: { type: 'link' | 'action' | 'none' }`;
+  - nested indentation is a theming concern, not a prop-level API.
 
-## 9. Best practices
+### `DdMenu` theming notes
+
+Confirmed in `runtime/assets/styles/tokens/default-theme/components/menu.json`:
+
+- submenu indentation is controlled by `menu.submenu.padding-inline-start`;
+- item spacing continues to be driven separately by `menu.item.padding-block` and `menu.item.padding-inline`;
+- when adjusting nested navigation density, prefer the submenu token before changing structural CSS.
+
+## 10. Best practices
 
 - Install and use the library through the Nuxt module.
 - Keep the prefix consistent in examples and generated code.
 - Prefer `DdXxx` in AI-generated examples.
+- Check TypeScript, `processedAttrs.ts`, and CSS modules before documenting component capabilities.
 - Use `useToaster` together with a single global `DdToaster` instance.
 - Use `Form*` components when the context is already integrated with `vee-validate`.
 - Use `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, and `Toggle` directly when structured validation is not needed.
@@ -1310,15 +1520,18 @@ Inferred from the code:
 - Use semantic variants (`success`, `warning`, `danger`, `error`, `info`, `accent`, `primary`) according to context.
 - Adjust `tag`, ARIA, and semantics on layout primitives when a neutral wrapper is not sufficient.
 
-## 10. Anti-patterns
+## 11. Anti-patterns
 
 - Do not import components from internal `runtime/components/...` paths in consuming app code.
 - Do not import internal helpers from `runtime/shared/utils/*`.
 - Do not use `useThemeEditor` as if it were a general public app composable.
 - Do not use a generic `variant="primary"` prop where the component expects attrs such as `primary`, `ghost`, `outline`, etc.
+- Do not replace semantic attrs with fake value props such as `color="color-primary"` when the public API is just `primary`.
 - Do not assume every component shares the same size scale.
 - Do not document or generate examples as if the library had official support outside Nuxt.
 - Do not rely by default on Tailwind/Bootstrap utility classes to “force” component appearance.
+- Do not hardcode new spacing, sizing, or theming values in component CSS when a component token should own that control.
+- Do not describe non-existent slots such as `header`, `actions`, or `trigger` unless they are explicit in the component code.
 - Do not use non-existent props/slots such as:
   - `DdFormLabel text`
   - `DdInputGroup #leading`
@@ -1328,7 +1541,7 @@ Inferred from the code:
   - `DdPagination v-model:page`
   - `DdPopover #trigger`
 
-## 11. Complete usage examples
+## 12. Complete usage examples
 
 ### Example 1: layout with menu and content
 
@@ -1472,12 +1685,12 @@ const rows = [
 </script>
 ```
 
-## 12. TODOs for remaining gaps
+## 13. TODOs for remaining gaps
 
 - `TODO:` decide whether `DdModal` should gain a `header` slot in the future; today it does not exist.
 - `TODO:` align `src/types.ts` with all `appConfig.daredash.icons` keys that are actually read at runtime.
 
-## Appendix: useful public types
+## 14. Appendix: useful public types
 
 ### `TableColumn`
 

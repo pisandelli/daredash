@@ -1,5 +1,6 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, resolveComponent, type PropType } from 'vue'
+import { useAppConfig } from '#imports'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Menu.module.css'
 import type { MenuEntry } from './types'
@@ -98,6 +99,8 @@ export default defineNuxtComponent({
     }
 
     const { processedAttrs, classList } = useBaseComponent(filteredAttrs, styles, 'Menu')
+    const appConfig = useAppConfig()
+    const globalIcons = appConfig.daredash?.icons || {}
 
     const { isCollapsed, collapse, expand, toggle } = useMenuState(props, emit)
     const float = useMenuFloat(props, isCollapsed)
@@ -143,8 +146,8 @@ export default defineNuxtComponent({
           }, [
             h(resolveComponent('Icon'), {
               name: isCollapsed.value
-                ? 'heroicons:chevron-double-right'
-                : 'heroicons:chevron-double-left',
+                ? globalIcons.menuExpand || 'heroicons:chevron-right'
+                : globalIcons.menuCollapse || 'heroicons:chevron-left',
               class: styles.toggleIcon,
               'aria-hidden': 'true'
             })

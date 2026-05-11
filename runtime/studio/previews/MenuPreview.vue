@@ -53,6 +53,13 @@ function focusField(path: string) {
       <h3>Vertical sidebar</h3>
       <div class="dd-menu-shell">
         <DdMenu :items="sidebarItems" toggle-button collapsible active-key="overview" />
+        <p class="dd-menu-help">
+          <b>Token-driven here:</b> toggle size, color, hover background, radius, item spacing, separators, and submenu indentation.
+        </p>
+        <p class="dd-menu-help">
+          <b>Controlled by app config:</b> the collapse/expand toggle icons come from <code>appConfig.daredash.icons.menuCollapse</code>
+          and <code>appConfig.daredash.icons.menuExpand</code>, not from theme tokens.
+        </p>
         <div class="dd-menu-actions">
           <button type="button" class="dd-menu-action" @click="focusField('menu.width')">Width</button>
           <button type="button" class="dd-menu-action" @click="focusField('menu.item.bg-active')">Active item</button>

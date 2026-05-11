@@ -1,6 +1,8 @@
 # Installation and Configuration
 
-`daredash` is a Nuxt-first UI library module. It handles component registration, design token processing, global reset styles, and a Studio route for token inspection.
+This guide is for application developers adopting DareDash in a Nuxt project. Use it to get the module running quickly, understand the available options, and confirm what DareDash adds to your app.
+
+Next step after this guide: [Layout Primitives](./layout.md)
 
 ## 1. Install the module
 
@@ -10,11 +12,12 @@ pnpm add daredash
 
 You can also use a local module path while developing inside a monorepo.
 
-## 2. Configure `nuxt.config.ts`
+## 2. Register DareDash in `nuxt.config.ts`
 
 Add `daredash` to the Nuxt `modules` array.
 
 ```ts
+// nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
     [
@@ -28,17 +31,18 @@ export default defineNuxtConfig({
 })
 ```
 
-### Available module options
+## 3. Available module options
 
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `tokens` | `string` | `./runtime/assets/styles/tokens/default-theme` | Path to a JSON token file or a directory of token files. |
+| `tokens` | `string` | `./runtime/assets/styles/tokens/default-theme` | Path to a token JSON file or a directory of token files. |
 | `prefix` | `string` | `'dd'` | Prefix used for registered components and generated CSS variables. |
 | `debug` | `boolean` | `false` | Enables internal build-time debug logs. |
 
 ### Example with custom tokens
 
 ```ts
+// nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
     [
@@ -52,14 +56,14 @@ export default defineNuxtConfig({
 })
 ```
 
-If you change `prefix`, restart the Nuxt dev server so component registration and CSS variable generation are rebuilt correctly.
+If you change `prefix`, restart the Nuxt dev server so component registration and CSS variable generation are rebuilt with the new names.
 
-## 3. Token files
+## 4. Token sources
 
-The module accepts either:
+DareDash accepts either:
 
-- a single `.json` token file;
-- or a directory containing multiple `.json` token files.
+- a single `.json` token file
+- or a directory containing multiple `.json` token files
 
 Example:
 
@@ -80,21 +84,23 @@ Example:
 }
 ```
 
-If you point `tokens` to a directory, the module recursively reads all `.json` files and merges them.
+If you point `tokens` to a directory, the module recursively reads `.json` files and merges them into the final token graph.
 
-## 4. What the module adds to your app
+## 5. What DareDash adds to your app
 
-When enabled, `daredash`:
+When enabled, the module:
 
-- auto-registers all library components;
-- injects the global `reset.css`;
-- processes tokens into CSS custom properties;
-- registers the internal `/studio` route;
-- adds a Nuxt DevTools tab for the Studio;
-- auto-imports runtime composables from `runtime/composables`;
-- exposes `runtime/public` as Nitro public assets.
+- auto-registers all public components
+- injects the global reset stylesheet
+- processes tokens into CSS custom properties and theme layers
+- auto-imports runtime composables
+- registers the internal `/studio` route
+- adds a Nuxt DevTools tab for Studio
+- exposes `runtime/public` as Nitro public assets
 
-## 5. Nuxt dependencies used by the module
+You do not need to manually import the reset in `app.vue`.
+
+## 6. Runtime dependencies used by the module
 
 The module configures and depends on:
 
@@ -102,26 +108,11 @@ The module configures and depends on:
 - `@nuxt/icon`
 - `@vee-validate/nuxt`
 
-## 6. Fonts
+This matters mainly so consumers understand why icons, fonts, and validation wrappers are available out of the box.
 
-`daredash` uses `@nuxt/fonts` for font handling.
+## 7. Icon configuration
 
-In practice, your app can keep using Nuxt font configuration as usual. Token-driven typography can be layered on top of that.
-
-## 7. Global styles
-
-You do not need to manually import the library reset in `app.vue`.
-
-The module injects:
-
-- the design token output;
-- the global reset stylesheet.
-
-This gives all components a consistent baseline without extra setup in the consuming app.
-
-## 8. Icon configuration
-
-The library uses `@nuxt/icon` and reads icon names from `appConfig.daredash.icons`.
+DareDash uses `@nuxt/icon` and reads icon names from `appConfig.daredash.icons`.
 
 Common documented keys include:
 
@@ -132,18 +123,54 @@ Common documented keys include:
 - `toastClose`
 - `selectArrow`
 - `modalClose`
+- `menuCollapse`
+- `menuExpand`
 
 Additional runtime keys are also used by some components, so keep icon naming centralized in `app.config.ts` when you customize the library.
 
 Example:
 
 ```ts
+// app.config.ts
 export default defineAppConfig({
   daredash: {
     icons: {
       modalClose: 'mdi:close',
-      selectArrow: 'mdi:chevron-down'
+      selectArrow: 'mdi:chevron-down',
+      menuCollapse: 'mdi:chevron-left',
+      menuExpand: 'mdi:chevron-right'
     }
   }
 })
 ```
+
+## 8. Studio
+
+Studio is available at:
+
+- `/studio`
+- and as a dedicated Nuxt DevTools tab
+
+Studio is useful for:
+
+- previewing components
+- inspecting token-driven behavior
+- iterating on theme values
+- exporting token overrides
+
+You do not need Studio to use DareDash, but it becomes very valuable once you start customizing the design system.
+
+## 9. First render sanity check
+
+Once the module is installed, this should work without extra component imports:
+
+```vue
+<template>
+  <dd-stack compact>
+    <dd-button primary>Save</dd-button>
+    <dd-alert info title="Ready">DareDash is active.</dd-alert>
+  </dd-stack>
+</template>
+```
+
+If the prefix is still `dd`, the component tags and CSS variable names will be generated accordingly.

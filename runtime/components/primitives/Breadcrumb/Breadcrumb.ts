@@ -1,6 +1,7 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, computed, type PropType, type VNode } from 'vue'
 import { NuxtLink, Icon } from '#components'
+import { useAppConfig } from '#imports'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Breadcrumb.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
@@ -16,6 +17,9 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbConfig {
+  /**
+   * Optional separator icon name. Falls back to `appConfig.daredash.icons.breadcrumbSeparator`.
+   */
   separator?: string;
   routes: BreadcrumbItem[];
 }
@@ -34,9 +38,13 @@ export default defineNuxtComponent({
   },
   setup(props, { attrs }): () => VNode {
     const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Breadcrumb')
+    const appConfig = useAppConfig()
 
-    const separatorChar = computed(() => {
-      return props.config.separator ?? '➜'
+    const separatorIconName = computed(() => {
+      return props.config.separator
+        ?? appConfig.daredash?.icons?.breadcrumbSeparator
+        ?? appConfig.daredash?.icons?.menuExpand
+        ?? 'heroicons:chevron-right'
     })
 
     const renderIcon = (iconName?: string) => {
@@ -97,7 +105,10 @@ export default defineNuxtComponent({
                 class: styles.separator,
                 'aria-hidden': 'true'
               },
-              separatorChar.value
+              h(Icon, {
+                name: separatorIconName.value,
+                class: styles.icon
+              })
             )
           )
         }

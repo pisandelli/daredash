@@ -12,11 +12,11 @@
   },
   "width": {
     "$description": "Expanded sidebar width",
-    "$value": "240px"
+    "$value": "15rem"
   },
   "width-collapsed": {
     "$description": "Collapsed sidebar width (icons only)",
-    "$value": "60px"
+    "$value": "3.75rem"
   },
   "transition": {
     "$value": "{transition.base}"
@@ -84,6 +84,12 @@
       "$value": "{space.xxs}"
     }
   },
+  "submenu": {
+    "$type": "object",
+    "padding-inline-start": {
+      "$value": "calc({menu.item.padding-inline} + {menu.item.icon-size})"
+    }
+  },
   "float": {
     "$type": "object",
     "bg": {
@@ -99,7 +105,7 @@
       "$value": "{border-radius.lg}"
     },
     "min-width": {
-      "$value": "180px"
+      "$value": "11.25rem"
     },
     "z-index": {
       "$value": "{z-index.4}"

@@ -9,6 +9,10 @@
   --local-color: v('card.color');
   --local-padding: v('card.padding');
   --local-max-width: v('card.max-width');
+  --local-header-border-width: v('card.header.border-width');
+  --local-header-border-color: v('card.header.border-color');
+  --local-footer-border-width: v('card.footer.border-width');
+  --local-footer-border-color: v('card.footer.border-color');
 
   /* -- Layout -- */
   display: flex;
@@ -37,7 +41,7 @@
 .header {
   padding-inline: var(--local-padding);
   padding-block: var(--local-padding);
-  border-block-end: v('card.header.border-width') solid v('card.header.border-color');
+  border-block-end: var(--local-header-border-width) solid var(--local-header-border-color);
   font-weight: v('font-weight.bold');
 }
 
@@ -49,6 +53,6 @@
 .footer {
   padding-inline: var(--local-padding);
   padding-block: var(--local-padding);
-  border-block-start: v('card.footer.border-width') solid v('card.footer.border-color');
+  border-block-start: var(--local-footer-border-width) solid var(--local-footer-border-color);
   background-color: v('color.bg.surface-hover');
 }

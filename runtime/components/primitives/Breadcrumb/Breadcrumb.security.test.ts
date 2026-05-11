@@ -23,7 +23,7 @@ describe('Breadcrumb Security', () => {
     expect(wrapper.html()).toContain('&lt;script id="xss-label"&gt;alert("xss-label")&lt;/script&gt;')
   })
 
-  it('escapes XSS payload in separator', async () => {
+  it('does not render raw HTML when separator receives an invalid icon name', async () => {
     const xssPayload = '<script id="xss-separator">alert("xss-separator")</script>'
     const wrapper = await mountSuspended(Breadcrumb, {
       props: {
@@ -41,8 +41,7 @@ describe('Breadcrumb Security', () => {
     const scriptTag = wrapper.find('#xss-separator')
     expect(scriptTag.exists()).toBe(false)
 
-    // The text content should contain the payload as literal text
-    expect(wrapper.html()).toContain('&lt;script id="xss-separator"&gt;alert("xss-separator")&lt;/script&gt;')
+    expect(wrapper.html()).not.toContain('<script id="xss-separator">')
   })
 
   it('sanitizes javascript: URIs in href', async () => {

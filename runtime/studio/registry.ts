@@ -503,6 +503,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('menu.separator.letter-spacing', 'Separator Letter Spacing', 'text', 'Separator'),
       componentField('menu.separator.border-color', 'Separator Border Color', 'color', 'Separator'),
       componentField('menu.separator.padding-block', 'Separator Padding', 'text', 'Separator'),
+      componentField('menu.submenu.padding-inline-start', 'Submenu Indent', 'text', 'Submenu'),
       componentField('menu.float.bg', 'Float Background', 'color', 'Float'),
       componentField('menu.float.border-color', 'Float Border Color', 'color', 'Float'),
       componentField('menu.float.shadow', 'Float Shadow', 'text', 'Float'),

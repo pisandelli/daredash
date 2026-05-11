@@ -10,6 +10,10 @@
   --local-line-height: v('radio.line-height');
   --local-color: v('radio.color');
   --local-focus-box-shadow: v('input.focus.box-shadow');
+  --local-hover-border-color: v('radio.hover.border');
+  --local-checked-border-color: v('radio.checked.border');
+  --local-disabled-bg: v('radio.disabled.bg');
+  --local-disabled-border-color: v('radio.disabled.border');
 
   display: flex;
   align-items: center;
@@ -39,11 +43,11 @@
   background-size: 100%;
 
   &:hover:not(:disabled) {
-    border-color: v('radio.hover.border');
+    border-color: var(--local-hover-border-color);
   }
 
   &:checked {
-    border-color: v('radio.checked.border');
+    border-color: var(--local-checked-border-color);
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%230984e3' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='4'/%3e%3c/svg%3e");
   }
 
@@ -53,8 +57,8 @@
   }
 
   &[disabled] {
-    background-color: v('radio.disabled.bg');
-    border-color: v('radio.disabled.border');
+    background-color: var(--local-disabled-bg);
+    border-color: var(--local-disabled-border-color);
     cursor: not-allowed;
 
     &:checked {
