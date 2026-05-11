@@ -15,6 +15,7 @@ const tabs = STUDIO_TABS
 const activeTabId = ref(tabs[0]?.id ?? 'base')
 const componentSearch = ref('')
 const isComponentPickerOpen = ref(false)
+const componentSearchInput = ref<HTMLInputElement | null>(null)
 
 const activeTab = computed<StudioTabDefinition>(() => {
   return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0]!
@@ -227,6 +228,8 @@ function toggleComponentPicker(): void {
     componentSearch.value = ''
 
     nextTick(() => {
+      componentSearchInput.value?.focus()
+
       const activeOption = document.querySelector('.dde-component-option-active') as HTMLElement | null
       activeOption?.scrollIntoView({
         block: 'start',
@@ -348,6 +351,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
               class="dde-component-menu"
             >
               <input
+                ref="componentSearchInput"
                 v-model="componentSearch"
                 class="dde-component-search"
                 type="search"
@@ -966,7 +970,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;

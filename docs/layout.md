@@ -1,34 +1,48 @@
 # Layout Primitives
 
-`daredash` includes a small set of layout primitives built around CSS Modules, tokenized spacing, and attribute-driven variants.
+This guide is for application developers composing pages with DareDash. Use it to understand which structural primitive to reach for first, how the layout attrs work, and how to combine these building blocks without inventing custom wrappers too early.
 
-All examples below assume the default `dd` prefix.
+Next step after this guide: [UI Components](./components.md)
 
-## Shared rule
+## 1. Which primitive should I use?
+
+| Primitive | Use it for |
+| :--- | :--- |
+| `dd-box` | A neutral wrapper with tokenized internal padding. |
+| `dd-center` | Centering content and constraining line length. |
+| `dd-cluster` | Horizontal groups of items with wrapping and alignment control. |
+| `dd-grid` | Responsive card or tile layouts. |
+| `dd-stack` | Vertical page rhythm and grouped flows. |
+| `dd-sidebar` | Sidebar/content arrangements that can wrap responsively. |
+| `dd-layout` | High-level page shells and full-page vertical framing. |
+
+## 2. Shared rules
 
 All layout primitives:
 
-- are auto-registered by the Nuxt module;
-- render a neutral wrapper by default;
-- accept `tag` to change the root HTML element;
-- use boolean or valued attrs to activate layout variants.
+- are auto-registered by the Nuxt module
+- render a neutral wrapper by default
+- accept `tag` to change the root element
+- use attrs to activate layout variants
 
 Example:
 
 ```vue
-<dd-box tag="section">
-  Content
-</dd-box>
+<template>
+  <dd-box tag="section">
+    Content
+  </dd-box>
+</template>
 ```
 
-## Box (`<dd-box>`)
+## 3. Box (`<dd-box>`)
 
 A generic wrapper for grouping content with internal padding.
 
 ```vue
 <template>
   <dd-box>
-    Content goes here
+    Content goes here.
   </dd-box>
 </template>
 ```
@@ -43,9 +57,9 @@ A generic wrapper for grouping content with internal padding.
 
 | Attr | Description |
 | :--- | :--- |
-| `nogap` | Removes internal spacing. |
+| `nogap` | Removes the internal padding. |
 
-## Center (`<dd-center>`)
+## 4. Center (`<dd-center>`)
 
 Centers content horizontally and constrains width using tokens.
 
@@ -67,11 +81,11 @@ Centers content horizontally and constrains width using tokens.
 
 | Attr | Description |
 | :--- | :--- |
-| `intrinsic` | Keeps the content centered based on its intrinsic size. |
+| `intrinsic` | Keeps the layout centered around intrinsic content size. |
 
-## Cluster (`<dd-cluster>`)
+## 5. Cluster (`<dd-cluster>`)
 
-Places children in a wrapping horizontal row with gap control.
+Places children in a wrapping horizontal row with alignment and gap controls.
 
 ```vue
 <template>
@@ -104,7 +118,7 @@ Places children in a wrapping horizontal row with gap control.
 | `stretch` | Stretches items vertically. |
 | `nogap` | Removes the gap. |
 
-## Grid (`<dd-grid>`)
+## 6. Grid (`<dd-grid>`)
 
 Creates a responsive CSS grid based on tokenized gap and minimum column width.
 
@@ -125,7 +139,7 @@ Creates a responsive CSS grid based on tokenized gap and minimum column width.
 
 ### Customization
 
-Use local overrides when needed:
+Use local CSS variable overrides when needed:
 
 ```css
 .my-grid {
@@ -134,7 +148,7 @@ Use local overrides when needed:
 }
 ```
 
-## Stack (`<dd-stack>`)
+## 7. Stack (`<dd-stack>`)
 
 Stacks children vertically using tokenized spacing.
 
@@ -148,7 +162,7 @@ Stacks children vertically using tokenized spacing.
 </template>
 ```
 
-`split-after` is useful when one item should push the rest downward:
+`split-after` is useful when one child should push the remaining content downward:
 
 ```vue
 <template>
@@ -174,23 +188,23 @@ Stacks children vertically using tokenized spacing.
 | `spaced` | Uses a larger gap. |
 | `nogap` | Removes the gap. |
 | `recursive` | Applies stack spacing inside nested children. |
-| `reverse` | Reverses visual order. |
+| `reverse` | Reverses the visual order. |
 | `split-after` | Applies `margin-block-end: auto` to the nth child. |
 
-## Sidebar (`<dd-sidebar>`)
+## 8. Sidebar (`<dd-sidebar>`)
 
 Creates a sidebar/content pattern that can wrap when space gets tight.
 
 ```vue
 <template>
   <dd-sidebar right>
-    <aside>Sidebar Nav</aside>
-    <main>Main Content</main>
+    <aside>Sidebar navigation</aside>
+    <main>Main content</main>
   </dd-sidebar>
 </template>
 ```
 
-Use `fill` when the sidebar area should occupy available vertical space inside a larger page layout:
+Use `fill` when the sidebar region should stretch inside a larger page shell:
 
 ```vue
 <template>
@@ -199,8 +213,8 @@ Use `fill` when the sidebar area should occupy available vertical space inside a
 
     <div data-body>
       <dd-sidebar fill>
-        <aside>Sidebar Nav</aside>
-        <main>Main Content</main>
+        <aside>Sidebar navigation</aside>
+        <main>Main content</main>
       </dd-sidebar>
     </div>
 
@@ -225,7 +239,7 @@ Use `fill` when the sidebar area should occupy available vertical space inside a
 | `fill` | Expands the layout to occupy available vertical space. |
 | `nogap` | Removes the gap. |
 
-## Layout (`<dd-layout>`)
+## 9. Layout (`<dd-layout>`)
 
 High-level page layout wrapper.
 
@@ -234,7 +248,7 @@ High-level page layout wrapper.
   <dd-layout>
     <dd-sidebar>
       <aside>Sidebar</aside>
-      <main>Main Content</main>
+      <main>Main content</main>
     </dd-sidebar>
   </dd-layout>
 </template>
@@ -251,3 +265,11 @@ High-level page layout wrapper.
 `dd-layout` itself does not expose a formal `body` or `fill` prop API. Instead, some CSS behaviors react to descendants carrying `data-body` and `data-fill`.
 
 Use that pattern only when you really need the page body to stretch inside a larger shell.
+
+## 10. Practical composition tips
+
+- Start with `dd-stack` when the page is mostly vertical.
+- Use `dd-cluster` for toolbars, action rows, and mixed inline controls.
+- Use `dd-grid` for card collections and dashboard sections.
+- Use `dd-sidebar` when the content relationship is explicitly “main + aside”.
+- Use `dd-layout` only when you are shaping the whole page shell, not for small internal sections.

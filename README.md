@@ -2,66 +2,36 @@
 
 Token-driven UI library for Nuxt.
 
-`daredash` is a Nuxt-first component library built around:
+`daredash` is a Nuxt-first UI library built around reusable components, JSON design tokens, CSS Modules, semantic attrs, and a built-in Studio for theme exploration. If you want a UI layer that stays consistent while remaining easy to theme and evolve, this is the front door.
 
-- reusable UI primitives and widgets
-- JSON-based design tokens
-- CSS Modules with semantic variants
-- a built-in Studio for exploring and exporting theme changes
+## Documentation Map
 
-If you want a UI layer that is consistent, themeable, and tightly integrated with Nuxt, this library is the entry point.
+Use this order if you are adopting DareDash in an application:
 
-## Documentation TOC
+1. [Installation and Configuration](./docs/installation.md)  
+   Set up the Nuxt module, prefix, tokens, icons, and Studio route.
+2. [Layout Primitives](./docs/layout.md)  
+   Learn the structural building blocks used to compose pages.
+3. [UI Components](./docs/components.md)  
+   Browse the main component reference for forms, feedback, navigation, and widgets.
+4. [Features, Tokens, and Theming](./docs/features.md)  
+   Understand the design-token model, `v()`, theming, and safe customization.
+5. [Architecture](./docs/architecture.md)  
+   Read the high-level system explanation once you want the “why” behind the library.
+6. [Developer Guide](./README.DEV.md)  
+   Use this only if you are extending or maintaining the library itself.
 
-### Start here
-
-- [Installation Guide](./docs/installation.md)
-- [UI Components](./docs/components.md)
-- [Layout Primitives](./docs/layout.md)
-- [Features](./docs/features.md)
-- [Architecture](./docs/architecture.md)
-
-### AI and internal guidance
-
-- [LLM Guide](./llms.md)
-- [Compact AI Guide](./docs/LLM.md)
-- [Developer Guide](./README.DEV.md)
+AI-specific guidance lives separately in [llms.txt](./llms.txt).
 
 ## Why DareDash
 
-DareDash combines three concerns that are often split across multiple tools:
+DareDash combines three concerns that are often split across separate tools:
 
-- **UI components**
-  - buttons, forms, layout primitives, navigation, tables, overlays
-- **design system infrastructure**
-  - tokens, variants, themes, CSS variable generation
-- **interactive design tooling**
-  - DareDash Studio for live token inspection and theme iteration
+- a component library for real application UI
+- a design-token system for consistency and theming
+- a built-in Studio for visual iteration and token export
 
-The result is a library that is not only reusable in application code, but also easier to evolve as a product system.
-
-## Studio as a Differentiator
-
-One of the strongest parts of DareDash is the built-in **DareDash Studio**.
-
-Studio is not just a playground. It is a working surface for the design system itself.
-
-It helps teams:
-
-- inspect components in one place
-- preview token-driven visual changes
-- experiment with theme values without rewriting component code
-- export token overrides as JSON
-- reduce the back-and-forth between design intent and implementation
-
-From a product perspective, Studio turns the UI library into a system you can actively shape, not just consume.
-
-From a developer perspective, Studio reduces guesswork when working on tokens, themes, and visual regressions.
-
-The module exposes Studio at:
-
-- `/studio`
-- and as a dedicated tab in Nuxt DevTools
+The result is not just a bag of components. It is a working product system that can be consumed by app teams and evolved by maintainers without drifting into one-off styling.
 
 ## Quick Start
 
@@ -88,122 +58,102 @@ export default defineNuxtConfig({
 })
 ```
 
-### Use components
+### Build a page with DareDash
 
 ```vue
 <template>
-  <DdLayout>
-    <DdSidebar>
-      <DdMenu :items="menuItems" collapsible />
-    </DdSidebar>
+  <dd-layout>
+    <dd-sidebar>
+      <dd-menu :items="menuItems" collapsible />
+    </dd-sidebar>
 
-    <DdBox tag="main">
-      <DdStack spaced>
-        <DdCard>
+    <dd-box tag="main">
+      <dd-stack spaced>
+        <dd-breadcrumb :config="breadcrumb" />
+
+        <dd-card>
           <template #header>Welcome</template>
-          <p>Your content here.</p>
-        </DdCard>
-      </DdStack>
-    </DdBox>
-  </DdLayout>
+          <p>Your content goes here.</p>
+        </dd-card>
+      </dd-stack>
+    </dd-box>
+  </dd-layout>
 </template>
+
+<script setup lang="ts">
+const menuItems = [
+  {
+    key: 'dashboard',
+    label: 'Dashboard',
+    icon: 'heroicons:home',
+    action: { type: 'link', to: '/' }
+  }
+]
+
+const breadcrumb = {
+  routes: [
+    { label: 'Home', to: '/' },
+    { label: 'Dashboard' }
+  ]
+}
+</script>
 ```
 
 ## What the Module Provides
 
-When enabled, `daredash`:
+When you enable `daredash`, the module:
 
-- auto-registers all library components
-- processes token JSON into CSS custom properties
-- injects the global reset stylesheet
-- adds runtime composable imports
-- exposes token/theme tooling through Studio
-- registers a DevTools tab for faster iteration
+- auto-registers the component surface with the configured prefix
+- parses token JSON and emits CSS custom properties
+- injects the reset stylesheet and token output
+- auto-imports runtime composables
+- exposes the `/studio` route
+- adds a Nuxt DevTools tab for Studio
+
+This is why DareDash should be understood as a Nuxt module first, not as a disconnected component package.
 
 ## Main Capabilities
 
 ### Components
 
-DareDash includes:
+The library includes:
 
-- layout primitives such as `Box`, `Stack`, `Cluster`, `Grid`, `Sidebar`, `Layout`
-- form primitives such as `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Toggle`
-- validated form wrappers such as `FormInput`, `FormSelect`, `FormCheckbox`
-- widgets such as `Modal`, `Drawer`, `Tabs`, `Table`, `Menu`, `Popover`, `Anchor`
-- feedback components such as `Alert`, `Loading`, `Toast`, `Toaster`
+- layout primitives such as `dd-box`, `dd-stack`, `dd-cluster`, `dd-grid`, `dd-sidebar`, and `dd-layout`
+- form primitives such as `dd-input`, `dd-textarea`, `dd-select`, `dd-checkbox`, `dd-radio`, and `dd-toggle`
+- `vee-validate` wrappers such as `dd-form-input` and `dd-form-select`
+- widgets such as `dd-menu`, `dd-tabs`, `dd-modal`, `dd-drawer`, `dd-table`, `dd-popover`, and `dd-anchor`
+- feedback primitives such as `dd-alert`, `dd-badge`, `dd-progress`, `dd-loading`, `dd-toast`, and `dd-toaster`
 
-### Design Tokens
+### Tokens and theming
 
-The library consumes JSON token files and turns them into:
+The design system is token-driven. JSON token files become:
 
 - CSS variables
 - theme layers
-- typed token metadata for client registration
+- component-level visual mappings
 
-This gives you a centralized way to control:
+This gives consumers a centralized way to control color, spacing, typography, sizing, and component behavior without turning every screen into a custom CSS project.
 
-- color
-- spacing
-- sizing
-- component-level visual behavior
+### Studio
 
-### Theme System
+Studio is one of DareDash’s strongest differentiators.
 
-DareDash supports theme-oriented token organization and runtime theme selectors such as `data-theme`.
+It is exposed at:
 
-The current architecture is especially strong when used with Studio for previewing and exporting theme overrides.
+- `/studio`
+- and as a dedicated tab in Nuxt DevTools
 
-## Example Use Cases
+Studio helps teams preview token changes, inspect components, iterate on themes, and export overrides without rewriting component logic.
 
-### Action Button
+## Where to go next
 
-```vue
-<DdButton primary icon="heroicons:plus">
-  New
-</DdButton>
-```
-
-### Validated Form
-
-```vue
-<DdFormInput
-  name="email"
-  label="Email"
-  type="email"
-/>
-```
-
-### Table
-
-```vue
-<DdTable :columns="columns" :data="rows" />
-```
-
-### Modal
-
-```vue
-<DdModal :open="open" title="Confirm" @update:open="open = $event">
-  <p>Are you sure?</p>
-</DdModal>
-```
-
-## Documentation
-
-- [Installation Guide](./docs/installation.md)
-- [Layout Primitives](./docs/layout.md)
-- [UI Components](./docs/components.md)
-- [Features](./docs/features.md)
-- [Architecture](./docs/architecture.md)
-- [LLM Guide](./llms.md)
-- [Compact AI Guide](./docs/LLM.md)
-- [Developer Guide](./README.DEV.md)
+- Start with [Installation and Configuration](./docs/installation.md) if you are adding DareDash to a Nuxt app.
+- Jump to [Layout Primitives](./docs/layout.md) if you want to start composing pages.
+- Open [UI Components](./docs/components.md) if you need the human-facing component reference.
+- Read [Features, Tokens, and Theming](./docs/features.md) before customizing the visual system deeply.
 
 ## Notes
 
 - Default prefix: `dd`
 - If you change the prefix, restart the Nuxt dev server
-- The library is currently designed for Nuxt usage, not positioned as a framework-agnostic Vue package
-
-## Why the Name
-
-The project grew out of a naming journey around CSS variables and the `dd` prefix. The final name, **DareDash**, kept the established `dd` identity while turning the “double dash” idea into something memorable and brandable.
+- Consumer examples in the human docs use `kebab-case` tags such as `<dd-button>`

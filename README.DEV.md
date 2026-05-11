@@ -1,36 +1,38 @@
 # DareDash Developer Guide
 
-This README is for contributors and maintainers.
+This guide is for contributors and maintainers.
 
-If you want to understand how the library is structured, where core responsibilities live, and how to safely extend the system, start here.
+If you are adopting DareDash in an application, start with [README.md](./README.md) and the files inside [`docs/`](./docs). This file is specifically for people extending the module, evolving the tokens, or maintaining the component system.
 
-For a higher-level architectural explanation aimed at broader audiences, see [docs/architecture.md](./docs/architecture.md).
+## Documentation Map
 
-## Documentation TOC
+Use this order when working on the library itself:
 
-### Product and usage docs
+1. [README](./README.md)  
+   Product-facing entrypoint and adoption path.
+2. [Installation and Configuration](./docs/installation.md)  
+   Consumer setup expectations.
+3. [Layout Primitives](./docs/layout.md)  
+   Human-facing structural reference.
+4. [UI Components](./docs/components.md)  
+   Human-facing component reference.
+5. [Features, Tokens, and Theming](./docs/features.md)  
+   Design-system and customization model.
+6. [Architecture](./docs/architecture.md)  
+   Conceptual system overview for broader audiences.
+7. [Developer Guide](./README.DEV.md)  
+   Contributor and maintainer workflows.
 
-- [README](./README.md)
-- [Installation Guide](./docs/installation.md)
-- [Layout Primitives](./docs/layout.md)
-- [UI Components](./docs/components.md)
-- [Features](./docs/features.md)
-- [Architecture](./docs/architecture.md)
+AI guidance remains separate in [llms.txt](./llms.txt).
 
-### AI and maintainer docs
+## What maintainers should keep in mind
 
-- [LLM Guide](./llms.md)
-- [Compact AI Guide](./docs/LLM.md)
-- [Developer Guide](./README.DEV.md)
+DareDash is a Nuxt-first UI library with four connected parts:
 
-## What DareDash Is
-
-DareDash is a Nuxt-first UI library with four tightly connected parts:
-
-- a **Nuxt module** that wires everything into the app
-- a **component system** made of primitives, wrappers, and widgets
-- a **design token pipeline** that generates CSS variables and themes
-- a **Studio** that helps inspect, preview, and export visual system changes
+- a Nuxt module that wires the system into the app
+- a component surface made of primitives, wrappers, and widgets
+- a token pipeline that produces CSS variables and themes
+- a Studio that sits on top of the same runtime and token infrastructure
 
 The important mental model is:
 
@@ -39,21 +41,21 @@ The important mental model is:
 - components render the system
 - Studio helps evolve the system
 
-## High-Level Architecture
+## High-level architecture
 
 ### Build layer
 
-The build layer lives mainly in `src/`.
+The build layer lives mainly in `src/` and `module.ts`.
 
 Its responsibilities include:
 
 - reading token sources
-- resolving references
+- resolving token references
 - generating CSS variable output
-- registering the PostCSS `v()` hook
+- wiring the PostCSS `v()` function
 - registering components with the current prefix
 
-Key files:
+Important files:
 
 - `module.ts`
 - `src/builder/tokens.ts`
@@ -73,7 +75,7 @@ It contains:
 - shared utilities
 - Studio pages and previews
 
-Key folders:
+Important folders:
 
 - `runtime/components/`
 - `runtime/composables/`
@@ -81,266 +83,154 @@ Key folders:
 - `runtime/shared/`
 - `runtime/studio/`
 
-## Core Relationships
+## Core relationships
 
-### 1. Module -> Tokens
+### Module -> tokens
 
-The Nuxt module loads token sources through the configured `tokens` path.
-
-Those tokens are parsed and converted into:
+The Nuxt module loads the configured token source and turns it into:
 
 - root-level CSS custom properties
 - theme selectors such as `[data-theme="light"]`
-- typed token metadata for client-side registration
+- typed token metadata for the client
 
-### 2. Module -> Components
+### Module -> components
 
-The module reads `components.config.ts` and registers components with the configured prefix.
+The module reads `components.config.ts` and registers the public component surface using the configured prefix.
 
-That registration supports two paths:
+This registration supports:
 
-- **generated wrappers**
-  - for simpler style-driven components
-- **direct registration**
-  - for more complex components with dedicated implementation files
+- generated wrappers for simpler components
+- direct registration for more complex implementations
 
-### 3. Components -> Composables
+### Components -> composables
 
-Components rely on composables and shared utilities for consistency.
+Components rely on shared composables for consistency.
 
 Examples:
 
 - `useBaseComponent`
-  - shared attr/class handling
+  shared attr/class handling
 - `useToaster`
-  - global toast state
+  public toast state and API
 - `useThemeEditor`
-  - Studio-oriented token editing workflow
+  Studio-oriented token editing workflow
 
-### 4. Components -> Tokens
+### Components -> tokens
 
-Components do not hardcode most visual values.
+Components should not hardcode most visual values.
 
-Instead, CSS Modules consume token-generated custom properties, often through local variable mapping. This keeps the system themeable and easier to evolve.
+Instead, CSS Modules consume token-generated custom properties, usually through local `--local-*` mappings. This is what keeps the library themeable and easier to evolve.
 
-### 5. Studio -> Everything
+### Studio -> everything
 
-Studio is not a side feature. It sits on top of the same token and component infrastructure used by the runtime.
+Studio is not a disconnected playground. It relies on the same token pipeline, component runtime, and CSS infrastructure as the rest of the library.
 
 That makes it valuable for:
 
 - internal development
 - product review
-- theme experimentation
-- design-system iteration
+- theme iteration
+- regression inspection
 
-## Component Model
-
-The component catalog is intentionally layered.
-
-### Layout primitives
-
-Examples:
-
-- `Box`
-- `Stack`
-- `Cluster`
-- `Grid`
-- `Sidebar`
-- `Layout`
-
-These are mostly structural building blocks with small APIs.
-
-### UI primitives
-
-Examples:
-
-- `Button`
-- `Badge`
-- `Input`
-- `Select`
-- `Checkbox`
-- `Alert`
-- `Progress`
-
-These are the main reusable UI elements.
-
-### Form wrappers
-
-Examples:
-
-- `FormInput`
-- `FormSelect`
-- `FormCheckbox`
-
-These are thin `vee-validate` adapters around primitives.
-
-### Widgets
-
-Examples:
-
-- `Modal`
-- `Drawer`
-- `Tabs`
-- `Menu`
-- `Table`
-- `Popover`
-- `Anchor`
-
-These components typically contain more coordination logic and richer runtime behavior.
-
-## Prefix Strategy
-
-The prefix system is fundamental to the library.
-
-Default prefix:
-
-- `dd`
-
-Examples:
-
-- component name: `DdButton`
-- CSS variable: `--dd-color-primary`
-
-Never hardcode the prefix in new logic when a helper already exists for dynamic resolution.
-
-The main runtime helper for this is `getPrefixName`.
-
-## Token System
-
-Tokens are defined in JSON and can come from:
-
-- a single file
-- or a directory tree of JSON files
-
-The build pipeline:
-
-1. resolves the token source
-2. merges JSON when directories are used
-3. parses standard and typed token values
-4. emits CSS variable output
-5. emits theme blocks
-6. registers the client token plugin
-
-This architecture gives DareDash its consistency and extensibility.
-
-## Styling Rules
-
-### Use `v()` in module CSS
-
-When authoring CSS for the library:
-
-- use `v('token.path')`
-- do not manually hardcode the generated CSS variable name when the intent is a token reference
-
-### Prefer token layering
-
-The safest styling model is:
-
-1. global token
-2. component token mapping
-3. local usage
-
-This reduces leakage and makes overrides more predictable.
-
-### Use attr-driven variants
-
-The library relies heavily on attrs that become `data-*` states.
-
-This is part of the system design, not an incidental implementation detail.
-
-## Studio
-
-Studio is one of the most important differentiators in the repository.
-
-For contributors, it matters because it provides a fast feedback loop for:
-
-- component previews
-- theme previews
-- token inspection
-- exporting token overrides
-
-From an internal architecture perspective, Studio proves that the token pipeline and component system are reusable beyond normal page rendering.
-
-Studio is exposed through:
-
-- `/studio`
-- a Nuxt DevTools tab
-
-## Public vs Internal Surface
+## Public vs internal surface
 
 ### Safe public surface
 
-- registered components
+Treat these as application-facing:
+
+- auto-registered DareDash components
 - module options: `tokens`, `prefix`, `debug`
 - `useToaster`
-- icon overrides in `appConfig.daredash.icons`
+- icon overrides through `appConfig.daredash.icons`
 
 ### Internal or tooling-oriented surface
 
+Do not treat these as stable consumer APIs:
+
+- `runtime/components/*`
+- `runtime/shared/utils/*`
 - `useBaseComponent`
 - `useThemeEditor`
-- `runtime/shared/utils/*`
-- `src/*`
-- `#dd/*` aliases as a primary app API
-- `runtime/components/widgets/Menu/useMenu*.ts`
+- `#dd/*` aliases as a primary app-consumer API
 
-When documenting or extending the project, keep this boundary explicit.
+## Styling and token rules
 
-## Extending the Library
+### Use `v()` in module CSS
+
+When authoring styles inside the library:
+
+- use `v('token.path')`
+- do not manually hardcode generated CSS variable names when the intent is a token reference
+
+### Prefer token layering
+
+The default layering model should stay:
+
+1. global token
+2. component token
+3. local variable usage
+
+This keeps overrides predictable and reduces visual leakage.
+
+### Validate attrs against the actual system
+
+When documenting or implementing visual capabilities, verify all three:
+
+- component TypeScript
+- `runtime/shared/utils/processedAttrs.ts`
+- component CSS module selectors
+
+Do not invent attrs, props, or slots because another UI library supports them.
+
+## Extending the library
 
 ### Add a new component
 
-Typical workflow:
+When adding a new public component:
 
-1. create the runtime implementation
-2. create the CSS Module
-3. add the component to `components.config.ts`
-4. add tokens if the component needs its own token namespace
-5. add tests when logic branches exist
+- decide whether it is a layout primitive, UI primitive, form wrapper, or widget
+- register it through the component catalog and module flow
+- author styles in `runtime/assets/styles/components/`
+- expose only the minimum public API needed
+- document it in `docs/components.md` and align `llms.txt` if the public surface changed
 
 ### Add or evolve tokens
 
-Typical workflow:
+When adding visual controls:
 
-1. add or update token JSON
-2. keep naming aligned with existing namespaces
-3. verify output in Studio
-4. verify CSS usage through `v()`
+- prefer component tokens over hardcoded values
+- keep token names semantic and scoped
+- update Studio registry entries if the token should be editable there
+- verify human docs stay aligned with the exposed capability
 
 ### Add a more complex widget
 
-Use the widget path when the component needs:
+For richer components:
 
-- significant internal coordination
-- overlay/dialog logic
-- keyboard interaction
-- composition across multiple subcomponents
+- keep orchestration logic inside dedicated runtime implementation files
+- reuse primitives and composables where it improves consistency
+- avoid leaking internal coordination details into the public API
 
 ## Validation
 
-After TypeScript or component API changes:
+Before closing a documentation or public-surface change:
+
+- review links and cross-doc references
+- verify props/slots/emits against component code
+- verify attrs against `processedAttrs.ts` and component CSS
+- run the relevant checks for the changed area
+
+Useful checks include:
 
 ```bash
 pnpm --dir modules/daredash run lint:ts
-```
-
-After Studio-related changes:
-
-```bash
 pnpm --dir modules/daredash run test:studio
 ```
 
-For broader coverage:
+## Practical contribution rules
 
-```bash
-pnpm --dir modules/daredash test
-```
-
-## Practical Contribution Rules
-
-- Keep documentation aligned with `llms.md` when the public API changes.
+- Keep `README.md` consumer-first and `README.DEV.md` maintainer-first.
+- Keep human docs aligned with the real code, not with assumptions from other UI libraries.
+- Keep `llms.txt` aligned when the public API changes.
+- Prefer adding tokens and semantic attrs over one-off visual exceptions.
 - Preserve the distinction between public API and internal tooling.
-- Prefer adding clarity to tokens and variants over adding one-off exceptions.
-- Avoid inventing public APIs that are only implementation details today.
-- Treat Studio as a first-class part of the product story, not just a dev sandbox.

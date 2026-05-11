@@ -27,6 +27,7 @@
   --local-item-font-size: v('menu.item.font-size');
   --local-item-font-weight: v('menu.item.font-weight');
   --local-item-font-weight-active: v('menu.item.font-weight-active');
+  --local-submenu-padding-inline-start: v('menu.submenu.padding-inline-start');
 
   /* -- Separator Tokens -- */
   --local-sep-color: v('menu.separator.color');
@@ -147,12 +148,6 @@
 
 .toggleIcon {
   font-size: var(--local-toggle-icon-size);
-  transition: transform var(--local-transition);
-}
-
-/* Rotate icon when collapsed */
-.menu[data-collapsed] .toggleIcon {
-  transform: rotate(180deg);
 }
 
 /* ==========================================================================
@@ -390,7 +385,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  padding-inline-start: calc(var(--local-item-padding-inline) + var(--local-item-icon-size) + v('space.xxs'));
+  padding-inline-start: var(--local-submenu-padding-inline-start);
   padding-block-end: v('space.xxs');
 }
 

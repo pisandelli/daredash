@@ -63,6 +63,8 @@ export default defineNuxtModule<ModuleOptions>().with({
      * key via `appConfig.daredash.icons` in their own `app.config.ts`.
      * @see Rule §12 — Iconography (Agnostic Architecture)
      */
+    const menuExpandIcon = 'heroicons:chevron-right'
+
     const defaultIcons = {
       success: 'heroicons:check-circle',
       error: 'heroicons:x-circle',
@@ -70,15 +72,19 @@ export default defineNuxtModule<ModuleOptions>().with({
       info: 'heroicons:information-circle',
       toastClose: 'heroicons:x-mark',
       selectArrow: 'heroicons:chevron-down',
-      modalClose: 'heroicons:x-mark'
+      breadcrumbSeparator: menuExpandIcon,
+      modalClose: 'heroicons:x-mark',
+      menuCollapse: 'heroicons:chevron-left',
+      menuExpand: menuExpandIcon
     }
 
+    const daredashAppConfig = (nuxt.options.appConfig.daredash as Record<string, any>) || {}
+
     nuxt.options.appConfig.daredash = {
-      ...((nuxt.options.appConfig.daredash as Record<string, any>) || {}),
+      ...daredashAppConfig,
       icons: {
         ...defaultIcons,
-        ...((nuxt.options.appConfig.daredash as Record<string, any>)?.icons ||
-          {})
+        ...(daredashAppConfig.icons || {})
       }
     }
 

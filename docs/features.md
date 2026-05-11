@@ -1,22 +1,38 @@
-# Features
+# Features, Tokens, and Theming
 
-`daredash` is a powerful Nuxt module designed to centralize and manage Design Tokens, allowing you to apply styles in a flexible and predictable way. Below, we detail the key features, token usage, and best practices.
+This guide is for developers who want to understand how DareDash handles tokens, styling, themes, and safe visual customization. Read it after installation if you plan to change the look and feel of the library instead of only consuming the default system.
 
-## 1. Using Tokens
+Next step after this guide: [Architecture](./architecture.md)
 
-The heart of `daredash` is its Design Token system. Instead of scattering hexadecimal color values or measurements (rem, px) directly in CSS or components, you define these values in a centralized JSON file and reference them.
+## 1. What DareDash is optimizing for
 
-### Why use Tokens?
-* **Consistency:** Ensures the same color or spacing is used throughout the application.
-* **Maintainability:** Updating a token in a single file affects the entire application.
-* **Theming:** Makes it easy to create dark modes or custom themes for different brands using the same codebase.
+DareDash is designed around a few core ideas:
 
-## 2. Token Types
+- consistency through tokens instead of scattered visual values
+- semantic styling through attrs instead of ad hoc variant APIs
+- safe component-level customization through token layering
+- a Studio workflow for theme exploration and export
 
-The library supports two types of tokens:
+## 2. Design tokens
 
-### Standard Tokens
-These are simple key-value pairs. They are often used to create references to other tokens or define simple values that don't require strict browser typing.
+The design-token system is the foundation of the visual layer.
+
+Tokens define things like:
+
+- colors
+- spacing
+- typography
+- sizing
+- component-level visual mappings
+- theme-specific overrides
+
+At build time, these tokens are transformed into CSS custom properties. At runtime, components consume them through CSS Modules.
+
+## 3. Token types
+
+### Standard tokens
+
+Standard tokens are simple token values or references.
 
 ```json
 {
@@ -28,8 +44,9 @@ These are simple key-value pairs. They are often used to create references to ot
 }
 ```
 
-### Typed Tokens
-Tokens defined as objects with a specific schema, intended for use with the `CSS.registerProperty` API (CSS Typed OM). This allows the browser to know the *type* of value that CSS property expects (e.g., `<color>`, `<length>`, `<number>`).
+### Typed tokens
+
+Typed tokens are defined with explicit CSS metadata and are intended to work with `CSS.registerProperty`.
 
 ```json
 {
@@ -45,89 +62,121 @@ Tokens defined as objects with a specific schema, intended for use with the `CSS
 }
 ```
 
-**Benefits of Typed Tokens:**
-* **Type Safety in CSS:** The browser rejects invalid values (e.g., setting a size `10px` for a property of type `<color>`).
-* **Animations (Transitions):** Typed custom properties can be animated smoothly (e.g., gradual transition between two colors).
+Typed tokens help the browser understand the expected kind of value and can improve transitions and runtime validation of custom properties.
 
-## 3. How to Use Tokens
+## 4. Using tokens in module CSS
 
-Tokens defined in your JSON file are automatically converted into **CSS Custom Properties (CSS Variables)** during the Nuxt build process.
-
-### In CSS (PostCSS)
-`daredash` uses a custom PostCSS plugin (`postcss-v-function`) to make it easier to reference tokens in your CSS files. Instead of using `var(--dd-color-primary)`, you can use the `v()` function.
+When authoring CSS inside the DareDash library, use the `v()` helper.
 
 ```css
 .my-component {
-  /* Using the PostCSS v() function */
-  color: v('color.text');
+  color: v('color.text.default');
   background-color: v('color.primary');
-
-  /* Is converted to: */
-  /* color: var(--dd-color-text); */
-  /* background-color: var(--dd-color-primary); */
 }
 ```
 
-This approach allows seamless integration with other native CSS functions, such as `color-mix()` or relative color syntax.
+This is preferred over manually writing generated variable names when your goal is to reference a token.
 
-### In Vue Components
-Since tokens become standard CSS variables in the root (`:root`), you can use them directly in inline style attributes or in utility classes if you use something like Tailwind CSS alongside it, referencing the generated global variables (e.g., `--dd-color-primary`).
+The `v()` function is processed at build time by DareDash’s PostCSS pipeline.
 
-## 4. How to Apply Components
+## 5. Token layering
 
-`daredash` provides a series of components (Primitives and Widgets) that come pre-styled based on your tokens.
+The safest styling model inside DareDash is:
 
-The components respect the prefix defined in the module configuration (by default, `dd`).
+1. global token
+2. component token
+3. local `--local-*` variable usage
 
-```vue
-<template>
-  <dd-layout>
-    <dd-sidebar>
-      <dd-stack>
-        <dd-button>Action</dd-button>
-        <dd-badge>New</dd-badge>
-      </dd-stack>
-    </dd-sidebar>
-    <dd-box>
-      Main content here.
-    </dd-box>
-  </dd-layout>
-</template>
-```
+This keeps the system:
 
-## 5. Best Practices for Customization and Theming
+- easier to theme
+- easier to debug
+- safer to override
+- less likely to leak styles across components
 
-The architecture of `daredash` follows a golden rule (Token Layering) to prevent style leakage and allow safe overrides.
+In practice, components should avoid hardcoding visual values when a component token should own that control.
 
-### Token Layering (The Golden Rule)
+## 6. Component customization strategy
 
-1. **Global Token:** Defined in your tokens JSON file (e.g., `default-theme.tokens.json`). This generates variables in the `:root`.
-2. **Component Token:** Defined in the component's CSS (`.module.css`), it maps the global token to a component-specific token.
-3. **Local Scope:** Inside the component, this token is mapped to a local variable `--local-`.
+When you want to customize a component, prefer this order:
 
-**Example of a Safe Override:**
-Instead of trying to override the primary color globally or forcing a style with `!important`, you should override the `--local-` variable or the component's scoped variable in the instance where you are using it.
+1. use the exposed semantic attrs
+2. use existing component tokens
+3. use local CSS variable overrides
+4. only then reach for one-off ad hoc values
+
+Example:
 
 ```css
-/* Wrong: may affect the entire application or fail depending on specificity */
 .my-button {
-  background-color: red !important;
-}
-
-/* Right: Overrides only the local/component token for this instance */
-.my-custom-button {
-  --dd-button-bg: v('color.error'); /* If you want to use another system token */
-  /* or */
-  --dd-button-bg: #ff0000; /* If it's an ad-hoc value */
+  --dd-button-base-color: #0f766e;
 }
 ```
 
 ```vue
 <template>
-  <dd-button class="my-custom-button">Red Button</dd-button>
+  <dd-button class="my-button">Save</dd-button>
 </template>
 ```
 
-### Organizing your Token JSONs
-If your design system grows significantly, you can point the `tokens` property in `nuxt.config.ts` to a **directory** instead of a single file.
-The module will recursively read all `.json` files in the directory and automatically merge them, creating namespaces (e.g., a file at `tokens/components/button.json` will be accessible under the key `components.button`).
+The exact public variable names and token mappings depend on the component, so use the component CSS and token files as the source of truth when customizing deeply.
+
+## 7. Semantic attrs and visual states
+
+DareDash relies heavily on semantic attrs that become `data-*` states in the rendered output.
+
+Common examples include:
+
+- `primary`
+- `success`
+- `warning`
+- `danger`
+- `info`
+- `ghost`
+- `outline`
+- `small`
+- `large`
+
+These attrs matter because they are part of the styling contract. Human documentation should treat them as real supported capabilities only when they are actually implemented in the component code and CSS.
+
+## 8. Themes
+
+The current architecture supports:
+
+- a default token layer
+- named themes such as `light` and `dark`
+- runtime selectors such as `[data-theme="..."]`
+
+Today, the strongest supported workflow for theme iteration is still tied to Studio and token preview/export, even though the theme infrastructure exists at runtime.
+
+## 9. Studio
+
+Studio is where DareDash becomes more than a static component library.
+
+It helps teams:
+
+- inspect components in one place
+- preview token changes
+- experiment with semantic scales and component tokens
+- export token overrides as JSON
+
+This is especially useful when the goal is to evolve a product system instead of only consuming the default theme.
+
+## 10. Organizing token files
+
+The `tokens` option can point to:
+
+- a single token file
+- or a directory of token files
+
+When a directory is used, DareDash reads `.json` files recursively and merges them into the final token graph.
+
+This is the preferred model once the design system grows beyond a single file.
+
+## 11. Practical guidance
+
+- Use semantic attrs before arbitrary color overrides.
+- Add component tokens when a visual control should be reusable and themeable.
+- Use local CSS variable overrides for narrow, instance-level customization.
+- Avoid `!important` when token layering or attrs can solve the problem cleanly.
+- Treat Studio as part of the design-system workflow, not as an unrelated demo surface.

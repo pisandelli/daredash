@@ -14,7 +14,7 @@
     "$value": "{font-weight.medium}"
   },
   "text-transform": {
-    "$value": "uppercase"
+    "$value": "none"
   },
   "sizes": {
     "tiny": {

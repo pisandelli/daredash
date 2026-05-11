@@ -7,9 +7,11 @@
   --local-header-padding: v('accordion.header.padding');
   --local-header-font-family: v('accordion.header.font-family');
   --local-header-font-size: v('accordion.header.font-size');
+  --local-header-font-weight: v('accordion.header.font-weight');
   --local-header-gap: v('accordion.header.gap');
   --local-header-title-gap: v('accordion.header.title-gap');
   --local-header-chevron-size: v('accordion.header.chevron-size');
+  --local-header-icon-size: v('accordion.header.icon-size');
   --local-content-padding: v('accordion.content.padding');
   --local-content-bg: v('accordion.content.background-color', v('color.gray.50'));
   --local-content-font-family: v('accordion.content.font-family');
@@ -77,7 +79,7 @@
   /* -- Typography -- */
   font-family: var(--local-header-font-family);
   font-size: var(--local-header-font-size);
-  font-weight: v('accordion.header.font-weight');
+  font-weight: var(--local-header-font-weight);
   color: var(--local-title-color);
 
   /* -- Interaction -- */
@@ -117,7 +119,7 @@
 }
 
 .leadicon {
-  font-size: v('accordion.header.icon-size');
+  font-size: var(--local-header-icon-size);
   color: color-mix(in srgb, var(--local-title-color) 72%, transparent);
   flex-shrink: 0;
   transition: color v('transition.fast');

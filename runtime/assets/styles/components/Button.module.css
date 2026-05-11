@@ -10,12 +10,13 @@
   --local-font-family: v('button.font-family');
   --local-font-weight: v('button.font-weight');
   --local-text-transform: v('button.text-transform');
+  --local-icon-gap: v('button.icon.gap');
 
   /* -- Layout -- */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: v('button.icon.gap');
+  gap: var(--local-icon-gap);
 
   max-inline-size: max-content;
   block-size: var(--local-height);

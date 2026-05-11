@@ -59,7 +59,7 @@ function resolveFieldValue(path: string, fallback: string) {
     </div>
 
     <div class="dd-studio-preview-block">
-      <h3>Custom separator</h3>
+      <h3>Separator Icon Override</h3>
       <div
         role="button"
         tabindex="0"
@@ -69,12 +69,15 @@ function resolveFieldValue(path: string, fallback: string) {
         @keydown.enter.prevent="focusField('breadcrumbs.separator.color')"
         @keydown.space.prevent="focusField('breadcrumbs.separator.color')"
       >
-        <DdBreadcrumb :config="{ separator: '/', routes: compactRoutes }" />
+        <DdBreadcrumb :config="{ separator: 'heroicons:chevron-double-right', routes: compactRoutes }" />
         <div class="dd-breadcrumb-meta">
           <span>{{ resolveFieldValue('breadcrumbs.separator.color', 'var(--dd-breadcrumbs-separator-color)') }}</span>
           <span>{{ resolveFieldValue('breadcrumbs.item-current.font-weight', 'var(--dd-breadcrumbs-item-current-font-weight)') }}</span>
         </div>
       </div>
+      <p class="dd-breadcrumb-note">
+        Separator glyphs come from `config.separator` or `appConfig.daredash.icons.breadcrumbSeparator`.
+      </p>
     </div>
   </section>
 </template>
@@ -142,5 +145,12 @@ function resolveFieldValue(path: string, fallback: string) {
   background: rgba(241 245 249 / 0.9);
   color: #475569;
   font-size: 0.76rem;
+}
+
+.dd-breadcrumb-note {
+  margin: 0.55rem 0 0;
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 </style>

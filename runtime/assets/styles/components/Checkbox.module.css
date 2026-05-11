@@ -10,6 +10,11 @@
   --local-line-height: v('checkbox.line-height');
   --local-color: v('checkbox.color');
   --local-focus-box-shadow: v('input.focus.box-shadow');
+  --local-hover-border-color: v('checkbox.hover.border');
+  --local-checked-bg: v('checkbox.checked.bg');
+  --local-checked-border-color: v('checkbox.checked.border');
+  --local-disabled-bg: v('checkbox.disabled.bg');
+  --local-disabled-border-color: v('checkbox.disabled.border');
 
   display: flex;
   align-items: center;
@@ -39,12 +44,12 @@
   background-size: 100%;
 
   &:hover:not(:disabled) {
-    border-color: v('checkbox.hover.border');
+    border-color: var(--local-hover-border-color);
   }
 
   &:checked {
-    background-color: v('checkbox.checked.bg');
-    border-color: v('checkbox.checked.border');
+    background-color: var(--local-checked-bg);
+    border-color: var(--local-checked-border-color);
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
   }
 
@@ -54,8 +59,8 @@
   }
 
   &[disabled] {
-    background-color: v('checkbox.disabled.bg');
-    border-color: v('checkbox.disabled.border');
+    background-color: var(--local-disabled-bg);
+    border-color: var(--local-disabled-border-color);
     cursor: not-allowed;
 
     &:checked {

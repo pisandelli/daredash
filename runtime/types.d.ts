@@ -16,7 +16,10 @@ declare module 'nuxt/schema' {
         info?: string
         toastClose?: string
         selectArrow?: string
+        breadcrumbSeparator?: string
         modalClose?: string
+        menuCollapse?: string
+        menuExpand?: string
         search?: string
         loading?: string
         drawerClose?: string
