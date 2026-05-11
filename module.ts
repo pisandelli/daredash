@@ -29,7 +29,7 @@ export default defineNuxtModule<ModuleOptions>().with({
       }
     },
     '@nuxt/icon': {
-      version: '^2.2.1'
+      version: '^2.2.2'
     },
     '@vee-validate/nuxt': {
       version: '^4.15.1',
