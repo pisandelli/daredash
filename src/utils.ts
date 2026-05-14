@@ -13,8 +13,6 @@ export function debugLog(
   data?: any
 ) {
   if (process.env.NODE_ENV === 'development') {
-    const logMethod =
-      console[type || 'log'] || console.log
-    logMethod(`${modLabel} ${message}`, data ??  '')
+    console[type || 'log'](`${modLabel} ${message}`, data ?? '')
   }
 }
