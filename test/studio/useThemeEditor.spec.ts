@@ -128,4 +128,35 @@ describe('useThemeEditor', () => {
 
     expect(parsed.primitives.color.primary['600'].$value).toBe('{color.success.500}')
   })
+
+  it('prevents prototype pollution when exporting tokens', () => {
+    const tabsWithPollution: StudioTabDefinition[] = [
+      {
+        id: 'hacker',
+        label: 'Hacker',
+        navigationKind: 'foundation',
+        tokenGroup: 'primitives',
+        preview: {} as any,
+        fields: [
+          {
+            path: '__proto__.polluted',
+            label: 'Polluted',
+            type: 'color',
+            defaultValue: 'yes'
+          },
+          {
+            path: 'constructor.prototype.polluted',
+            label: 'Polluted 2',
+            type: 'color',
+            defaultValue: 'yes'
+          }
+        ]
+      }
+    ]
+
+    const { setLiteralValue, exportTokensJson } = useThemeEditor(tabsWithPollution)
+
+    setLiteralValue('__proto__.polluted', 'hacked')
+    expect(() => exportTokensJson()).toThrowError('Prototype pollution detected')
+  })
 })
