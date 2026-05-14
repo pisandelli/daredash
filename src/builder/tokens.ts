@@ -39,8 +39,12 @@ export async function setupTokens(
         debugLog(`Attempting to load tokens from project path: ${filePath}`)
       tokens = (await mergeTokenSource(filePath)) as TokensFile
       if (debugMode) debugLog(`Successfully loaded tokens from project path.`)
-    } catch (projectError: any) {
-      if (projectError.code !== 'ENOENT') {
+    } catch (projectError: unknown) {
+      if (!(projectError instanceof Error)) {
+        throw projectError
+      }
+
+      if ((projectError as NodeJS.ErrnoException).code !== 'ENOENT') {
         throw projectError
       }
 
