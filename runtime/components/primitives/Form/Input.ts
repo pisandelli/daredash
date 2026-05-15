@@ -166,7 +166,7 @@ export default defineNuxtComponent({
                 isSuccess.value && styles.success
               ]
             },
-            [h(Icon, { name: props.icon, size: '1.25rem' })]
+            [h(Icon, { name: props.icon, size: 'var(--dd-input-icon-size)' })]
           )
         )
       }
@@ -206,7 +206,7 @@ export default defineNuxtComponent({
                 isSuccess.value && styles.success
               ]
             },
-            [h(Icon, { name: props.iconRight, size: '1.25rem' })]
+            [h(Icon, { name: props.iconRight, size: 'var(--dd-input-icon-size)' })]
           )
         )
       }

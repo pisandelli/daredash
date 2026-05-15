@@ -18,7 +18,7 @@
       "$value": "{color.secondary-50}"
     },
     "color": {
-      "$value": "{color.secondary-600}"
+      "$value": "contrast-color({input-group.addon.background-color})"
     },
     "border-color": {
       "$value": "{input.border-color}"

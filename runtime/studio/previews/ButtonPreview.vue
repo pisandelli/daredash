@@ -2,7 +2,7 @@
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Buttons</h2>
-      <p>Variants, sizes and icon behavior based on button tokens.</p>
+      <p>Variants, sizes and icon behavior based on button tokens. Filled button foreground can be controlled globally with `button.color` or granularly per semantic variant with tokens such as `button.success.color`.</p>
     </header>
 
     <div class="dd-studio-preview-block">

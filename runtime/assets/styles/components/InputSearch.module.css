@@ -61,7 +61,7 @@
 .searchButton {
   /* -- Local Tokens -- */
   --local-bg: v('input-search.button.background-color');
-  --local-color: v('input-search.button.color');
+  --local-color: v('input-search.button.color', contrast-color(var(--local-bg)));
   --local-hover-bg: v('input-search.button.hover-background-color');
   --local-icon-size: v('input-search.button.icon-size');
   --local-font-size: v('input-search.button.font-size');
@@ -97,11 +97,13 @@
   /* -- Colour Variants via data-variant attribute -- */
   &[data-variant="success"] {
     --local-bg: v('input-search.button.success.background-color');
+    --local-color: v('input-search.button.success.color');
     --local-hover-bg: v('input-search.button.success.hover-background-color');
   }
 
   &[data-variant="danger"] {
     --local-bg: v('input-search.button.danger.background-color');
+    --local-color: v('input-search.button.danger.color');
     --local-hover-bg: v('input-search.button.danger.hover-background-color');
   }
 

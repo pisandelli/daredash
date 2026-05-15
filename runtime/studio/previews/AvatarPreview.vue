@@ -35,10 +35,10 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-avatar-preview-note">
         <strong>Color behavior</strong>
         <span>
-          Fallback avatars use the theme tokens `avatar.background-color` and `avatar.color` by default. Edit those two tokens to control the default initials background and text color your theme ships with.
+          Fallback avatars use the theme tokens `avatar.background-color` and `avatar.color` by default. `avatar.color` can be a direct color or a CSS expression such as `contrast-color({avatar.background-color})`.
         </span>
         <span>
-          Use the optional `random` variant only when you want the component to ignore those theme tokens and generate its own pastel color pair.
+          Use the optional `random` variant only when you want the component to ignore those theme tokens and generate its own pastel background with automatic contrast for the initials.
         </span>
       </div>
     </header>

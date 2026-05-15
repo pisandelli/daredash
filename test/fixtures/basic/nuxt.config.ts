@@ -1,6 +1,8 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import MyModule from '../../../module'
+import { createResolver } from '@nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
-  modules: [MyModule]
+  modules: [resolve('../../../module')]
 })

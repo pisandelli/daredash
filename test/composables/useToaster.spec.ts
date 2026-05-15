@@ -3,6 +3,7 @@ import { useToaster } from '../../runtime/composables/useToaster'
 
 // Mock nuxt/app
 vi.mock('nuxt/app', () => ({
+  defineNuxtPlugin: vi.fn((plugin) => plugin),
   useState: vi.fn((key, init) => ({ value: init ? init() : [] }))
 }))
 

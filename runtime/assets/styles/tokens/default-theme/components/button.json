@@ -4,6 +4,9 @@
   "base-color": {
     "$value": "{color.primary.600}"
   },
+  "color": {
+    "$value": "contrast-color({button.base-color})"
+  },
   "border-radius": {
     "$value": "{border-radius.base}"
   },
@@ -104,26 +107,41 @@
   "primary": {
     "base-color": {
       "$value": "{color.primary.600}"
+    },
+    "color": {
+      "$value": "contrast-color({button.primary.base-color})"
     }
   },
   "success": {
     "base-color": {
       "$value": "{color.success}"
+    },
+    "color": {
+      "$value": "contrast-color({button.success.base-color})"
     }
   },
   "warning": {
     "base-color": {
       "$value": "{color.warning}"
+    },
+    "color": {
+      "$value": "contrast-color({button.warning.base-color})"
     }
   },
   "danger": {
     "base-color": {
       "$value": "{color.danger}"
+    },
+    "color": {
+      "$value": "contrast-color({button.danger.base-color})"
     }
   },
   "info": {
     "base-color": {
       "$value": "{color.info}"
+    },
+    "color": {
+      "$value": "contrast-color({button.info.base-color})"
     }
   }
 }

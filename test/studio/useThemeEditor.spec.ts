@@ -63,6 +63,14 @@ describe('useThemeEditor', () => {
           defaultValue: '#0984e3',
           rawDefaultValue: '{color.primary.600}',
           referencePath: 'color.primary.600'
+        },
+        {
+          path: 'button.success.color',
+          label: 'Success Text',
+          type: 'text',
+          defaultValue: 'contrast-color(#ef4444)',
+          rawDefaultValue: 'contrast-color({color.danger.500})',
+          referencePath: 'color.danger.500'
         }
       ]
     }
@@ -158,5 +166,40 @@ describe('useThemeEditor', () => {
 
     setLiteralValue('__proto__.polluted', 'hacked')
     expect(() => exportTokensJson()).toThrowError('Prototype pollution detected')
+  })
+
+  it('preserves embedded reference expressions in preview and export', () => {
+    const { values, rawValueForPath, exportTokensJson, setReferencePath } = useThemeEditor(tabs)
+
+    expect(values.value['button.success.color']).toBe('contrast-color(#ef4444)')
+    expect(rawValueForPath('button.success.color')).toBe('contrast-color({color.danger.500})')
+
+    setReferencePath('button.success.color', 'color.primary.600')
+
+    expect(values.value['button.success.color']).toBe('contrast-color(#0984e3)')
+    expect(rawValueForPath('button.success.color')).toBe('contrast-color({color.primary.600})')
+
+    const parsed = JSON.parse(exportTokensJson())
+
+    expect(parsed.components.button.success.color.$value).toBe('contrast-color({color.primary.600})')
+  })
+
+  it('keeps embedded reference expressions in reference mode when edited through a single input', () => {
+    const { values, rawValueForPath, modes, setReferenceExpression } = useThemeEditor(tabs)
+
+    setReferenceExpression('button.success.color', 'contrast-color({color.primary.600})')
+
+    expect(modes.value['button.success.color']).toBe('reference')
+    expect(values.value['button.success.color']).toBe('contrast-color(#0984e3)')
+    expect(rawValueForPath('button.success.color')).toBe('contrast-color({color.primary.600})')
+  })
+
+  it('falls back to literal mode when the single expression input no longer matches the reference template', () => {
+    const { values, modes, setReferenceExpression } = useThemeEditor(tabs)
+
+    setReferenceExpression('button.success.color', 'color-mix(in srgb, {color.primary.600} 80%, white)')
+
+    expect(modes.value['button.success.color']).toBe('literal')
+    expect(values.value['button.success.color']).toBe('color-mix(in srgb, {color.primary.600} 80%, white)')
   })
 })

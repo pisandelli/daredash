@@ -172,7 +172,7 @@ export default defineNuxtComponent({
       const arrowNode = h('div', { class: styles.arrowWrapper }, [
         h(Icon, {
           name: globalIcons.selectArrow || 'heroicons:chevron-down',
-          size: '1.25rem'
+          size: 'var(--dd-select-arrow-size)'
         })
       ])
 

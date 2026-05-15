@@ -30,9 +30,9 @@ describe('AccordionGroup & Accordion', () => {
       }
     })
 
-    // Inline style should contain the variable mapped via v()
+    // Inline style should bind the public accordion accent token override.
     expect(wrapper.find('details').attributes('style')).toContain(
-      '--local-accent'
+      '--dd-accordion-accent-color: color.danger;'
     )
   })
 

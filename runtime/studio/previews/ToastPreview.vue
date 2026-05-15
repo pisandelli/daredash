@@ -17,7 +17,7 @@ function resolveFieldValue(path: string, fallback: string) {
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Toast</h2>
-      <p>Visual tokens for the individual notification card.</p>
+      <p>Visual tokens for the individual notification card. Solid variant foregrounds can now be driven by CSS expressions such as `contrast-color(...)`.</p>
       <div class="dd-toast-preview-note">
         <strong>How this differs from Toaster</strong>
         <span>

@@ -6,7 +6,7 @@
       "$value": "{button.primary.base-color}"
     },
     "color": {
-      "$value": "{color.white}"
+      "$value": "contrast-color({input-search.button.background-color})"
     },
     "border-radius": {
       "$value": "{input.border-radius}"
@@ -30,6 +30,9 @@
       "background-color": {
         "$value": "{button.success.base-color}"
       },
+      "color": {
+        "$value": "contrast-color({input-search.button.success.background-color})"
+      },
       "hover-background-color": {
         "$value": "color-mix(in srgb, {button.success.base-color} 85%, black)"
       }
@@ -37,6 +40,9 @@
     "danger": {
       "background-color": {
         "$value": "{button.danger.base-color}"
+      },
+      "color": {
+        "$value": "contrast-color({input-search.button.danger.background-color})"
       },
       "hover-background-color": {
         "$value": "color-mix(in srgb, {button.danger.base-color} 85%, black)"
@@ -47,7 +53,7 @@
         "$value": "{color.secondary-100}"
       },
       "color": {
-        "$value": "{color.darker-gray}"
+        "$value": "contrast-color({input-search.button.neutral.background-color})"
       },
       "hover-background-color": {
         "$value": "{color.secondary-200}"
