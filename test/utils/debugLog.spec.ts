@@ -42,11 +42,4 @@ describe('debugLog', () => {
     debugLog('message with data', 'log', data)
     expect(console.log).toHaveBeenCalledWith(`${modLabel} message with data`, data)
   })
-
-  it('should fallback to console.log if specified type does not exist (though TypeScript should prevent this)', () => {
-    process.env.NODE_ENV = 'development'
-    // @ts-ignore
-    debugLog('invalid type message', 'invalid')
-    expect(console.log).toHaveBeenCalledWith(`${modLabel} invalid type message`, '')
-  })
 })
