@@ -1,6 +1,7 @@
 .button {
   /* -- Local Tokens -- */
   --local-base-color: v('button.base-color');
+  --local-color: v('button.color');
   --local-height: v('button.sizes.regular.height');
   --local-padding-x: v('button.sizes.regular.padding');
   --local-font-size: v('button.sizes.regular.font-size');
@@ -41,8 +42,8 @@
   transition: v('transition.base');
 
   /* -- Colors -- */
-  background-color: hsl(from var(--local-base-color) h s l);
-  color: v('color.white');
+  background-color: var(--local-base-color);
+  color: var(--local-color);
 
   /* -- States -- */
   &:hover,
@@ -70,11 +71,30 @@
   }
 
   /* -- Variants (Semantic) -- */
-  &[data-primary] { --local-base-color: v('button.primary.base-color'); }
-  &[data-success] { --local-base-color: v('button.success.base-color'); }
-  &[data-warning] { --local-base-color: v('button.warning.base-color'); }
-  &[data-danger]  { --local-base-color: v('button.danger.base-color'); }
-  &[data-info]    { --local-base-color: v('button.info.base-color'); }
+  &[data-primary] {
+    --local-base-color: v('button.primary.base-color');
+    --local-color: v('button.primary.color');
+  }
+
+  &[data-success] {
+    --local-base-color: v('button.success.base-color');
+    --local-color: v('button.success.color');
+  }
+
+  &[data-warning] {
+    --local-base-color: v('button.warning.base-color');
+    --local-color: v('button.warning.color');
+  }
+
+  &[data-danger]  {
+    --local-base-color: v('button.danger.base-color');
+    --local-color: v('button.danger.color');
+  }
+
+  &[data-info]    {
+    --local-base-color: v('button.info.base-color');
+    --local-color: v('button.info.color');
+  }
 
   /* -- Sizes -- */
   &[data-tiny] {

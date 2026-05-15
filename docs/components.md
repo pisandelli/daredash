@@ -34,6 +34,7 @@ Use `dd-button` for actions, links, and compact call-to-action patterns.
 | Prop | Type | Description |
 | :--- | :--- | :--- |
 | `color` | `string` | Direct custom color override. |
+| `textColor` | `string` | Direct custom foreground override for this instance. |
 | `icon` | `string` | Left-side icon name. |
 | `to` | `string \| object` | Renders the button as a Nuxt link. |
 | `href` | `string` | Renders the button as an href-driven link. |
@@ -45,6 +46,8 @@ Use `dd-button` for actions, links, and compact call-to-action patterns.
 - size attrs such as `tiny`, `small`, `large`, `xlarge`
 
 Use semantic attrs for status and intent first. Reserve `color` for arbitrary one-off overrides.
+
+When `color` is used on its own, the button still follows the themed foreground token, which can default to `contrast-color({button.base-color})`. Add `textColor` only when a specific instance needs an explicit foreground instead of the theme decision.
 
 ### Card (`<dd-card>`)
 

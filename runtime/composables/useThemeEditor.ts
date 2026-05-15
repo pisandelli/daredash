@@ -12,6 +12,8 @@ export type TokenEditorMode = 'literal' | 'reference'
 
 type TokenModeValues = Record<string, TokenEditorMode>
 
+const REFERENCE_SENTINEL = '__DDA_REFERENCE__'
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -27,6 +29,18 @@ function pathToCssVar(path: string, prefix: string): string {
 
 function sanitizeCssValue(value: string): string {
   return value.replace(/[;{}]/g, '').trim()
+}
+
+function extractReferenceTemplate(rawValue?: string): string | undefined {
+  if (typeof rawValue !== 'string') return undefined
+
+  const matches = [...rawValue.matchAll(/{([^}]+)}/g)]
+  if (matches.length !== 1) return undefined
+
+  const match = matches[0]
+  if (!match) return undefined
+
+  return `${rawValue.slice(0, match.index)}{${REFERENCE_SENTINEL}}${rawValue.slice((match.index ?? 0) + match[0].length)}`
 }
 
 /**
@@ -111,6 +125,15 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     return fieldsMap[path]?.referencePath ?? ''
   }
 
+  function referenceTemplateForPath(path: string): string | undefined {
+    return extractReferenceTemplate(fieldsMap[path]?.rawDefaultValue)
+  }
+
+  function applyReferenceTemplate(template: string | undefined, referenceValue: string): string {
+    if (!template) return referenceValue
+    return template.replace(`{${REFERENCE_SENTINEL}}`, referenceValue)
+  }
+
   function resolveValue(
     path: string,
     visited = new Set<string>(),
@@ -130,12 +153,17 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     const referencePath = normalizeReferencePath(path, referenceValueMap[path] ?? '')
     if (!referencePath) return literalValue
 
+    const referenceTemplate = referenceTemplateForPath(path)
+    let resolvedReferenceValue: string
+
     if (referencePath in fieldsMap) {
       visited.add(path)
-      return resolveValue(referencePath, visited, modeValues, literalValueMap, referenceValueMap)
+      resolvedReferenceValue = resolveValue(referencePath, visited, modeValues, literalValueMap, referenceValueMap)
+    } else {
+      resolvedReferenceValue = tokenValue(referencePath, literalValue)
     }
 
-    return tokenValue(referencePath, literalValue)
+    return applyReferenceTemplate(referenceTemplate, resolvedReferenceValue)
   }
 
   const values = computed<TokenValues>(() =>
@@ -146,10 +174,16 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     const mode = modes.value[path] ?? 'literal'
     if (mode === 'reference') {
       const referencePath = normalizeReferencePath(path, references.value[path] ?? '')
-      if (referencePath) return `{${referencePath}}`
+      if (referencePath) {
+        return applyReferenceTemplate(referenceTemplateForPath(path), `{${referencePath}}`)
+      }
     }
 
     return literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+  }
+
+  function hasReferenceTemplate(path: string): boolean {
+    return Boolean(referenceTemplateForPath(path))
   }
 
   function defaultRawValue(path: string): string {
@@ -284,6 +318,41 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     references.value[path] = normalizeReferencePath(path, value)
   }
 
+  function setReferenceExpression(path: string, value: string): void {
+    const normalizedValue = value.trim()
+    const template = referenceTemplateForPath(path)
+
+    if (!template) {
+      setLiteralValue(path, value)
+      setMode(path, 'literal')
+      return
+    }
+
+    const matches = [...normalizedValue.matchAll(/{([^}]+)}/g)]
+    if (matches.length !== 1) {
+      setLiteralValue(path, value)
+      setMode(path, 'literal')
+      return
+    }
+
+    const match = matches[0]
+    if (!match) {
+      setLiteralValue(path, value)
+      setMode(path, 'literal')
+      return
+    }
+
+    const candidateTemplate = `${normalizedValue.slice(0, match.index)}{${REFERENCE_SENTINEL}}${normalizedValue.slice((match.index ?? 0) + match[0].length)}`
+    if (candidateTemplate !== template) {
+      setLiteralValue(path, value)
+      setMode(path, 'literal')
+      return
+    }
+
+    references.value[path] = normalizeReferencePath(path, match[1] ?? '')
+    modes.value[path] = 'reference'
+  }
+
   function setMode(path: string, mode: TokenEditorMode): void {
     modes.value[path] = mode
   }
@@ -300,8 +369,11 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     downloadTokens,
     exportTokensJson,
     isFieldChanged,
+    rawValueForPath,
+    hasReferenceTemplate,
     setLiteralValue,
     setReferencePath,
+    setReferenceExpression,
     setMode
   }
 }

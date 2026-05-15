@@ -18,6 +18,10 @@
     "$description": "Size of the close icon",
     "$value": "{font-size.lg}"
   },
+  "icon-size": {
+    "$description": "Size of the leading semantic icon",
+    "$value": "1.5rem"
+  },
   "cluster-gap": {
     "$description": "Internal gap between message and close button",
     "$value": "{space.xs}"
@@ -74,10 +78,10 @@
         "$value": "{color.primary}"
       },
       "color": {
-        "$value": "{color.white}"
+        "$value": "contrast-color({toast.solid.primary.background})"
       },
       "icon-color": {
-        "$value": "{color.white}"
+        "$value": "{toast.solid.primary.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(255, 255, 255, 0.2)"
@@ -88,10 +92,10 @@
         "$value": "{color.success}"
       },
       "color": {
-        "$value": "{color.white}"
+        "$value": "contrast-color({toast.solid.success.background})"
       },
       "icon-color": {
-        "$value": "{color.white}"
+        "$value": "{toast.solid.success.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(255, 255, 255, 0.2)"
@@ -102,10 +106,10 @@
         "$value": "{color.warning}"
       },
       "color": {
-        "$value": "{color.text.default}"
+        "$value": "contrast-color({toast.solid.warning.background})"
       },
       "icon-color": {
-        "$value": "{color.text.default}"
+        "$value": "{toast.solid.warning.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(0, 0, 0, 0.1)"
@@ -116,10 +120,10 @@
         "$value": "{color.danger}"
       },
       "color": {
-        "$value": "{color.white}"
+        "$value": "contrast-color({toast.solid.danger.background})"
       },
       "icon-color": {
-        "$value": "{color.white}"
+        "$value": "{toast.solid.danger.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(255, 255, 255, 0.2)"
@@ -130,10 +134,10 @@
         "$value": "{color.error}"
       },
       "color": {
-        "$value": "{color.white}"
+        "$value": "contrast-color({toast.solid.error.background})"
       },
       "icon-color": {
-        "$value": "{color.white}"
+        "$value": "{toast.solid.error.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(255, 255, 255, 0.2)"
@@ -144,10 +148,10 @@
         "$value": "{color.info}"
       },
       "color": {
-        "$value": "{color.white}"
+        "$value": "contrast-color({toast.solid.info.background})"
       },
       "icon-color": {
-        "$value": "{color.white}"
+        "$value": "{toast.solid.info.color}"
       },
       "close-hover-bg": {
         "$value": "rgba(255, 255, 255, 0.2)"

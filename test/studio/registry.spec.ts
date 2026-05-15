@@ -22,6 +22,14 @@ describe('DareDash Studio registry', () => {
     }
   })
 
+  it('does not expose expression suffixes in studio labels', () => {
+    const fields = STUDIO_TABS.flatMap((tab) => tab.fields)
+
+    for (const field of fields) {
+      expect(field.label.includes('/ Expression')).toBe(false)
+    }
+  })
+
   it('keeps the base tab focused on non-typographic primitives', () => {
     const baseTab = STUDIO_TABS.find((tab) => tab.id === 'base')
 
@@ -165,11 +173,13 @@ describe('DareDash Studio registry', () => {
     const avatarTab = STUDIO_TABS.find((tab) => tab.id === 'avatar')
     const avatarSize = avatarTab?.fields.find((field) => field.path === 'avatar.size')
     const avatarBackground = avatarTab?.fields.find((field) => field.path === 'avatar.background-color')
+    const avatarColor = avatarTab?.fields.find((field) => field.path === 'avatar.color')
 
     expect(avatarTab).toBeDefined()
     expect(avatarTab!.navigationKind).toBe('component')
     expect(avatarSize?.referencePath).toBe('space.sl')
     expect(avatarBackground?.referencePath).toBe('color.primary.100')
+    expect(avatarColor?.referencePath).toBe('avatar.background-color')
   })
 
   it('registers breadcrumbs with preserved token references', () => {
@@ -317,50 +327,59 @@ describe('DareDash Studio registry', () => {
     const inputTab = STUDIO_TABS.find((tab) => tab.id === 'input')
     const lineHeightField = inputTab?.fields.find((field) => field.path === 'input.line-height')
     const warningField = inputTab?.fields.find((field) => field.path === 'input.warning-state.border-color')
+    const iconSizeField = inputTab?.fields.find((field) => field.path === 'input.icon-size')
 
     expect(inputTab).toBeDefined()
     expect(inputTab!.navigationKind).toBe('component')
     expect(lineHeightField?.referencePath).toBe('line-height.normal')
     expect(warningField?.referencePath).toBe('color.warning')
+    expect(iconSizeField?.defaultValue).toBe('1.25rem')
   })
 
   it('registers input group with preserved token references', () => {
     const inputGroupTab = STUDIO_TABS.find((tab) => tab.id === 'input-group')
     const borderField = inputGroupTab?.fields.find((field) => field.path === 'input-group.border-radius')
     const addonField = inputGroupTab?.fields.find((field) => field.path === 'input-group.addon.font-size')
+    const addonColorField = inputGroupTab?.fields.find((field) => field.path === 'input-group.addon.color')
 
     expect(inputGroupTab).toBeDefined()
     expect(inputGroupTab!.navigationKind).toBe('component')
     expect(borderField?.referencePath).toBe('input.border-radius')
     expect(addonField?.referencePath).toBe('input.font-size')
+    expect(addonColorField?.referencePath).toBe('input-group.addon.background-color')
   })
 
   it('registers input search with preserved token references', () => {
     const inputSearchTab = STUDIO_TABS.find((tab) => tab.id === 'input-search')
     const primaryField = inputSearchTab?.fields.find((field) => field.path === 'input-search.button.background-color')
     const neutralField = inputSearchTab?.fields.find((field) => field.path === 'input-search.button.neutral.background-color')
+    const successTextField = inputSearchTab?.fields.find((field) => field.path === 'input-search.button.success.color')
 
     expect(inputSearchTab).toBeDefined()
     expect(inputSearchTab!.navigationKind).toBe('component')
     expect(primaryField?.referencePath).toBe('button.primary.base-color')
     expect(neutralField?.referencePath).toBe('color.secondary-100')
+    expect(successTextField?.referencePath).toBe('input-search.button.success.background-color')
   })
 
   it('registers progress with preserved token references', () => {
     const progressTab = STUDIO_TABS.find((tab) => tab.id === 'progress')
     const trackField = progressTab?.fields.find((field) => field.path === 'progress.background-color')
     const indicatorField = progressTab?.fields.find((field) => field.path === 'progress.indicator.background-color')
+    const tooltipColorField = progressTab?.fields.find((field) => field.path === 'progress.tooltip.color')
 
     expect(progressTab).toBeDefined()
     expect(progressTab!.navigationKind).toBe('component')
     expect(trackField?.referencePath).toBe('color.light-gray')
     expect(indicatorField?.referencePath).toBe('color.primary')
+    expect(tooltipColorField?.referencePath).toBe('progress.tooltip.background-color')
   })
 
   it('registers toast with preserved token references', () => {
     const toastTab = STUDIO_TABS.find((tab) => tab.id === 'toast')
     const paddingField = toastTab?.fields.find((field) => field.path === 'toast.padding')
     const shadowField = toastTab?.fields.find((field) => field.path === 'toast.box-shadow')
+    const iconSizeField = toastTab?.fields.find((field) => field.path === 'toast.icon-size')
     const iconField = toastTab?.fields.find((field) => field.path === 'toast.icon-color')
     const successIconField = toastTab?.fields.find((field) => field.path === 'toast.success.icon-color')
     const backgroundField = toastTab?.fields.find((field) => field.path === 'toast.background')
@@ -371,11 +390,20 @@ describe('DareDash Studio registry', () => {
     expect(toastTab!.navigationKind).toBe('component')
     expect(paddingField?.referencePath).toBe('space.md')
     expect(shadowField?.referencePath).toBe('card.box-shadow')
+    expect(iconSizeField?.defaultValue).toBe('1.5rem')
     expect(backgroundField?.referencePath).toBe('color.white')
     expect(iconField?.referencePath).toBe('color.info')
     expect(successIconField?.referencePath).toBe('color.success')
     expect(solidDangerField?.referencePath).toBe('color.danger')
-    expect(solidWarningTextField?.referencePath).toBe('color.text.default')
+    expect(solidWarningTextField?.referencePath).toBe('toast.solid.warning.background')
+  })
+
+  it('registers button semantic foreground expressions with preserved token references', () => {
+    const buttonTab = STUDIO_TABS.find((tab) => tab.id === 'button')
+    const successTextField = buttonTab?.fields.find((field) => field.path === 'button.success.color')
+
+    expect(buttonTab).toBeDefined()
+    expect(successTextField?.referencePath).toBe('button.success.base-color')
   })
 
   it('registers stack with preserved token references', () => {

@@ -77,7 +77,7 @@ function componentField(
 ): StudioFieldDefinition {
   return {
     path,
-    label,
+    label: label.replace(/\s*\/ Expression$/, ''),
     type,
     defaultValue: tokenValue(path, fallback),
     rawDefaultValue: rawTokenValue(path),
@@ -93,8 +93,8 @@ function toastSemanticIconField(variant: string, label: string): StudioFieldDefi
 function toastSolidVariantFields(variant: string, label: string): StudioFieldDefinition[] {
   return [
     componentField(`toast.solid.${variant}.background`, `${label} Background`, 'text', `Solid ${label}`),
-    componentField(`toast.solid.${variant}.color`, `${label} Text`, 'color', `Solid ${label}`),
-    componentField(`toast.solid.${variant}.icon-color`, `${label} Icon`, 'color', `Solid ${label}`),
+    componentField(`toast.solid.${variant}.color`, `${label} Text`, 'text', `Solid ${label}`),
+    componentField(`toast.solid.${variant}.icon-color`, `${label} Icon`, 'text', `Solid ${label}`),
     componentField(`toast.solid.${variant}.close-hover-bg`, `${label} Close Hover`, 'color', `Solid ${label}`)
   ]
 }
@@ -168,6 +168,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
     preview: ButtonPreview,
     fields: [
       componentField('button.base-color', 'Base Color', 'color', 'Core'),
+      componentField('button.color', 'Text Color', 'text', 'Core', 'contrast-color({button.base-color})'),
       componentField('button.border-radius', 'Border Radius', 'text', 'Core'),
       componentField('button.font-family', 'Font Family', 'text', 'Core'),
       componentField('button.font-weight', 'Font Weight', 'text', 'Core', '500'),
@@ -202,10 +203,15 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('button.sizes.xlarge.font-size', 'Font Size (xlarge)', 'text', 'Sizes'),
       componentField('button.sizes.xlarge.icon-size', 'Icon Size (xlarge)', 'text', 'Sizes'),
       componentField('button.primary.base-color', 'Primary Color', 'color', 'Semantic'),
+      componentField('button.primary.color', 'Primary Text', 'text', 'Semantic'),
       componentField('button.success.base-color', 'Success Color', 'color', 'Semantic'),
+      componentField('button.success.color', 'Success Text', 'text', 'Semantic'),
       componentField('button.warning.base-color', 'Warning Color', 'color', 'Semantic'),
+      componentField('button.warning.color', 'Warning Text', 'text', 'Semantic'),
       componentField('button.danger.base-color', 'Danger Color', 'color', 'Semantic', '#ef4444'),
-      componentField('button.info.base-color', 'Info Color', 'color', 'Semantic')
+      componentField('button.danger.color', 'Danger Text', 'text', 'Semantic'),
+      componentField('button.info.base-color', 'Info Color', 'color', 'Semantic'),
+      componentField('button.info.color', 'Info Text', 'text', 'Semantic')
     ]
   }),
   componentTab('badge', 'primitive', {
@@ -343,7 +349,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('progress.label.font-size', 'Label Font Size', 'text', 'Label'),
       componentField('progress.label.color', 'Label Color', 'color', 'Label'),
       componentField('progress.tooltip.background-color', 'Tooltip Background', 'color', 'Tooltip'),
-      componentField('progress.tooltip.color', 'Tooltip Color', 'color', 'Tooltip'),
+      componentField('progress.tooltip.color', 'Tooltip Color', 'text', 'Tooltip', 'contrast-color({progress.tooltip.background-color})'),
       componentField('progress.tooltip.font-size', 'Tooltip Font Size', 'text', 'Tooltip'),
       componentField('progress.tooltip.border-radius', 'Tooltip Radius', 'text', 'Tooltip'),
       componentField('progress.tooltip.padding', 'Tooltip Padding', 'text', 'Tooltip'),
@@ -364,6 +370,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('toast.font-family', 'Font Family', 'text', 'Typography'),
       componentField('toast.box-shadow', 'Box Shadow', 'text', 'Core'),
       componentField('toast.cluster-gap', 'Content Gap', 'text', 'Layout'),
+      componentField('toast.icon-size', 'Icon Size', 'text', 'Layout'),
       componentField('toast.close-size', 'Close Size', 'text', 'Close'),
       componentField('toast.background', 'Background', 'text', 'Colors'),
       componentField('toast.color', 'Text Color', 'color', 'Colors'),
@@ -582,7 +589,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('avatar.overlap', 'Group Overlap', 'text', 'Core'),
       componentField('avatar.border-radius', 'Border Radius', 'text', 'Core'),
       componentField('avatar.background-color', 'Background Color', 'color', 'Colors'),
-      componentField('avatar.color', 'Text Color', 'color', 'Colors'),
+      componentField('avatar.color', 'Text Color', 'text', 'Colors'),
       componentField('avatar.font-size', 'Font Size', 'text', 'Typography'),
       componentField('avatar.font-weight', 'Font Weight', 'text', 'Typography', '500'),
       componentField('avatar.sm.size', 'Small Size', 'text', 'Sizes'),
@@ -624,6 +631,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('input.color', 'Text Color', 'color', 'Core'),
       componentField('input.font-family', 'Font Family', 'text', 'Typography'),
       componentField('input.font-size', 'Font Size', 'text', 'Typography'),
+      componentField('input.icon-size', 'Icon Size', 'text', 'Typography'),
       componentField('input.font-weight', 'Font Weight', 'text', 'Typography'),
       componentField('input.line-height', 'Line Height', 'text', 'Typography'),
       componentField('input.placeholder.color', 'Placeholder Color', 'color', 'Typography'),
@@ -665,7 +673,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('input-group.border-width', 'Border Width', 'text', 'Core'),
       componentField('input-group.border-style', 'Border Style', 'text', 'Core'),
       componentField('input-group.addon.background-color', 'Addon Background', 'color', 'Addon'),
-      componentField('input-group.addon.color', 'Addon Color', 'color', 'Addon'),
+      componentField('input-group.addon.color', 'Addon Color', 'text', 'Addon', 'contrast-color({input-group.addon.background-color})'),
       componentField('input-group.addon.border-color', 'Addon Border Color', 'color', 'Addon'),
       componentField('input-group.addon.font-size', 'Addon Font Size', 'text', 'Addon'),
       componentField('input-group.addon.padding-inline', 'Addon Padding Inline', 'text', 'Addon')
@@ -680,7 +688,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('input-search.group.border-width', 'Group Border Width', 'text', 'Group'),
       componentField('input-search.group.border-style', 'Group Border Style', 'text', 'Group'),
       componentField('input-search.button.background-color', 'Button Background', 'color', 'Button'),
-      componentField('input-search.button.color', 'Button Text Color', 'color', 'Button'),
+      componentField('input-search.button.color', 'Button Text', 'text', 'Button', 'contrast-color({input-search.button.background-color})'),
       componentField('input-search.button.border-radius', 'Button Radius', 'text', 'Button'),
       componentField('input-search.button.hover-background-color', 'Button Hover Background', 'text', 'Button'),
       componentField('input-search.button.icon-size', 'Button Icon Size', 'text', 'Button'),
@@ -688,11 +696,13 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('input-search.button.font-weight', 'Button Font Weight', 'text', 'Button'),
       componentField('input-search.button.padding-inline', 'Button Padding Inline', 'text', 'Button'),
       componentField('input-search.button.success.background-color', 'Success Background', 'color', 'Semantic'),
+      componentField('input-search.button.success.color', 'Success Text', 'text', 'Semantic'),
       componentField('input-search.button.success.hover-background-color', 'Success Hover', 'text', 'Semantic'),
       componentField('input-search.button.danger.background-color', 'Danger Background', 'color', 'Semantic'),
+      componentField('input-search.button.danger.color', 'Danger Text', 'text', 'Semantic'),
       componentField('input-search.button.danger.hover-background-color', 'Danger Hover', 'text', 'Semantic'),
       componentField('input-search.button.neutral.background-color', 'Neutral Background', 'color', 'Semantic'),
-      componentField('input-search.button.neutral.color', 'Neutral Text', 'color', 'Semantic'),
+      componentField('input-search.button.neutral.color', 'Neutral Text', 'text', 'Semantic'),
       componentField('input-search.button.neutral.hover-background-color', 'Neutral Hover', 'color', 'Semantic')
     ]
   }),

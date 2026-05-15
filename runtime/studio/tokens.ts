@@ -61,8 +61,9 @@ export function tokenReference(path: string): string | undefined {
 
   if (typeof rawValue !== 'string') return undefined
 
-  const match = rawValue.match(/^\{([^}]+)\}$/)
-  return match?.[1]
+  const matches = [...rawValue.matchAll(/{([^}]+)}/g)]
+  if (matches.length !== 1) return undefined
+  return matches[0]?.[1]
 }
 
 export function rawTokenValue(path: string): string | undefined {

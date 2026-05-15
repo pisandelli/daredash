@@ -180,3 +180,77 @@ This is the preferred model once the design system grows beyond a single file.
 - Use local CSS variable overrides for narrow, instance-level customization.
 - Avoid `!important` when token layering or attrs can solve the problem cleanly.
 - Treat Studio as part of the design-system workflow, not as an unrelated demo surface.
+
+## 12. Contrast with `contrast-color()`
+
+MDN currently marks `contrast-color()` as Baseline 2026 and widely available in current engines since April 2026, which makes it a practical default in modern-only DareDash environments.
+
+For filled surfaces such as buttons, `contrast-color()` is a good fit because it can derive a readable foreground from the effective background color at runtime, including instance-level overrides such as:
+
+```vue
+<DdButton color="#facc15">Custom</DdButton>
+```
+
+In DareDash, the recommended pattern is to expose the foreground as a tokenized CSS expression instead of hardcoding the contrast decision inside component CSS.
+
+Example defaults:
+
+```json
+{
+  "button": {
+    "color": {
+      "$value": "contrast-color({button.base-color})"
+    },
+    "success": {
+      "color": {
+        "$value": "contrast-color({button.success.base-color})"
+      }
+    }
+  },
+  "input-search": {
+    "button": {
+      "color": {
+        "$value": "contrast-color({input-search.button.background-color})"
+      },
+      "success": {
+        "color": {
+          "$value": "contrast-color({input-search.button.success.background-color})"
+        }
+      }
+    }
+  }
+}
+```
+
+This keeps the public token API expressed in standard token references rather than component-private `--local-*` variables, while still allowing the component CSS to use local fallbacks where instance-level overrides are needed.
+
+Use the generic token when the foreground must track the component's real local background, including per-instance overrides. Use semantic variant tokens when you want granular control over a specific style such as `success`, `danger`, or `neutral`.
+
+For `Button`, there is also an instance-level escape hatch:
+
+```vue
+<DdButton color="#facc15" text-color="#111827">Custom</DdButton>
+```
+
+Use `textColor` when the theme-level foreground logic is correct in general but a specific button needs an explicit foreground override.
+
+These tokens are text/CSS expression tokens, so they can accept values such as:
+
+- `contrast-color(...)`
+- `#fff`
+- `var(...)`
+- `color-mix(...)`
+
+That said, `contrast-color()` still fits best in some places more than others:
+
+- solid surfaces owned by the component are strong candidates
+- transparent, tinted, or gradient-driven surfaces often still need explicit design choices instead of black-or-white auto contrast
+- interaction tokens that derive from foreground intent, such as close-hover layers or icon accents, may still deserve separate tokens
+
+In practice, this means the safest pattern is:
+
+1. keep the background token or local variable as the source of truth
+2. default the foreground token to `contrast-color()` over the component's real local background variable
+3. add semantic foreground tokens when consumers need brand-over-default behavior only for specific variants
+
+This pattern is a strong match for `Button`, `InputSearch`, `InputGroup` addons, `Progress` tooltips, and `Toast` solid variants. Even in `Toast`, related pieces such as icons or close-action colors can still stay on dedicated tokens while referencing the main foreground token when that is the right default.

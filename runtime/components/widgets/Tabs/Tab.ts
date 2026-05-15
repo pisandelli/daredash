@@ -117,9 +117,17 @@ export default defineNuxtComponent({
       const children = []
 
       if (props.loading) {
-        children.push(h(Icon, { name: 'svg-spinners:gooey-balls-2', 'aria-hidden': 'true', style: { fontSize: '1.25em' } }))
+        children.push(h(Icon, {
+          name: 'svg-spinners:gooey-balls-2',
+          'aria-hidden': 'true',
+          size: 'var(--dd-tabs-trigger-icon-size)'
+        }))
       } else if (props.icon) {
-        children.push(h(Icon, { name: props.icon, 'aria-hidden': 'true' }))
+        children.push(h(Icon, {
+          name: props.icon,
+          'aria-hidden': 'true',
+          size: 'var(--dd-tabs-trigger-icon-size)'
+        }))
       } else if (slots.prefix) {
         children.push(slots.prefix())
       }
@@ -133,7 +141,10 @@ export default defineNuxtComponent({
           'aria-label': 'Close tab',
           tabindex: -1 
         }, [
-          h(Icon, { name: 'heroicons:x-mark' })
+          h(Icon, {
+            name: 'heroicons:x-mark',
+            size: 'var(--dd-tabs-trigger-icon-size)'
+          })
         ]))
       } else if (slots.suffix) {
         children.push(slots.suffix())

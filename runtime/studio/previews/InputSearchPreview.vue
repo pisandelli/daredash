@@ -13,7 +13,7 @@ function focusField(path: string) {
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Input Search</h2>
-      <p>Search field pattern combining an inherited Input surface with a tokenized action button.</p>
+      <p>Search field pattern combining an inherited Input surface with a tokenized action button. The action foreground can be controlled globally with `input-search.button.color` or per variant with semantic text tokens.</p>
       <div class="dd-form-note">
         <strong>How to read this preview</strong>
         <span><b>Token-driven here:</b> the group shell and the search button variants.</span>

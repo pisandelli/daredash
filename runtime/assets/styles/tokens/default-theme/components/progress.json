@@ -43,7 +43,7 @@
     "$description": "Tokens for the hover tooltip at the fill tip",
     "$type": "object",
     "background-color": { "$value": "{color.darker-gray}" },
-    "color":            { "$value": "{color.white}" },
+    "color":            { "$value": "contrast-color({progress.tooltip.background-color})" },
     "font-size":        { "$value": "{font-size.xs}" },
     "border-radius":    { "$value": "{border-radius.base}" },
     "padding":          { "$value": "0.2rem 0.45rem" },

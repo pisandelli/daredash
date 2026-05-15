@@ -77,6 +77,45 @@ describe('Button Primitive', () => {
     expect(styleAttr).toContain(expectedVar)
   })
 
+  it('binds custom `textColor` via CSS variable style correctly', async () => {
+    const wrapper = await mountSuspended(Button, {
+      props: {
+        textColor: '#111827'
+      }
+    })
+
+    const expectedVar = getPrefixName('button-color', {
+      type: 'css-var-decl'
+    })
+    const styleAttr = wrapper.attributes('style')
+    expect(styleAttr).toBeDefined()
+    expect(styleAttr).toContain('#111827')
+    expect(styleAttr).toContain(expectedVar)
+  })
+
+  it('binds custom background and foreground colors together when both props are provided', async () => {
+    const wrapper = await mountSuspended(Button, {
+      props: {
+        color: '#ffba00',
+        textColor: '#111827'
+      }
+    })
+
+    const bgVar = getPrefixName('button-base-color', {
+      type: 'css-var-decl'
+    })
+    const fgVar = getPrefixName('button-color', {
+      type: 'css-var-decl'
+    })
+    const styleAttr = wrapper.attributes('style')
+
+    expect(styleAttr).toBeDefined()
+    expect(styleAttr).toContain('#ffba00')
+    expect(styleAttr).toContain('#111827')
+    expect(styleAttr).toContain(bgVar)
+    expect(styleAttr).toContain(fgVar)
+  })
+
   it('renders the given icon through the Icon component', async () => {
     const wrapper = await mountSuspended(Button, {
       props: {

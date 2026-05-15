@@ -83,7 +83,7 @@ export default defineNuxtComponent({
           style: backgroundColor.value
             ? {
                 [bgVar]: backgroundColor.value,
-                [colorVar]: '#111827'
+                [colorVar]: `contrast-color(${backgroundColor.value})`
               }
             : undefined
         },

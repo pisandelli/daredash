@@ -60,6 +60,9 @@
   "font-size": {
     "$value": "{font-size.sm}"
   },
+  "icon-size": {
+    "$value": "1.25rem"
+  },
   "font-weight": {
     "$value": "{font-weight.regular}"
   },

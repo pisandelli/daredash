@@ -8,6 +8,7 @@ describe('DareDash Studio page', () => {
 
     expect(wrapper.find('.dd-studio-root').exists()).toBe(true)
     expect(wrapper.find('.dd-studio-preview-scope').exists()).toBe(true)
+    expect(wrapper.find('.dde-field-info-trigger').exists()).toBe(true)
   })
 
   it('updates preview styles without relying on :root overrides', async () => {

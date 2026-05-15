@@ -77,8 +77,11 @@ const {
   reset,
   downloadTokens,
   isFieldChanged,
+  rawValueForPath,
+  hasReferenceTemplate,
   setLiteralValue,
   setReferencePath,
+  setReferenceExpression,
   setMode
 } = useThemeEditor(tabs)
 
@@ -116,6 +119,50 @@ const groupedFields = computed(() => {
 
 function eventValue(event: Event): string {
   return (event.target as HTMLInputElement | HTMLSelectElement | null)?.value ?? ''
+}
+
+function displayFieldLabel(field: StudioFieldDefinition): string {
+  return field.label.replace(/\s*\/ Expression$/, '')
+}
+
+function fieldAcceptedInputs(field: StudioFieldDefinition): string[] {
+  if (field.type === 'select') return ['preset option']
+  if (field.type === 'color') return ['color literal', 'reference']
+  return ['string', 'reference', 'CSS expression']
+}
+
+function fieldExampleValues(field: StudioFieldDefinition): string[] {
+  const examples = new Set<string>()
+
+  if (field.type === 'select') {
+    for (const option of field.options?.slice(0, 3) ?? []) {
+      examples.add(option)
+    }
+    return [...examples]
+  }
+
+  if (field.type === 'color') {
+    examples.add('#ffffff')
+    examples.add('{color.primary.600}')
+  } else {
+    examples.add('1rem')
+    examples.add('{space.md}')
+
+    if (field.rawDefaultValue?.includes('(')) {
+      examples.add(field.rawDefaultValue)
+    } else {
+      examples.add('contrast-color({button.base-color})')
+      examples.add('color-mix(in srgb, {color.primary.600} 80%, black)')
+    }
+  }
+
+  if (field.rawDefaultValue) examples.add(field.rawDefaultValue)
+
+  return [...examples].slice(0, 4)
+}
+
+function fieldInfoAriaLabel(field: StudioFieldDefinition): string {
+  return `Show help for ${displayFieldLabel(field)}`
 }
 
 function pathHasAny(path: string, fragments: string[]): boolean {
@@ -215,6 +262,10 @@ function applyReference(field: StudioFieldDefinition, referencePath: string): vo
 function referenceSuggestionLabel(field: StudioFieldDefinition, suggestion: string): string {
   if (field.referencePath === suggestion) return `Use default: ${suggestion}`
   return `Use ${suggestion}`
+}
+
+function usesSingleExpressionReferenceInput(field: StudioFieldDefinition): boolean {
+  return modes.value[field.path] === 'reference' && hasReferenceTemplate(field.path)
 }
 
 function selectTab(tab: StudioTabDefinition): void {
@@ -420,10 +471,71 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                 :data-field-path="field.path"
                 @focusin="focusedFieldPath = field.path"
               >
-                <label class="dde-field-label" :for="`field-${field.path}`">
-                  <span>{{ field.label }}</span>
-                  <code class="dde-field-path">{{ field.path }}</code>
-                </label>
+                <div class="dde-field-head">
+                  <label class="dde-field-label" :for="`field-${field.path}`">
+                    <span>{{ displayFieldLabel(field) }}</span>
+                    <code class="dde-field-path">{{ field.path }}</code>
+                  </label>
+                  <div class="dde-field-info">
+                    <button
+                      type="button"
+                      class="dde-field-info-trigger"
+                      :aria-label="fieldInfoAriaLabel(field)"
+                    >
+                      i
+                    </button>
+                    <div class="dde-field-info-tooltip" role="tooltip">
+                      <div class="dde-field-info-section">
+                        <span class="dde-field-info-title">Accepted input</span>
+                        <div class="dde-field-info-chips">
+                          <code
+                            v-for="accepted in fieldAcceptedInputs(field)"
+                            :key="`${field.path}-accepted-${accepted}`"
+                            class="dde-field-info-chip"
+                          >
+                            {{ accepted }}
+                          </code>
+                        </div>
+                      </div>
+
+                      <div class="dde-field-info-section">
+                        <span class="dde-field-info-title">Examples</span>
+                        <div class="dde-field-info-chips">
+                          <code
+                            v-for="example in fieldExampleValues(field)"
+                            :key="`${field.path}-example-${example}`"
+                            class="dde-field-info-chip"
+                          >
+                            {{ example }}
+                          </code>
+                        </div>
+                      </div>
+
+                      <div
+                        v-if="field.referencePath"
+                        class="dde-field-info-section"
+                      >
+                        <span class="dde-field-info-title">Default reference</span>
+                        <code class="dde-field-info-inline">{{ '{' + field.referencePath + '}' }}</code>
+                      </div>
+
+                      <div
+                        v-if="field.rawDefaultValue"
+                        class="dde-field-info-section"
+                      >
+                        <span class="dde-field-info-title">Default value</span>
+                        <code class="dde-field-info-inline">{{ field.rawDefaultValue }}</code>
+                      </div>
+
+                      <p
+                        v-if="field.description"
+                        class="dde-field-info-note"
+                      >
+                        {{ field.description }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 <p v-if="field.description" class="dde-field-desc">
                   {{ field.description }}
                 </p>
@@ -520,6 +632,16 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     {{ opt }}
                   </option>
                 </select>
+
+                <input
+                  v-else-if="usesSingleExpressionReferenceInput(field)"
+                  :id="`field-${field.path}`"
+                  :value="rawValueForPath(field.path)"
+                  type="text"
+                  class="dde-input dde-field-focus-target"
+                  spellcheck="false"
+                  @input="setReferenceExpression(field.path, eventValue($event))"
+                />
 
                 <input
                   v-else-if="modes[field.path] !== 'reference'"
@@ -1053,6 +1175,14 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
+.dde-field-head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .dde-field-focused {
   border-color: rgba(47 155 143 / 0.44);
   background: rgba(255 255 255 / 0.035);
@@ -1062,13 +1192,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 }
 
 .dde-field-label {
-  grid-column: 1;
   font-size: 0.86rem;
   font-weight: 600;
   color: var(--studio-text);
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-inline-size: 0;
 }
 
 .dde-field-path {
@@ -1076,6 +1206,104 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-family: var(--studio-code-font);
   color: var(--studio-text-code);
   opacity: 0.8;
+}
+
+.dde-field-info {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.dde-field-info-trigger {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  border: 1px solid var(--studio-border);
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.03);
+  color: var(--studio-text-muted);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: help;
+  transition: all 140ms ease;
+}
+
+.dde-field-info-trigger:hover,
+.dde-field-info:focus-within .dde-field-info-trigger {
+  color: var(--studio-text);
+  border-color: rgba(47 155 143 / 0.45);
+  background: rgba(47 155 143 / 0.08);
+}
+
+.dde-field-info-tooltip {
+  position: absolute;
+  inset-block-start: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  z-index: 20;
+  inline-size: min(19rem, 70vw);
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(47 155 143 / 0.18);
+  border-radius: var(--studio-radius-md);
+  background: rgba(15 17 21 / 0.96);
+  box-shadow: 0 16px 40px rgba(0 0 0 / 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.25rem);
+  pointer-events: none;
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    visibility 140ms ease;
+}
+
+.dde-field-info:hover .dde-field-info-tooltip,
+.dde-field-info:focus-within .dde-field-info-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dde-field-info-section {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.dde-field-info-title {
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--studio-text-muted);
+}
+
+.dde-field-info-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.dde-field-info-chip,
+.dde-field-info-inline {
+  font-family: var(--studio-code-font);
+  font-size: 0.68rem;
+  color: var(--studio-text);
+}
+
+.dde-field-info-chip {
+  padding: 0.22rem 0.42rem;
+  border: 1px solid rgba(255 255 255 / 0.08);
+  border-radius: 999px;
+  background: rgba(255 255 255 / 0.04);
+}
+
+.dde-field-info-note {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--studio-text-muted);
 }
 
 .dde-field-desc {

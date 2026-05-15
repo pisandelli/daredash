@@ -17,7 +17,7 @@
   },
   "color": {
     "$description": "Text color (for initials)",
-    "$value": "{color.primary.800}"
+    "$value": "contrast-color({avatar.background-color})"
   },
   "font-size": {
     "$value": "{font-size.md}"

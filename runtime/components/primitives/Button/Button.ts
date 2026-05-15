@@ -19,6 +19,14 @@ export default defineNuxtComponent({
       default: undefined
     },
     /**
+     * Custom foreground color for the button text and icon.
+     * Overrides theme text colors for this instance only.
+     */
+    textColor: {
+      type: String,
+      default: undefined
+    },
+    /**
      * The name of the icon to display on the left side of the button.
      */
     icon: {
@@ -53,9 +61,13 @@ export default defineNuxtComponent({
     })
 
     const defineColor = computed(() => {
-      // Only return color if explicit color prop is present.
-      // Standard semantic colors are handled via CSS selectors based on attributes.
       if (props.color) return props.color
+
+      return undefined
+    })
+
+    const defineTextColor = computed(() => {
+      if (props.textColor) return props.textColor
 
       return undefined
     })
@@ -64,9 +76,13 @@ export default defineNuxtComponent({
       const styles: Record<string, string> = {}
 
       if (defineColor.value) {
-        // Bind the calculated color to the Proxy Variable
         styles[getPrefixName('button-base-color', { type: 'css-var-decl' })] =
           defineColor.value
+      }
+
+      if (defineTextColor.value) {
+        styles[getPrefixName('button-color', { type: 'css-var-decl' })] =
+          defineTextColor.value
       }
 
       return styles
@@ -74,13 +90,11 @@ export default defineNuxtComponent({
 
     const isIconOnly = computed(() => props.icon && !slots.default)
 
-    const iconSize = '1.25em'
-
     return () => {
       const renderProps = {
         ...processedAttrs.value,
         class: classList.value,
-        ...(defineColor.value ? { style: buttonStyle.value } : {}),
+        ...(Object.keys(buttonStyle.value).length > 0 ? { style: buttonStyle.value } : {}),
         'data-icon-only': isIconOnly.value ? '' : undefined,
         ...(props.to && { to: props.to }),
         ...(props.href && { href: sanitizeHref(props.href) })
@@ -90,10 +104,7 @@ export default defineNuxtComponent({
         default: () => {
           const children = []
           if (props.icon) {
-            // Updated to use relative styling or standard size
-            children.push(
-              h(Icon, { name: props.icon, size: iconSize, class: styles.icon })
-            )
+            children.push(h(Icon, { name: props.icon, class: styles.icon }))
           }
           if (slots.default) {
             children.push(...slots.default())
