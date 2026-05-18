@@ -10,6 +10,8 @@ Next step after this guide: [Layout Primitives](./layout.md)
 pnpm add @pisandelli/daredash
 ```
 
+This installs DareDash and its runtime package dependencies. You do not need to separately add `@nuxt/fonts`, `@nuxt/icon`, or `@vee-validate/nuxt` in the usual case.
+
 You can also use a local module path while developing inside a monorepo.
 
 ## 2. Register DareDash in `nuxt.config.ts`
@@ -108,7 +110,9 @@ The module configures and depends on:
 - `@nuxt/icon`
 - `@vee-validate/nuxt`
 
-This matters mainly so consumers understand why icons, fonts, and validation wrappers are available out of the box.
+These are shipped as DareDash runtime dependencies and registered through `moduleDependencies`, so icons, fonts, and validation wrappers are available out of the box.
+
+In most apps, no extra installation step is required unless you intentionally want to pin or override those packages yourself.
 
 ## 7. Icon configuration
 

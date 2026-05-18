@@ -113,6 +113,8 @@ Confirmed in `module.ts`:
 - `@nuxt/icon`
 - `@vee-validate/nuxt`
 
+These are included as DareDash runtime dependencies and registered automatically through `moduleDependencies`, so consumers do not normally need to install them separately.
+
 ### Effects of the module in a Nuxt app
 
 Confirmed in `module.ts`:

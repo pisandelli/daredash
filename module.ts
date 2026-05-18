@@ -75,7 +75,14 @@ export default defineNuxtModule<ModuleOptions>().with({
       breadcrumbSeparator: menuExpandIcon,
       modalClose: 'heroicons:x-mark',
       menuCollapse: 'heroicons:chevron-left',
-      menuExpand: menuExpandIcon
+      menuExpand: menuExpandIcon,
+      search: 'heroicons:magnifying-glass',
+      loading: 'svg-spinners:ring-resize',
+      drawerClose: 'heroicons:x-mark',
+      tableError: 'heroicons:exclamation-triangle',
+      emptyTable: 'heroicons:inbox',
+      paginationPrev: 'heroicons:chevron-left',
+      paginationNext: 'heroicons:chevron-right'
     }
 
     const daredashAppConfig = (nuxt.options.appConfig.daredash as Record<string, any>) || {}

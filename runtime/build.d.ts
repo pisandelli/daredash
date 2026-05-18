@@ -1,6 +1,3 @@
-declare module '*.module.styl'
-declare module '*.module.css'
-
 declare module '#build/design-tokens.json' {
   const value: Array<{
     name: string
@@ -13,3 +10,4 @@ declare module '#build/design-tokens.json' {
 
   export default value
 }
+

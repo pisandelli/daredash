@@ -64,7 +64,10 @@ const DdCluster = resolveComponent(
 )
 
 const appConfig = useAppConfig()
-const globalIcons = appConfig.daredash?.icons || {}
+const globalIcons = (appConfig.daredash?.icons || {}) as Record<
+  string,
+  string | undefined
+>
 
 const totalPages = computed(() => {
   return Math.ceil(props.total / props.pageSize) || 1

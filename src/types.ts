@@ -64,6 +64,13 @@ declare module '@nuxt/schema' {
         modalClose?: string
         menuCollapse?: string
         menuExpand?: string
+        search?: string
+        loading?: string
+        drawerClose?: string
+        tableError?: string
+        emptyTable?: string
+        paginationPrev?: string
+        paginationNext?: string
         [key: string]: string | undefined
       }
     }
