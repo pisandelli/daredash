@@ -33,14 +33,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Verify package
-        run: npm run verify:studio
-
-      - name: Build package
-        run: npm run prepack
-
-      - name: Review package contents
-        run: npm pack --dry-run
+      - name: Verify publish artifact
+        run: npm run verify:publish
 
       - name: Publish package to npm
         run: npm publish

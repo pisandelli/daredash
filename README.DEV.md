@@ -229,10 +229,8 @@ Recommended release flow:
    - `repository.url` must match the GitHub repository exactly
    - `homepage` should point to the README
    - `bugs.url` should point to the issue tracker
-2. Build the package artifact:
-   `pnpm --filter @pisandelli/daredash prepack`
-3. Review the published contents:
-   `cd modules/daredash && npm pack --dry-run`
+2. Verify the standalone publish artifact:
+   `npm run verify:publish`
 4. Publish from GitHub Actions using this repository's `.github/workflows/publish.yml`
 5. Configure npm trusted publishing for `@pisandelli/daredash`:
    - npm package settings -> Trusted publishing
@@ -250,9 +248,14 @@ Notes:
 Useful checks include:
 
 ```bash
-pnpm --dir modules/daredash run lint:ts
-pnpm --dir modules/daredash run test:studio
+npm run verify:publish
+npm run verify:studio
 ```
+
+Check intent:
+
+- `verify:publish` validates the package as a standalone published artifact
+- `verify:studio` validates the Studio and playground-coupled developer workflow
 
 ## Practical contribution rules
 
