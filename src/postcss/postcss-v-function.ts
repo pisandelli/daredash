@@ -9,7 +9,11 @@ function replaceVFunctions(
   let cursor = 0
 
   while (cursor < value.length) {
-    const start = value.indexOf("v('", cursor)
+    const singleQuoteStart = value.indexOf("v('", cursor)
+    const doubleQuoteStart = value.indexOf('v("', cursor)
+    const startCandidates = [singleQuoteStart, doubleQuoteStart].filter((index) => index !== -1)
+    const start = startCandidates.length > 0 ? Math.min(...startCandidates) : -1
+
     if (start === -1) {
       result += value.slice(cursor)
       break
@@ -18,8 +22,9 @@ function replaceVFunctions(
     result += value.slice(cursor, start)
 
     let index = start + 3
+    const quote = value[index - 1]
     const pathStart = index
-    const pathEnd = value.indexOf("'", pathStart)
+    const pathEnd = value.indexOf(quote, pathStart)
 
     if (pathEnd === -1) {
       result += value.slice(start)

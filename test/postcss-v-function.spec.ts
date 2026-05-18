@@ -37,4 +37,30 @@ describe('createPostCSSVPlugin', () => {
       '--local-color: var(--dd-button-color, contrast-color(var(--dd-color-gray-50, #f9fafb)))'
     )
   })
+
+  it('supports double-quoted token paths and fallbacks', () => {
+    const plugin = createPostCSSVPlugin('dd', {
+      button: {
+        color: {
+          $value: '#ffffff'
+        }
+      },
+      color: {
+        gray: {
+          '50': {
+            $value: '#f9fafb'
+          }
+        }
+      }
+    })
+
+    const decl = {
+      value: '--local-color: v("button.color", contrast-color(v("color.gray.50")))'
+    }
+    plugin.Declaration(decl)
+
+    expect(decl.value).toBe(
+      '--local-color: var(--dd-button-color, contrast-color(var(--dd-color-gray-50, #f9fafb)))'
+    )
+  })
 })
