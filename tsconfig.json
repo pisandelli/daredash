@@ -1,7 +1,46 @@
 {
-  "extends": "../../.nuxt/tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "bundler"
-  }
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "#dd/composables/*": [
+        "./runtime/composables/*"
+      ],
+      "#dd/utils/*": [
+        "./runtime/shared/utils/*"
+      ],
+      "#dd/styles/*": [
+        "./runtime/assets/styles/components/*"
+      ],
+      "#dd/types/*": [
+        "./runtime/shared/types/*"
+      ]
+    }
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./runtime/**/*.ts",
+    "./runtime/**/*.vue",
+    "./module.ts",
+    "./build.config.ts",
+    "./declarations.d.ts"
+  ],
+  "exclude": [
+    "./dist",
+    "./test",
+    "./node_modules"
+  ]
 }

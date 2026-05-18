@@ -248,14 +248,14 @@ Notes:
 Useful checks include:
 
 ```bash
+npm test
 npm run verify:publish
-npm run verify:studio
 ```
 
 Check intent:
 
+- `test` runs the full module test suite, including Studio and component coverage
 - `verify:publish` validates the package as a standalone published artifact
-- `verify:studio` validates the Studio and playground-coupled developer workflow
 
 ## Practical contribution rules
 

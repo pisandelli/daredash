@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import Breadcrumb from './Breadcrumb'
 
@@ -25,23 +25,28 @@ describe('Breadcrumb Security', () => {
 
   it('does not render raw HTML when separator receives an invalid icon name', async () => {
     const xssPayload = '<script id="xss-separator">alert("xss-separator")</script>'
-    const wrapper = await mountSuspended(Breadcrumb, {
-      props: {
-        config: {
-          separator: xssPayload,
-          routes: [
-            { label: 'Home', to: '/' },
-            { label: 'End' }
-          ]
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    try {
+      const wrapper = await mountSuspended(Breadcrumb, {
+        props: {
+          config: {
+            separator: xssPayload,
+            routes: [
+              { label: 'Home', to: '/' },
+              { label: 'End' }
+            ]
+          }
         }
-      }
-    })
+      })
 
-    // If it's vulnerable, the script tag will be present in the DOM
-    const scriptTag = wrapper.find('#xss-separator')
-    expect(scriptTag.exists()).toBe(false)
+      // If it's vulnerable, the script tag will be present in the DOM
+      const scriptTag = wrapper.find('#xss-separator')
+      expect(scriptTag.exists()).toBe(false)
 
-    expect(wrapper.html()).not.toContain('<script id="xss-separator">')
+      expect(wrapper.html()).not.toContain('<script id="xss-separator">')
+    } finally {
+      consoleErrorSpy.mockRestore()
+    }
   })
 
   it('sanitizes javascript: URIs in href', async () => {

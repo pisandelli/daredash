@@ -4,6 +4,7 @@ import {
   addImportsDir,
   extendPages
 } from '@nuxt/kit'
+import type { Nuxt } from '@nuxt/schema'
 import { type ModuleOptions } from './src/types'
 import { debugLog } from './src/utils'
 import { setupTokens } from './src/builder/tokens'
@@ -12,6 +13,15 @@ import { addCustomTab } from '@nuxt/devtools-kit'
 
 const moduleTokensPath =
   './runtime/assets/styles/tokens/default-theme'
+
+interface PublicAssetConfig {
+  dir: string
+  maxAge: number
+}
+
+interface NitroPublicAssetsConfig {
+  publicAssets?: PublicAssetConfig[]
+}
 
 export default defineNuxtModule<ModuleOptions>().with({
   meta: {
@@ -122,7 +132,7 @@ export default defineNuxtModule<ModuleOptions>().with({
      * Exposes the module's `runtime/public` directory as a Nitro public asset,
      * served with a one-year cache header.
      */
-    nuxt.hook('nitro:config', async (nitroConfig) => {
+    ;(nuxt as Nuxt).hook('nitro:config' as any, async (nitroConfig: NitroPublicAssetsConfig) => {
       nitroConfig.publicAssets ||= []
       nitroConfig.publicAssets.push({
         dir: resolver.resolve('./runtime/public'),

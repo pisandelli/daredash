@@ -11,6 +11,10 @@ import { mergeTokenSource } from '../utils/token-merger'
 import { createPostCSSVPlugin } from '../postcss/postcss-v-function'
 import { components } from '../../components.config'
 
+interface NitroAliasConfig {
+  alias?: Record<string, string>
+}
+
 /**
  * Sets up the component generation logic.
  *
@@ -39,14 +43,14 @@ export async function setupComponents(
   nuxt.options.alias['@daredash'] = moduleRoot
 
   // Ensure alias is available in Vite (for components) and Nitro (for server)
-  nuxt.hook('vite:extendConfig', (config) => {
+  nuxt.hook('vite:extendConfig', (config: any) => {
     if (config.resolve) {
       config.resolve.alias = config.resolve.alias || {}
       ;(config.resolve.alias as any)['@daredash'] = moduleRoot
     }
   })
 
-  nuxt.hook('nitro:config', (config) => {
+  nuxt.hook('nitro:config' as any, (config: NitroAliasConfig) => {
     config.alias = config.alias || {}
     config.alias['@daredash'] = moduleRoot
   })
@@ -85,7 +89,7 @@ export async function setupComponents(
   // Configure PostCSS in Vite to process the v() function in CSS files.
   // PostCSS runs as a Vite plugin (transform hook), so the factory function
   // is never serialized — unlike Stylus preprocessorOptions.
-  nuxt.hook('vite:extendConfig', (config) => {
+  nuxt.hook('vite:extendConfig', (config: any) => {
     const vPlugin = createPostCSSVPlugin(options.prefix || 'dd', tokens)
 
     const existingPostcss = (config.css?.postcss ?? {}) as { plugins?: any[] }

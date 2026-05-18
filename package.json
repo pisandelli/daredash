@@ -1,6 +1,6 @@
 {
   "name": "@pisandelli/daredash",
-  "version": "0.0.1-beta-14",
+  "version": "0.0.1-beta-15",
   "packageManager": "pnpm@11.1.2",
   "type": "module",
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
@@ -25,11 +25,9 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "pack:dry-run": "npm pack --dry-run",
-    "test": "vitest",
+    "pack:dry-run": "npm pack --dry-run --ignore-scripts",
     "lint:ts": "vue-tsc --noEmit -p tsconfig.json",
-    "test:studio": "vitest run test/studio/registry.spec.ts test/studio/useThemeEditor.spec.ts test/studio/studio-page.spec.ts",
-    "verify:studio": "npm run lint:ts && npm run test:studio",
+    "test": "vitest run",
     "verify:publish": "npm run prepack && npm run pack:dry-run"
   },
   "author": "Pedro Pisandelli",
@@ -57,24 +55,31 @@
     "nuxt": "^4.4.6"
   },
   "dependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/heroicons-solid": "^1.2.1",
+    "@iconify-json/svg-spinners": "^1.2.4",
     "@nuxt/devtools-kit": "^3.2.4",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/icon": "^2.2.2",
     "@nuxt/kit": "^4.4.6",
-    "@iconify-json/svg-spinners": "^1.2.4",
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/zod": "^4.15.1",
     "defu": "^6.1.4",
+    "vee-validate": "^4.15.1",
     "zod": "^3.24.0"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^1.0.2",
-    "@types/node": "^25.6.2",
+    "@nuxt/schema": "^4.4.6",
     "@nuxt/test-utils": "^4.0.3",
+    "@types/node": "^25.6.2",
     "@vitest/coverage-v8": "4.1.6",
     "@vue/test-utils": "^2.4.10",
     "playwright-core": "^1.59.1",
+    "unbuild": "^3.6.1",
+    "vite": "^7.3.3",
     "vitest": "^4.1.6",
+    "vitest-environment-nuxt": "^2.0.0",
     "vue-tsc": "^3.1.1"
   }
 }
