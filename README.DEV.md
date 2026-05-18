@@ -225,18 +225,25 @@ The package is prepared to publish as `@pisandelli/daredash`.
 
 Recommended release flow:
 
-1. Ensure you are authenticated with npm:
-   `npm login`
+1. Keep package metadata aligned with the public repository:
+   - `repository.url` must match the GitHub repository exactly
+   - `homepage` should point to the README
+   - `bugs.url` should point to the issue tracker
 2. Build the package artifact:
    `pnpm --filter @pisandelli/daredash prepack`
 3. Review the published contents:
    `cd modules/daredash && npm pack --dry-run`
-4. Publish the package:
-   `npm publish --access public`
+4. Publish from GitHub Actions using this repository's `.github/workflows/publish.yml`
+5. Configure npm trusted publishing for `@pisandelli/daredash`:
+   - npm package settings -> Trusted publishing
+   - provider: GitHub Actions
+   - repository: `pisandelli/daredash`
+   - workflow filename: `publish.yml`
 
 Notes:
 
-- the first public publish for a scoped package must include public access
+- `publishConfig.access=public` and `publishConfig.provenance=true` are already set in `package.json`
+- once trusted publishing is enabled, npm will generate provenance attestations automatically for public publishes from GitHub-hosted runners
 - the module consumer installs `@pisandelli/daredash`, but the Nuxt config key remains `daredash`
 - run the relevant checks for the changed area
 

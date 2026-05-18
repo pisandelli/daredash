@@ -1,6 +1,6 @@
 {
   "name": "@pisandelli/daredash",
-  "version": "0.0.1-beta-8",
+  "version": "0.0.1-beta-10",
   "type": "module",
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
   "main": "./dist/module.mjs",
@@ -38,23 +38,30 @@
     "design-system",
     "tokens"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pisandelli/daredash.git"
+  },
+  "homepage": "https://github.com/pisandelli/daredash#readme",
+  "bugs": {
+    "url": "https://github.com/pisandelli/daredash/issues"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "peerDependencies": {
-    "nuxt": "^4.4.5"
+    "nuxt": "^4.4.6"
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^3.2.4",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/icon": "^2.2.2",
-    "@nuxt/kit": "^4.4.5",
+    "@nuxt/kit": "^4.4.6",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/zod": "^4.15.1",
-    "@videojs/http-streaming": "^3.17.2",
     "defu": "^6.1.4",
-    "video.js": "^8.23.4",
     "zod": "^3.24.0"
   },
   "devDependencies": {

@@ -127,10 +127,6 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/primitives/Toaster/Toast.ts',
     style: './runtime/assets/styles/components/Toast.module.css'
   },
-  VideoPlayer: {
-    filePath: './runtime/components/primitives/VideoPlayer/VideoPlayer.vue',
-    style: './runtime/assets/styles/components/VideoPlayer.module.css'
-  },
   Accordion: {
     filePath: './runtime/components/widgets/Accordion/Accordion.ts',
     style: './runtime/assets/styles/components/Accordion.module.css'

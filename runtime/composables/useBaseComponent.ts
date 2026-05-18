@@ -34,7 +34,7 @@ export function useBaseComponent(
     // CSS Modules often convert CamelCase to camelCase or lowercase.
     if (componentName && Object.keys(styles).length > 0) {
       const lowerName = componentName.toLowerCase()
-      // camelCase conversion (e.g. VideoPlayer -> videoPlayer)
+      // camelCase conversion (e.g. FormLabel -> formLabel)
       const camelName =
         componentName.charAt(0).toLowerCase() + componentName.slice(1)
 
