@@ -37,4 +37,10 @@ jobs:
         run: npm run verify:publish
 
       - name: Publish package to npm
-        run: npm publish
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          if [[ "$VERSION" == *-* ]]; then
+            npm publish --tag beta
+          else
+            npm publish
+          fi
