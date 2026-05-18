@@ -1,6 +1,6 @@
 {
   "name": "@pisandelli/daredash",
-  "version": "0.0.1-beta-7",
+  "version": "0.0.1-beta-8",
   "type": "module",
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
   "main": "./dist/module.mjs",
@@ -46,6 +46,8 @@
   },
   "dependencies": {
     "@nuxt/devtools-kit": "^3.2.4",
+    "@nuxt/fonts": "^0.14.0",
+    "@nuxt/icon": "^2.2.2",
     "@nuxt/kit": "^4.4.5",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@vee-validate/nuxt": "^4.15.1",
@@ -53,11 +55,9 @@
     "@videojs/http-streaming": "^3.17.2",
     "defu": "^6.1.4",
     "video.js": "^8.23.4",
-    "zod": "^4.4.3"
+    "zod": "^3.24.0"
   },
   "devDependencies": {
-    "@nuxt/fonts": "^0.14.0",
-    "@nuxt/icon": "^2.2.2",
     "@nuxt/module-builder": "^1.0.2",
     "@types/node": "^25.6.2",
     "@nuxt/test-utils": "^4.0.3",

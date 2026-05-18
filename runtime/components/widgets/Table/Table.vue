@@ -53,7 +53,10 @@ const attrs = useAttrs()
 const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Table')
 
 const appConfig = useAppConfig()
-const globalIcons = appConfig.daredash?.icons || {}
+const globalIcons = (appConfig.daredash?.icons || {}) as Record<
+  string,
+  string | undefined
+>
 
 const DdLoading = resolveComponent(getPrefixName('Loading', { type: 'component' }))
 

@@ -61,7 +61,10 @@ export default defineNuxtComponent({
 
     // AppConfig icons fallback
     const appConfig = useAppConfig()
-    const globalIcons = appConfig.daredash?.icons || {}
+    const globalIcons = (appConfig.daredash?.icons || {}) as Record<
+      string,
+      string | undefined
+    >
 
     // Resolve DareDash components dynamically
     const DdBox = resolveComponent(getPrefixName('Box', { type: 'component' }))

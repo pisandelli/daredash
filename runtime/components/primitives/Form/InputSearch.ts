@@ -65,7 +65,10 @@ export default defineNuxtComponent({
   setup(props, { attrs, emit }) {
     const { processedAttrs } = useBaseComponent(attrs, styles, 'InputSearch')
     const appConfig = useAppConfig()
-    const globalIcons = appConfig.daredash?.icons || {}
+    const globalIcons = (appConfig.daredash?.icons || {}) as Record<
+      string,
+      string | undefined
+    >
 
     const DdCluster = resolveComponent(
       getPrefixName('Cluster', { type: 'component' })
