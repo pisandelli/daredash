@@ -17,8 +17,8 @@ const componentSearch = ref('')
 const isComponentPickerOpen = ref(false)
 const componentSearchInput = ref<HTMLInputElement | null>(null)
 
-const activeTab = computed<StudioTabDefinition>(() => {
-  return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0]!
+const activeTab = computed<StudioTabDefinition | null>(() => {
+  return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0] ?? null
 })
 
 const foundationTabs = computed(() =>
@@ -32,7 +32,7 @@ const componentTabs = computed(() =>
 )
 
 const activeComponentTab = computed(() => {
-  if (activeTab.value.navigationKind === 'component') return activeTab.value
+  if (activeTab.value?.navigationKind === 'component') return activeTab.value
   return componentTabs.value[0] ?? null
 })
 
@@ -106,7 +106,7 @@ const componentChangeCount = computed(() =>
 
 const groupedFields = computed(() => {
   const map = new Map<string, StudioFieldDefinition[]>()
-  for (const field of activeTab.value.fields) {
+  for (const field of activeTab.value?.fields ?? []) {
     const group = field.group || 'General'
     if (!map.has(group)) map.set(group, [])
     map.get(group)!.push(field)
@@ -385,7 +385,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
             <button
               type="button"
               class="dde-tab dde-component-trigger"
-              :class="{ 'dde-tab-active': activeTab.navigationKind === 'component' }"
+              :class="{ 'dde-tab-active': activeTab?.navigationKind === 'component' }"
               :aria-expanded="isComponentPickerOpen"
               aria-haspopup="listbox"
               @click="toggleComponentPicker"
@@ -453,6 +453,9 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
         </nav>
 
         <div class="dde-fields" role="tabpanel">
+          <p v-if="!activeTab" class="dde-empty-state">
+            DareDash Studio could not load its token tabs for this build.
+          </p>
           <section
             v-for="group in groupedFields"
             :key="group.label"
@@ -735,7 +738,10 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
       <section class="dde-panel dde-panel-preview">
         <div class="dde-preview-canvas">
           <div class="dd-studio-preview-scope" :style="previewStyle">
-            <component :is="activeTab.preview" />
+            <component :is="activeTab.preview" v-if="activeTab" />
+            <div v-else class="dde-empty-preview">
+              Studio preview unavailable.
+            </div>
           </div>
         </div>
       </section>
@@ -1098,6 +1104,18 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   gap: 1.25rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(255 255 255 / 0.14) transparent;
+}
+
+.dde-empty-state,
+.dde-empty-preview {
+  display: grid;
+  place-items: center;
+  min-block-size: 12rem;
+  padding: 1.5rem;
+  border: 1px dashed var(--studio-border);
+  border-radius: var(--studio-radius-md);
+  color: var(--studio-text-muted);
+  text-align: center;
 }
 
 .dde-fields::-webkit-scrollbar {
