@@ -58,6 +58,25 @@ export default defineNuxtModule<ModuleOptions>().with({
     const debugMode = options.debug
     if (debugMode) debugLog('Debug mode is enabled.', 'warn')
 
+    nuxt.options.routeRules ||= {}
+    const studioRouteRules = nuxt.options.routeRules['/studio'] || {}
+    const studioHeaders = {
+      ...(studioRouteRules.headers || {}),
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Content-Security-Policy': [
+        "frame-ancestors 'self'",
+        'http://localhost:*',
+        'http://127.0.0.1:*',
+        'https://localhost:*',
+        'https://127.0.0.1:*'
+      ].join(' ')
+    }
+
+    nuxt.options.routeRules['/studio'] = {
+      ...studioRouteRules,
+      headers: studioHeaders
+    }
+
     /**
      * Exposes the configured prefix to the Nuxt public runtime config.
      * Required by `getPrefixName` and other runtime utilities.
