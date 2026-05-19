@@ -9,8 +9,6 @@ import type {
   StudioTabDefinition
 } from '../studio/types'
 
-definePageMeta({ layout: false })
-
 const tabs = STUDIO_TABS
 const activeTabId = ref(tabs[0]?.id ?? 'base')
 const componentSearch = ref('')

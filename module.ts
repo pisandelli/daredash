@@ -191,7 +191,10 @@ export default defineNuxtModule<ModuleOptions>().with({
       pages.push({
         name: 'dd-studio',
         path: '/studio',
-        file: resolver.resolve('./runtime/pages/studio.vue')
+        file: resolver.resolve('./runtime/pages/studio.vue'),
+        meta: {
+          layout: false
+        }
       })
     })
 
