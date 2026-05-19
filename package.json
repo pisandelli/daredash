@@ -1,6 +1,6 @@
 {
   "name": "@pisandelli/daredash",
-  "version": "0.0.1-beta-20.1",
+  "version": "0.0.1-beta-20.2",
   "type": "module",
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
   "main": "./dist/module.mjs",
