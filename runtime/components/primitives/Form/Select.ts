@@ -75,6 +75,24 @@ export default defineNuxtComponent({
     const { processedAttrs } = useBaseComponent(attrs, {})
     const appConfig = useAppConfig()
     const globalIcons = appConfig.daredash?.icons || {}
+    const selectAttrs = computed(() => {
+      const filteredAttrs = { ...processedAttrs.value }
+
+      for (const propKey of [
+        'options',
+        'modelValue',
+        'placeholder',
+        'isInvalid',
+        'errorMessage',
+        'id',
+        'name',
+        'label'
+      ]) {
+        delete filteredAttrs[propKey]
+      }
+
+      return filteredAttrs
+    })
 
     // Handle input change
     const onChange = (event: Event) => {
@@ -153,7 +171,7 @@ export default defineNuxtComponent({
       const selectNode = h(
         'select',
         {
-          ...attrs,
+          ...selectAttrs.value,
           id: identifier.value,
           name: props.name,
           class: styles.select,
@@ -192,8 +210,8 @@ export default defineNuxtComponent({
       return h(
         'div',
         {
-          class: [styles.wrapper, processedAttrs.value.class],
-          ...processedAttrs.value
+          class: [styles.wrapper, attrs.class],
+          style: attrs.style
         },
         [
           labelNode,

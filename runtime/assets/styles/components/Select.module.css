@@ -120,7 +120,9 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  inline-size: 100%;
+  inline-size: auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   gap: v('space.xs');
 }
 

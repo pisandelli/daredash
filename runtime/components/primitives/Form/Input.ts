@@ -225,7 +225,7 @@ export default defineNuxtComponent({
       )
 
       // Return the wrapper
-      return h('div', { class: styles.wrapper }, [
+      return h('div', { class: [styles.wrapper, attrs.class], style: attrs.style }, [
         labelNode,
         h('div', { style: { position: 'relative' } }, inputNodes), // Wrap input+icons for positioning
         messageNode

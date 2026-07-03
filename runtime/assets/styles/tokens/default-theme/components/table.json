@@ -40,13 +40,13 @@
       "$value": "left"
     },
     "padding": {
-      "$value": "{space.md}"
+      "$value": "{space.xs}"
     }
   },
   "cell": {
     "$type": "object",
     "padding": {
-      "$value": "{space.md}"
+      "$value": "{space.xs}"
     },
     "border-color": {
       "$value": "{table.border-color}"

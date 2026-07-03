@@ -90,4 +90,20 @@ describe('Input Primitive', () => {
     expect(html).toContain('mdi:account')
     expect(html).toContain('mdi:check')
   })
+
+  it('applies consumer layout hooks to the outer wrapper', async () => {
+    const wrapper = await mountSuspended(Input, {
+      attrs: {
+        class: 'toolbarField',
+        style: 'flex: 0 1 256px;',
+        autocomplete: 'off'
+      }
+    })
+
+    expect(wrapper.classes()).toContain('toolbarField')
+    expect(wrapper.attributes('style')).toContain('flex-basis: 256px;')
+
+    const input = wrapper.find('input')
+    expect(input.attributes('autocomplete')).toBe('off')
+  })
 })
