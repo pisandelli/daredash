@@ -13,6 +13,8 @@ describe('default component tokens', () => {
 
     expect(tableTokens.header.padding.$value).toBe('{space.xs}')
     expect(tableTokens.cell.padding.$value).toBe('{space.xs}')
+    expect(tableTokens.header['background-color'].$value).toBe('{color.secondary.200}')
+    expect(tableTokens.header['text-transform'].$value).toBe('none')
   })
 
   it('keeps select field spacing aligned with input spacing', () => {

@@ -489,7 +489,7 @@ describe('DareDash Studio registry', () => {
     expect(colorField?.referencePath).toBe('color.text.default')
     expect(borderField?.referencePath).toBe('color.secondary.100')
     expect(borderWidthField?.defaultValue).toBe('1px')
-    expect(headerField?.referencePath).toBe('color.secondary.50')
+    expect(headerField?.referencePath).toBe('color.secondary.200')
     expect(headerColorField?.referencePath).toBe('color.dark-gray')
     expect(cellBorderField?.referencePath).toBe('table.border-color')
     expect(cellBorderWidthField?.referencePath).toBe('table.border-width')

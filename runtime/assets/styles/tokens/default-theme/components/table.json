@@ -22,7 +22,7 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.secondary.50}"
+      "$value": "{color.secondary.200}"
     },
     "color": {
       "$value": "{color.dark-gray}"
@@ -34,7 +34,7 @@
       "$value": "{font-weight.bold}"
     },
     "text-transform": {
-      "$value": "uppercase"
+      "$value": "none"
     },
     "text-align": {
       "$value": "left"
