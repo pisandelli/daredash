@@ -1,7 +1,7 @@
 import { ref, computed, readonly, type Ref } from 'vue'
 import { useRuntimeConfig } from '#app'
 import { tokenValue } from '../studio/tokens'
-import type { StudioTabDefinition, StudioTokenGroup } from '../studio/types'
+import type { StudioTabDefinition, StudioTokenGroup, StudioFieldDefinition } from '../studio/types'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -73,6 +73,121 @@ function setNestedValue(obj: Record<string, unknown>, path: string, value: strin
 }
 
 // ---------------------------------------------------------------------------
+// Editor Helpers
+// ---------------------------------------------------------------------------
+
+function normalizeReferencePath(path: string, value: string): string {
+  const normalized = value.trim().replace(/^\{|\}$/g, '')
+  if (!normalized) return ''
+
+  if (path.startsWith('color.') && !normalized.startsWith('color.')) {
+    return `color.${normalized}`
+  }
+
+  return normalized
+}
+
+function defaultModeForPath(fieldsMap: Record<string, StudioFieldDefinition>, path: string): TokenEditorMode {
+  return fieldsMap[path]?.referencePath ? 'reference' : 'literal'
+}
+
+function defaultLiteralValueForPath(fieldsMap: Record<string, StudioFieldDefinition>, path: string): string {
+  return fieldsMap[path]?.defaultValue ?? ''
+}
+
+function defaultReferencePathForPath(fieldsMap: Record<string, StudioFieldDefinition>, path: string): string {
+  return fieldsMap[path]?.referencePath ?? ''
+}
+
+function referenceTemplateForPath(fieldsMap: Record<string, StudioFieldDefinition>, path: string): string | undefined {
+  return extractReferenceTemplate(fieldsMap[path]?.rawDefaultValue)
+}
+
+function applyReferenceTemplate(template: string | undefined, referenceValue: string): string {
+  if (!template) return referenceValue
+  return template.replace(`{${REFERENCE_SENTINEL}}`, referenceValue)
+}
+
+function resolveValue(
+  fieldsMap: Record<string, StudioFieldDefinition>,
+  path: string,
+  visited: Set<string>,
+  modeValues: TokenModeValues,
+  literalValueMap: TokenValues,
+  referenceValueMap: TokenValues
+): string {
+  if (visited.has(path)) {
+    return literalValueMap[path] ?? defaultLiteralValueForPath(fieldsMap, path)
+  }
+
+  const mode = modeValues[path] ?? defaultModeForPath(fieldsMap, path)
+  const literalValue = literalValueMap[path] ?? defaultLiteralValueForPath(fieldsMap, path)
+
+  if (mode !== 'reference') return literalValue
+
+  const referencePath = normalizeReferencePath(path, referenceValueMap[path] ?? '')
+  if (!referencePath) return literalValue
+
+  const referenceTemplate = referenceTemplateForPath(fieldsMap, path)
+  let resolvedReferenceValue: string
+
+  if (referencePath in fieldsMap) {
+    visited.add(path)
+    resolvedReferenceValue = resolveValue(
+      fieldsMap,
+      referencePath,
+      visited,
+      modeValues,
+      literalValueMap,
+      referenceValueMap
+    )
+  } else {
+    resolvedReferenceValue = tokenValue(referencePath, literalValue)
+  }
+
+  return applyReferenceTemplate(referenceTemplate, resolvedReferenceValue)
+}
+
+function rawValueForPath(
+  fieldsMap: Record<string, StudioFieldDefinition>,
+  path: string,
+  modeValues: TokenModeValues,
+  literalValueMap: TokenValues,
+  referenceValueMap: TokenValues
+): string {
+  const mode = modeValues[path] ?? 'literal'
+  if (mode === 'reference') {
+    const referencePath = normalizeReferencePath(path, referenceValueMap[path] ?? '')
+    if (referencePath) {
+      return applyReferenceTemplate(referenceTemplateForPath(fieldsMap, path), `{${referencePath}}`)
+    }
+  }
+
+  return literalValueMap[path] ?? fieldsMap[path]?.defaultValue ?? ''
+}
+
+function isFieldChanged(
+  fieldsMap: Record<string, StudioFieldDefinition>,
+  path: string,
+  modeValues: TokenModeValues,
+  literalValueMap: TokenValues,
+  referenceValueMap: TokenValues
+): boolean {
+  const currentMode = modeValues[path] ?? defaultModeForPath(fieldsMap, path)
+  const initialMode = defaultModeForPath(fieldsMap, path)
+
+  if (currentMode !== initialMode) return true
+
+  if (currentMode === 'reference') {
+    const currentReference = normalizeReferencePath(path, referenceValueMap[path] ?? '')
+    const defaultReference = defaultReferencePathForPath(fieldsMap, path)
+    return currentReference !== defaultReference
+  }
+
+  return (literalValueMap[path] ?? '') !== defaultLiteralValueForPath(fieldsMap, path)
+}
+
+// ---------------------------------------------------------------------------
 // Composable
 // ---------------------------------------------------------------------------
 
@@ -84,7 +199,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   const allFields = tabs.flatMap((tab) => tab.fields)
 
   /** Lookup map for O(1) field retrieval by path */
-  const fieldsMap = Object.fromEntries(allFields.map((f) => [f.path, f]))
+  const fieldsMap: Record<string, StudioFieldDefinition> = Object.fromEntries(allFields.map((f) => [f.path, f]))
   const groupMap = new Map<string, StudioTokenGroup>(
     tabs.flatMap((tab) => tab.fields.map((field) => [field.path, tab.tokenGroup]))
   )
@@ -102,122 +217,40 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     ) as TokenModeValues
   )
 
-  function normalizeReferencePath(path: string, value: string): string {
-    const normalized = value.trim().replace(/^\{|\}$/g, '')
-    if (!normalized) return ''
+  const defaultModeValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultModeForPath(fieldsMap, field.path)])
+  ) as TokenModeValues
 
-    if (path.startsWith('color.') && !normalized.startsWith('color.')) {
-      return `color.${normalized}`
-    }
+  const defaultLiteralValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultLiteralValueForPath(fieldsMap, field.path)])
+  )
 
-    return normalized
-  }
-
-  function defaultModeForPath(path: string): TokenEditorMode {
-    return fieldsMap[path]?.referencePath ? 'reference' : 'literal'
-  }
-
-  function defaultLiteralValueForPath(path: string): string {
-    return fieldsMap[path]?.defaultValue ?? ''
-  }
-
-  function defaultReferencePathForPath(path: string): string {
-    return fieldsMap[path]?.referencePath ?? ''
-  }
-
-  function referenceTemplateForPath(path: string): string | undefined {
-    return extractReferenceTemplate(fieldsMap[path]?.rawDefaultValue)
-  }
-
-  function applyReferenceTemplate(template: string | undefined, referenceValue: string): string {
-    if (!template) return referenceValue
-    return template.replace(`{${REFERENCE_SENTINEL}}`, referenceValue)
-  }
-
-  function resolveValue(
-    path: string,
-    visited = new Set<string>(),
-    modeValues: TokenModeValues = modes.value,
-    literalValueMap: TokenValues = literalValues.value,
-    referenceValueMap: TokenValues = references.value
-  ): string {
-    if (visited.has(path)) {
-      return literalValueMap[path] ?? defaultLiteralValueForPath(path)
-    }
-
-    const mode = modeValues[path] ?? defaultModeForPath(path)
-    const literalValue = literalValueMap[path] ?? defaultLiteralValueForPath(path)
-
-    if (mode !== 'reference') return literalValue
-
-    const referencePath = normalizeReferencePath(path, referenceValueMap[path] ?? '')
-    if (!referencePath) return literalValue
-
-    const referenceTemplate = referenceTemplateForPath(path)
-    let resolvedReferenceValue: string
-
-    if (referencePath in fieldsMap) {
-      visited.add(path)
-      resolvedReferenceValue = resolveValue(referencePath, visited, modeValues, literalValueMap, referenceValueMap)
-    } else {
-      resolvedReferenceValue = tokenValue(referencePath, literalValue)
-    }
-
-    return applyReferenceTemplate(referenceTemplate, resolvedReferenceValue)
-  }
+  const defaultReferenceValues = Object.fromEntries(
+    allFields.map((field) => [field.path, defaultReferencePathForPath(fieldsMap, field.path)])
+  )
 
   const values = computed<TokenValues>(() =>
-    Object.fromEntries(allFields.map((field) => [field.path, resolveValue(field.path)]))
+    Object.fromEntries(allFields.map((field) => [
+      field.path,
+      resolveValue(fieldsMap, field.path, new Set<string>(), modes.value, literalValues.value, references.value)
+    ]))
   )
 
-  function rawValueForPath(path: string): string {
-    const mode = modes.value[path] ?? 'literal'
-    if (mode === 'reference') {
-      const referencePath = normalizeReferencePath(path, references.value[path] ?? '')
-      if (referencePath) {
-        return applyReferenceTemplate(referenceTemplateForPath(path), `{${referencePath}}`)
-      }
-    }
-
-    return literalValues.value[path] ?? fieldsMap[path]?.defaultValue ?? ''
+  function publicRawValueForPath(path: string): string {
+    return rawValueForPath(fieldsMap, path, modes.value, literalValues.value, references.value)
   }
 
-  function hasReferenceTemplate(path: string): boolean {
-    return Boolean(referenceTemplateForPath(path))
+  function publicHasReferenceTemplate(path: string): boolean {
+    return Boolean(referenceTemplateForPath(fieldsMap, path))
   }
 
-  function defaultRawValue(path: string): string {
-    const field = fieldsMap[path]
-    return field?.rawDefaultValue ?? field?.defaultValue ?? ''
+  function publicIsFieldChanged(path: string): boolean {
+    return isFieldChanged(fieldsMap, path, modes.value, literalValues.value, references.value)
   }
-
-  function isFieldChanged(path: string): boolean {
-    const currentMode = modes.value[path] ?? defaultModeForPath(path)
-    const initialMode = defaultModeForPath(path)
-
-    if (currentMode !== initialMode) return true
-
-    if (currentMode === 'reference') {
-      const currentReference = normalizeReferencePath(path, references.value[path] ?? '')
-      const defaultReference = defaultReferencePathForPath(path)
-      return currentReference !== defaultReference
-    }
-
-    return (literalValues.value[path] ?? '') !== defaultLiteralValueForPath(path)
-  }
-
-  const defaultModeValues = Object.fromEntries(
-    allFields.map((field) => [field.path, defaultModeForPath(field.path)])
-  ) as TokenModeValues
-  const defaultLiteralValues = Object.fromEntries(
-    allFields.map((field) => [field.path, defaultLiteralValueForPath(field.path)])
-  )
-  const defaultReferenceValues = Object.fromEntries(
-    allFields.map((field) => [field.path, defaultReferencePathForPath(field.path)])
-  )
 
   function defaultResolvedValue(path: string): string {
     return resolveValue(
+      fieldsMap,
       path,
       new Set<string>(),
       defaultModeValues,
@@ -227,7 +260,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   }
 
   /** Computed flag — true when any value differs from its default */
-  const hasChanges = computed(() => allFields.some((f) => isFieldChanged(f.path)))
+  const hasChanges = computed(() => allFields.some((f) => publicIsFieldChanged(f.path)))
 
   const previewStyle = computed(() => {
     const style: Record<string, string> = {}
@@ -270,10 +303,10 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
 
     for (const path of Object.keys(fieldsMap)) {
       const field = fieldsMap[path]
-      if (!field || !isFieldChanged(path)) continue
+      if (!field || !publicIsFieldChanged(path)) continue
 
       const group = groupMap.get(path)
-      const rawValue = rawValueForPath(path)
+      const rawValue = publicRawValueForPath(path)
 
       if (group === 'components') {
         if (!overrides['components']) overrides['components'] = {}
@@ -320,7 +353,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
 
   function setReferenceExpression(path: string, value: string): void {
     const normalizedValue = value.trim()
-    const template = referenceTemplateForPath(path)
+    const template = referenceTemplateForPath(fieldsMap, path)
 
     if (!template) {
       setLiteralValue(path, value)
@@ -368,9 +401,9 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     reset,
     downloadTokens,
     exportTokensJson,
-    isFieldChanged,
-    rawValueForPath,
-    hasReferenceTemplate,
+    isFieldChanged: publicIsFieldChanged,
+    rawValueForPath: publicRawValueForPath,
+    hasReferenceTemplate: publicHasReferenceTemplate,
     setLiteralValue,
     setReferencePath,
     setReferenceExpression,
