@@ -14,13 +14,6 @@
   --local-focus-outline: v('input.focus.outline');
   --local-focus-box-shadow: v('input.focus.box-shadow');
   --local-disabled-cursor: v('input.disabled.cursor');
-  --local-label-font-size: v('input.label.font-size');
-  --local-label-font-weight: v('input.label.font-weight');
-  --local-label-color: v('input.label.color');
-  --local-message-font-family: v('input.error-label.font-family');
-  --local-message-font-size: v('input.error-label.font-size');
-  --local-message-font-weight: v('input.error-label.font-weight');
-  --local-message-color: v('input.error-label.color');
   --local-padding-inline-start: v('input.padding.inline.start');
   --local-padding-inline-end: v('input.padding.inline.end');
   --local-padding-block-start: v('input.padding.block.start');
@@ -137,6 +130,14 @@
 }
 
 .wrapper {
+  --local-label-font-size: v('input.label.font-size');
+  --local-label-font-weight: v('input.label.font-weight');
+  --local-label-color: v('input.label.color');
+  --local-message-font-family: v('input.error-label.font-family');
+  --local-message-font-size: v('input.error-label.font-size');
+  --local-message-font-weight: v('input.error-label.font-weight');
+  --local-message-color: v('input.error-label.color');
+
   display: flex;
   flex-direction: column;
   inline-size: auto;

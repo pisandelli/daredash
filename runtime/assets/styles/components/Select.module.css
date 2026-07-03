@@ -114,7 +114,6 @@
   font-size: var(--local-label-font-size);
   font-weight: var(--local-label-font-weight);
   color: var(--local-label-color);
-  margin-block-end: v('space.xxs');
 }
 
 .wrapper {
@@ -123,7 +122,7 @@
   inline-size: auto;
   min-inline-size: 0;
   max-inline-size: 100%;
-  gap: v('space.xs');
+  gap: 0.375rem;
 }
 
 .inner {
