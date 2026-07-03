@@ -9,13 +9,14 @@ import type {
   StudioTabDefinition
 } from '../studio/types'
 
+import StudioHeader from '../components/studio/StudioHeader.vue'
+import StudioSidebar from '../components/studio/StudioSidebar.vue'
+
 definePageMeta({ layout: false })
 
 const tabs = STUDIO_TABS
 const activeTabId = ref(tabs[0]?.id ?? 'base')
 const componentSearch = ref('')
-const isComponentPickerOpen = ref(false)
-const componentSearchInput = ref<HTMLInputElement | null>(null)
 
 const activeTab = computed<StudioTabDefinition>(() => {
   return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0]!
@@ -30,11 +31,6 @@ const componentTabs = computed(() =>
     .filter((tab) => tab.navigationKind === 'component')
     .sort((a, b) => a.label.localeCompare(b.label))
 )
-
-const activeComponentTab = computed(() => {
-  if (activeTab.value.navigationKind === 'component') return activeTab.value
-  return componentTabs.value[0] ?? null
-})
 
 const filteredComponentTabs = computed(() => {
   const query = componentSearch.value.trim().toLowerCase()
@@ -117,177 +113,8 @@ const groupedFields = computed(() => {
   }))
 })
 
-function eventValue(event: Event): string {
-  return (event.target as HTMLInputElement | HTMLSelectElement | null)?.value ?? ''
-}
-
-function displayFieldLabel(field: StudioFieldDefinition): string {
-  return field.label.replace(/\s*\/ Expression$/, '')
-}
-
-function fieldAcceptedInputs(field: StudioFieldDefinition): string[] {
-  if (field.type === 'select') return ['preset option']
-  if (field.type === 'color') return ['color literal', 'reference']
-  return ['string', 'reference', 'CSS expression']
-}
-
-function fieldExampleValues(field: StudioFieldDefinition): string[] {
-  const examples = new Set<string>()
-
-  if (field.type === 'select') {
-    for (const option of field.options?.slice(0, 3) ?? []) {
-      examples.add(option)
-    }
-    return [...examples]
-  }
-
-  if (field.type === 'color') {
-    examples.add('#ffffff')
-    examples.add('{color.primary.600}')
-  } else {
-    examples.add('1rem')
-    examples.add('{space.md}')
-
-    if (field.rawDefaultValue?.includes('(')) {
-      examples.add(field.rawDefaultValue)
-    } else {
-      examples.add('contrast-color({button.base-color})')
-      examples.add('color-mix(in srgb, {color.primary.600} 80%, black)')
-    }
-  }
-
-  if (field.rawDefaultValue) examples.add(field.rawDefaultValue)
-
-  return [...examples].slice(0, 4)
-}
-
-function fieldInfoAriaLabel(field: StudioFieldDefinition): string {
-  return `Show help for ${displayFieldLabel(field)}`
-}
-
-function pathHasAny(path: string, fragments: string[]): boolean {
-  return fragments.some((fragment) => path.includes(fragment))
-}
-
-function referencePlaceholder(field: StudioFieldDefinition): string {
-  if (field.referencePath) return field.referencePath
-
-  const pathParts = field.path.split('.')
-  const root = pathParts[0] ?? ''
-  const semanticColor = pathParts.find((part) =>
-    ['primary', 'secondary', 'accent', 'success', 'danger', 'error', 'warning', 'info'].includes(part)
-  )
-
-  if (field.type === 'color' || field.path.includes('color')) {
-    return semanticColor ? `color.${semanticColor}.500` : 'color.primary.500'
-  }
-
-  switch (root) {
-    case 'font':
-      return 'font.base'
-    case 'font-size':
-      return 'font-size.md'
-    case 'font-weight':
-      return 'font-weight.bold'
-    case 'line-height':
-      return 'line-height.normal'
-    case 'letter-spacing':
-      return 'letter-spacing.wide'
-    case 'border-radius':
-      return 'border-radius.md'
-    case 'border-width':
-      return 'border-width.sm'
-    case 'transition':
-      return 'transition.base'
-    case 'shadow':
-      return 'shadow.md'
-    case 'space':
-      return 'space.md'
-    default:
-      break
-  }
-
-  if (pathHasAny(field.path, ['font-size', 'icon-size'])) return 'font-size.md'
-  if (pathHasAny(field.path, ['font-weight'])) return 'font-weight.bold'
-  if (pathHasAny(field.path, ['line-height'])) return 'line-height.normal'
-  if (pathHasAny(field.path, ['letter-spacing'])) return 'letter-spacing.wide'
-  if (pathHasAny(field.path, ['border-radius'])) return 'border-radius.md'
-  if (pathHasAny(field.path, ['border-width'])) return 'border-width.sm'
-  if (pathHasAny(field.path, ['transition'])) return 'transition.base'
-  if (pathHasAny(field.path, ['shadow'])) return 'shadow.md'
-  if (pathHasAny(field.path, ['padding', 'gap', 'height', 'size'])) return 'space.md'
-
-  return 'token.path'
-}
-
-function currentReferencePath(field: StudioFieldDefinition): string {
-  return references.value[field.path] || field.referencePath || ''
-}
-
-function currentReferenceRelation(field: StudioFieldDefinition): string {
-  const referencePath = currentReferencePath(field)
-  if (!referencePath) return field.path
-  return `${field.path} -> ${referencePath}`
-}
-
-function isDetachedFromDefaultReference(field: StudioFieldDefinition): boolean {
-  return Boolean(field.referencePath) && modes.value[field.path] !== 'reference'
-}
-
-function referenceSummaryLabel(field: StudioFieldDefinition): string {
-  if (isDetachedFromDefaultReference(field)) return 'Detached from default'
-  if (modes.value[field.path] === 'reference') return 'Inherits from'
-  if (field.referencePath) return 'Default reference'
-  return 'Reference'
-}
-
-function resolvedValueLabel(field: StudioFieldDefinition): string {
-  if (field.type === 'color') return 'Resolved color'
-  return 'Resolved value'
-}
-
-function referenceSuggestions(field: StudioFieldDefinition): string[] {
-  return [...new Set(
-    [field.referencePath, referencePlaceholder(field)]
-      .map((value) => value?.trim() ?? '')
-      .filter(Boolean)
-  )]
-}
-
-function applyReference(field: StudioFieldDefinition, referencePath: string): void {
-  setReferencePath(field.path, referencePath)
-  setMode(field.path, 'reference')
-}
-
-function referenceSuggestionLabel(field: StudioFieldDefinition, suggestion: string): string {
-  if (field.referencePath === suggestion) return `Use default: ${suggestion}`
-  return `Use ${suggestion}`
-}
-
-function usesSingleExpressionReferenceInput(field: StudioFieldDefinition): boolean {
-  return modes.value[field.path] === 'reference' && hasReferenceTemplate(field.path)
-}
-
 function selectTab(tab: StudioTabDefinition): void {
   activeTabId.value = tab.id
-  isComponentPickerOpen.value = false
-}
-
-function toggleComponentPicker(): void {
-  isComponentPickerOpen.value = !isComponentPickerOpen.value
-  if (isComponentPickerOpen.value) {
-    componentSearch.value = ''
-
-    nextTick(() => {
-      componentSearchInput.value?.focus()
-
-      const activeOption = document.querySelector('.dde-component-option-active') as HTMLElement | null
-      activeOption?.scrollIntoView({
-        block: 'start',
-        inline: 'nearest'
-      })
-    })
-  }
 }
 
 async function focusField(path: string) {
@@ -334,403 +161,39 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
       v-text="previewCss"
     />
 
-    <header class="dde-header">
-      <div class="dde-header-brand">
-        <span class="dde-header-logo">◈</span>
-        <div class="dde-header-title">
-          <span>DareDash Studio</span>
-          <small>Theme Editor</small>
-        </div>
-      </div>
-      <div class="dde-header-actions">
-        <button
-          class="dde-btn dde-btn-ghost"
-          :disabled="!hasChanges"
-          type="button"
-          @click="reset"
-        >
-          Reset
-        </button>
-        <button
-          class="dde-btn dde-btn-primary"
-          :disabled="!hasChanges || isDownloading"
-          type="button"
-          @click="handleDownload"
-        >
-          <span v-if="isDownloading">Exporting…</span>
-          <span v-else>Export tokens.json</span>
-        </button>
-      </div>
-    </header>
+    <StudioHeader
+      :has-changes="hasChanges"
+      :is-downloading="isDownloading"
+      @reset="reset"
+      @download="handleDownload"
+    />
 
     <main class="dde-split">
-      <aside class="dde-panel dde-panel-form">
-        <nav class="dde-tabs" role="tablist" aria-label="Token groups">
-          <button
-            v-for="tab in foundationTabs"
-            :key="tab.id"
-            role="tab"
-            class="dde-tab"
-            :class="{ 'dde-tab-active': activeTabId === tab.id }"
-            :aria-selected="activeTabId === tab.id"
-            type="button"
-            @click="selectTab(tab)"
-          >
-            <span>{{ tab.label }}</span>
-            <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
-              {{ tabChangeCount(tab) }}
-            </span>
-          </button>
-          <div class="dde-component-picker">
-            <button
-              type="button"
-              class="dde-tab dde-component-trigger"
-              :class="{ 'dde-tab-active': activeTab.navigationKind === 'component' }"
-              :aria-expanded="isComponentPickerOpen"
-              aria-haspopup="listbox"
-              @click="toggleComponentPicker"
-            >
-              <span>Components</span>
-              <span v-if="componentChangeCount" class="dde-tab-badge">
-                {{ componentChangeCount }}
-              </span>
-              <span class="dde-component-trigger-icon">⌄</span>
-            </button>
-
-            <div
-              v-if="isComponentPickerOpen"
-              class="dde-component-menu"
-            >
-              <input
-                ref="componentSearchInput"
-                v-model="componentSearch"
-                class="dde-component-search"
-                type="search"
-                placeholder="Search components..."
-                autocomplete="off"
-              />
-              <div class="dde-component-list" role="listbox">
-                <div
-                  v-for="group in groupedComponentTabs"
-                  :key="group.category"
-                  class="dde-component-group"
-                >
-                  <p class="dde-component-separator">
-                    {{ group.label }}
-                  </p>
-                  <button
-                    v-for="tab in group.tabs"
-                    :key="tab.id"
-                    type="button"
-                    class="dde-component-option"
-                    :class="{ 'dde-component-option-active': activeTabId === tab.id }"
-                    role="option"
-                    :aria-selected="activeTabId === tab.id"
-                    @click="selectTab(tab)"
-                  >
-                    <span class="dde-component-option-label">
-                      {{ tab.label }}
-                      <span
-                        v-if="activeTabId === tab.id"
-                        class="dde-component-selected-dot"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <span v-if="tabChangeCount(tab)" class="dde-tab-badge">
-                      {{ tabChangeCount(tab) }}
-                    </span>
-                  </button>
-                </div>
-                <p
-                  v-if="!groupedComponentTabs.length"
-                  class="dde-component-empty"
-                >
-                  No components found.
-                </p>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <div class="dde-fields" role="tabpanel">
-          <section
-            v-for="group in groupedFields"
-            :key="group.label"
-            class="dde-field-group"
-          >
-            <h3 class="dde-field-group-title">
-              <span>{{ group.label }}</span>
-              <span class="dde-field-group-count">{{ group.fields.length }}</span>
-            </h3>
-            <div class="dde-field-group-body">
-              <div
-                v-for="field in group.fields"
-                :key="field.path"
-                class="dde-field"
-                :class="{ 'dde-field-focused': focusedFieldPath === field.path }"
-                :data-field-path="field.path"
-                @focusin="focusedFieldPath = field.path"
-              >
-                <div class="dde-field-head">
-                  <label class="dde-field-label" :for="`field-${field.path}`">
-                    <span>{{ displayFieldLabel(field) }}</span>
-                    <code class="dde-field-path">{{ field.path }}</code>
-                  </label>
-                  <div class="dde-field-info">
-                    <button
-                      type="button"
-                      class="dde-field-info-trigger"
-                      :aria-label="fieldInfoAriaLabel(field)"
-                    >
-                      i
-                    </button>
-                    <div class="dde-field-info-tooltip" role="tooltip">
-                      <div class="dde-field-info-section">
-                        <span class="dde-field-info-title">Accepted input</span>
-                        <div class="dde-field-info-chips">
-                          <code
-                            v-for="accepted in fieldAcceptedInputs(field)"
-                            :key="`${field.path}-accepted-${accepted}`"
-                            class="dde-field-info-chip"
-                          >
-                            {{ accepted }}
-                          </code>
-                        </div>
-                      </div>
-
-                      <div class="dde-field-info-section">
-                        <span class="dde-field-info-title">Examples</span>
-                        <div class="dde-field-info-chips">
-                          <code
-                            v-for="example in fieldExampleValues(field)"
-                            :key="`${field.path}-example-${example}`"
-                            class="dde-field-info-chip"
-                          >
-                            {{ example }}
-                          </code>
-                        </div>
-                      </div>
-
-                      <div
-                        v-if="field.referencePath"
-                        class="dde-field-info-section"
-                      >
-                        <span class="dde-field-info-title">Default reference</span>
-                        <code class="dde-field-info-inline">{{ '{' + field.referencePath + '}' }}</code>
-                      </div>
-
-                      <div
-                        v-if="field.rawDefaultValue"
-                        class="dde-field-info-section"
-                      >
-                        <span class="dde-field-info-title">Default value</span>
-                        <code class="dde-field-info-inline">{{ field.rawDefaultValue }}</code>
-                      </div>
-
-                      <p
-                        v-if="field.description"
-                        class="dde-field-info-note"
-                      >
-                        {{ field.description }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <p v-if="field.description" class="dde-field-desc">
-                  {{ field.description }}
-                </p>
-
-                <div
-                  v-if="field.type !== 'select'"
-                  class="dde-field-mode"
-                  role="tablist"
-                  :aria-label="`${field.label} input mode`"
-                >
-                  <button
-                    type="button"
-                    class="dde-field-mode-option"
-                    :class="{ 'dde-field-mode-option-active': modes[field.path] === 'literal' }"
-                    :aria-selected="modes[field.path] === 'literal'"
-                    title="Edit the token with a raw CSS value"
-                    @click="setMode(field.path, 'literal')"
-                  >
-                    Literal
-                  </button>
-                  <button
-                    type="button"
-                    class="dde-field-mode-option"
-                    :class="{ 'dde-field-mode-option-active': modes[field.path] === 'reference' }"
-                    :aria-selected="modes[field.path] === 'reference'"
-                    title="Point this token to another token path"
-                    @click="setMode(field.path, 'reference')"
-                  >
-                    Reference
-                  </button>
-                </div>
-
-                <div
-                  v-if="field.type === 'color' && modes[field.path] !== 'reference'"
-                  class="dde-color-wrapper"
-                >
-                  <input
-                    :value="literalValues[field.path]"
-                    type="color"
-                    class="dde-color-swatch"
-                    @input="setLiteralValue(field.path, eventValue($event))"
-                  />
-                  <input
-                    :id="`field-${field.path}`"
-                    :value="literalValues[field.path]"
-                    type="text"
-                    class="dde-color-text dde-field-focus-target"
-                    spellcheck="false"
-                    @input="setLiteralValue(field.path, eventValue($event))"
-                  />
-                </div>
-
-                <div
-                  v-else-if="field.type === 'color' && modes[field.path] === 'reference'"
-                  class="dde-reference-stack"
-                >
-                  <div class="dde-color-wrapper dde-color-wrapper-readonly">
-                    <input
-                      :value="values[field.path]"
-                      type="color"
-                      class="dde-color-swatch"
-                      disabled
-                    />
-                    <input
-                      type="text"
-                      class="dde-color-text dde-color-text-readonly"
-                      :value="values[field.path]"
-                      readonly
-                    />
-                  </div>
-                  <input
-                    :id="`field-${field.path}`"
-                    :value="references[field.path]"
-                    type="text"
-                    class="dde-input dde-field-focus-target"
-                    spellcheck="false"
-                    :placeholder="referencePlaceholder(field)"
-                    @input="setReferencePath(field.path, eventValue($event))"
-                  />
-                </div>
-
-                <select
-                  v-else-if="field.type === 'select'"
-                  :id="`field-${field.path}`"
-                  :value="literalValues[field.path]"
-                  class="dde-input dde-field-focus-target"
-                  @change="setLiteralValue(field.path, eventValue($event))"
-                >
-                  <option
-                    v-for="opt in field.options"
-                    :key="opt"
-                    :value="opt"
-                  >
-                    {{ opt }}
-                  </option>
-                </select>
-
-                <input
-                  v-else-if="usesSingleExpressionReferenceInput(field)"
-                  :id="`field-${field.path}`"
-                  :value="rawValueForPath(field.path)"
-                  type="text"
-                  class="dde-input dde-field-focus-target"
-                  spellcheck="false"
-                  @input="setReferenceExpression(field.path, eventValue($event))"
-                />
-
-                <input
-                  v-else-if="modes[field.path] !== 'reference'"
-                  :id="`field-${field.path}`"
-                  :value="literalValues[field.path]"
-                  type="text"
-                  class="dde-input dde-field-focus-target"
-                  spellcheck="false"
-                  @input="setLiteralValue(field.path, eventValue($event))"
-                />
-
-                <div
-                  v-else
-                  class="dde-reference-stack"
-                >
-                  <input
-                    type="text"
-                    class="dde-input dde-input-readonly"
-                    :value="values[field.path]"
-                    readonly
-                  />
-                  <input
-                    :id="`field-${field.path}`"
-                    :value="references[field.path]"
-                    type="text"
-                    class="dde-input dde-field-focus-target"
-                    spellcheck="false"
-                    :placeholder="referencePlaceholder(field)"
-                    @input="setReferencePath(field.path, eventValue($event))"
-                  />
-                </div>
-
-                <div
-                  v-if="references[field.path] || field.referencePath"
-                  class="dde-field-meta"
-                >
-                  <span class="dde-field-meta-badge">
-                    {{ referenceSummaryLabel(field) }}
-                  </span>
-                  <div class="dde-field-meta-panel">
-                    <div class="dde-field-meta-row">
-                      <span class="dde-field-meta-key">Relation</span>
-                      <code class="dde-field-meta-value">
-                        {{ currentReferenceRelation(field) }}
-                      </code>
-                    </div>
-                    <div
-                      v-if="modes[field.path] === 'reference'"
-                      class="dde-field-meta-row"
-                    >
-                      <span class="dde-field-meta-key">{{ resolvedValueLabel(field) }}</span>
-                      <code class="dde-field-meta-value">
-                        {{ values[field.path] }}
-                      </code>
-                    </div>
-                    <p
-                      v-else-if="field.referencePath"
-                      class="dde-field-meta-hint"
-                    >
-                      This field started as a reference, but it is currently using a literal value.
-                    </p>
-                    <div
-                      v-if="referenceSuggestions(field).length"
-                      class="dde-field-actions"
-                    >
-                      <button
-                        v-for="suggestion in referenceSuggestions(field)"
-                        :key="`${field.path}-${suggestion}`"
-                        type="button"
-                        class="dde-field-action"
-                        :disabled="modes[field.path] === 'reference' && currentReferencePath(field) === suggestion"
-                        @click="applyReference(field, suggestion)"
-                      >
-                        {{ referenceSuggestionLabel(field, suggestion) }}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <span
-                  v-if="isFieldChanged(field.path)"
-                  class="dde-field-changed"
-                  title="Modified"
-                >●</span>
-              </div>
-            </div>
-          </section>
-        </div>
-      </aside>
+      <StudioSidebar
+        :foundation-tabs="foundationTabs"
+        :active-tab-id="activeTabId"
+        :active-tab="activeTab"
+        :component-search="componentSearch"
+        :grouped-component-tabs="groupedComponentTabs"
+        :component-change-count="componentChangeCount"
+        :grouped-fields="groupedFields"
+        :focused-field-path="focusedFieldPath"
+        :modes="modes"
+        :literal-values="literalValues"
+        :values="values"
+        :references="references"
+        @update:component-search="componentSearch = $event"
+        @select-tab="selectTab"
+        @focusin="focusedFieldPath = $event"
+        @set-mode="setMode"
+        @set-literal-value="setLiteralValue"
+        @set-reference-path="setReferencePath"
+        @set-reference-expression="setReferenceExpression"
+        :tab-change-count="tabChangeCount"
+        :is-field-changed="isFieldChanged"
+        :raw-value-for-path="rawValueForPath"
+        :has-reference-template="hasReferenceTemplate"
+      />
 
       <section class="dde-panel dde-panel-preview">
         <div class="dde-preview-canvas">
