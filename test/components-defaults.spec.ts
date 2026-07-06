@@ -46,4 +46,23 @@ describe('default component tokens', () => {
     expect(textareaCss).toContain("--local-label-font-weight: v('textarea.label.font-weight');")
     expect(textareaCss).toContain("--local-label-color: v('textarea.label.color');")
   })
+
+  it('uses section-specific card padding tokens with shared fallback', () => {
+    const cardTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/card.json'
+    )
+    const cardCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Card.module.css'
+    )
+
+    const cardTokens = JSON.parse(readFileSync(cardTokensPath, 'utf8'))
+    const cardCss = readFileSync(cardCssPath, 'utf8')
+
+    expect(cardTokens.body.padding.$value).toBe('{card.padding}')
+    expect(cardCss).toContain("--local-header-padding: v('card.header.padding', var(--local-padding));")
+    expect(cardCss).toContain("--local-body-padding: v('card.body.padding', var(--local-padding));")
+    expect(cardCss).toContain("--local-footer-padding: v('card.footer.padding', var(--local-padding));")
+  })
 })

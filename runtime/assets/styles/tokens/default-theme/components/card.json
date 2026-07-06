@@ -40,6 +40,12 @@
       "$value": "{border-width.sm}"
     }
   },
+  "body": {
+    "$type": "object",
+    "padding": {
+      "$value": "{card.padding}"
+    }
+  },
   "footer": {
     "$type": "object",
     "padding": {

@@ -8,6 +8,9 @@
   --local-bg: v('card.background-color');
   --local-color: v('card.color');
   --local-padding: v('card.padding');
+  --local-header-padding: v('card.header.padding', var(--local-padding));
+  --local-body-padding: v('card.body.padding', var(--local-padding));
+  --local-footer-padding: v('card.footer.padding', var(--local-padding));
   --local-max-width: v('card.max-width');
   --local-header-border-width: v('card.header.border-width');
   --local-header-border-color: v('card.header.border-color');
@@ -39,20 +42,18 @@
 
 /* -- Sections -- */
 .header {
-  padding-inline: var(--local-padding);
-  padding-block: var(--local-padding);
+  padding: var(--local-header-padding);
   border-block-end: var(--local-header-border-width) solid var(--local-header-border-color);
   font-weight: v('font-weight.bold');
 }
 
 .body {
-  padding: var(--local-padding);
+  padding: var(--local-body-padding);
   flex: 1;
 }
 
 .footer {
-  padding-inline: var(--local-padding);
-  padding-block: var(--local-padding);
+  padding: var(--local-footer-padding);
   border-block-start: var(--local-footer-border-width) solid var(--local-footer-border-color);
   background-color: v('color.bg.surface-hover');
 }

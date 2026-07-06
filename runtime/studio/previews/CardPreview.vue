@@ -31,7 +31,7 @@ function resolveFieldValue(path: string, fallback: string) {
       <button
         type="button"
         class="dd-card-shell"
-        @click="focusField('card.padding')"
+        @click="focusField('card.body.padding')"
       >
         <DdCard>
           <template #header>
@@ -44,8 +44,9 @@ function resolveFieldValue(path: string, fallback: string) {
           <div class="dd-card-body-content">
             <strong>Studio-ready surface</strong>
             <p>
-              Cards combine spacing, borders and shadow into one composable surface. Body padding comes from `card.padding`, while shell styling comes from the core card tokens.
+              Cards combine spacing, borders and shadow into one composable surface. Section padding can now be controlled independently, while `card.padding` remains the shared fallback token.
             </p>
+            <span class="dd-card-body-token">{{ resolveFieldValue('card.body.padding', 'var(--dd-card-body-padding)') }}</span>
           </div>
 
           <template #footer>
@@ -176,6 +177,13 @@ function resolveFieldValue(path: string, fallback: string) {
 }
 
 .dd-card-section-meta span {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.dd-card-body-token {
+  display: inline-flex;
+  margin-top: 0.5rem;
   font-size: 0.78rem;
   color: #64748b;
 }

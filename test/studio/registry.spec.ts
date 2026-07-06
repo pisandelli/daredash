@@ -200,12 +200,14 @@ describe('DareDash Studio registry', () => {
     const backgroundField = cardTab?.fields.find((field) => field.path === 'card.background-color')
     const radiusField = cardTab?.fields.find((field) => field.path === 'card.border-radius')
     const headerPaddingField = cardTab?.fields.find((field) => field.path === 'card.header.padding')
+    const bodyPaddingField = cardTab?.fields.find((field) => field.path === 'card.body.padding')
 
     expect(cardTab).toBeDefined()
     expect(cardTab!.navigationKind).toBe('component')
     expect(backgroundField?.referencePath).toBe('color.bg.surface')
     expect(radiusField?.referencePath).toBe('border-radius.lg')
     expect(headerPaddingField?.referencePath).toBe('space.lg')
+    expect(bodyPaddingField?.referencePath).toBe('card.padding')
   })
 
   it('registers center with preserved token references', () => {
