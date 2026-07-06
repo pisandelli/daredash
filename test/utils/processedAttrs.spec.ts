@@ -12,9 +12,9 @@ describe('processedAttrs utility', () => {
   })
 
   it('prefixes custom attributes with data-', () => {
-    // 'full' and 'size' are in customAttributes
-    const input = { full: true, size: 'large' }
-    const expected = { 'data-full': true, 'data-size': 'large' }
+    // 'full', 'size', and 'comfortable' are in customAttributes
+    const input = { full: true, size: 'large', comfortable: true }
+    const expected = { 'data-full': true, 'data-size': 'large', 'data-comfortable': true }
     expect(processedAttrs(input)).toEqual(expected)
   })
 

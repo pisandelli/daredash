@@ -637,8 +637,21 @@ Use `dd-table` for straightforward tabular data with built-in loading, empty, an
 
 #### Common attrs
 
+- `large`
+- `comfortable` (same preset used by default)
+- `compact`
 - `striped`
 - `striped-odd`
+
+#### Density presets
+
+`dd-table` supports three density presets inspired by mailbox-style data views:
+
+- `large`
+- `comfortable`
+- `compact`
+
+When no density attr is provided, the table uses the `comfortable` token set by default.
 
 ### Pagination (`<dd-pagination>`)
 

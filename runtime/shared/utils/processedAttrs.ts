@@ -49,6 +49,7 @@ export const customAttributes = new Set([
   // from stack.module.css
   'recursive',
   'compact',
+  'comfortable',
   'spaced',
   'reverse',
   'split-after',

@@ -3,7 +3,19 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 describe('default component tokens', () => {
-  it('uses compact table padding defaults', () => {
+  it('uses compact badge typography defaults', () => {
+    const badgeTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/badge.json'
+    )
+
+    const badgeTokens = JSON.parse(readFileSync(badgeTokensPath, 'utf8'))
+
+    expect(badgeTokens['font-size'].$value).toBe('{font-size.xs}')
+    expect(badgeTokens.padding.inline.$value).toBe('{space.xs}')
+  })
+
+  it('uses updated table header and cell defaults', () => {
     const tableTokensPath = resolve(
       process.cwd(),
       'runtime/assets/styles/tokens/default-theme/components/table.json'
@@ -11,10 +23,23 @@ describe('default component tokens', () => {
 
     const tableTokens = JSON.parse(readFileSync(tableTokensPath, 'utf8'))
 
-    expect(tableTokens.header.padding.$value).toBe('{space.xs}')
-    expect(tableTokens.cell.padding.$value).toBe('{space.xs}')
-    expect(tableTokens.header['background-color'].$value).toBe('{color.secondary.200}')
+    expect(tableTokens.header.color.$value).toBe('{color.darker-gray}')
+    expect(tableTokens.header['background-color'].$value).toBe('{color.secondary.100}')
+    expect(tableTokens.header['font-size'].$value).toBe('{font-size.sm}')
+    expect(tableTokens.header.padding.$value).toBe('{space.sm}')
+    expect(tableTokens.cell['font-size'].$value).toBe('{font-size.sm}')
+    expect(tableTokens.cell.padding.$value).toBe('{space.sm}')
+    expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.primary.50}')
     expect(tableTokens.header['text-transform'].$value).toBe('none')
+    expect(tableTokens.density.large.header['font-size'].$value).toBe('{font-size.md}')
+    expect(tableTokens.density.large.cell['font-size'].$value).toBe('{font-size.md}')
+    expect(tableTokens.density.large.cell.padding.$value).toBe('{space.md}')
+    expect(tableTokens.density.comfortable.header['font-size'].$value).toBe('{table.header.font-size}')
+    expect(tableTokens.density.comfortable.cell['font-size'].$value).toBe('{table.cell.font-size}')
+    expect(tableTokens.density.comfortable.cell.padding.$value).toBe('{table.cell.padding}')
+    expect(tableTokens.density.compact.header['font-size'].$value).toBe('{font-size.xs}')
+    expect(tableTokens.density.compact.cell['font-size'].$value).toBe('{font-size.xs}')
+    expect(tableTokens.density.compact.cell.padding.$value).toBe('{space.xs}')
   })
 
   it('keeps select field spacing aligned with input spacing', () => {
@@ -83,5 +108,23 @@ describe('default component tokens', () => {
     expect(modalCss).toContain('.modal:not([open])')
     expect(modalCss).toContain('display: none;')
     expect(modalCss).toContain('.modal[open]')
+  })
+
+  it('uses table density styles to override header and cell sizing', () => {
+    const tableCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Table.module.css'
+    )
+
+    const tableCss = readFileSync(tableCssPath, 'utf8')
+
+    expect(tableCss).toContain("--local-header-font-size: v('table.header.font-size');")
+    expect(tableCss).toContain("--local-cell-font-size: v('table.cell.font-size');")
+    expect(tableCss).toContain(".wrapper[data-large]")
+    expect(tableCss).toContain(".wrapper[data-comfortable]")
+    expect(tableCss).toContain(".wrapper[data-compact]")
+    expect(tableCss).toContain("font-size: var(--local-header-font-size);")
+    expect(tableCss).toContain("font-size: var(--local-cell-font-size);")
+    expect(tableCss).toContain("--local-cell-padding: var(--local-density-compact-cell-padding);")
   })
 })

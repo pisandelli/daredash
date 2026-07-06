@@ -139,4 +139,22 @@ describe('Table primitive', () => {
     expect(rows[0]!.classes()).toContain(styles['error-row'])
     expect(rows[0]!.text()).toContain('Connection failed API')
   })
+
+  it('forwards density attrs as data attributes on the wrapper', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: sampleData
+      },
+      attrs: {
+        comfortable: true,
+        compact: true,
+        large: true
+      }
+    })
+
+    expect(wrapper.attributes('data-comfortable')).toBeDefined()
+    expect(wrapper.attributes('data-compact')).toBeDefined()
+    expect(wrapper.attributes('data-large')).toBeDefined()
+  })
 })

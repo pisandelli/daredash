@@ -22,13 +22,16 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.secondary.200}"
+      "$value": "{color.secondary.100}"
     },
     "color": {
-      "$value": "{color.dark-gray}"
+      "$value": "{color.darker-gray}"
     },
     "font-family": {
       "$value": "{font.base}"
+    },
+    "font-size": {
+      "$value": "{font-size.sm}"
     },
     "font-weight": {
       "$value": "{font-weight.bold}"
@@ -40,13 +43,16 @@
       "$value": "left"
     },
     "padding": {
-      "$value": "{space.xs}"
+      "$value": "{space.sm}"
     }
   },
   "cell": {
     "$type": "object",
+    "font-size": {
+      "$value": "{font-size.sm}"
+    },
     "padding": {
-      "$value": "{space.xs}"
+      "$value": "{space.sm}"
     },
     "border-color": {
       "$value": "{table.border-color}"
@@ -67,7 +73,64 @@
   "row-hover": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.secondary.100}"
+      "$value": "{color.primary.50}"
+    }
+  },
+  "density": {
+    "$type": "object",
+    "large": {
+      "$type": "object",
+      "header": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{font-size.md}"
+        }
+      },
+      "cell": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{font-size.md}"
+        },
+        "padding": {
+          "$value": "{space.md}"
+        }
+      }
+    },
+    "comfortable": {
+      "$type": "object",
+      "header": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{table.header.font-size}"
+        }
+      },
+      "cell": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{table.cell.font-size}"
+        },
+        "padding": {
+          "$value": "{table.cell.padding}"
+        }
+      }
+    },
+    "compact": {
+      "$type": "object",
+      "header": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{font-size.xs}"
+        }
+      },
+      "cell": {
+        "$type": "object",
+        "font-size": {
+          "$value": "{font-size.xs}"
+        },
+        "padding": {
+          "$value": "{space.xs}"
+        }
+      }
     }
   },
   "empty-state": {

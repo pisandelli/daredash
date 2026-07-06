@@ -30,23 +30,59 @@ function badgeClass(intent: string) {
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Table</h2>
-      <p>Data grid surface covering header treatment, row states and empty/error messaging.</p>
+      <p>Data grid surface covering density presets, header treatment, row states and feedback messaging.</p>
     </header>
 
     <div class="dd-studio-preview-block">
-      <h3>Default, even and odd stripes</h3>
+      <h3>Density presets</h3>
       <div class="dd-table-stack">
         <div class="dd-table-shell">
-          <div class="dd-table-shell-label">Default</div>
-          <DdTable :columns="columns" :data="rows">
+          <div class="dd-table-shell-label">Large</div>
+          <DdTable large :columns="columns" :data="rows">
             <template #cell-status="{ row }">
-              <button type="button" class="dd-table-badge" :class="badgeClass(row.intent)" @click="focusField('table.color')">
+              <button type="button" class="dd-table-badge" :class="badgeClass(row.intent)" @click="focusField('table.density.large.cell.padding')">
                 {{ row.status }}
               </button>
             </template>
           </DdTable>
         </div>
 
+        <div class="dd-table-shell">
+          <div class="dd-table-shell-label">Comfortable (default)</div>
+          <DdTable comfortable :columns="columns" :data="rows">
+            <template #cell-status="{ row }">
+              <button type="button" class="dd-table-badge" :class="badgeClass(row.intent)" @click="focusField('table.density.comfortable.cell.padding')">
+                {{ row.status }}
+              </button>
+            </template>
+          </DdTable>
+        </div>
+
+        <div class="dd-table-shell">
+          <div class="dd-table-shell-label">Compact</div>
+          <DdTable compact :columns="columns" :data="rows">
+            <template #cell-status="{ row }">
+              <button type="button" class="dd-table-badge" :class="badgeClass(row.intent)" @click="focusField('table.density.compact.cell.padding')">
+                {{ row.status }}
+              </button>
+            </template>
+          </DdTable>
+        </div>
+      </div>
+      <div class="dd-table-actions">
+        <button type="button" class="dd-table-action" @click="focusField('table.header.font-size')">Header size</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.cell.font-size')">Cell size</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.large.cell.padding')">Large density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.comfortable.cell.padding')">Comfortable density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.compact.cell.padding')">Compact density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.header.background-color')">Header background</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.row-hover.background-color')">Hover row</button>
+      </div>
+    </div>
+
+    <div class="dd-studio-preview-block">
+      <h3>Striped states</h3>
+      <div class="dd-table-stack">
         <div class="dd-table-shell">
           <div class="dd-table-shell-label">Even stripes</div>
           <DdTable striped :columns="columns" :data="rows">
@@ -69,14 +105,6 @@ function badgeClass(intent: string) {
           </DdTable>
         </div>
       </div>
-      <div class="dd-table-actions">
-        <button type="button" class="dd-table-action" @click="focusField('table.color')">Body text</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.header.color')">Header text</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.header.background-color')">Header background</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.cell.padding')">Cell padding</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.row-striped.background-color')">Striped row</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.row-hover.background-color')">Hover row</button>
-      </div>
     </div>
 
     <div class="dd-studio-preview-block">
@@ -93,6 +121,7 @@ function badgeClass(intent: string) {
 .dd-table-stack {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .dd-table-shell {
