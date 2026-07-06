@@ -50,7 +50,6 @@ export default defineNuxtComponent({
     const globalIcons = appConfig.daredash?.icons || {}
 
     // Resolve DareDash components dynamically
-    const DdBox = resolveComponent(getPrefixName('Box', { type: 'component' }))
     const DdStack = resolveComponent(
       getPrefixName('Stack', { type: 'component' })
     )
@@ -129,7 +128,7 @@ export default defineNuxtComponent({
 
       // Body (Default slot)
       modalContent.push(
-        h(DdBox, { class: styles.body }, () => slots.default?.())
+        h('div', { class: styles.body }, slots.default?.())
       )
 
       // Footer
@@ -139,7 +138,7 @@ export default defineNuxtComponent({
 
       const innerStack = h(
         DdStack as any,
-        { class: styles.inner },
+        { class: styles.inner, nogap: true },
         () => modalContent
       )
 

@@ -65,4 +65,23 @@ describe('default component tokens', () => {
     expect(cardCss).toContain("--local-body-padding: v('card.body.padding', var(--local-padding));")
     expect(cardCss).toContain("--local-footer-padding: v('card.footer.padding', var(--local-padding));")
   })
+
+  it('uses modal body as the effective scroll container', () => {
+    const modalCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Modal.module.css'
+    )
+
+    const modalCss = readFileSync(modalCssPath, 'utf8')
+
+    expect(modalCss).toContain('display: flex;')
+    expect(modalCss).toContain('flex-direction: column;')
+    expect(modalCss).toContain('block-size: 100%;')
+    expect(modalCss).toContain('min-block-size: 0;')
+    expect(modalCss).toContain('flex: 1 1 auto;')
+    expect(modalCss).toContain('overflow-y: auto;')
+    expect(modalCss).toContain('.modal:not([open])')
+    expect(modalCss).toContain('display: none;')
+    expect(modalCss).toContain('.modal[open]')
+  })
 })

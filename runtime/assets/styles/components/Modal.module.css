@@ -21,6 +21,8 @@
   color: v('color.text.default');
 
   /* Layout & Design */
+  display: flex;
+  flex-direction: column;
   inline-size: var(--local-inline-size);
   max-inline-size: var(--local-max-inline-size);
   max-block-size: calc(100dvh - 2rem);
@@ -35,8 +37,22 @@
   }
 }
 
+.modal:not([open]) {
+  display: none;
+}
+
+.modal[open] {
+  display: flex;
+}
+
+.inner {
+  flex: 1 1 auto;
+  block-size: 100%;
+  min-block-size: 0;
+}
 
 .header {
+  flex-shrink: 0;
   padding: var(--local-padding);
   padding-block-end: 0;
 }
@@ -70,12 +86,15 @@
 
 .body {
   font-family: var(--local-body-font-family);
-  padding: 0 var(--local-padding);
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding: var(--local-padding);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
 
 .footer {
+  flex-shrink: 0;
   padding: var(--local-padding);
   padding-block-start: 0;
 }
