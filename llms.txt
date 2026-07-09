@@ -379,6 +379,9 @@ Current state:
 - Component CSS should map public component tokens to local `--local-*` variables first.
 - New component-specific spacing, sizing, or visual controls should be added as component tokens instead of being hardcoded in CSS.
 - Recent example in the codebase: menu submenu indentation is exposed as `menu.submenu.padding-inline-start` rather than being embedded directly in the stylesheet.
+- Recent examples in the codebase:
+  - `card.header.padding`, `card.body.padding`, and `card.footer.padding` let section spacing diverge while still falling back to `card.padding`;
+  - `table.header.font-size`, `table.cell.font-size`, and `table.density.*` expose data-density behavior through tokens instead of hardcoded CSS.
 
 ### Current default palette notes
 
@@ -671,7 +674,9 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdCard><template #header>Title</template>Content<template #footer><DdButton>Save</DdButton></template></DdCard>`.
 - Incorrect example: `<DdCard><template #actions><DdButton>Save</DdButton></template></DdCard>`.
 - Accessibility notes: the semantics of inner content depend on the elements used in the slots.
-- Restrictions: relevant attrs `flat`, `noborder`.
+- Restrictions:
+  - relevant attrs `flat`, `noborder`;
+  - section spacing is token-driven through `card.padding` plus section overrides such as `card.header.padding`, `card.body.padding`, and `card.footer.padding`.
 
 ### `DdBadge`
 
@@ -1355,7 +1360,8 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Restrictions:
   - there is no `header` slot;
   - when `title` is provided, the built-in header and close button are rendered automatically;
-  - when `title` is omitted, only body and optional footer are rendered.
+  - when `title` is omitted, only body and optional footer are rendered;
+  - the modal body is the intended scroll container when content overflows, so prefer letting the internal body scroll instead of forcing `overflow: auto` on the root dialog.
 
 ### `DdDrawer`
 
@@ -1405,7 +1411,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 
 ### `DdTable`
 
-- Description: data table with loading, error, and empty states.
+- Description: data table with loading, error, empty, and density states.
 - When to use: simple tabular data.
 - When not to use: highly interactive grids without an additional business layer.
 - Import: auto-registered by the module.
@@ -1422,12 +1428,17 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `header-${column.key}`
   - `cell-${column.key}`
 - Correct example: `<DdTable :columns="columns" :data="rows"><template #cell-status="{ row }"><DdBadge>{{ row.status }}</DdBadge></template></DdTable>`.
+- Correct example: `<DdTable compact :columns="columns" :data="rows" />`.
 - Incorrect example: `<DdTable :items="rows" />`.
 - Accessibility notes: use clear column titles; custom cell rendering should preserve legibility.
 - Restrictions:
-  - variants `striped` and `striped-odd` are supported via attrs;
+  - density attrs `large`, `comfortable`, and `compact` are supported;
+  - when no density attr is provided, the default token set is the comfortable density;
+  - row styling attrs `striped` and `striped-odd` are supported;
   - `rowKey` may be a property name or a function;
-  - loading with existing data renders an updating row instead of replacing the table body entirely.
+  - loading with existing data renders an updating row instead of replacing the table body entirely;
+  - header and body typography are tokenized separately through `table.header.font-size` and `table.cell.font-size`;
+  - density presets are tokenized through `table.density.large.*`, `table.density.comfortable.*`, and `table.density.compact.*`.
 
 ### `DdPopover`
 
