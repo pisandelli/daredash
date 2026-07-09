@@ -72,9 +72,9 @@ function badgeClass(intent: string) {
       <div class="dd-table-actions">
         <button type="button" class="dd-table-action" @click="focusField('table.header.font-size')">Header size</button>
         <button type="button" class="dd-table-action" @click="focusField('table.cell.font-size')">Cell size</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.density.large.cell.padding')">Large density</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.density.comfortable.cell.padding')">Comfortable density</button>
-        <button type="button" class="dd-table-action" @click="focusField('table.density.compact.cell.padding')">Compact density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.large.header.padding')">Large density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.comfortable.header.padding')">Comfortable density</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.density.compact.header.padding')">Compact density</button>
         <button type="button" class="dd-table-action" @click="focusField('table.header.background-color')">Header background</button>
         <button type="button" class="dd-table-action" @click="focusField('table.row-hover.background-color')">Hover row</button>
       </div>
@@ -121,7 +121,7 @@ function badgeClass(intent: string) {
 .dd-table-stack {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .dd-table-shell {

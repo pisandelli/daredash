@@ -83,13 +83,16 @@
       "header": {
         "$type": "object",
         "font-size": {
-          "$value": "{font-size.md}"
+          "$value": "{font-size.base}"
+        },
+        "padding": {
+          "$value": "{space.md}"
         }
       },
       "cell": {
         "$type": "object",
         "font-size": {
-          "$value": "{font-size.md}"
+          "$value": "{font-size.base}"
         },
         "padding": {
           "$value": "{space.md}"
@@ -102,6 +105,9 @@
         "$type": "object",
         "font-size": {
           "$value": "{table.header.font-size}"
+        },
+        "padding": {
+          "$value": "{table.header.padding}"
         }
       },
       "cell": {
@@ -120,6 +126,9 @@
         "$type": "object",
         "font-size": {
           "$value": "{font-size.xs}"
+        },
+        "padding": {
+          "$value": "{space.xxs}"
         }
       },
       "cell": {
@@ -128,7 +137,7 @@
           "$value": "{font-size.xs}"
         },
         "padding": {
-          "$value": "{space.xs}"
+          "$value": "{space.xxs}"
         }
       }
     }

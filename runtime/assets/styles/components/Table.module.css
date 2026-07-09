@@ -8,15 +8,19 @@
   --local-header-bg: v('table.header.background-color');
   --local-header-color: v('table.header.color');
   --local-header-font-family: v('table.header.font-family');
-  --local-header-font-size: v('table.header.font-size');
+  --local-header-font-size-base: v('table.header.font-size');
+  --local-header-font-size: var(--local-header-font-size-base);
   --local-header-font-weight: v('table.header.font-weight');
   --local-header-text-transform: v('table.header.text-transform');
   --local-header-text-align: v('table.header.text-align');
-  --local-header-padding: v('table.header.padding');
+  --local-header-padding-base: v('table.header.padding');
+  --local-header-padding: var(--local-header-padding-base);
   --local-row-hover-bg: v('table.row-hover.background-color');
   --local-row-striped-bg: v('table.row-striped.background-color');
-  --local-cell-font-size: v('table.cell.font-size');
-  --local-cell-padding: v('table.cell.padding');
+  --local-cell-font-size-base: v('table.cell.font-size');
+  --local-cell-font-size: var(--local-cell-font-size-base);
+  --local-cell-padding-base: v('table.cell.padding');
+  --local-cell-padding: var(--local-cell-padding-base);
   --local-cell-border-color: v('table.cell.border-color');
   --local-cell-border-width: v('table.cell.border-width');
   --local-cell-text-align: v('table.cell.text-align');
@@ -25,15 +29,18 @@
   --local-empty-color: v('table.empty-state.color');
   --local-error-bg: v('table.error-state.background-color');
   --local-error-color: v('table.error-state.color');
-  --local-density-large-header-font-size: v('table.density.large.header.font-size', var(--local-header-font-size));
-  --local-density-large-cell-font-size: v('table.density.large.cell.font-size', var(--local-cell-font-size));
-  --local-density-large-cell-padding: v('table.density.large.cell.padding', var(--local-cell-padding));
-  --local-density-comfortable-header-font-size: v('table.density.comfortable.header.font-size', var(--local-header-font-size));
-  --local-density-comfortable-cell-font-size: v('table.density.comfortable.cell.font-size', var(--local-cell-font-size));
-  --local-density-comfortable-cell-padding: v('table.density.comfortable.cell.padding', var(--local-cell-padding));
-  --local-density-compact-header-font-size: v('table.density.compact.header.font-size', var(--local-header-font-size));
-  --local-density-compact-cell-font-size: v('table.density.compact.cell.font-size', var(--local-cell-font-size));
-  --local-density-compact-cell-padding: v('table.density.compact.cell.padding', var(--local-cell-padding));
+  --local-density-large-header-font-size: v('table.density.large.header.font-size', var(--local-header-font-size-base));
+  --local-density-large-header-padding: v('table.density.large.header.padding', var(--local-header-padding-base));
+  --local-density-large-cell-font-size: v('table.density.large.cell.font-size', var(--local-cell-font-size-base));
+  --local-density-large-cell-padding: v('table.density.large.cell.padding', var(--local-cell-padding-base));
+  --local-density-comfortable-header-font-size: v('table.density.comfortable.header.font-size', var(--local-header-font-size-base));
+  --local-density-comfortable-header-padding: v('table.density.comfortable.header.padding', var(--local-header-padding-base));
+  --local-density-comfortable-cell-font-size: v('table.density.comfortable.cell.font-size', var(--local-cell-font-size-base));
+  --local-density-comfortable-cell-padding: v('table.density.comfortable.cell.padding', var(--local-cell-padding-base));
+  --local-density-compact-header-font-size: v('table.density.compact.header.font-size', var(--local-header-font-size-base));
+  --local-density-compact-header-padding: v('table.density.compact.header.padding', var(--local-header-padding-base));
+  --local-density-compact-cell-font-size: v('table.density.compact.cell.font-size', var(--local-cell-font-size-base));
+  --local-density-compact-cell-padding: v('table.density.compact.cell.padding', var(--local-cell-padding-base));
   --local-transition: v('transition.fast');
 
   inline-size: 100%;
@@ -53,18 +60,21 @@
 
 .wrapper[data-large] {
   --local-header-font-size: var(--local-density-large-header-font-size);
+  --local-header-padding: var(--local-density-large-header-padding);
   --local-cell-font-size: var(--local-density-large-cell-font-size);
   --local-cell-padding: var(--local-density-large-cell-padding);
 }
 
 .wrapper[data-comfortable] {
   --local-header-font-size: var(--local-density-comfortable-header-font-size);
+  --local-header-padding: var(--local-density-comfortable-header-padding);
   --local-cell-font-size: var(--local-density-comfortable-cell-font-size);
   --local-cell-padding: var(--local-density-comfortable-cell-padding);
 }
 
 .wrapper[data-compact] {
   --local-header-font-size: var(--local-density-compact-header-font-size);
+  --local-header-padding: var(--local-density-compact-header-padding);
   --local-cell-font-size: var(--local-density-compact-cell-font-size);
   --local-cell-padding: var(--local-density-compact-cell-padding);
 }
