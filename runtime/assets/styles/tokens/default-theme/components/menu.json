@@ -87,7 +87,7 @@
   "submenu": {
     "$type": "object",
     "padding-inline-start": {
-      "$value": "calc({menu.item.padding-inline} + {menu.item.icon-size})"
+      "$value": "{space.xs}"
     }
   },
   "float": {

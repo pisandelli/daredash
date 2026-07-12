@@ -15,6 +15,17 @@ describe('default component tokens', () => {
     expect(badgeTokens.padding.inline.$value).toBe('{space.xs}')
   })
 
+  it('uses a compact default submenu indent for menu items', () => {
+    const menuTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/menu.json'
+    )
+
+    const menuTokens = JSON.parse(readFileSync(menuTokensPath, 'utf8'))
+
+    expect(menuTokens.submenu['padding-inline-start'].$value).toBe('{space.xs}')
+  })
+
   it('uses updated table header and cell defaults', () => {
     const tableTokensPath = resolve(
       process.cwd(),
