@@ -99,6 +99,7 @@ describe('DareDash Studio registry', () => {
       'card',
       'loading',
       'progress',
+      'skeleton',
       'toast',
       'toaster'
     ])
@@ -279,6 +280,21 @@ describe('DareDash Studio registry', () => {
     expect(loadingTab!.navigationKind).toBe('component')
     expect(colorField?.referencePath).toBe('color.secondary')
     expect(iconSizeField?.referencePath).toBe('space.xl')
+  })
+
+  it('registers skeleton with preserved token references', () => {
+    const skeletonTab = STUDIO_TABS.find((tab) => tab.id === 'skeleton')
+    const backgroundField = skeletonTab?.fields.find((field) => field.path === 'skeleton.background-color')
+    const highlightField = skeletonTab?.fields.find((field) => field.path === 'skeleton.highlight-color')
+    const radiusField = skeletonTab?.fields.find((field) => field.path === 'skeleton.border-radius')
+    const blockSizeField = skeletonTab?.fields.find((field) => field.path === 'skeleton.block-size')
+
+    expect(skeletonTab).toBeDefined()
+    expect(skeletonTab!.navigationKind).toBe('component')
+    expect(backgroundField?.referencePath).toBe('color.secondary.100')
+    expect(highlightField?.referencePath).toBe('color.secondary.50')
+    expect(radiusField?.referencePath).toBe('border-radius.md')
+    expect(blockSizeField?.referencePath).toBe('space.md')
   })
 
   it('registers menu with preserved token references', () => {

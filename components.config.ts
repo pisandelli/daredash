@@ -119,6 +119,10 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/primitives/Loading/Loading.ts',
     style: './runtime/assets/styles/components/Loading.module.css'
   },
+  Skeleton: {
+    filePath: './runtime/components/primitives/Skeleton/Skeleton.ts',
+    style: './runtime/assets/styles/components/Skeleton.module.css'
+  },
   Toaster: {
     filePath: './runtime/components/primitives/Toaster/Toaster.ts',
     style: './runtime/assets/styles/components/Toaster.module.css'

@@ -511,6 +511,7 @@ Do not document as an application API.
 ### Loading, empty, and error states
 
 - Use `DdLoading` for explicit loading indicators.
+- Use `DdSkeleton` for structural placeholders while content shape is known but data is still loading.
 - Use `DdTable` built-in loading, error, and empty states when rendering tables.
 - Use `DdAlert` for inline recoverable issues.
 - Use `useToaster` for transient, action-complete feedback rather than for persistent explanation.
@@ -1021,6 +1022,26 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Incorrect example: `<DdLoading :value="40" />`.
 - Accessibility notes: keep a textual label when the loading state needs to be announced.
 - Restrictions: the `default` slot replaces the label.
+
+### `DdSkeleton`
+
+- Description: decorative loading placeholder for text lines, cards, avatars, and media blocks.
+- When to use: preserve layout rhythm while waiting for async content.
+- When not to use: when a textual loading announcement is required; pair or replace with `DdLoading`.
+- Import: auto-registered by the module.
+- Props:
+  - `width?: string`
+  - `height?: string`
+  - `radius?: string`
+  - `circle: boolean = false`
+  - `animated: boolean = true`
+- Emits: none explicitly declared.
+- Slots: none explicitly declared.
+- Correct example: `<DdSkeleton width="12rem" />`.
+- Correct example: `<DdSkeleton circle width="3rem" />`.
+- Incorrect example: `<DdSkeleton label="Loading profile" />`.
+- Accessibility notes: defaults to `aria-hidden="true"` because it is decorative.
+- Restrictions: use explicit sizing props for one-off layout shaping; shared color, radius, size, and shimmer timing come from `skeleton.*` tokens.
 
 ### `DdToaster`
 

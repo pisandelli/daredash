@@ -29,6 +29,7 @@ import PopoverPreview from './previews/PopoverPreview.vue'
 import ProgressPreview from './previews/ProgressPreview.vue'
 import RadioPreview from './previews/RadioPreview.vue'
 import SelectPreview from './previews/SelectPreview.vue'
+import SkeletonPreview from './previews/SkeletonPreview.vue'
 import SidebarPreview from './previews/SidebarPreview.vue'
 import StackPreview from './previews/StackPreview.vue'
 import TablePreview from './previews/TablePreview.vue'
@@ -331,6 +332,17 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('loading.font-family', 'Font Family', 'text', 'Typography'),
       componentField('loading.icon-size', 'Icon Size', 'text', 'Core'),
       componentField('loading.gap', 'Gap', 'text', 'Spacing')
+    ]
+  }),
+  componentTab('skeleton', 'primitive', {
+    label: 'Skeleton',
+    preview: SkeletonPreview,
+    fields: [
+      componentField('skeleton.background-color', 'Background', 'color', 'Core'),
+      componentField('skeleton.highlight-color', 'Highlight', 'color', 'Core'),
+      componentField('skeleton.border-radius', 'Border Radius', 'text', 'Shape'),
+      componentField('skeleton.block-size', 'Block Size', 'text', 'Sizing'),
+      componentField('skeleton.animation-duration', 'Animation Duration', 'text', 'Motion')
     ]
   }),
   componentTab('progress', 'primitive', {

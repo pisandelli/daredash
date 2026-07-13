@@ -15,6 +15,20 @@ describe('default component tokens', () => {
     expect(badgeTokens.padding.inline.$value).toBe('{space.xs}')
   })
 
+  it('uses neutral skeleton defaults for placeholder states', () => {
+    const skeletonTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/skeleton.json'
+    )
+
+    const skeletonTokens = JSON.parse(readFileSync(skeletonTokensPath, 'utf8'))
+
+    expect(skeletonTokens['background-color'].$value).toBe('{color.secondary.100}')
+    expect(skeletonTokens['highlight-color'].$value).toBe('{color.secondary.50}')
+    expect(skeletonTokens['border-radius'].$value).toBe('{border-radius.md}')
+    expect(skeletonTokens['block-size'].$value).toBe('{space.md}')
+  })
+
   it('uses a compact default submenu indent for menu items', () => {
     const menuTokensPath = resolve(
       process.cwd(),

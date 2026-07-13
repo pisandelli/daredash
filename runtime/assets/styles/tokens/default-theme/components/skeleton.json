@@ -1,0 +1,19 @@
+{
+  "$description": "Tokens for the Skeleton component",
+  "$type": "object",
+  "background-color": {
+    "$value": "{color.secondary.100}"
+  },
+  "highlight-color": {
+    "$value": "{color.secondary.50}"
+  },
+  "border-radius": {
+    "$value": "{border-radius.md}"
+  },
+  "block-size": {
+    "$value": "{space.md}"
+  },
+  "animation-duration": {
+    "$value": "1.4s"
+  }
+}

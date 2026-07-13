@@ -1,0 +1,46 @@
+.skeleton {
+  --local-background-color: v('skeleton.background-color');
+  --local-highlight-color: v('skeleton.highlight-color');
+  --local-border-radius: v('skeleton.border-radius');
+  --local-block-size: v('skeleton.block-size');
+  --local-animation-duration: v('skeleton.animation-duration');
+  --local-inline-size: var(--dd-skeleton-inline-size, 100%);
+  --local-block-size-override: var(--dd-skeleton-block-size, var(--local-block-size));
+  --local-radius-override: var(--dd-skeleton-radius, var(--local-border-radius));
+
+  position: relative;
+  display: block;
+  inline-size: var(--local-inline-size);
+  block-size: var(--local-block-size-override);
+  border-radius: var(--local-radius-override);
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    var(--local-background-color) 0%,
+    var(--local-highlight-color) 50%,
+    var(--local-background-color) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--local-animation-duration) ease-in-out infinite;
+}
+
+.circle {
+  inline-size: var(--local-inline-size, var(--local-block-size-override));
+  aspect-ratio: 1;
+  border-radius: 999px;
+}
+
+.static {
+  animation: none;
+  background-position: 50% 0;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

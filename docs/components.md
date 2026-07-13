@@ -220,6 +220,42 @@ Loading indicator for explicit waiting states.
 
 - `default`
 
+### Skeleton (`<dd-skeleton>`)
+
+Decorative placeholder for loading layouts before the real content is ready.
+
+```vue
+<template>
+  <dd-stack compact>
+    <dd-skeleton width="12rem" />
+    <dd-skeleton width="100%" height="6rem" />
+    <dd-cluster>
+      <dd-skeleton circle width="3rem" />
+      <dd-stack compact style="flex: 1;">
+        <dd-skeleton width="10rem" />
+        <dd-skeleton width="70%" />
+      </dd-stack>
+    </dd-cluster>
+  </dd-stack>
+</template>
+```
+
+#### Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `width` | `string` | `undefined` | Optional inline size override. |
+| `height` | `string` | `undefined` | Optional block size override. |
+| `radius` | `string` | `undefined` | Optional border radius override. |
+| `circle` | `boolean` | `false` | Forces a circular placeholder. |
+| `animated` | `boolean` | `true` | Enables or disables the shimmer effect. |
+
+#### Common attrs
+
+- `aria-hidden`
+
+`dd-skeleton` is decorative by default and renders with `aria-hidden="true"` unless you explicitly override it.
+
 ### Breadcrumb (`<dd-breadcrumb>`)
 
 Breadcrumb navigation trail for contextual hierarchy.
