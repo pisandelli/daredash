@@ -146,8 +146,8 @@ export default defineNuxtComponent({
           }, [
             h(resolveComponent('Icon'), {
               name: isCollapsed.value
-                ? globalIcons.menuExpand || 'heroicons:chevron-right'
-                : globalIcons.menuCollapse || 'heroicons:chevron-left',
+                ? globalIcons.menuExpand || 'lucide:chevron-right'
+                : globalIcons.menuCollapse || 'lucide:chevron-left',
               class: styles.toggleIcon,
               'aria-hidden': 'true'
             })

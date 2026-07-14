@@ -47,7 +47,7 @@ export default defineNuxtComponent({
     },
     /**
      * Icon name (via @nuxt/icon) shown inside the search button.
-     * Defaults to `heroicons:magnifying-glass` if not provided.
+     * Defaults to the shared search icon if not provided.
      */
     buttonIcon: {
       type: String,
@@ -107,7 +107,7 @@ export default defineNuxtComponent({
 
     const searchIcon = computed(
       () =>
-        props.buttonIcon || globalIcons.search || 'heroicons:magnifying-glass'
+        props.buttonIcon || globalIcons.search || 'lucide:search'
     )
     const loadingIcon = computed(
       () => globalIcons.loading || 'svg-spinners:ring-resize'

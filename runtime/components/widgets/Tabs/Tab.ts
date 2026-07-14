@@ -142,7 +142,7 @@ export default defineNuxtComponent({
           tabindex: -1 
         }, [
           h(Icon, {
-            name: 'heroicons:x-mark',
+            name: 'lucide:x',
             size: 'var(--dd-tabs-trigger-icon-size)'
           })
         ]))

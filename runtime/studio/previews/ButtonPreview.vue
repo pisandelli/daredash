@@ -42,8 +42,8 @@
     <div class="dd-studio-preview-block">
       <h3>Icons</h3>
       <div class="dd-studio-preview-row">
-        <DdButton primary icon="heroicons:star" />
-        <DdButton primary icon="heroicons:star">With icon</DdButton>
+        <DdButton primary icon="lucide:star" />
+        <DdButton primary icon="lucide:star">With icon</DdButton>
         <DdButton primary disabled>Disabled</DdButton>
       </div>
     </div>

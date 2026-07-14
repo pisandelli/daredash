@@ -19,7 +19,7 @@ export default defineNuxtComponent({
     },
     /**
      * Optional icon to display before the title.
-     * Use `@nuxt/icon` format (e.g., 'heroicons:user').
+     * Use `@nuxt/icon` format (e.g., 'lucide:user').
      */
     icon: {
       type: String,
@@ -103,7 +103,7 @@ export default defineNuxtComponent({
       // Active state chevron
       summaryChildren.push(
         h('span', { class: styles.icon, 'aria-hidden': 'true' }, [
-          h(Icon, { name: 'heroicons:chevron-down' })
+          h(Icon, { name: 'lucide:chevron-down' })
         ])
       )
 

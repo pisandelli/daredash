@@ -20,9 +20,9 @@
     <div class="dd-studio-preview-block">
       <h3>With icon</h3>
       <div class="dd-studio-preview-row">
-        <DdBadge primary icon="heroicons:star">Featured</DdBadge>
-        <DdBadge success icon="heroicons:check-circle">Success</DdBadge>
-        <DdBadge danger icon="heroicons:x-circle">Danger</DdBadge>
+        <DdBadge primary icon="lucide:star">Featured</DdBadge>
+        <DdBadge success icon="lucide:circle-check">Success</DdBadge>
+        <DdBadge danger icon="lucide:circle-x">Danger</DdBadge>
       </div>
     </div>
   </section>

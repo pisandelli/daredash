@@ -85,7 +85,7 @@ const menuItems = [
   {
     key: 'dashboard',
     label: 'Dashboard',
-    icon: 'heroicons:home',
+    icon: 'lucide:house',
     action: { type: 'link', to: '/' }
   }
 ]

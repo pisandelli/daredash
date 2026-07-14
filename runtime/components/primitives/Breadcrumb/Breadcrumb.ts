@@ -44,7 +44,7 @@ export default defineNuxtComponent({
       return props.config.separator
         ?? appConfig.daredash?.icons?.breadcrumbSeparator
         ?? appConfig.daredash?.icons?.menuExpand
-        ?? 'heroicons:chevron-right'
+        ?? 'lucide:chevron-right'
     })
 
     const renderIcon = (iconName?: string) => {

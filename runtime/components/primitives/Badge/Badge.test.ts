@@ -44,11 +44,11 @@ describe('Badge Primitive', () => {
   it('renders the given icon through the Icon component', async () => {
     const wrapper = await mountSuspended(Badge, {
       props: {
-        icon: 'heroicons:star'
+        icon: 'lucide:star'
       }
     })
 
     const html = wrapper.html()
-    expect(html).toContain('heroicons:star')
+    expect(html).toContain('lucide:star')
   })
 })

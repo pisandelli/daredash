@@ -88,30 +88,30 @@ export default defineNuxtModule<ModuleOptions>().with({
 
     /**
      * Seeds the default icon map for interactive components (Toast, Modal, Select, etc.).
-     * Internally resolves to `heroicons:` by convention. Consumers can override any
-     * key via `appConfig.daredash.icons` in their own `app.config.ts`.
+     * Consumers can override any key via `appConfig.daredash.icons` in their own
+     * `app.config.ts`.
      * @see Rule §12 — Iconography (Agnostic Architecture)
      */
-    const menuExpandIcon = 'heroicons:chevron-right'
+    const menuExpandIcon = 'lucide:chevron-right'
 
     const defaultIcons = {
-      success: 'heroicons:check-circle',
-      error: 'heroicons:x-circle',
-      warning: 'heroicons:exclamation-triangle',
-      info: 'heroicons:information-circle',
-      toastClose: 'heroicons:x-mark',
-      selectArrow: 'heroicons:chevron-down',
+      success: 'lucide:circle-check',
+      error: 'lucide:circle-x',
+      warning: 'lucide:triangle-alert',
+      info: 'lucide:circle-alert',
+      toastClose: 'lucide:x',
+      selectArrow: 'lucide:chevron-down',
       breadcrumbSeparator: menuExpandIcon,
-      modalClose: 'heroicons:x-mark',
-      menuCollapse: 'heroicons:chevron-left',
+      modalClose: 'lucide:x',
+      menuCollapse: 'lucide:chevron-left',
       menuExpand: menuExpandIcon,
-      search: 'heroicons:magnifying-glass',
+      search: 'lucide:search',
       loading: 'svg-spinners:ring-resize',
-      drawerClose: 'heroicons:x-mark',
-      tableError: 'heroicons:exclamation-triangle',
-      emptyTable: 'heroicons:inbox',
-      paginationPrev: 'heroicons:chevron-left',
-      paginationNext: 'heroicons:chevron-right'
+      drawerClose: 'lucide:x',
+      tableError: 'lucide:triangle-alert',
+      emptyTable: 'lucide:inbox',
+      paginationPrev: 'lucide:chevron-left',
+      paginationNext: 'lucide:chevron-right'
     }
 
     const daredashAppConfig = (nuxt.options.appConfig.daredash as Record<string, any>) || {}
@@ -207,7 +207,7 @@ export default defineNuxtModule<ModuleOptions>().with({
     addCustomTab({
       name: 'dd-studio',
       title: 'DareDash Studio',
-      icon: 'heroicons:paint-brush-solid',
+      icon: 'lucide:paintbrush',
       view: {
         type: 'iframe',
         src: '/studio'

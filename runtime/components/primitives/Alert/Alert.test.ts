@@ -77,7 +77,7 @@ describe('Alert Primitive', () => {
     })
 
     const html = wrapper.html()
-    expect(html).toContain('heroicons:check-circle') // Or whatever the component resolves NuxtIcon to based on its string
+    expect(html).toContain('lucide:circle-check')
   })
 
   it('uses custom icon when icon prop is string', async () => {

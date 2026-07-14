@@ -138,7 +138,7 @@ export default defineNuxtComponent({
                 },
                 [
                   h(Icon, {
-                    name: globalIcons.drawerClose || globalIcons.modalClose || 'heroicons:x-mark'
+                    name: globalIcons.drawerClose || globalIcons.modalClose || 'lucide:x'
                   })
                 ]
               )

@@ -10,13 +10,13 @@
       <DdAccordionGroup>
         <DdAccordion
           title="Token-driven interaction"
-          icon="heroicons:sparkles"
+          icon="lucide:sparkles"
         >
           Accordion styles are composed from border, header, content and motion tokens.
         </DdAccordion>
         <DdAccordion
           title="One open item by default"
-          icon="heroicons:squares-2x2"
+          icon="lucide:layout-grid"
         >
           The group uses native details name behavior to keep one panel open at a time.
         </DdAccordion>
@@ -29,7 +29,7 @@
         <DdAccordion
           title="Primary accent"
           primary
-          icon="heroicons:star"
+          icon="lucide:star"
           open
         >
           The standard primary semantic color.
@@ -37,35 +37,35 @@
         <DdAccordion
           title="Info accent"
           info
-          icon="heroicons:information-circle"
+          icon="lucide:circle-alert"
         >
           Used to highlight neutral or educational information.
         </DdAccordion>
         <DdAccordion
           title="Success accent"
           success
-          icon="heroicons:check-circle"
+          icon="lucide:circle-check"
         >
           Useful for checklist-like disclosure patterns.
         </DdAccordion>
         <DdAccordion
           title="Warning accent"
           warning
-          icon="heroicons:exclamation-triangle"
+          icon="lucide:triangle-alert"
         >
           Helpful when the disclosed content changes the user's next step.
         </DdAccordion>
         <DdAccordion
           title="Danger accent"
           danger
-          icon="heroicons:shield-exclamation"
+          icon="lucide:shield-alert"
         >
           Used for destructive actions or critical privacy settings.
         </DdAccordion>
         <DdAccordion
           title="Custom accent"
           accent-color="#9333ea"
-          icon="heroicons:paint-brush"
+          icon="lucide:paintbrush"
         >
           An injected HEX color string bypassing the theme tokens.
         </DdAccordion>

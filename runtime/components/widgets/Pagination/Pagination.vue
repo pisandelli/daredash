@@ -166,7 +166,7 @@ const paginationRange = computed(() => {
       <li :class="[styles.item, styles.prev]">
         <button type="button" :class="styles.button" :disabled="isFirstPage || props.disabled"
           aria-label="Previous page" @click="onPrev">
-          <Icon :name="globalIcons.paginationPrev || 'heroicons:chevron-left'" :class="styles.icon" />
+          <Icon :name="globalIcons.paginationPrev || 'lucide:chevron-left'" :class="styles.icon" />
         </button>
       </li>
 
@@ -187,7 +187,7 @@ const paginationRange = computed(() => {
       <li :class="[styles.item, styles.next]">
         <button type="button" :class="styles.button" :disabled="isLastPage || props.disabled" aria-label="Next page"
           @click="onNext">
-          <Icon :name="globalIcons.paginationNext || 'heroicons:chevron-right'" :class="styles.icon" />
+          <Icon :name="globalIcons.paginationNext || 'lucide:chevron-right'" :class="styles.icon" />
         </button>
       </li>
     </component>

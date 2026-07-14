@@ -6,20 +6,20 @@ import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
 const sidebarItems: MenuEntry[] = [
-  { key: 'overview', label: 'Overview', icon: 'heroicons:squares-2x2', active: true, action: { type: 'none' } },
-  { key: 'analytics', label: 'Analytics', icon: 'heroicons:chart-bar', badge: { label: 3 }, action: { type: 'none' } },
+  { key: 'overview', label: 'Overview', icon: 'lucide:layout-grid', active: true, action: { type: 'none' } },
+  { key: 'analytics', label: 'Analytics', icon: 'lucide:chart-column', badge: { label: 3 }, action: { type: 'none' } },
   { type: 'separator', label: 'Workspace' },
   {
     key: 'projects',
     label: 'Projects',
-    icon: 'heroicons:folder',
+    icon: 'lucide:folder',
     children: [
       { key: 'alpha', label: 'Alpha roadmap', action: { type: 'none' } },
       { key: 'beta', label: 'Beta release', action: { type: 'none' } }
     ],
     action: { type: 'none' }
   },
-  { key: 'settings', label: 'Settings', icon: 'heroicons:cog-6-tooth', action: { type: 'none' } }
+  { key: 'settings', label: 'Settings', icon: 'lucide:settings', action: { type: 'none' } }
 ]
 
 const floatingItems: MenuEntry[] = [

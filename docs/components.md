@@ -23,7 +23,7 @@ Use `dd-button` for actions, links, and compact call-to-action patterns.
 ```vue
 <template>
   <dd-cluster>
-    <dd-button primary icon="heroicons:plus">New</dd-button>
+    <dd-button primary icon="lucide:plus">New</dd-button>
     <dd-button outline href="/docs">Docs</dd-button>
   </dd-cluster>
 </template>
@@ -85,7 +85,7 @@ Use `dd-badge` for short status labels, counts, or metadata.
   <dd-cluster>
     <dd-badge>New</dd-badge>
     <dd-badge success>Done</dd-badge>
-    <dd-badge danger icon="heroicons:x-mark">Failed</dd-badge>
+    <dd-badge danger icon="lucide:x">Failed</dd-badge>
   </dd-cluster>
 </template>
 ```
@@ -297,7 +297,7 @@ Styled text input for short values.
     name="email"
     type="email"
     label="Email"
-    icon="heroicons:envelope"
+    icon="lucide:mail"
   />
 </template>
 ```

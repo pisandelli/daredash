@@ -96,7 +96,7 @@ const hasData = computed(() => props.data && props.data.length > 0)
         <tr v-if="props.isInvalid" :class="[styles.tr, styles['error-row']]">
           <td :class="styles.td" :colspan="columns.length">
             <div :class="styles['empty-state']">
-              <Icon :name="globalIcons.tableError || 'heroicons:exclamation-triangle'" size="2rem" />
+              <Icon :name="globalIcons.tableError || 'lucide:triangle-alert'" size="2rem" />
               <span>{{ props.errorMessage || 'An error occurred while fetching data.'
                 }}</span>
             </div>
@@ -118,7 +118,7 @@ const hasData = computed(() => props.data && props.data.length > 0)
             <div :class="styles['empty-state']">
               <!-- Empty Slot Override -->
               <slot name="empty">
-                <Icon :name="globalIcons.emptyTable || 'heroicons:inbox'" size="2rem" />
+                <Icon :name="globalIcons.emptyTable || 'lucide:inbox'" size="2rem" />
                 <span>No data available</span>
               </slot>
             </div>

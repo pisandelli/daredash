@@ -12,14 +12,14 @@ const simpleItems: MenuEntry[] = [
   {
     key: 'home',
     label: 'Home',
-    icon: 'heroicons:home',
+    icon: 'lucide:house',
     // Use action type for test environment: NuxtLink may not resolve in tests
     action: { type: 'action', handler: vi.fn() }
   },
   {
     key: 'settings',
     label: 'Settings',
-    icon: 'heroicons:cog-6-tooth',
+    icon: 'lucide:settings',
     badge: { label: 3 },
     action: { type: 'action', handler: vi.fn() }
   },
@@ -35,7 +35,7 @@ const itemsWithChildren: MenuEntry[] = [
   {
     key: 'reports',
     label: 'Reports',
-    icon: 'heroicons:chart-bar',
+    icon: 'lucide:chart-column',
     action: { type: 'none' },
     children: [
       {
@@ -64,7 +64,7 @@ const itemsWithSeparator: MenuEntry[] = [
 const actionItem: MenuEntry = {
   key: 'logout',
   label: 'Logout',
-  icon: 'heroicons:arrow-right-on-rectangle',
+  icon: 'lucide:log-out',
   action: { type: 'action', handler: vi.fn() }
 }
 

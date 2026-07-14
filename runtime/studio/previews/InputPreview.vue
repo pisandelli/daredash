@@ -56,11 +56,11 @@ function focusField(path: string) {
       <h3>Icons and disabled</h3>
       <div class="dd-form-grid">
         <div class="dd-form-card">
-          <DdInput label="Search" placeholder="Search records" icon="heroicons:magnifying-glass" />
+          <DdInput label="Search" placeholder="Search records" icon="lucide:search" />
           <button type="button" class="dd-form-link" @click="focusField('input.padding.inline.start')">Edit left icon spacing</button>
         </div>
         <div class="dd-form-card">
-          <DdInput label="Password" type="password" placeholder="Secure value" icon-right="heroicons:eye" />
+          <DdInput label="Password" type="password" placeholder="Secure value" icon-right="lucide:eye" />
           <button type="button" class="dd-form-link" @click="focusField('input.padding.inline.end')">Edit right icon spacing</button>
         </div>
         <div class="dd-form-card">

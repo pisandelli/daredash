@@ -690,7 +690,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `color?: string`
 - Emits: none explicitly declared.
 - Slots: `default`.
-- Correct example: `<DdBadge success icon="heroicons:check">Active</DdBadge>`.
+- Correct example: `<DdBadge success icon="lucide:check">Active</DdBadge>`.
 - Correct example: `<DdBadge color="#0f766e">Custom</DdBadge>`.
 - Incorrect example: `<DdBadge :count="3" />`.
 - Accessibility notes: does not replace a fuller status description when that is needed.
@@ -776,7 +776,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `href?: string`
 - Emits: none explicitly declared.
 - Slots: `default`.
-- Correct example: `<DdButton primary icon="heroicons:plus">New</DdButton>`.
+- Correct example: `<DdButton primary icon="lucide:plus">New</DdButton>`.
 - Correct example: `<DdButton href="https://example.com">Open</DdButton>`.
 - Correct example: `<DdButton color="#2563eb">Custom action</DdButton>`.
 - Incorrect example: `<DdButton variant="primary">Save</DdButton>`.
@@ -808,7 +808,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `update:modelValue`
 - Slots: none explicitly declared.
 - Correct example: `<DdInput v-model="email" name="email" type="email" label="Email" />`.
-- Correct example: `<DdInput v-model="email" small success icon="heroicons:envelope" />`.
+- Correct example: `<DdInput v-model="email" small success icon="lucide:mail" />`.
 - Incorrect example: `<DdInput :options="options" />`.
 - Accessibility notes: use `label` or provide equivalent labeling.
 - Restrictions:
@@ -1318,7 +1318,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `default`
   - `prefix`
   - `suffix`
-- Correct example: `<DdTab value="profile" icon="heroicons:user">Profile</DdTab>`.
+- Correct example: `<DdTab value="profile" icon="lucide:user">Profile</DdTab>`.
 - Correct example: `<DdTab value="logs" closable>Logs</DdTab>`.
 - Incorrect example: `<DdTab name="profile">Profile</DdTab>`.
 - Accessibility notes: participates in `aria-selected`, `aria-controls`, and keyboard navigation.
@@ -1603,7 +1603,7 @@ const menuItems = [
   {
     key: 'home',
     label: 'Home',
-    icon: 'heroicons:home',
+    icon: 'lucide:house',
     action: { type: 'link', to: '/' }
   }
 ]

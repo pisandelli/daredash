@@ -57,14 +57,14 @@ describe('Breadcrumb Primitive', () => {
 
     const separators = wrapper.findAll('li > span[aria-hidden="true"]')
     expect(separators.length).toBe(1)
-    expect(separators[0]!.html()).toContain('heroicons:chevron-right')
+    expect(separators[0]!.html()).toContain('lucide:chevron-right')
   })
 
   it('renders custom separator icon override', async () => {
     const wrapper = await mountSuspended(Breadcrumb, {
       props: {
         config: {
-          separator: 'heroicons:chevron-double-right',
+          separator: 'lucide:chevrons-right',
           routes: [
             { label: 'A', to: '/a' },
             { label: 'B' }
@@ -74,7 +74,7 @@ describe('Breadcrumb Primitive', () => {
     })
 
     const separators = wrapper.findAll('li > span[aria-hidden="true"]')
-    expect(separators[0]!.html()).toContain('heroicons:chevron-double-right')
+    expect(separators[0]!.html()).toContain('lucide:chevrons-right')
   })
 
   it('applies custom hoverColor via CSS variable interpolation', async () => {

@@ -16,22 +16,22 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "transparent"
+      "$value": "{color.bg.surface}"
     },
     "background-color-hover": {
       "$value": "{color.light-gray}"
     },
     "padding": {
-      "$value": "{space.md}"
+      "$value": "{space.sm}"
     },
     "font-family": {
       "$value": "{font.base}"
     },
     "font-size": {
-      "$value": "{font-size.base}"
+      "$value": "{font-size.sm}"
     },
     "font-weight": {
-      "$value": "{font-weight.bold}"
+      "$value": "{font-weight.light}"
     },
     "icon-size": {
       "$description": "Size of the icon (e.g., chevron)",

@@ -86,12 +86,12 @@ const semanticIcon = computed(() => {
   const globalIcons = appConfig.daredash?.icons || {}
 
   // `processedAttrs` returns things like `{'data-success': ''}`
-  if ('data-success' in processedAttrs.value) return globalIcons.success || 'heroicons:check-circle'
-  if ('data-danger' in processedAttrs.value) return globalIcons.error || 'heroicons:x-circle'
-  if ('data-error' in processedAttrs.value) return globalIcons.error || 'heroicons:x-circle'
-  if ('data-warning' in processedAttrs.value) return globalIcons.warning || 'heroicons:exclamation-triangle'
-  if ('data-info' in processedAttrs.value) return globalIcons.info || 'heroicons:information-circle'
-  return globalIcons.info || 'heroicons:information-circle'
+  if ('data-success' in processedAttrs.value) return globalIcons.success || 'lucide:circle-check'
+  if ('data-danger' in processedAttrs.value) return globalIcons.error || 'lucide:circle-x'
+  if ('data-error' in processedAttrs.value) return globalIcons.error || 'lucide:circle-x'
+  if ('data-warning' in processedAttrs.value) return globalIcons.warning || 'lucide:triangle-alert'
+  if ('data-info' in processedAttrs.value) return globalIcons.info || 'lucide:circle-alert'
+  return globalIcons.info || 'lucide:circle-alert'
 })
 
 const resolvedIcon = computed(() => {
@@ -121,7 +121,7 @@ const resolvedIcon = computed(() => {
     </div>
 
     <button v-if="props.closable" type="button" :class="styles.close" aria-label="Close alert" @click="handleClose">
-      <Icon :name="useAppConfig().daredash?.icons?.toastClose || 'heroicons:x-mark'" />
+      <Icon :name="useAppConfig().daredash?.icons?.toastClose || 'lucide:x'" />
     </button>
   </div>
 </template>

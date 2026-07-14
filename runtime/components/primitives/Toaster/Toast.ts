@@ -35,14 +35,14 @@ export default defineNuxtComponent({
     const iconName = computed(() => {
       if (props.icon) return props.icon
       if (attrs.success !== undefined && attrs.success !== false)
-        return globalIcons.success || 'heroicons:check-circle'
+        return globalIcons.success || 'lucide:circle-check'
       if (attrs.danger !== undefined && attrs.danger !== false)
-        return globalIcons.error || 'heroicons:x-circle'
+        return globalIcons.error || 'lucide:circle-x'
       if (attrs.error !== undefined && attrs.error !== false)
-        return globalIcons.error || 'heroicons:x-circle'
+        return globalIcons.error || 'lucide:circle-x'
       if (attrs.warning !== undefined && attrs.warning !== false)
-        return globalIcons.warning || 'heroicons:exclamation-triangle'
-      return globalIcons.info || 'heroicons:information-circle'
+        return globalIcons.warning || 'lucide:triangle-alert'
+      return globalIcons.info || 'lucide:circle-alert'
     })
 
     return () => {
@@ -76,7 +76,7 @@ export default defineNuxtComponent({
             'aria-label': 'Dismiss'
           },
           h(Icon, {
-            name: globalIcons.toastClose || 'heroicons:x-mark',
+            name: globalIcons.toastClose || 'lucide:x',
             size: 'var(--dd-toast-close-size)'
           })
         )

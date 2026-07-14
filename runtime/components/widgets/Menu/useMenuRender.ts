@@ -103,7 +103,7 @@ export function useMenuRender(
 
       const chevronNode = (hasChildren && !hideLabel)
         ? h(Icon, {
-            name: 'heroicons:chevron-right',
+            name: 'lucide:chevron-right',
             class: styles.chevron,
             'aria-hidden': 'true'
           })

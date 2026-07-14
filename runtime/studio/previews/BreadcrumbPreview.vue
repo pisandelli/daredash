@@ -69,7 +69,7 @@ function resolveFieldValue(path: string, fallback: string) {
         @keydown.enter.prevent="focusField('breadcrumbs.separator.color')"
         @keydown.space.prevent="focusField('breadcrumbs.separator.color')"
       >
-        <DdBreadcrumb :config="{ separator: 'heroicons:chevron-double-right', routes: compactRoutes }" />
+        <DdBreadcrumb :config="{ separator: 'lucide:chevrons-right', routes: compactRoutes }" />
         <div class="dd-breadcrumb-meta">
           <span>{{ resolveFieldValue('breadcrumbs.separator.color', 'var(--dd-breadcrumbs-separator-color)') }}</span>
           <span>{{ resolveFieldValue('breadcrumbs.item-current.font-weight', 'var(--dd-breadcrumbs-item-current-font-weight)') }}</span>
