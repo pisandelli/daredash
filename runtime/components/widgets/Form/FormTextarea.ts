@@ -1,8 +1,7 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, computed } from 'vue'
 import { useField } from 'vee-validate'
-import { resolveComponent } from 'vue'
-import getPrefixName from '#dd/utils/getPrefixName'
+import Textarea from '../../primitives/Form/Textarea'
 
 export default defineNuxtComponent({
   name: 'FormTextarea',
@@ -25,10 +24,6 @@ export default defineNuxtComponent({
     }
   },
   setup(props, { attrs, slots }) {
-    const TextareaComponent = resolveComponent(
-      getPrefixName('Textarea', { type: 'component' })
-    )
-
     const {
       value,
       errorMessage: fieldError,
@@ -44,7 +39,7 @@ export default defineNuxtComponent({
 
     return () => {
       return h(
-        TextareaComponent as any,
+        Textarea,
         {
           ...attrs,
           name: props.name,

@@ -43,16 +43,16 @@
    * FieldShell is the standard wrapper for Input/Select/Textarea. Inside an
    * InputGroup it should behave as the control segment, not as an outer field.
    */
-  [data-dd-field-shell] {
+  [data-field-shell] {
     gap: 0;
     max-inline-size: none;
   }
 
-  [data-dd-field-feedback] {
+  [data-field-feedback] {
     display: none;
   }
 
-  > [data-dd-field-shell] {
+  > [data-field-shell] {
     flex: 1 1 0;
     inline-size: auto;
   }

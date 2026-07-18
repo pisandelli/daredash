@@ -1,8 +1,7 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, computed } from 'vue'
 import { useField } from 'vee-validate'
-import { resolveComponent } from 'vue'
-import getPrefixName from '#dd/utils/getPrefixName'
+import Input from '../../primitives/Form/Input'
 
 export default defineNuxtComponent({
   name: 'FormInput',
@@ -25,10 +24,6 @@ export default defineNuxtComponent({
     }
   },
   setup(props, { attrs, slots }) {
-    const InputComponent = resolveComponent(
-      getPrefixName('Input', { type: 'component' })
-    )
-
     const {
       value,
       errorMessage: fieldError,
@@ -44,7 +39,7 @@ export default defineNuxtComponent({
 
     return () => {
       return h(
-        InputComponent as any,
+        Input,
         {
           ...attrs,
           name: props.name,

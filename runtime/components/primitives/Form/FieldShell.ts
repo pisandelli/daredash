@@ -57,7 +57,7 @@ export default defineNuxtComponent({
             {
               class: styles.label,
               for: props.forId,
-              'data-dd-field-label': ''
+              'data-field-label': ''
             },
             [props.label, props.required ? ' *' : '']
           )
@@ -67,7 +67,7 @@ export default defineNuxtComponent({
         'div',
         {
           class: styles.control,
-          'data-dd-field-control': ''
+          'data-field-control': ''
         },
         slots.default?.()
       )
@@ -81,7 +81,7 @@ export default defineNuxtComponent({
                 props.messageState === 'error' ? styles.errorMessage : undefined,
                 props.messageState === 'warning' ? styles.warningMessage : undefined
               ],
-              'data-dd-field-message': ''
+              'data-field-message': ''
             },
             props.message ?? ''
           )
@@ -92,15 +92,15 @@ export default defineNuxtComponent({
             'small',
             {
               class: styles.counter,
-              'data-dd-field-counter': ''
+              'data-field-counter': ''
             },
             props.counter
           )
         : null
 
       const feedbackNode = messageNode || counterNode
-        ? h('div', { class: styles.feedback, 'data-dd-field-feedback': '' }, [
-            messageNode ?? h('span', { 'data-dd-field-message-placeholder': '' }),
+        ? h('div', { class: styles.feedback, 'data-field-feedback': '' }, [
+            messageNode ?? h('span', { 'data-field-message-placeholder': '' }),
             counterNode
           ])
         : null
@@ -110,7 +110,7 @@ export default defineNuxtComponent({
         {
           class: [styles.field, props.wrapperClass],
           style: props.wrapperStyle,
-          'data-dd-field-shell': '',
+          'data-field-shell': '',
           'data-no-message': props.noMessage ? '' : undefined
         },
         [labelNode, controlNode, feedbackNode].filter(Boolean)
