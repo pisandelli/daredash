@@ -322,7 +322,10 @@ Styled text input for short values.
 - `success`
 - `small`
 - `large`
+- `no-message`
 - standard native attrs such as `required` and `disabled`
+
+Use `no-message` for compact filter/search rows where the reserved helper/error area would disrupt alignment.
 
 ### Textarea (`<dd-textarea>`)
 
@@ -358,6 +361,7 @@ Multiline field for longer text.
 - `error`
 - `warning`
 - `success`
+- `no-message`
 
 ### Select (`<dd-select>`)
 
@@ -391,6 +395,7 @@ Styled native select for a single choice from a closed list.
 - `success`
 - `small`
 - `large`
+- `no-message`
 
 ### Checkbox (`<dd-checkbox>`), Radio (`<dd-radio>`), and Toggle (`<dd-toggle>`)
 

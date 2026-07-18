@@ -77,7 +77,9 @@ export const customAttributes = new Set([
   'striped',
   'striped-odd',
   // from Progress.module.css
-  'indeterminate'
+  'indeterminate',
+  // form field anatomy
+  'no-message'
 ])
 
 /**

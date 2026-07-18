@@ -1,8 +1,9 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, computed, type VNode, resolveComponent } from 'vue'
+import { h, computed, type VNode } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Input.module.css'
 import { Icon } from '#components'
+import FieldShell from './FieldShell'
 
 export default defineNuxtComponent({
   name: 'Input',
@@ -82,11 +83,16 @@ export default defineNuxtComponent({
   emits: ['update:modelValue'],
   setup(props, { attrs, emit }) {
     // 1. Process Attributes and get wrapped class
-    const { processedAttrs, classList } = useBaseComponent(
+    const { processedAttrs } = useBaseComponent(
       attrs,
       styles,
       'Input'
     )
+    const inputAttrs = computed(() => {
+      const filteredAttrs = { ...processedAttrs.value }
+      delete filteredAttrs['data-no-message']
+      return filteredAttrs
+    })
 
     // Handle input change
     const onInput = (event: Event) => {
@@ -117,6 +123,9 @@ export default defineNuxtComponent({
     const isDisabled = computed(
       () => attrs.disabled !== undefined && attrs.disabled !== false
     )
+    const shouldRenderMessage = computed(
+      () => attrs['no-message'] === undefined || attrs['no-message'] === false
+    )
 
     const identifier = computed(() => props.id || props.name || 'input')
     const hasError = computed(() => !!(attrError.value || props.isInvalid))
@@ -137,19 +146,6 @@ export default defineNuxtComponent({
     )
 
     return () => {
-      // 1. Render Label if present
-      const labelNode = props.label
-        ? h(
-            'label',
-            {
-              class: styles.label,
-              for: identifier.value
-            },
-            [props.label, isRequired.value ? ' *' : '']
-          )
-        : null
-
-      // 2. Render Input Wrapper
       const inputNodes: VNode[] = []
 
       // Icon Left
@@ -174,11 +170,11 @@ export default defineNuxtComponent({
       // Input Element
       inputNodes.push(
         h('input', {
-          ...processedAttrs.value,
+          ...inputAttrs.value,
           id: identifier.value,
           name: props.name,
           type: props.type,
-          class: [styles.input, classList.value],
+          class: styles.input,
           disabled: isDisabled.value || undefined, // undefined to remove attribute if false
           required: isRequired.value || undefined,
           placeholder: props.placeholder,
@@ -211,25 +207,20 @@ export default defineNuxtComponent({
         )
       }
 
-      // 3. Always render message container to reserve space and prevent layout shift
-      const messageNode = h(
-        'small',
+      return h(
+        FieldShell,
         {
-          class: [
-            styles.message,
-            hasError.value ? styles.errorMessage : undefined,
-            hasWarning.value ? styles.warningMessage : undefined
-          ]
+          label: props.label,
+          forId: identifier.value,
+          required: isRequired.value,
+          message: activeMessage.value,
+          messageState: hasError.value ? 'error' : hasWarning.value ? 'warning' : undefined,
+          noMessage: !shouldRenderMessage.value,
+          wrapperClass: attrs.class,
+          wrapperStyle: attrs.style
         },
-        activeMessage.value ?? ''
+        () => inputNodes
       )
-
-      // Return the wrapper
-      return h('div', { class: [styles.wrapper, attrs.class], style: attrs.style }, [
-        labelNode,
-        h('div', { style: { position: 'relative' } }, inputNodes), // Wrap input+icons for positioning
-        messageNode
-      ])
     }
   }
 })

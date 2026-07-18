@@ -2,6 +2,7 @@ import { defineNuxtComponent } from 'nuxt/app'
 import { h, computed, ref, watch } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Textarea.module.css'
+import FieldShell from './FieldShell'
 
 // Optional VeeValidate integration – gracefully degrades when not installed.
 let useField: undefined | ((...args: any[]) => any)
@@ -91,11 +92,16 @@ export default defineNuxtComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { attrs, emit }) {
-    const { processedAttrs, classList } = useBaseComponent(
+    const { processedAttrs } = useBaseComponent(
       attrs,
       styles,
       'Textarea'
     )
+    const textareaAttrs = computed(() => {
+      const filteredAttrs = { ...processedAttrs.value }
+      delete filteredAttrs['data-no-message']
+      return filteredAttrs
+    })
 
     const liveValue = ref((props.modelValue || '') as string)
 
@@ -136,6 +142,9 @@ export default defineNuxtComponent({
     )
     const isDisabled = computed(
       () => attrs.disabled !== undefined && attrs.disabled !== false
+    )
+    const shouldRenderMessage = computed(
+      () => attrs['no-message'] === undefined || attrs['no-message'] === false
     )
 
     const identifier = computed(() => props.id || props.name || 'textarea')
@@ -180,21 +189,12 @@ export default defineNuxtComponent({
     const charCount = computed(() => liveValue.value.length)
 
     return () => {
-      // 1. Label
-      const labelNode = props.label
-        ? h('label', { class: styles.label, for: identifier.value }, [
-            props.label,
-            isRequired.value ? ' *' : ''
-          ])
-        : null
-
-      // 2. Textarea
       const textareaNode = h('textarea', {
-        ...processedAttrs.value,
+        ...textareaAttrs.value,
         id: identifier.value,
         name: props.name,
         rows: props.rows,
-        class: [styles.textarea, classList.value],
+        class: styles.textarea,
         disabled: isDisabled.value || undefined,
         required: isRequired.value || undefined,
         placeholder: props.placeholder,
@@ -206,41 +206,22 @@ export default defineNuxtComponent({
         onInput
       })
 
-      // 3. Footer: message on the left, char counter on the right
-      const messageNode = activeMessage.value
-        ? h(
-            'small',
-            {
-              class: [
-                styles.message,
-                hasError.value ? styles.errorMessage : styles.warningMessage
-              ]
-            },
-            activeMessage.value
-          )
-        : null
-
-      const counterNode = props.maxLength
-        ? h(
-            'small',
-            { class: styles.counter },
-            `${charCount.value} / ${props.maxLength}`
-          )
-        : null
-
-      const footerNode =
-        messageNode || counterNode
-          ? h('div', { class: styles.footer }, [
-              messageNode ?? h('span'),
-              counterNode
-            ])
-          : null
-
-      return h('div', { class: [styles.wrapper, processedAttrs.value.class] }, [
-        labelNode,
-        textareaNode,
-        footerNode
-      ])
+      return h(
+        FieldShell,
+        {
+          label: props.label,
+          forId: identifier.value,
+          required: isRequired.value,
+          message: activeMessage.value,
+          messageState: hasError.value ? 'error' : hasWarning.value ? 'warning' : undefined,
+          noMessage: !shouldRenderMessage.value,
+          reserveMessage: false,
+          counter: props.maxLength ? `${charCount.value} / ${props.maxLength}` : undefined,
+          wrapperClass: attrs.class,
+          wrapperStyle: attrs.style
+        },
+        () => textareaNode
+      )
     }
   }
 })

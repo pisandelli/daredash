@@ -70,7 +70,11 @@ describe('default component tokens', () => {
     expect(tableTokens.density.compact.cell.padding.$value).toBe('{space.xxs}')
   })
 
-  it('keeps select field spacing aligned with input spacing', () => {
+  it('uses a shared field shell for text field spacing and messages', () => {
+    const fieldShellCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/FieldShell.module.css'
+    )
     const inputCssPath = resolve(
       process.cwd(),
       'runtime/assets/styles/components/Input.module.css'
@@ -83,21 +87,29 @@ describe('default component tokens', () => {
       process.cwd(),
       'runtime/assets/styles/components/Textarea.module.css'
     )
+    const inputGroupCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/InputGroup.module.css'
+    )
 
+    const fieldShellCss = readFileSync(fieldShellCssPath, 'utf8')
     const inputCss = readFileSync(inputCssPath, 'utf8')
     const selectCss = readFileSync(selectCssPath, 'utf8')
     const textareaCss = readFileSync(textareaCssPath, 'utf8')
+    const inputGroupCss = readFileSync(inputGroupCssPath, 'utf8')
 
-    expect(inputCss).toContain(".wrapper {\n  --local-label-font-size: v('input.label.font-size');")
-    expect(inputCss).toContain('gap: 0.375rem;')
-    expect(selectCss).toContain('gap: 0.375rem;')
+    expect(fieldShellCss).toContain(".field {\n  --local-label-font-size: v('input.label.font-size');")
+    expect(fieldShellCss).toContain('gap: 0.375rem;')
+    expect(fieldShellCss).toContain('min-block-size: 1.25em;')
+    expect(inputGroupCss).toContain('[data-dd-field-shell] {')
+    expect(inputGroupCss).toContain('[data-dd-field-feedback] {')
+    expect(inputGroupCss).toContain('> [data-dd-field-shell] {')
+    expect(inputGroupCss).toContain('flex: 1 1 0;')
+    expect(inputGroupCss).toContain('gap: 0;')
+    expect(inputCss).not.toContain('.wrapper')
+    expect(selectCss).not.toContain('.wrapper')
+    expect(textareaCss).not.toContain('.wrapper')
     expect(selectCss).not.toContain("margin-block-end: v('space.xxs');")
-    expect(selectCss).toContain("--local-label-font-size: v('select.label.font-size');")
-    expect(selectCss).toContain("--local-label-font-weight: v('select.label.font-weight');")
-    expect(selectCss).toContain("--local-label-color: v('select.label.color');")
-    expect(textareaCss).toContain("--local-label-font-size: v('textarea.label.font-size');")
-    expect(textareaCss).toContain("--local-label-font-weight: v('textarea.label.font-weight');")
-    expect(textareaCss).toContain("--local-label-color: v('textarea.label.color');")
   })
 
   it('uses section-specific card padding tokens with shared fallback', () => {

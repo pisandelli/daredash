@@ -57,4 +57,19 @@ describe('Select Primitive', () => {
     expect(select.attributes('data-testid')).toBe('category-filter')
     expect(select.classes()).not.toContain('toolbarField')
   })
+
+  it('omits the reserved message area when no-message is used', async () => {
+    const wrapper = await mountSuspended(Select, {
+      attrs: {
+        'no-message': true,
+        error: 'Choose an option'
+      },
+      props: {
+        options: [{ label: 'Alpha', value: 'a' }]
+      }
+    })
+
+    expect(wrapper.find('select').exists()).toBe(true)
+    expect(wrapper.find('small').exists()).toBe(false)
+  })
 })

@@ -1,9 +1,10 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, computed, type VNode } from 'vue'
+import { h, computed } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import { useAppConfig } from '#imports'
 import styles from '#dd/styles/Select.module.css'
 import { Icon } from '#components'
+import FieldShell from './FieldShell'
 
 export default defineNuxtComponent({
   name: 'Select',
@@ -86,7 +87,8 @@ export default defineNuxtComponent({
         'errorMessage',
         'id',
         'name',
-        'label'
+        'label',
+        'data-no-message'
       ]) {
         delete filteredAttrs[propKey]
       }
@@ -123,6 +125,9 @@ export default defineNuxtComponent({
     const isDisabled = computed(
       () => attrs.disabled !== undefined && attrs.disabled !== false
     )
+    const shouldRenderMessage = computed(
+      () => attrs['no-message'] === undefined || attrs['no-message'] === false
+    )
 
     const identifier = computed(() => props.id || props.name || 'select')
     const hasError = computed(() => !!(attrError.value || props.isInvalid))
@@ -143,19 +148,6 @@ export default defineNuxtComponent({
     )
 
     return () => {
-      // 1. Render Label
-      const labelNode = props.label
-        ? h(
-            'label',
-            {
-              class: styles.label,
-              for: identifier.value
-            },
-            [props.label, isRequired.value ? ' *' : '']
-          )
-        : null
-
-      // 2. Render Options
       const optionsNodes = [
         h(
           'option',
@@ -194,30 +186,19 @@ export default defineNuxtComponent({
         })
       ])
 
-      // 5. Always render message container to reserve space and prevent layout shift
-      const messageNode = h(
-        'small',
-        {
-          class: [
-            styles.message,
-            hasError.value ? styles.errorMessage : undefined,
-            hasWarning.value ? styles.warningMessage : undefined
-          ]
-        },
-        activeMessage.value ?? ''
-      )
-
       return h(
-        'div',
+        FieldShell,
         {
-          class: [styles.wrapper, attrs.class],
-          style: attrs.style
+          label: props.label,
+          forId: identifier.value,
+          required: isRequired.value,
+          message: activeMessage.value,
+          messageState: hasError.value ? 'error' : hasWarning.value ? 'warning' : undefined,
+          noMessage: !shouldRenderMessage.value,
+          wrapperClass: attrs.class,
+          wrapperStyle: attrs.style
         },
-        [
-          labelNode,
-          h('div', { class: styles.inner }, [selectNode, arrowNode]),
-          messageNode
-        ]
+        () => [selectNode, arrowNode]
       )
     }
   }

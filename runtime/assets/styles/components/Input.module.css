@@ -128,36 +128,3 @@
   &.warning { color: v('color.warning'); }
   &.success { color: v('color.success'); }
 }
-
-.wrapper {
-  --local-label-font-size: v('input.label.font-size');
-  --local-label-font-weight: v('input.label.font-weight');
-  --local-label-color: v('input.label.color');
-  --local-message-font-family: v('input.error-label.font-family');
-  --local-message-font-size: v('input.error-label.font-size');
-  --local-message-font-weight: v('input.error-label.font-weight');
-  --local-message-color: v('input.error-label.color');
-
-  display: flex;
-  flex-direction: column;
-  inline-size: auto;
-  min-inline-size: 0;
-  max-inline-size: 100%;
-  gap: 0.375rem;
-}
-
-.label {
-  font-size: var(--local-label-font-size);
-  font-weight: var(--local-label-font-weight);
-  color: var(--local-label-color);
-}
-
-.message {
-  font-family: var(--local-message-font-family);
-  font-size: var(--local-message-font-size);
-  font-weight: var(--local-message-font-weight);
-  min-block-size: 1.25em;
-}
-
-.errorMessage   { color: var(--local-message-color); }
-.warningMessage { color: v('color.warning'); }

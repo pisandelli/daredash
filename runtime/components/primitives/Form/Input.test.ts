@@ -106,4 +106,16 @@ describe('Input Primitive', () => {
     const input = wrapper.find('input')
     expect(input.attributes('autocomplete')).toBe('off')
   })
+
+  it('omits the reserved message area when no-message is used', async () => {
+    const wrapper = await mountSuspended(Input, {
+      attrs: {
+        'no-message': true,
+        error: 'Required field'
+      }
+    })
+
+    expect(wrapper.find('input').exists()).toBe(true)
+    expect(wrapper.find('small').exists()).toBe(false)
+  })
 })

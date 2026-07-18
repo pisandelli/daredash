@@ -39,6 +39,24 @@
   label { display: none; }
   small { display: none; }
 
+  /*
+   * FieldShell is the standard wrapper for Input/Select/Textarea. Inside an
+   * InputGroup it should behave as the control segment, not as an outer field.
+   */
+  [data-dd-field-shell] {
+    gap: 0;
+    max-inline-size: none;
+  }
+
+  [data-dd-field-feedback] {
+    display: none;
+  }
+
+  > [data-dd-field-shell] {
+    flex: 1 1 0;
+    inline-size: auto;
+  }
+
   /* Strip border and radius from the inner input/select */
   :is(input, select) {
     border: none;

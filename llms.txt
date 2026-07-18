@@ -815,6 +815,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - supports status attrs `error`, `warning`, and `success`;
   - supports sizing attrs `small` and `large`;
   - `error` and `warning` may be passed as booleans or as strings, and string values become visible helper messages;
+  - use `no-message` in compact filter/search rows when the reserved helper/error area should not affect external alignment;
   - left and right icons are props (`icon`, `iconRight`), not slots.
 
 ### `DdTextarea`
@@ -840,7 +841,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdTextarea v-model="bio" name="bio" :rows="4" :max-length="280" />`.
 - Incorrect example: `<DdTextarea :options="options" />`.
 - Accessibility notes: use `label` or equivalent labeling.
-- Restrictions: states `error`, `warning`, `success`.
+- Restrictions: states `error`, `warning`, `success`; use `no-message` to suppress visible helper/error text in compact layouts while preserving visual state.
 
 ### `DdSelect`
 
@@ -868,6 +869,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - supports status attrs `error`, `warning`, and `success`;
   - supports sizing attrs `small` and `large`;
   - `error` and `warning` may be passed as strings to surface inline helper text;
+  - use `no-message` in compact filter/search rows when the reserved helper/error area should not affect external alignment;
   - options must follow `{ label, value, disabled? }`.
 
 ### `DdCheckbox`
