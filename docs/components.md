@@ -76,6 +76,8 @@ Use `dd-card` to group related content with optional header and footer regions.
 - `flat`
 - `noborder`
 
+Consumer classes passed to `dd-card` are preserved on the card root and can be used as local visual hooks.
+
 ### Badge (`<dd-badge>`)
 
 Use `dd-badge` for short status labels, counts, or metadata.
@@ -100,6 +102,30 @@ Use `dd-badge` for short status labels, counts, or metadata.
 #### Common attrs
 
 - semantic attrs such as `primary`, `success`, `warning`, `danger`, `info`
+
+### Notification Trigger (`<dd-notification-trigger>`)
+
+Use `dd-notification-trigger` for an icon-only notification button with a detached count badge.
+
+```vue
+<template>
+  <dd-notification-trigger ghost :count="unreadCount" label="Open notifications" />
+</template>
+```
+
+#### Props
+
+| Prop | Type | Description |
+| :--- | :--- | :--- |
+| `count` | `number` | Numeric badge count. |
+| `max` | `number` | Maximum value before rendering `max+`. |
+| `icon` | `string` | Optional icon override. Defaults to the global `notification` icon. |
+| `label` | `string` | Accessible button label. |
+| `show-zero` | `boolean` | Shows a zero badge when `count` is 0. |
+| `to` | `string or object` | Route target for the underlying button. |
+| `href` | `string` | Href target for the underlying button. |
+
+Button visual attrs such as `ghost`, `outline`, `primary`, `small`, and `large` are forwarded to the inner `dd-button`, keeping the count outside the button content so the button shape does not change. The numeric count is rendered with local CSS, not `dd-badge`, so it stays solid and round for single digits while wider values such as `99+` expand only as needed. Customize it with `notification-trigger.badge.base-color`, `notification-trigger.badge.color`, `notification-trigger.badge.border-radius`, and related placement tokens.
 
 ### Avatar (`<dd-avatar>` and `<dd-avatar-group>`)
 
@@ -786,6 +812,8 @@ Use `dd-menu` for hierarchical, persistent navigation.
 - `select`
 
 Nested indentation is controlled through theming, not through a prop-level API.
+
+When `active-key` or route detection resolves to a nested item, `dd-menu` automatically expands the active parent group and keeps only the relevant active branch expanded.
 
 ### Anchor (`<dd-anchor>`)
 

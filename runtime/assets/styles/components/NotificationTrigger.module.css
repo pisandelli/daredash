@@ -1,0 +1,41 @@
+.notificationTrigger {
+  --local-badge-offset-inline: v('notification-trigger.badge.offset-inline');
+  --local-badge-offset-block: v('notification-trigger.badge.offset-block');
+  --local-badge-min-size: v('notification-trigger.badge.min-size');
+  --local-badge-padding-inline: v('notification-trigger.badge.padding-inline');
+  --local-badge-radius: v('notification-trigger.badge.border-radius');
+  --local-badge-base-color: v('notification-trigger.badge.base-color');
+  --local-badge-color: v('notification-trigger.badge.color');
+  --local-badge-z-index: v('notification-trigger.badge.z-index');
+
+  position: relative;
+  display: inline-flex;
+  inline-size: max-content;
+}
+
+.badge {
+  position: absolute;
+  inset-block-start: var(--local-badge-offset-block);
+  inset-inline-end: var(--local-badge-offset-inline);
+  z-index: var(--local-badge-z-index);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--local-badge-min-size);
+  min-block-size: var(--local-badge-min-size);
+  aspect-ratio: 1;
+  padding-inline: 0;
+  border-radius: var(--local-badge-radius);
+  font-family: v('font.base');
+  font-size: v('font-size.xs');
+  font-weight: v('font-weight.medium');
+  line-height: v('line-height.none');
+  background-color: var(--local-badge-base-color);
+  color: var(--local-badge-color);
+  pointer-events: none;
+}
+
+.badge[data-overflow] {
+  aspect-ratio: auto;
+  padding-inline: var(--local-badge-padding-inline);
+}

@@ -25,7 +25,7 @@ export default defineNuxtComponent({
     }
   },
   setup(props, { slots, attrs }): () => VNode {
-    const { processedAttrs } = useBaseComponent(attrs, styles)
+    const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Badge')
 
     const defineColor = computed(() => {
       // Only return color if explicit color prop is present.
@@ -49,7 +49,7 @@ export default defineNuxtComponent({
         'span',
         {
           ...processedAttrs.value,
-          class: styles.badge,
+          class: classList.value,
           ...(defineColor.value ? { style: badgeStyle.value } : {})
         },
         [

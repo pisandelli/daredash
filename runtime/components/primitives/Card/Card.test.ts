@@ -49,4 +49,17 @@ describe('Card Primitive', () => {
     expect(wrapper.attributes('data-flat')).toBeDefined()
     expect(wrapper.attributes('data-noborder')).toBeDefined()
   })
+
+  it('preserves consumer classes on the card root', async () => {
+    const wrapper = await mountSuspended(Card, {
+      attrs: {
+        class: 'is-read'
+      },
+      slots: {
+        default: () => 'Notification'
+      }
+    })
+
+    expect(wrapper.classes()).toContain('is-read')
+  })
 })

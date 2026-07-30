@@ -123,6 +123,10 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/primitives/Skeleton/Skeleton.ts',
     style: './runtime/assets/styles/components/Skeleton.module.css'
   },
+  NotificationTrigger: {
+    filePath: './runtime/components/primitives/NotificationTrigger/NotificationTrigger.ts',
+    style: './runtime/assets/styles/components/NotificationTrigger.module.css'
+  },
   Toaster: {
     filePath: './runtime/components/primitives/Toaster/Toaster.ts',
     style: './runtime/assets/styles/components/Toaster.module.css'

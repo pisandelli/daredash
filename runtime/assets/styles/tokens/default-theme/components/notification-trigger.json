@@ -1,0 +1,29 @@
+{
+  "badge": {
+    "$type": "object",
+    "offset-inline": {
+      "$value": "-0.25rem"
+    },
+    "offset-block": {
+      "$value": "-0.25rem"
+    },
+    "min-size": {
+      "$value": "1rem"
+    },
+    "padding-inline": {
+      "$value": "{space.xxs}"
+    },
+    "border-radius": {
+      "$value": "{border-radius.full}"
+    },
+    "base-color": {
+      "$value": "{color.danger}"
+    },
+    "color": {
+      "$value": "contrast-color({notification-trigger.badge.base-color})"
+    },
+    "z-index": {
+      "$value": "1"
+    }
+  }
+}

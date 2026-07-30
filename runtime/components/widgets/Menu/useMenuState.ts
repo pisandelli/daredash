@@ -51,6 +51,13 @@ export function useMenuState(
     }
   )
 
+  watch(
+    () => props.collapsed,
+    (collapsed) => {
+      internalCollapsed.value = collapsed
+    }
+  )
+
   return {
     internalCollapsed,
     isCollapsed,

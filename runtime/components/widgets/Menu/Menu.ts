@@ -1,5 +1,5 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, resolveComponent, type PropType } from 'vue'
+import { h, resolveComponent, toRef, watch, type PropType } from 'vue'
 import { useAppConfig } from '#imports'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Menu.module.css'
@@ -104,7 +104,20 @@ export default defineNuxtComponent({
 
     const { isCollapsed, collapse, expand, toggle } = useMenuState(props, emit)
     const float = useMenuFloat(props, isCollapsed)
-    const { resolvedActiveKey } = useMenuActive({ activeKey: props.activeKey, items: props.items })
+    const { resolvedActiveKey, resolvedActiveParentKeys } = useMenuActive({
+      activeKey: toRef(props, 'activeKey'),
+      items: toRef(props, 'items')
+    })
+
+    watch(
+      resolvedActiveParentKeys,
+      (keys) => {
+        if (props.orientation !== 'vertical') return
+        if (keys.length === 0) return
+        float.expandedKeys.value = new Set(keys)
+      },
+      { immediate: true }
+    )
 
     const render = useMenuRender(styles, {
       isCollapsed,

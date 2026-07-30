@@ -110,6 +110,7 @@ export default defineNuxtModule<ModuleOptions>().with({
       drawerClose: 'lucide:x',
       tableError: 'lucide:triangle-alert',
       emptyTable: 'lucide:inbox',
+      notification: 'lucide:bell',
       paginationPrev: 'lucide:chevron-left',
       paginationNext: 'lucide:chevron-right'
     }

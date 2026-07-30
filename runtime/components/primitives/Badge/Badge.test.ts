@@ -26,6 +26,19 @@ describe('Badge Primitive', () => {
     expect(wrapper.attributes('data-large')).toBeDefined()
   })
 
+  it('preserves consumer classes on the badge root', async () => {
+    const wrapper = await mountSuspended(Badge, {
+      attrs: {
+        class: 'count-badge'
+      },
+      slots: {
+        default: () => '3'
+      }
+    })
+
+    expect(wrapper.classes()).toContain('count-badge')
+  })
+
   it('binds custom `color` via CSS variable style correctly', async () => {
     const wrapper = await mountSuspended(Badge, {
       props: {

@@ -188,6 +188,7 @@ describe('Menu', () => {
     expect(trigger.attributes('aria-expanded')).toBe('false')
 
     await trigger.trigger('click')
+    wrapper.vm.$forceUpdate()
     await nextTick()
 
     const parentItem = wrapper.findAll('li').find(li =>
@@ -205,13 +206,57 @@ describe('Menu', () => {
     const trigger = wrapper.find('button[aria-controls]')
 
     await trigger.trigger('click') // open
+    wrapper.vm.$forceUpdate()
     await nextTick()
     await trigger.trigger('click') // close
+    wrapper.vm.$forceUpdate()
     await nextTick()
 
     const expandedItems = wrapper.findAll('[data-expanded]')
     // Root <nav> may have data-orientation but no data-expanded
     expect(expandedItems.filter(el => el.element.tagName === 'LI').length).toBe(0)
+  })
+
+  test('expands the parent group for the active route key', async () => {
+    const wrapper = await mountSuspended(Menu, {
+      props: {
+        items: itemsWithChildren,
+        activeKey: 'reports-monthly'
+      }
+    })
+
+    const parentItem = wrapper.findAll('li').find(li =>
+      li.text().includes('Reports') &&
+      li.attributes('data-expanded') !== undefined
+    )
+
+    expect(parentItem).toBeDefined()
+    expect(wrapper.find('button[aria-controls]').attributes('aria-expanded')).toBe('true')
+  })
+
+  test('keeps only the active parent group expanded for the resolved active key', async () => {
+    const groupedItems: MenuEntry[] = [
+      ...itemsWithChildren,
+      {
+        key: 'settings',
+        label: 'Settings',
+        action: { type: 'none' },
+        children: [
+          { key: 'settings-profile', label: 'Profile', action: { type: 'link', to: '/settings/profile' } }
+        ]
+      }
+    ]
+
+    const wrapper = await mountSuspended(Menu, {
+      props: {
+        items: groupedItems,
+        activeKey: 'settings-profile'
+      }
+    })
+
+    const expandedItems = wrapper.findAll('li[data-expanded]')
+    expect(expandedItems).toHaveLength(1)
+    expect(expandedItems[0]!.text()).toContain('Settings')
   })
 
   test('emits select event when action item is clicked', async () => {
@@ -269,23 +314,22 @@ describe('Menu', () => {
     expect(wrapper.find('nav').attributes('data-collapsed')).toBe('')
   })
 
-  test('expose toggle() changes collapsed state and emits update:collapsed', async () => {
+  test('toggle button changes collapsed state and emits update:collapsed', async () => {
     const wrapper = await mountSuspended(Menu, {
       props: {
         items: simpleItems,
         collapsible: true,
+        toggleButton: true,
         collapsed: false
       }
     })
 
-    // In Nuxt test-utils, expose() methods are accessible via wrapper.vm.$
-    // but the pattern differs from a regular Vue component.
-    // We verify by: clicking the toggle button (ensure it emits the event).
-    // Since toggle button is not rendered here, we test via prop changes instead.
     expect(wrapper.find('nav').attributes('data-collapsed')).toBeUndefined()
-    await wrapper.setProps({ collapsed: true })
+    await wrapper.find('button[aria-label]').trigger('click')
+    wrapper.vm.$forceUpdate()
     await nextTick()
     expect(wrapper.find('nav').attributes('data-collapsed')).toBe('')
+    expect(wrapper.emitted('update:collapsed')![0]).toEqual([true])
   })
 
   test('renders toggle button when toggleButton prop is true', async () => {

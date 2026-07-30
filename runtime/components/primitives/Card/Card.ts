@@ -9,7 +9,7 @@ export default defineNuxtComponent({
   name: 'Card',
   inheritAttrs: false,
   setup(props, { slots, attrs }): () => VNode {
-    const { processedAttrs, classList } = useBaseComponent(attrs, styles)
+    const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Card')
     const Box = resolveComponent(getPrefixName('Box', { type: 'component' }))
 
     const Stack = resolveComponent(
@@ -42,7 +42,7 @@ export default defineNuxtComponent({
         Box,
         {
           ...processedAttrs.value,
-          class: styles.card,
+          class: classList.value,
           nogap: true
         },
         () => content

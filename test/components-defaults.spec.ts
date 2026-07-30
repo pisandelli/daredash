@@ -15,6 +15,34 @@ describe('default component tokens', () => {
     expect(badgeTokens.padding.inline.$value).toBe('{space.xs}')
   })
 
+  it('uses detached notification trigger badge defaults', () => {
+    const notificationTriggerTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/notification-trigger.json'
+    )
+    const notificationTriggerCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/NotificationTrigger.module.css'
+    )
+
+    const notificationTriggerTokens = JSON.parse(readFileSync(notificationTriggerTokensPath, 'utf8'))
+    const notificationTriggerCss = readFileSync(notificationTriggerCssPath, 'utf8')
+
+    expect(notificationTriggerTokens.badge['offset-inline'].$value).toBe('-0.25rem')
+    expect(notificationTriggerTokens.badge['offset-block'].$value).toBe('-0.25rem')
+    expect(notificationTriggerTokens.badge['min-size'].$value).toBe('1rem')
+    expect(notificationTriggerTokens.badge['padding-inline'].$value).toBe('{space.xxs}')
+    expect(notificationTriggerTokens.badge['border-radius'].$value).toBe('{border-radius.full}')
+    expect(notificationTriggerTokens.badge['base-color'].$value).toBe('{color.danger}')
+    expect(notificationTriggerTokens.badge.color.$value).toBe('contrast-color({notification-trigger.badge.base-color})')
+    expect(notificationTriggerCss).toContain("v('notification-trigger.badge.offset-inline')")
+    expect(notificationTriggerCss).toContain("v('notification-trigger.badge.base-color')")
+    expect(notificationTriggerCss).toContain('aspect-ratio: 1;')
+    expect(notificationTriggerCss).toContain('.badge[data-overflow]')
+    expect(notificationTriggerCss).toContain('background-color: var(--local-badge-base-color);')
+    expect(notificationTriggerCss).toContain('pointer-events: none;')
+  })
+
   it('uses neutral skeleton defaults for placeholder states', () => {
     const skeletonTokensPath = resolve(
       process.cwd(),

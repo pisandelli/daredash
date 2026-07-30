@@ -24,6 +24,7 @@ import LayoutPreview from './previews/LayoutPreview.vue'
 import LoadingPreview from './previews/LoadingPreview.vue'
 import MenuPreview from './previews/MenuPreview.vue'
 import ModalPreview from './previews/ModalPreview.vue'
+import NotificationTriggerPreview from './previews/NotificationTriggerPreview.vue'
 import PaginationPreview from './previews/PaginationPreview.vue'
 import PopoverPreview from './previews/PopoverPreview.vue'
 import ProgressPreview from './previews/ProgressPreview.vue'
@@ -592,6 +593,20 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('popover.arrow-size', 'Arrow Size', 'text', 'Core'),
       componentField('popover.color', 'Text Color', 'color', 'Core'),
       componentField('popover.z-index', 'Z-Index', 'text', 'Core')
+    ]
+  }),
+  componentTab('notification-trigger', 'primitive', {
+    label: 'Notification Trigger',
+    preview: NotificationTriggerPreview,
+    fields: [
+      componentField('notification-trigger.badge.offset-inline', 'Badge Offset Inline', 'text', 'Badge'),
+      componentField('notification-trigger.badge.offset-block', 'Badge Offset Block', 'text', 'Badge'),
+      componentField('notification-trigger.badge.min-size', 'Badge Min Size', 'text', 'Badge'),
+      componentField('notification-trigger.badge.padding-inline', 'Badge Padding Inline', 'text', 'Badge'),
+      componentField('notification-trigger.badge.border-radius', 'Badge Radius', 'text', 'Badge'),
+      componentField('notification-trigger.badge.base-color', 'Badge Background', 'color', 'Badge'),
+      componentField('notification-trigger.badge.color', 'Badge Text', 'text', 'Badge'),
+      componentField('notification-trigger.badge.z-index', 'Badge Z Index', 'text', 'Badge')
     ]
   }),
   componentTab('avatar', 'primitive', {

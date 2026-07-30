@@ -98,6 +98,7 @@ describe('DareDash Studio registry', () => {
       'button',
       'card',
       'loading',
+      'notification-trigger',
       'progress',
       'skeleton',
       'toast',

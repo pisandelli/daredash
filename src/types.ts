@@ -69,6 +69,7 @@ declare module '@nuxt/schema' {
         drawerClose?: string
         tableError?: string
         emptyTable?: string
+        notification?: string
         paginationPrev?: string
         paginationNext?: string
         [key: string]: string | undefined

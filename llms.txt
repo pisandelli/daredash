@@ -144,19 +144,18 @@ Keys explicitly typed in `src/types.ts`:
 - `info`
 - `toastClose`
 - `selectArrow`
+- `breadcrumbSeparator`
 - `modalClose`
 - `menuCollapse`
 - `menuExpand`
-
-Keys also read directly by runtime components:
-
 - `search`
 - `loading`
+- `drawerClose`
 - `tableError`
 - `emptyTable`
+- `notification`
 - `paginationPrev`
 - `paginationNext`
-- `drawerClose`
 
 Example:
 
@@ -677,6 +676,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Accessibility notes: the semantics of inner content depend on the elements used in the slots.
 - Restrictions:
   - relevant attrs `flat`, `noborder`;
+  - consumer classes are preserved on the card root and may be used as local visual hooks;
   - section spacing is token-driven through `card.padding` plus section overrides such as `card.header.padding`, `card.body.padding`, and `card.footer.padding`.
 
 ### `DdBadge`
@@ -698,6 +698,32 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - supports semantic attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
   - `color` is a real prop for direct custom color, not a semantic alias API;
   - prefer semantic attrs for status communication and reserve `color` for true one-off overrides.
+
+### `DdNotificationTrigger`
+
+- Description: icon-only notification button with a detached count badge.
+- When to use: topbars, headers, and authenticated areas that need a notification trigger with unread count.
+- When not to use: transient toast notifications; use `DdToast`/`DdToaster` for those.
+- Import: auto-registered by the module.
+- Props:
+  - `count: number = 0`
+  - `max: number = 99`
+  - `icon?: string`
+  - `label: string = 'Notifications'`
+  - `showZero: boolean = false`
+  - `to?: string | object`
+  - `href?: string`
+- Emits: none explicitly declared.
+- Slots: default slot is forwarded to the underlying button.
+- Correct example: `<DdNotificationTrigger ghost :count="unreadCount" label="Open notifications" />`.
+- Incorrect example: `<DdButton icon="lucide:bell"><DdBadge>3</DdBadge></DdButton>`.
+- Accessibility notes: provide a meaningful `label` or `aria-label`; the badge is decorative and hidden from assistive tech.
+- Restrictions:
+  - visual attrs such as `ghost`, `outline`, `primary`, `small`, and `large` are forwarded to the inner `DdButton`;
+  - the numeric count is local CSS, not `DdBadge`, because it is positional UI chrome rather than a standalone status badge;
+  - badge placement, shape, background, and text color are tokenized through `notification-trigger.badge.*`;
+  - notification count badges must remain solid and round by default for legibility; values wider than one character may expand as a pill;
+  - default icon comes from `appConfig.daredash.icons.notification` and falls back to `lucide:bell`.
 
 ### `DdBreadcrumb`
 
@@ -1536,6 +1562,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `items` is required;
   - each item must follow `MenuEntry`;
   - actions are modeled as `action: { type: 'link' | 'action' | 'none' }`;
+  - active nested routes expand their parent branch automatically and keep only the active branch open;
   - nested indentation is a theming concern, not a prop-level API.
 
 ### `DdMenu` theming notes
@@ -1728,7 +1755,6 @@ const rows = [
 ## 13. TODOs for remaining gaps
 
 - `TODO:` decide whether `DdModal` should gain a `header` slot in the future; today it does not exist.
-- `TODO:` align `src/types.ts` with all `appConfig.daredash.icons` keys that are actually read at runtime.
 
 ## 14. Appendix: useful public types
 

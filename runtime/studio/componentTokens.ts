@@ -19,6 +19,7 @@ import layout from '../assets/styles/tokens/default-theme/components/layout.json
 import loading from '../assets/styles/tokens/default-theme/components/loading.json'
 import menu from '../assets/styles/tokens/default-theme/components/menu.json'
 import modal from '../assets/styles/tokens/default-theme/components/modal.json'
+import notificationTrigger from '../assets/styles/tokens/default-theme/components/notification-trigger.json'
 import pagination from '../assets/styles/tokens/default-theme/components/pagination.json'
 import popover from '../assets/styles/tokens/default-theme/components/popover.json'
 import progress from '../assets/styles/tokens/default-theme/components/progress.json'
@@ -56,6 +57,7 @@ export const STUDIO_COMPONENT_TOKENS = {
   loading,
   menu,
   modal,
+  'notification-trigger': notificationTrigger,
   pagination,
   popover,
   progress,
