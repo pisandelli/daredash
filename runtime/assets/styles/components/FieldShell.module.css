@@ -2,6 +2,7 @@
   --local-label-font-size: v('input.label.font-size');
   --local-label-font-weight: v('input.label.font-weight');
   --local-label-color: v('input.label.color');
+  --local-required-marker-color: v('input.required-marker.color');
   --local-message-font-family: v('input.error-label.font-family');
   --local-message-font-size: v('input.error-label.font-size');
   --local-message-font-weight: v('input.error-label.font-weight');
@@ -21,6 +22,10 @@
   font-size: var(--local-label-font-size);
   font-weight: var(--local-label-font-weight);
   color: var(--local-label-color);
+}
+
+.requiredMarker {
+  color: var(--local-required-marker-color);
 }
 
 .control {

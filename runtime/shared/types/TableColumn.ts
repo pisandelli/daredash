@@ -15,4 +15,8 @@ export interface TableColumn {
    * CSS width (e.g., '100px', '20%')
    */
   width?: string
+  /**
+   * Enables built-in click-to-sort behavior for this column.
+   */
+  sortable?: boolean
 }

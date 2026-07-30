@@ -327,6 +327,8 @@ Styled text input for short values.
 
 Use `no-message` for compact filter/search rows where the reserved helper/error area would disrupt alignment.
 
+Required fields render a dedicated required marker inside the shared field shell. Its color is controlled by `input.required-marker.color` and is shared by `dd-input`, `dd-textarea`, `dd-select`, and their VeeValidate wrappers.
+
 ### Textarea (`<dd-textarea>`)
 
 Multiline field for longer text.
@@ -661,6 +663,8 @@ Use `dd-table` for straightforward tabular data with built-in loading, empty, an
 </template>
 ```
 
+Set `sortable: true` on a column to enable built-in click sorting for that column.
+
 #### Main props
 
 - `columns`
@@ -683,6 +687,10 @@ Use `dd-table` for straightforward tabular data with built-in loading, empty, an
 - `compact`
 - `striped`
 - `striped-odd`
+
+#### Row Styling
+
+The base `<tr>` background is controlled by `table.row.background-color`. Striped and hover states still use `table.row-striped.background-color` and `table.row-hover.background-color`.
 
 #### Density presets
 

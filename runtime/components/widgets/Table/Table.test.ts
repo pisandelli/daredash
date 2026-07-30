@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount, config } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import Table from './Table.vue'
 import styles from '#dd/styles/Table.module.css'
 
@@ -156,5 +157,43 @@ describe('Table primitive', () => {
     expect(wrapper.attributes('data-comfortable')).toBeDefined()
     expect(wrapper.attributes('data-compact')).toBeDefined()
     expect(wrapper.attributes('data-large')).toBeDefined()
+  })
+
+  it('sorts rows for sortable columns', async () => {
+    const columns = [
+      { key: 'name', title: 'Name', sortable: true },
+      { key: 'status', title: 'Status' }
+    ]
+    const wrapper = mount(Table, {
+      props: {
+        columns,
+        data: [
+          { id: 1, name: 'Charlie', status: 'Queued' },
+          { id: 2, name: 'Alice', status: 'Active' },
+          { id: 3, name: 'Bob', status: 'Review' }
+        ]
+      }
+    })
+
+    const rowNames = () => wrapper.findAll('tbody > tr').map(row => row.findAll('td')[0]!.text())
+
+    wrapper.vm.toggleSort(columns[0])
+    wrapper.vm.$forceUpdate()
+    await nextTick()
+    expect(wrapper.vm.getAriaSort(columns[0])).toBe('ascending')
+    expect(wrapper.find('th').attributes('aria-sort')).toBe('ascending')
+    expect(rowNames()).toEqual(['Alice', 'Bob', 'Charlie'])
+
+    wrapper.vm.toggleSort(columns[0])
+    wrapper.vm.$forceUpdate()
+    await nextTick()
+    expect(rowNames()).toEqual(['Charlie', 'Bob', 'Alice'])
+    expect(wrapper.find('th').attributes('aria-sort')).toBe('descending')
+
+    wrapper.vm.toggleSort(columns[0])
+    wrapper.vm.$forceUpdate()
+    await nextTick()
+    expect(rowNames()).toEqual(['Charlie', 'Alice', 'Bob'])
+    expect(wrapper.find('th').attributes('aria-sort')).toBe('none')
   })
 })

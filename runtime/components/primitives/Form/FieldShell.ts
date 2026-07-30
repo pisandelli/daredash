@@ -59,7 +59,12 @@ export default defineNuxtComponent({
               for: props.forId,
               'data-field-label': ''
             },
-            [props.label, props.required ? ' *' : '']
+            [
+              props.label,
+              props.required
+                ? h('span', { class: styles.requiredMarker, 'data-field-required-marker': '' }, ' *')
+                : null
+            ]
           )
         : null
 

@@ -118,4 +118,20 @@ describe('Input Primitive', () => {
     expect(wrapper.find('input').exists()).toBe(true)
     expect(wrapper.find('small').exists()).toBe(false)
   })
+
+  it('renders required marker as a dedicated field element', async () => {
+    const wrapper = await mountSuspended(Input, {
+      props: {
+        label: 'Email'
+      },
+      attrs: {
+        required: true
+      }
+    })
+
+    const marker = wrapper.find('[data-field-required-marker]')
+
+    expect(marker.exists()).toBe(true)
+    expect(marker.text()).toBe('*')
+  })
 })

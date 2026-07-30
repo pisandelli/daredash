@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAttrs, resolveComponent, computed } from 'vue'
+import { useAttrs, resolveComponent, computed, ref, useSlots, h } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Table.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
@@ -50,6 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const attrs = useAttrs()
+const slots = useSlots()
 const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Table')
 
 const appConfig = useAppConfig()
@@ -59,6 +60,10 @@ const globalIcons = (appConfig.daredash?.icons || {}) as Record<
 >
 
 const DdLoading = resolveComponent(getPrefixName('Loading', { type: 'component' }))
+type SortDirection = 'asc' | 'desc'
+
+const sortKey = ref<string | undefined>(undefined)
+const sortDirection = ref<SortDirection>('asc')
 
 const getRowKey = (row: Record<string, any>): string => {
   if (typeof props.rowKey === 'function') {
@@ -68,6 +73,105 @@ const getRowKey = (row: Record<string, any>): string => {
 }
 
 const hasData = computed(() => props.data && props.data.length > 0)
+
+const getSortValue = (row: Record<string, any>, key: string) => row[key]
+
+const compareValues = (a: unknown, b: unknown): number => {
+  if (a == null && b == null) return 0
+  if (a == null) return 1
+  if (b == null) return -1
+
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a - b
+  }
+
+  const aDate = a instanceof Date ? a.getTime() : Date.parse(String(a))
+  const bDate = b instanceof Date ? b.getTime() : Date.parse(String(b))
+
+  if (!Number.isNaN(aDate) && !Number.isNaN(bDate)) {
+    return aDate - bDate
+  }
+
+  return String(a).localeCompare(String(b), undefined, {
+    numeric: true,
+    sensitivity: 'base'
+  })
+}
+
+const sortedData = computed(() => {
+  if (!sortKey.value) return props.data
+
+  const directionMultiplier = sortDirection.value === 'asc' ? 1 : -1
+
+  return [...props.data].sort((a, b) => {
+    return compareValues(
+      getSortValue(a, sortKey.value!),
+      getSortValue(b, sortKey.value!)
+    ) * directionMultiplier
+  })
+})
+
+function getSortedData() {
+  return sortedData.value
+}
+
+function toggleSort(column: TableColumn) {
+  if (!column.sortable) return
+
+  if (sortKey.value !== column.key) {
+    sortKey.value = column.key
+    sortDirection.value = 'asc'
+    return
+  }
+
+  if (sortDirection.value === 'asc') {
+    sortDirection.value = 'desc'
+    return
+  }
+
+  sortKey.value = undefined
+  sortDirection.value = 'asc'
+}
+
+function getAriaSort(column: TableColumn) {
+  if (!column.sortable) return undefined
+  if (sortKey.value !== column.key) return 'none'
+  return sortDirection.value === 'asc' ? 'ascending' : 'descending'
+}
+
+const HeaderContent = ({ column }: { column: TableColumn }) => {
+  return slots[`header-${column.key}`]?.({ column }) ?? column.title
+}
+
+const CellContent = ({
+  row,
+  column,
+  index
+}: {
+  row: Record<string, any>
+  column: TableColumn
+  index: number
+}) => {
+  return slots[`cell-${column.key}`]?.({
+    row,
+    column,
+    index,
+    value: row[column.key]
+  }) ?? row[column.key]
+}
+
+const EmptyContent = () => {
+  return slots.empty?.() ?? [
+    h(Icon, { name: globalIcons.emptyTable || 'lucide:inbox', size: '2rem' }),
+    h('span', 'No data available')
+  ]
+}
+
+defineExpose({
+  getSortedData,
+  toggleSort,
+  getAriaSort
+})
 </script>
 
 <template>
@@ -79,15 +183,26 @@ const hasData = computed(() => props.data && props.data.length > 0)
             v-for="column in columns"
             :key="column.key"
             :class="styles.th"
+            :aria-sort="column.sortable ? (sortKey === column.key ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none') : undefined"
             :style="{
               ...(column.align ? { textAlign: column.align } : {}),
               ...(column.width ? { width: column.width } : {})
             }"
+            @click="column.sortable ? toggleSort(column) : undefined"
           >
-            <!-- Column Title -->
-            <slot :name="`header-${column.key}`" :column="column">
-              {{ column.title }}
-            </slot>
+            <button
+              v-if="column.sortable"
+              type="button"
+              :class="styles.sortButton"
+            >
+              <span :class="styles.sortLabel">
+                <HeaderContent :column="column" />
+              </span>
+              <span :class="styles.sortIndicator" aria-hidden="true">
+                {{ sortKey === column.key ? (sortDirection === 'asc' ? '↑' : '↓') : '↕' }}
+              </span>
+            </button>
+            <HeaderContent v-else :column="column" />
           </th>
         </tr>
       </thead>
@@ -116,28 +231,21 @@ const hasData = computed(() => props.data && props.data.length > 0)
         <tr v-else-if="!hasData" :class="[styles.tr, styles['empty-row']]">
           <td :class="styles.td" :colspan="columns.length">
             <div :class="styles['empty-state']">
-              <!-- Empty Slot Override -->
-              <slot name="empty">
-                <Icon :name="globalIcons.emptyTable || 'lucide:inbox'" size="2rem" />
-                <span>No data available</span>
-              </slot>
+              <EmptyContent />
             </div>
           </td>
         </tr>
 
         <!-- Ideal State: Render rows -->
         <template v-else>
-          <tr v-for="(row, rowIndex) in data" :key="getRowKey(row)" :class="styles.tr">
+          <tr v-for="(row, rowIndex) in sortedData" :key="getRowKey(row)" :class="styles.tr">
             <td
               v-for="column in columns"
               :key="column.key"
               :class="styles.td"
               :style="column.align ? { textAlign: column.align } : undefined"
             >
-              <!-- Cell Scoped Slot -->
-              <slot :name="`cell-${column.key}`" :row="row" :column="column" :index="rowIndex" :value="row[column.key]">
-                {{ row[column.key] }}
-              </slot>
+              <CellContent :row="row" :column="column" :index="rowIndex" />
             </td>
           </tr>
 

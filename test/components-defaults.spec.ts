@@ -54,6 +54,7 @@ describe('default component tokens', () => {
     expect(tableTokens.header.padding.$value).toBe('{space.sm}')
     expect(tableTokens.cell['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.cell.padding.$value).toBe('{space.sm}')
+    expect(tableTokens.row['background-color'].$value).toBe('transparent')
     expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.primary.50}')
     expect(tableTokens.header['text-transform'].$value).toBe('none')
     expect(tableTokens.density.large.header['font-size'].$value).toBe('{font-size.base}')
@@ -93,6 +94,11 @@ describe('default component tokens', () => {
     )
 
     const fieldShellCss = readFileSync(fieldShellCssPath, 'utf8')
+    const inputTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/input.json'
+    )
+    const inputTokens = JSON.parse(readFileSync(inputTokensPath, 'utf8'))
     const inputCss = readFileSync(inputCssPath, 'utf8')
     const selectCss = readFileSync(selectCssPath, 'utf8')
     const textareaCss = readFileSync(textareaCssPath, 'utf8')
@@ -101,6 +107,8 @@ describe('default component tokens', () => {
     expect(fieldShellCss).toContain(".field {\n  --local-label-font-size: v('input.label.font-size');")
     expect(fieldShellCss).toContain('gap: 0.375rem;')
     expect(fieldShellCss).toContain('min-block-size: 1.25em;')
+    expect(fieldShellCss).toContain("--local-required-marker-color: v('input.required-marker.color');")
+    expect(inputTokens['required-marker'].color.$value).toBe('{color.danger}')
     expect(inputGroupCss).toContain('[data-field-shell] {')
     expect(inputGroupCss).toContain('[data-field-feedback] {')
     expect(inputGroupCss).toContain('> [data-field-shell] {')
@@ -159,6 +167,7 @@ describe('default component tokens', () => {
     const tableCss = readFileSync(tableCssPath, 'utf8')
 
     expect(tableCss).toContain("--local-header-font-size-base: v('table.header.font-size');")
+    expect(tableCss).toContain("--local-row-bg: v('table.row.background-color');")
     expect(tableCss).toContain("--local-header-font-size: var(--local-header-font-size-base);")
     expect(tableCss).toContain("--local-cell-font-size-base: v('table.cell.font-size');")
     expect(tableCss).toContain("--local-cell-font-size: var(--local-cell-font-size-base);")

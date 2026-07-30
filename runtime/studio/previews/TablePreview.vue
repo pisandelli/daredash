@@ -6,8 +6,8 @@ import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
 const columns: TableColumn[] = [
-  { key: 'name', title: 'Project' },
-  { key: 'owner', title: 'Owner' },
+  { key: 'name', title: 'Project', sortable: true },
+  { key: 'owner', title: 'Owner', sortable: true },
   { key: 'status', title: 'Status', align: 'center' }
 ]
 
@@ -76,6 +76,7 @@ function badgeClass(intent: string) {
         <button type="button" class="dd-table-action" @click="focusField('table.density.comfortable.header.padding')">Comfortable density</button>
         <button type="button" class="dd-table-action" @click="focusField('table.density.compact.header.padding')">Compact density</button>
         <button type="button" class="dd-table-action" @click="focusField('table.header.background-color')">Header background</button>
+        <button type="button" class="dd-table-action" @click="focusField('table.row.background-color')">Row background</button>
         <button type="button" class="dd-table-action" @click="focusField('table.row-hover.background-color')">Hover row</button>
       </div>
     </div>

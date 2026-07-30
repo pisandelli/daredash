@@ -166,7 +166,7 @@ describe('DareDash Studio registry', () => {
 
     expect(accordionTab).toBeDefined()
     expect(accordionTab!.navigationKind).toBe('component')
-    expect(headerPadding?.referencePath).toBe('space.md')
+    expect(headerPadding?.referencePath).toBe('space.sm')
     expect(contentPadding?.referencePath).toBe('accordion.header.padding')
   })
 
@@ -346,12 +346,14 @@ describe('DareDash Studio registry', () => {
     const lineHeightField = inputTab?.fields.find((field) => field.path === 'input.line-height')
     const warningField = inputTab?.fields.find((field) => field.path === 'input.warning-state.border-color')
     const iconSizeField = inputTab?.fields.find((field) => field.path === 'input.icon-size')
+    const requiredMarkerField = inputTab?.fields.find((field) => field.path === 'input.required-marker.color')
 
     expect(inputTab).toBeDefined()
     expect(inputTab!.navigationKind).toBe('component')
     expect(lineHeightField?.referencePath).toBe('line-height.normal')
     expect(warningField?.referencePath).toBe('color.warning')
     expect(iconSizeField?.defaultValue).toBe('1.25rem')
+    expect(requiredMarkerField?.referencePath).toBe('color.danger')
   })
 
   it('registers input group with preserved token references', () => {
@@ -506,6 +508,7 @@ describe('DareDash Studio registry', () => {
     const cellBorderWidthField = tableTab?.fields.find((field) => field.path === 'table.cell.border-width')
     const comfortableDensityPaddingField = tableTab?.fields.find((field) => field.path === 'table.density.comfortable.cell.padding')
     const compactDensityHeaderSizeField = tableTab?.fields.find((field) => field.path === 'table.density.compact.header.font-size')
+    const rowBackgroundField = tableTab?.fields.find((field) => field.path === 'table.row.background-color')
 
     expect(tableTab).toBeDefined()
     expect(tableTab!.navigationKind).toBe('component')
@@ -521,6 +524,7 @@ describe('DareDash Studio registry', () => {
     expect(cellBorderWidthField?.referencePath).toBe('table.border-width')
     expect(comfortableDensityPaddingField?.referencePath).toBe('table.cell.padding')
     expect(compactDensityHeaderSizeField?.referencePath).toBe('font-size.xs')
+    expect(rowBackgroundField?.defaultValue).toBe('transparent')
   })
 
   it('registers tabs with preserved token references', () => {

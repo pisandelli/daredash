@@ -15,6 +15,7 @@
   --local-header-text-align: v('table.header.text-align');
   --local-header-padding-base: v('table.header.padding');
   --local-header-padding: var(--local-header-padding-base);
+  --local-row-bg: v('table.row.background-color');
   --local-row-hover-bg: v('table.row-hover.background-color');
   --local-row-striped-bg: v('table.row-striped.background-color');
   --local-cell-font-size-base: v('table.cell.font-size');
@@ -103,12 +104,44 @@
   vertical-align: middle;
 }
 
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: v('space.xs');
+  inline-size: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.sortButton:focus-visible {
+  outline: 2px solid v('color.primary');
+  outline-offset: 2px;
+}
+
+.sortLabel {
+  min-inline-size: 0;
+}
+
+.sortIndicator {
+  color: color-mix(in srgb, currentColor 72%, transparent);
+  font-size: 0.82em;
+  line-height: 1;
+}
+
 /* Remove bottom border from last row to avoid double borders with wrapper */
 .tr:last-child .td {
   border-block-end: none;
 }
 
 .tr {
+  background-color: var(--local-row-bg);
   transition: background-color var(--local-transition);
 }
 

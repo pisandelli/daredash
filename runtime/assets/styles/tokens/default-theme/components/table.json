@@ -70,6 +70,12 @@
       "$value": "{color.secondary.50}"
     }
   },
+  "row": {
+    "$type": "object",
+    "background-color": {
+      "$value": "transparent"
+    }
+  },
   "row-hover": {
     "$type": "object",
     "background-color": {
