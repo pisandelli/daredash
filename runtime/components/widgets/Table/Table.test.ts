@@ -159,6 +159,86 @@ describe('Table primitive', () => {
     expect(wrapper.attributes('data-large')).toBeDefined()
   })
 
+  it('applies static rowClass values directly to data rows', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: sampleData,
+        rowClass: 'financee-row'
+      }
+    })
+
+    const rows = wrapper.findAll('tbody > tr')
+
+    expect(rows[0]!.classes()).toContain(styles.tr)
+    expect(rows[0]!.classes()).toContain('financee-row')
+    expect(rows[1]!.classes()).toContain('financee-row')
+  })
+
+  it('re-evaluates rowClass functions when row data changes', async () => {
+    const rows = [
+      { id: 1, name: 'Alice', status: 'Active', isRead: false },
+      { id: 2, name: 'Bob', status: 'Inactive', isRead: true }
+    ]
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: rows,
+        rowClass: (row: Record<string, any>) => ({
+          'read-row': row.isRead,
+          'open-row': row.status === 'Active'
+        })
+      }
+    })
+
+    const dataRows = () => wrapper.findAll('tbody > tr')
+
+    expect(dataRows()[0]!.classes()).toContain('open-row')
+    expect(dataRows()[0]!.classes()).not.toContain('read-row')
+    expect(dataRows()[1]!.classes()).toContain('read-row')
+
+    expect(wrapper.vm.getDataRowClass(
+      { ...rows[0], isRead: true },
+      0
+    )).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        'read-row': true,
+        'open-row': true
+      })
+    ]))
+  })
+
+  it('merges rowAttrs and rowClass on the data row tr', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: sampleData,
+        rowClass: row => ({ 'inactive-row': row.status === 'Inactive' }),
+        rowAttrs: row => ({
+          class: ['semantic-row', { 'active-row': row.status === 'Active' }],
+          'data-state': row.status,
+          'aria-label': `${row.name} row`
+        })
+      }
+    })
+
+    const rows = wrapper.findAll('tbody > tr')
+
+    expect(rows[0]!.classes()).toEqual(expect.arrayContaining([
+      styles.tr,
+      'semantic-row',
+      'active-row'
+    ]))
+    expect(rows[0]!.attributes('data-state')).toBe('Active')
+    expect(rows[0]!.attributes('aria-label')).toBe('Alice row')
+    expect(rows[1]!.classes()).toEqual(expect.arrayContaining([
+      styles.tr,
+      'semantic-row',
+      'inactive-row'
+    ]))
+    expect(rows[1]!.attributes('data-state')).toBe('Inactive')
+  })
+
   it('sorts rows for sortable columns', async () => {
     const columns = [
       { key: 'name', title: 'Name', sortable: true },

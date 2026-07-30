@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAttrs, resolveComponent, computed, ref, useSlots, h } from 'vue'
+import { useAttrs, resolveComponent, computed, ref, useSlots, h, type HTMLAttributes } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Table.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
@@ -13,6 +13,14 @@ defineOptions({
 
 import type { TableColumn } from '#dd/types/TableColumn'
 
+type Row = Record<string, any>
+type RowClassValue = HTMLAttributes['class']
+type RowAttrsValue = Omit<HTMLAttributes, 'class'> & {
+  class?: RowClassValue
+}
+type RowClassResolver = RowClassValue | ((row: Row, index: number) => RowClassValue)
+type RowAttrsResolver = RowAttrsValue | ((row: Row, index: number) => RowAttrsValue | undefined)
+
 interface Props {
   /**
    * Array defining the table headers and keys.
@@ -21,11 +29,19 @@ interface Props {
   /**
    * Array of objects representing the rows.
    */
-  data: Record<string, any>[]
+  data: Row[]
   /**
    * Determines the unique key for each row <tr> for Vue's virtual DOM optimization. Function or string property name.
    */
-  rowKey?: string | ((row: Record<string, any>) => string)
+  rowKey?: string | ((row: Row) => string)
+  /**
+   * Static class value or resolver applied directly to each data row <tr>.
+   */
+  rowClass?: RowClassResolver
+  /**
+   * Static attrs object or resolver applied directly to each data row <tr>.
+   */
+  rowAttrs?: RowAttrsResolver
   /**
    * Shows a loading spinner and disables interaction.
    */
@@ -65,7 +81,7 @@ type SortDirection = 'asc' | 'desc'
 const sortKey = ref<string | undefined>(undefined)
 const sortDirection = ref<SortDirection>('asc')
 
-const getRowKey = (row: Record<string, any>): string => {
+const getRowKey = (row: Row): string => {
   if (typeof props.rowKey === 'function') {
     return props.rowKey(row)
   }
@@ -74,7 +90,7 @@ const getRowKey = (row: Record<string, any>): string => {
 
 const hasData = computed(() => props.data && props.data.length > 0)
 
-const getSortValue = (row: Record<string, any>, key: string) => row[key]
+const getSortValue = (row: Row, key: string) => row[key]
 
 const compareValues = (a: unknown, b: unknown): number => {
   if (a == null && b == null) return 0
@@ -148,7 +164,7 @@ const CellContent = ({
   column,
   index
 }: {
-  row: Record<string, any>
+  row: Row
   column: TableColumn
   index: number
 }) => {
@@ -167,10 +183,39 @@ const EmptyContent = () => {
   ]
 }
 
+function getRowClass(row: Row, index: number): RowClassValue {
+  return typeof props.rowClass === 'function'
+    ? props.rowClass(row, index)
+    : props.rowClass
+}
+
+function getRowAttrs(row: Row, index: number): RowAttrsValue {
+  return typeof props.rowAttrs === 'function'
+    ? props.rowAttrs(row, index) || {}
+    : props.rowAttrs || {}
+}
+
+function getDataRowAttrs(row: Row, index: number): RowAttrsValue {
+  const rowAttrs = getRowAttrs(row, index)
+  const { class: _rowAttrsClass, ...restAttrs } = rowAttrs
+
+  return restAttrs
+}
+
+function getDataRowClass(row: Row, index: number): RowClassValue[] {
+  return [
+    styles.tr,
+    getRowAttrs(row, index).class,
+    getRowClass(row, index)
+  ]
+}
+
 defineExpose({
   getSortedData,
   toggleSort,
-  getAriaSort
+  getAriaSort,
+  getDataRowAttrs,
+  getDataRowClass
 })
 </script>
 
@@ -238,7 +283,12 @@ defineExpose({
 
         <!-- Ideal State: Render rows -->
         <template v-else>
-          <tr v-for="(row, rowIndex) in sortedData" :key="getRowKey(row)" :class="styles.tr">
+          <tr
+            v-for="(row, rowIndex) in sortedData"
+            :key="getRowKey(row)"
+            :class="getDataRowClass(row, rowIndex)"
+            v-bind="getDataRowAttrs(row, rowIndex)"
+          >
             <td
               v-for="column in columns"
               :key="column.key"

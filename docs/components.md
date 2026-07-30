@@ -696,6 +696,8 @@ Set `sortable: true` on a column to enable built-in click sorting for that colum
 - `columns`
 - `data`
 - `row-key`
+- `row-class`
+- `row-attrs`
 - `loading`
 - `is-invalid`
 - `error-message`
@@ -717,6 +719,33 @@ Set `sortable: true` on a column to enable built-in click sorting for that colum
 #### Row Styling
 
 The base `<tr>` background is controlled by `table.row.background-color`. Striped and hover states still use `table.row-striped.background-color` and `table.row-hover.background-color`.
+
+Use `row-class` or `row-attrs` for semantic row styling without relying on structural selectors:
+
+```vue
+<template>
+  <dd-table
+    :columns="columns"
+    :data="rows"
+    :row-class="rowClass"
+    :row-attrs="rowAttrs"
+  />
+</template>
+
+<script setup>
+const rowClass = row => ({
+  readRow: row.isRead,
+  openRow: row.status === 'OPEN'
+})
+
+const rowAttrs = row => ({
+  class: row.isRead ? 'mutedRow' : undefined,
+  'data-state': row.status
+})
+</script>
+```
+
+`row-class` and `row-attrs.class` support the same formats as Vue `:class` (`string`, array, or object) and are applied directly to the data row `<tr>`.
 
 #### Density presets
 

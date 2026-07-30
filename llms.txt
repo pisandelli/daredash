@@ -1470,6 +1470,8 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `columns: TableColumn[] = []`
   - `data: Record<string, any>[] = []`
   - `rowKey: string | ((row: any) => string) = 'id'`
+  - `rowClass?: string | array | object | ((row, index) => string | array | object)`
+  - `rowAttrs?: object | ((row, index) => object | undefined)`
   - `loading: boolean = false`
   - `isInvalid: boolean = false`
   - `errorMessage?: string`
@@ -1480,6 +1482,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `cell-${column.key}`
 - Correct example: `<DdTable :columns="columns" :data="rows"><template #cell-status="{ row }"><DdBadge>{{ row.status }}</DdBadge></template></DdTable>`.
 - Correct example: `<DdTable compact :columns="columns" :data="rows" />`.
+- Correct example: `<DdTable :columns="columns" :data="rows" :row-class="row => ({ readRow: row.isRead })" :row-attrs="row => ({ 'data-state': row.status })" />`.
 - Incorrect example: `<DdTable :items="rows" />`.
 - Accessibility notes: use clear column titles; custom cell rendering should preserve legibility.
 - Restrictions:
@@ -1487,6 +1490,9 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - when no density attr is provided, the default token set is the comfortable density;
   - row styling attrs `striped` and `striped-odd` are supported;
   - `rowKey` may be a property name or a function;
+  - `rowClass` and `rowAttrs` apply only to data row `<tr>` elements, not loading, empty, or error rows;
+  - `rowClass` and `rowAttrs.class` are merged with the internal table row class and support Vue-compatible class values;
+  - prefer `rowClass`/`rowAttrs` over structural selectors such as `tr:has(...)` for semantic row state styling;
   - loading with existing data renders an updating row instead of replacing the table body entirely;
   - header and body typography are tokenized separately through `table.header.font-size` and `table.cell.font-size`;
   - density presets are tokenized through `table.density.large.*`, `table.density.comfortable.*`, and `table.density.compact.*`;
