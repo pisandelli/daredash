@@ -51,10 +51,27 @@ describe('default component tokens', () => {
 
     const skeletonTokens = JSON.parse(readFileSync(skeletonTokensPath, 'utf8'))
 
-    expect(skeletonTokens['background-color'].$value).toBe('{color.secondary.100}')
-    expect(skeletonTokens['highlight-color'].$value).toBe('{color.secondary.50}')
+    expect(skeletonTokens['background-color'].$value).toBe('{color.gray.100}')
+    expect(skeletonTokens['highlight-color'].$value).toBe('{color.gray.50}')
     expect(skeletonTokens['border-radius'].$value).toBe('{border-radius.md}')
     expect(skeletonTokens['block-size'].$value).toBe('{space.md}')
+  })
+
+  it('keeps a dedicated gray ramp for neutral aliases', () => {
+    const primitivesPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/primitives.json'
+    )
+
+    const primitives = JSON.parse(readFileSync(primitivesPath, 'utf8'))
+
+    expect(primitives.color.secondary['600'].$value).toBe('#b000c3')
+    expect(primitives.color.gray['600'].$value).toBe('#545778')
+    expect(primitives.color.gray.$value).toBe('{color.gray.500}')
+    expect(primitives.color['light-gray'].$value).toBe('{color.gray.200}')
+    expect(primitives.color['dark-gray'].$value).toBe('{color.gray.600}')
+    expect(primitives.color['darker-gray'].$value).toBe('{color.gray.900}')
+    expect(primitives.color['border-hover'].$value).toBe('{color.gray.300}')
   })
 
   it('uses a compact default submenu indent for menu items', () => {
@@ -77,11 +94,13 @@ describe('default component tokens', () => {
     const tableTokens = JSON.parse(readFileSync(tableTokensPath, 'utf8'))
 
     expect(tableTokens.header.color.$value).toBe('{color.darker-gray}')
-    expect(tableTokens.header['background-color'].$value).toBe('{color.secondary.100}')
+    expect(tableTokens['border-color'].$value).toBe('{color.gray.100}')
+    expect(tableTokens.header['background-color'].$value).toBe('{color.gray.100}')
     expect(tableTokens.header['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.header.padding.$value).toBe('{space.sm}')
     expect(tableTokens.cell['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.cell.padding.$value).toBe('{space.sm}')
+    expect(tableTokens['row-striped']['background-color'].$value).toBe('{color.gray.50}')
     expect(tableTokens.row['background-color'].$value).toBe('transparent')
     expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.primary.50}')
     expect(tableTokens.header['text-transform'].$value).toBe('none')

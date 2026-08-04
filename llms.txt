@@ -85,7 +85,7 @@ export default defineNuxtConfig({
     [
       'daredash',
       {
-        tokens: './tokens',
+        tokens: './app/assets/tokens/custom-theme.tokens.json',
         prefix: 'dd'
       }
     ]
@@ -96,8 +96,9 @@ export default defineNuxtConfig({
 ### Module options
 
 - `tokens?: string`
-  - path to a JSON token file or directory;
+  - path to a JSON token file or directory, resolved from the consumer app `rootDir`;
   - default: `./runtime/assets/styles/tokens/default-theme`
+  - custom token sources are merged over the built-in `default-theme`, so partial override files are supported;
 - `prefix?: string`
   - prefix for components and CSS variables;
   - default: `dd`
@@ -387,9 +388,11 @@ Current state:
 Confirmed in `runtime/assets/styles/tokens/default-theme/primitives.json` and component tokens:
 
 - semantic scales follow `50` to `950`;
-- public semantic families include `primary`, `accent`, `success`, `info`, `warning`, `danger`, and `secondary`;
+- public semantic families include `primary`, `secondary`, `accent`, `success`, `info`, `warning`, and `danger`;
 - `error` is currently an alias of `danger`;
-- neutral utility tokens such as `light-gray`, `gray`, `dark-gray`, and `darker-gray` coexist with the `secondary` scale and should not be treated as interchangeable by default.
+- `secondary` is a dedicated semantic ramp rooted in `#C800DE`, not the neutral palette;
+- `color.gray` is the dedicated neutral ramp and exposes `50` through `950` plus `color.gray` as an alias to `color.gray.500`;
+- neutral utility tokens `light-gray`, `gray`, `dark-gray`, `darker-gray`, `border.default`, and `border-hover` inherit from the gray ramp and should be preferred for neutral surfaces, borders, and copy.
 
 ### Global variants and sizes
 

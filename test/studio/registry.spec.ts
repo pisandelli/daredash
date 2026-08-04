@@ -59,9 +59,11 @@ describe('DareDash Studio registry', () => {
     const baseTab = STUDIO_TABS.find((tab) => tab.id === 'base')
     const errorAlias = baseTab?.fields.find((field) => field.path === 'color.error.500')
     const borderAlias = baseTab?.fields.find((field) => field.path === 'color.border.default')
+    const grayAlias = baseTab?.fields.find((field) => field.path === 'color.gray')
 
     expect(errorAlias?.referencePath).toBe('color.danger.500')
     expect(borderAlias?.referencePath).toBe('color.light-gray')
+    expect(grayAlias?.referencePath).toBe('color.gray.500')
   })
 
   it('keeps every component tab backed by a shared token source', () => {
@@ -292,8 +294,8 @@ describe('DareDash Studio registry', () => {
 
     expect(skeletonTab).toBeDefined()
     expect(skeletonTab!.navigationKind).toBe('component')
-    expect(backgroundField?.referencePath).toBe('color.secondary.100')
-    expect(highlightField?.referencePath).toBe('color.secondary.50')
+    expect(backgroundField?.referencePath).toBe('color.gray.100')
+    expect(highlightField?.referencePath).toBe('color.gray.50')
     expect(radiusField?.referencePath).toBe('border-radius.md')
     expect(blockSizeField?.referencePath).toBe('space.md')
   })
@@ -514,9 +516,9 @@ describe('DareDash Studio registry', () => {
     expect(tableTab).toBeDefined()
     expect(tableTab!.navigationKind).toBe('component')
     expect(colorField?.referencePath).toBe('color.text.default')
-    expect(borderField?.referencePath).toBe('color.secondary.100')
+    expect(borderField?.referencePath).toBe('color.gray.100')
     expect(borderWidthField?.defaultValue).toBe('1px')
-    expect(headerField?.referencePath).toBe('color.secondary.100')
+    expect(headerField?.referencePath).toBe('color.gray.100')
     expect(headerColorField?.referencePath).toBe('color.darker-gray')
     expect(headerFontSizeField?.referencePath).toBe('font-size.sm')
     expect(cellFontSizeField?.referencePath).toBe('font-size.sm')

@@ -10,6 +10,7 @@ import { debugLog } from './src/utils'
 import { setupTokens } from './src/builder/tokens'
 import { setupComponents } from './src/builder/components'
 import { addCustomTab } from '@nuxt/devtools-kit'
+import { resolveTokenPaths } from './src/utils/resolveTokenPaths'
 
 const moduleTokensPath =
   './runtime/assets/styles/tokens/default-theme'
@@ -55,6 +56,7 @@ export default defineNuxtModule<ModuleOptions>().with({
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
+    const defaultTokensDir = resolver.resolve(moduleTokensPath)
     const debugMode = options.debug
     if (debugMode) debugLog('Debug mode is enabled.', 'warn')
 
@@ -129,7 +131,7 @@ export default defineNuxtModule<ModuleOptions>().with({
      * Parses the design token JSON file, generates CSS custom properties,
      * and creates a typed token list for client-side registration (CSS Typed OM).
      */
-    await setupTokens(options, nuxt, resolver)
+    await setupTokens(options, nuxt, resolver, defaultTokensDir)
 
     /**
      * Registers the PostCSS `v()` plugin, the `@daredash` alias, and all
@@ -137,7 +139,7 @@ export default defineNuxtModule<ModuleOptions>().with({
      * @note Must run before the reset CSS is injected so the `v()` PostCSS
      * plugin is already active when Vite processes that file.
      */
-    await setupComponents(options, nuxt, resolver)
+    await setupComponents(options, nuxt, resolver, defaultTokensDir)
 
     /**
      * Injects the global reset stylesheet into the consumer application.
@@ -219,15 +221,22 @@ export default defineNuxtModule<ModuleOptions>().with({
      * HMR for Design Tokens
      * Watches the tokens directory and regenerates CSS/JSON when a file changes.
      */
-    const tokensDir = resolver.resolve(options.tokens)
-    nuxt.options.watch.push(tokensDir)
+    const tokensWatchPaths = options.tokens === moduleTokensPath
+      ? [defaultTokensDir]
+      : [
+          defaultTokensDir,
+          ...resolveTokenPaths(nuxt.options.rootDir, resolver, options.tokens).projectPaths,
+          resolveTokenPaths(nuxt.options.rootDir, resolver, options.tokens).modulePath
+        ]
+
+    nuxt.options.watch.push(...new Set(tokensWatchPaths))
 
     nuxt.hook('builder:watch', async (event, path) => {
-      if (path.startsWith(tokensDir) && path.endsWith('.json')) {
+      if (tokensWatchPaths.some(tokensPath => path.startsWith(tokensPath)) && path.endsWith('.json')) {
         if (debugMode) {
           debugLog(`Token file ${event}: ${path}. Regenerating...`)
         }
-        await setupTokens(options, nuxt, resolver)
+        await setupTokens(options, nuxt, resolver, defaultTokensDir)
       }
     })
   }

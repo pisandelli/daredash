@@ -5,7 +5,7 @@
     "$value": "100%"
   },
   "border-color": {
-    "$value": "{color.secondary.100}"
+    "$value": "{color.gray.100}"
   },
   "border-width": {
     "$value": "1px"
@@ -22,7 +22,7 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.secondary.100}"
+      "$value": "{color.gray.100}"
     },
     "color": {
       "$value": "{color.darker-gray}"
@@ -67,7 +67,7 @@
   "row-striped": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.secondary.50}"
+      "$value": "{color.gray.50}"
     }
   },
   "row": {

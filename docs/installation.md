@@ -37,7 +37,7 @@ export default defineNuxtConfig({
 
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `tokens` | `string` | `./runtime/assets/styles/tokens/default-theme` | Path to a token JSON file or a directory of token files. |
+| `tokens` | `string` | `./runtime/assets/styles/tokens/default-theme` | Path to a token JSON file or a directory of token files. Consumer paths are resolved from the app `rootDir`. |
 | `prefix` | `string` | `'dd'` | Prefix used for registered components and generated CSS variables. |
 | `debug` | `boolean` | `false` | Enables internal build-time debug logs. |
 
@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     [
       '@pisandelli/daredash',
       {
-        tokens: './tokens',
+        tokens: './app/assets/tokens/custom-theme.tokens.json',
         prefix: 'dd'
       }
     ]
@@ -87,6 +87,24 @@ Example:
 ```
 
 If you point `tokens` to a directory, the module recursively reads `.json` files and merges them into the final token graph.
+
+Custom token files are merged over DareDash's built-in `default-theme`, so you can safely provide only the overrides you want to change.
+
+The built-in palette includes both semantic ramps such as `color.primary.*` and `color.secondary.*`, plus a dedicated neutral ramp at `color.gray.50` through `color.gray.950`. Neutral aliases like `color.light-gray`, `color.dark-gray`, `color.darker-gray`, `color.border.default`, and `color.border-hover` inherit from that gray scale.
+
+Example:
+
+```json
+{
+  "button": {
+    "border-radius": {
+      "$value": "999px"
+    }
+  }
+}
+```
+
+In this case, DareDash keeps the rest of the default token graph and only overrides `button.border-radius`.
 
 ## 5. What DareDash adds to your app
 

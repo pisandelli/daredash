@@ -8,25 +8,25 @@
     "$value": "{color.primary.600}"
   },
   "border-color": {
-    "$value": "{color.secondary.200}"
+    "$value": "{color.gray.200}"
   },
   "indicator-color": {
     "$value": "{color.primary.600}"
   },
   "indicator-color-hover": {
-    "$value": "{color.secondary.300}"
+    "$value": "{color.gray.300}"
   },
   "link-color": {
-    "$value": "{color.secondary.500}"
+    "$value": "{color.gray.500}"
   },
   "link-color-hover": {
-    "$value": "{color.secondary.900}"
+    "$value": "{color.gray.900}"
   },
   "font-family": {
     "$value": "{font.base}"
   },
   "item-bg-hover": {
-    "$value": "{color.secondary.50}"
+    "$value": "{color.gray.50}"
   },
   "item-radius": {
     "$value": "{border-radius.base}"

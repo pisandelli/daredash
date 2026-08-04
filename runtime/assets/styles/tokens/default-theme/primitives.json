@@ -47,6 +47,42 @@
     },
     "secondary": {
       "50": {
+        "$value": "#fbebfc"
+      },
+      "100": {
+        "$value": "#f6d6fa"
+      },
+      "200": {
+        "$value": "#edadf4"
+      },
+      "300": {
+        "$value": "#e585ef"
+      },
+      "400": {
+        "$value": "#db57e9"
+      },
+      "500": {
+        "$value": "#d129e3"
+      },
+      "600": {
+        "$value": "#b000c3"
+      },
+      "700": {
+        "$value": "#9800a9"
+      },
+      "800": {
+        "$value": "#7c008a"
+      },
+      "900": {
+        "$value": "#60006b"
+      },
+      "950": {
+        "$value": "#4c0054"
+      },
+      "$value": "{color.secondary.600}"
+    },
+    "gray": {
+      "50": {
         "$value": "#f7f8fc"
       },
       "100": {
@@ -79,7 +115,7 @@
       "950": {
         "$value": "#0f123c"
       },
-      "$value": "{color.secondary.600}"
+      "$value": "{color.gray.500}"
     },
     "accent": {
       "50": {
@@ -298,16 +334,13 @@
       "$value": "{color.warning.600}"
     },
     "light-gray": {
-      "$value": "#e3e4e8"
-    },
-    "gray": {
-      "$value": "#73768c"
+      "$value": "{color.gray.200}"
     },
     "dark-gray": {
-      "$value": "#5c5e70"
+      "$value": "{color.gray.600}"
     },
     "darker-gray": {
-      "$value": "#151a30"
+      "$value": "{color.gray.900}"
     },
     "border": {
       "default": {
@@ -319,7 +352,7 @@
         "$value": "#ffffff"
       },
       "surface-hover": {
-        "$value": "{color.secondary.50}"
+        "$value": "{color.gray.50}"
       }
     },
     "text": {
@@ -328,7 +361,7 @@
       }
     },
     "border-hover": {
-      "$value": "#c2cdd5"
+      "$value": "{color.gray.300}"
     },
     "bg-disabled": {
       "$value": "#eef1f3"

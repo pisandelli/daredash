@@ -5,14 +5,14 @@ import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions, TokensFile, TypedTokenValue } from '../types'
 import { debugLog } from '../utils'
-import { resolveTokenPaths } from '../utils/resolveTokenPaths'
-import { mergeTokenSource } from '../utils/token-merger'
 import { parseTokens } from '../parser'
+import { loadResolvedTokens } from '../utils/loadResolvedTokens'
 
 export async function setupTokens(
   options: ModuleOptions,
   nuxt: Nuxt,
-  resolver: Resolver
+  resolver: Resolver,
+  defaultTokensPath: string
 ) {
   const standardTokens: string[] = []
   const typedTokens: { name: string; value: TypedTokenValue }[] = []
@@ -21,40 +21,15 @@ export async function setupTokens(
 
   let filePath = ''
   try {
-    let fileContent: string
-    if (!options.tokens) {
-      if (debugMode) debugLog('No tokens file specified.', 'warn')
-      return
-    }
-
-    const { projectPath, modulePath } = resolveTokenPaths(
-      nuxt.options.rootDir,
-      resolver,
-      options.tokens
-    )
-
-    try {
-      filePath = projectPath
-      if (debugMode)
-        debugLog(`Attempting to load tokens from project path: ${filePath}`)
-      tokens = (await mergeTokenSource(filePath)) as TokensFile
-      if (debugMode) debugLog(`Successfully loaded tokens from project path.`)
-    } catch (projectError: unknown) {
-      if (!(projectError instanceof Error)) {
-        throw projectError
-      }
-
-      if ((projectError as NodeJS.ErrnoException).code !== 'ENOENT') {
-        throw projectError
-      }
-
-      if (debugMode)
-        debugLog(`Tokens not found in project, trying module path.`)
-      filePath = modulePath
-      if (debugMode)
-        debugLog(`Attempting to load tokens from module path: ${filePath}`)
-      tokens = (await mergeTokenSource(filePath)) as TokensFile
-      if (debugMode) debugLog(`Successfully loaded tokens from module path.`)
+    const resolvedTokens = await loadResolvedTokens(nuxt, resolver, {
+      tokenOption: options.tokens,
+      defaultTokensPath,
+      debug: debugMode
+    })
+    filePath = resolvedTokens.sourcePath
+    tokens = resolvedTokens.tokens as TokensFile
+    if (debugMode && resolvedTokens.mergedWithDefaults) {
+      debugLog(`Merged custom tokens over default theme tokens.`)
     }
   } catch (error) {
     debugLog(

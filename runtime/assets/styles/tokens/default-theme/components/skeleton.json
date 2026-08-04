@@ -2,10 +2,10 @@
   "$description": "Tokens for the Skeleton component",
   "$type": "object",
   "background-color": {
-    "$value": "{color.secondary.100}"
+    "$value": "{color.gray.100}"
   },
   "highlight-color": {
-    "$value": "{color.secondary.50}"
+    "$value": "{color.gray.50}"
   },
   "border-radius": {
     "$value": "{border-radius.md}"

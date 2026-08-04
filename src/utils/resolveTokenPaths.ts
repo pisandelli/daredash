@@ -1,4 +1,4 @@
-import { resolve } from 'node:path'
+import { isAbsolute, resolve } from 'node:path'
 import type { Resolver } from '@nuxt/kit'
 
 /**
@@ -10,8 +10,18 @@ export function resolveTokenPaths(
   resolver: Resolver,
   tokenOption: string
 ) {
-  const projectPath = resolve(rootDir, 'app/assets/styles/tokens', tokenOption)
+  const projectPaths = isAbsolute(tokenOption)
+    ? [tokenOption]
+    : [
+        resolve(rootDir, tokenOption),
+        resolve(rootDir, 'app/assets/styles/tokens', tokenOption)
+      ]
+  const projectPath = projectPaths[0]
   const modulePath = resolver.resolve(tokenOption)
 
-  return { projectPath, modulePath }
+  return {
+    projectPath,
+    projectPaths: [...new Set(projectPaths)],
+    modulePath
+  }
 }

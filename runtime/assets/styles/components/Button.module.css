@@ -63,8 +63,8 @@
 
   /* -- Disabled -- */
   &[disabled] {
-    --local-base-color: v('color.secondary.200') !important;
-    color: v('color.secondary.400') !important;
+    --local-base-color: v('color.gray.200') !important;
+    color: v('color.gray.400') !important;
     cursor: not-allowed;
     box-shadow: none !important;
     pointer-events: none;

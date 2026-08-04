@@ -80,6 +80,15 @@ const colorFamilies = [
       }))
   },
   {
+    label: 'Gray',
+    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
+      .map((step) => ({
+        label: step,
+        path: `--dd-color-gray-${step}`,
+        fieldPath: `color.gray.${step}`
+      }))
+  },
+  {
     label: 'Accent',
     tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
       .map((step) => ({
@@ -138,6 +147,7 @@ const colorFamilies = [
 const paletteContrastThresholds: Record<string, number> = {
   Primary: 400,
   Secondary: 500,
+  Gray: 500,
   Accent: 500,
   Success: 400,
   Warning: 500,
