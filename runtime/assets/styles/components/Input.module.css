@@ -65,7 +65,7 @@
     --local-background-color: v('input.disabled.background-color');
     --local-color: v('input.disabled.color');
     cursor: var(--local-disabled-cursor);
-    --local-border-color: v('color.secondary-200');
+    --local-border-color: v('input.disabled.border-color');
   }
 
   &[data-error] {
@@ -115,7 +115,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: v('color.secondary-400');
+  color: v('input.icon.color');
   pointer-events: none;
   inline-size: 2.5rem;
   block-size: 100%;

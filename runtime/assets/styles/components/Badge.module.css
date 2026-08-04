@@ -44,6 +44,11 @@
   &[data-info]    { --local-base-color: v('badge.info.base-color'); }
 }
 
+:global([data-theme='dark']) .badge {
+  background-color: color-mix(in srgb, var(--local-base-color) 24%, transparent);
+  color: color-mix(in srgb, var(--local-base-color) 35%, white);
+}
+
 .icon {
   font-size: var(--local-icon-size);
   font-weight: v('font-weight.regular');

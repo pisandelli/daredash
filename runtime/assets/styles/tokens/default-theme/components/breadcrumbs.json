@@ -13,7 +13,7 @@
   "item": {
     "$type": "object",
     "color": {
-      "$value": "{color.gray}"
+      "$value": "{color.text.muted}"
     },
     "hover-color": {
       "$value": "{color.primary}"
@@ -23,7 +23,7 @@
     "$description": "For the final item (current page)",
     "$type": "object",
     "color": {
-      "$value": "{color.darker-gray}"
+      "$value": "{color.text.default}"
     },
     "font-weight": {
       "$value": "{font-weight.bold}"
@@ -32,7 +32,7 @@
   "separator": {
     "$type": "object",
     "color": {
-      "$value": "{color.gray}"
+      "$value": "{color.text.muted}"
     }
   }
 }

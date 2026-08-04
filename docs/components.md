@@ -49,6 +49,8 @@ Use semantic attrs for status and intent first. Reserve `color` for arbitrary on
 
 When `color` is used on its own, the button still follows the themed foreground token, which can default to `contrast-color({button.base-color})`. Add `textColor` only when a specific instance needs an explicit foreground instead of the theme decision.
 
+Disabled visuals are tokenized through `button.disabled.background-color` and `button.disabled.color`, so light and dark themes can restyle passive buttons without component-level overrides.
+
 ### Card (`<dd-card>`)
 
 Use `dd-card` to group related content with optional header and footer regions.
@@ -102,6 +104,8 @@ Use `dd-badge` for short status labels, counts, or metadata.
 #### Common attrs
 
 - semantic attrs such as `primary`, `success`, `warning`, `danger`, `info`
+
+Badges stay soft by default, but the dark theme boosts contrast automatically so neutral badges remain readable on darker surfaces.
 
 ### Notification Trigger (`<dd-notification-trigger>`)
 
@@ -312,6 +316,8 @@ Breadcrumb navigation trail for contextual hierarchy.
 
 These components are best when you want direct control over state without `vee-validate` wrappers.
 
+`dd-input`, `dd-textarea`, and `dd-select` share the same field shell structure, so labels, controls, counters, and helper or error messages align consistently across simple fields and validated wrappers.
+
 ### Input (`<dd-input>`)
 
 Styled text input for short values.
@@ -349,6 +355,8 @@ Styled text input for short values.
 - `small`
 - `large`
 - `no-message`
+
+Disabled selects follow the same shared field tokens as inputs and textareas, which keeps light and dark themes aligned across the full form primitive set.
 - standard native attrs such as `required` and `disabled`
 
 Use `no-message` for compact filter/search rows where the reserved helper/error area would disrupt alignment.
@@ -457,6 +465,7 @@ Common supported behavior across these controls includes:
 - props: `name`, `value`, `id`, `label`, `warning`, `disabled`, `model-value`, `is-invalid`, `error-message`
 - emits: `update:modelValue`
 - `value` is required
+- checked and disabled dots are driven by tokens and CSS, not hardcoded SVG fills
 
 #### `dd-toggle` highlights
 
@@ -897,3 +906,5 @@ function save() {
 - `type: 'info'`
 - `position: 'top-right'`
 - `duration: 5000`
+
+`dd-toaster` renders through `Teleport`, but it mirrors the nearest `data-theme` host so scoped light and dark themes continue to apply to toast surfaces correctly.

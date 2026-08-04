@@ -5,7 +5,7 @@
     "$value": "100%"
   },
   "border-color": {
-    "$value": "{color.gray.100}"
+    "$value": "{card.border-color}"
   },
   "border-width": {
     "$value": "1px"
@@ -22,10 +22,10 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.gray.100}"
+      "$value": "{color.bg.surface-hover}"
     },
     "color": {
-      "$value": "{color.darker-gray}"
+      "$value": "{color.text.default}"
     },
     "font-family": {
       "$value": "{font.base}"
@@ -55,7 +55,7 @@
       "$value": "{space.sm}"
     },
     "border-color": {
-      "$value": "{table.border-color}"
+      "$value": "{color.border.default}"
     },
     "border-width": {
       "$value": "{table.border-width}"
@@ -67,7 +67,7 @@
   "row-striped": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.gray.50}"
+      "$value": "{color.bg.surface-hover}"
     }
   },
   "row": {
@@ -79,7 +79,7 @@
   "row-hover": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.primary.50}"
+      "$value": "{color.bg.surface-hover}"
     }
   },
   "density": {
@@ -151,7 +151,7 @@
   "empty-state": {
     "$type": "object",
     "color": {
-      "$value": "{color.gray}"
+      "$value": "{color.text.muted}"
     }
   },
   "error-state": {

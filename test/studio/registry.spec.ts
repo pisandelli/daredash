@@ -252,7 +252,7 @@ describe('DareDash Studio registry', () => {
 
     expect(drawerTab).toBeDefined()
     expect(drawerTab!.navigationKind).toBe('component')
-    expect(backgroundField?.referencePath).toBe('color.white')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface')
     expect(shadowField?.referencePath).toBe('shadow.xl')
   })
 
@@ -281,7 +281,7 @@ describe('DareDash Studio registry', () => {
 
     expect(loadingTab).toBeDefined()
     expect(loadingTab!.navigationKind).toBe('component')
-    expect(colorField?.referencePath).toBe('color.secondary')
+    expect(colorField?.referencePath).toBe('color.text.muted')
     expect(iconSizeField?.referencePath).toBe('space.xl')
   })
 
@@ -294,8 +294,8 @@ describe('DareDash Studio registry', () => {
 
     expect(skeletonTab).toBeDefined()
     expect(skeletonTab!.navigationKind).toBe('component')
-    expect(backgroundField?.referencePath).toBe('color.gray.100')
-    expect(highlightField?.referencePath).toBe('color.gray.50')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface-hover')
+    expect(highlightField?.referencePath).toBe('color.bg.surface')
     expect(radiusField?.referencePath).toBe('border-radius.md')
     expect(blockSizeField?.referencePath).toBe('space.md')
   })
@@ -307,7 +307,7 @@ describe('DareDash Studio registry', () => {
 
     expect(menuTab).toBeDefined()
     expect(menuTab!.navigationKind).toBe('component')
-    expect(activeField?.referencePath).toBe('color.primary.50')
+    expect(activeField?.referencePath).toBe('color.bg.surface-hover')
     expect(floatField?.referencePath).toBe('shadow.lg')
   })
 
@@ -329,7 +329,7 @@ describe('DareDash Studio registry', () => {
 
     expect(paginationTab).toBeDefined()
     expect(paginationTab!.navigationKind).toBe('component')
-    expect(colorField?.referencePath).toBe('color.dark-gray')
+    expect(colorField?.referencePath).toBe('color.text.muted')
     expect(activeField?.referencePath).toBe('color.primary')
   })
 
@@ -381,7 +381,7 @@ describe('DareDash Studio registry', () => {
     expect(inputSearchTab).toBeDefined()
     expect(inputSearchTab!.navigationKind).toBe('component')
     expect(primaryField?.referencePath).toBe('button.primary.base-color')
-    expect(neutralField?.referencePath).toBe('color.secondary-100')
+    expect(neutralField?.referencePath).toBe('color.gray.100')
     expect(successTextField?.referencePath).toBe('input-search.button.success.background-color')
   })
 
@@ -516,14 +516,14 @@ describe('DareDash Studio registry', () => {
     expect(tableTab).toBeDefined()
     expect(tableTab!.navigationKind).toBe('component')
     expect(colorField?.referencePath).toBe('color.text.default')
-    expect(borderField?.referencePath).toBe('color.gray.100')
+    expect(borderField?.referencePath).toBe('card.border-color')
     expect(borderWidthField?.defaultValue).toBe('1px')
-    expect(headerField?.referencePath).toBe('color.gray.100')
-    expect(headerColorField?.referencePath).toBe('color.darker-gray')
+    expect(headerField?.referencePath).toBe('color.bg.surface-hover')
+    expect(headerColorField?.referencePath).toBe('color.text.default')
     expect(headerFontSizeField?.referencePath).toBe('font-size.sm')
     expect(cellFontSizeField?.referencePath).toBe('font-size.sm')
     expect(largeDensityHeaderPaddingField?.referencePath).toBe('space.md')
-    expect(cellBorderField?.referencePath).toBe('table.border-color')
+    expect(cellBorderField?.referencePath).toBe('color.border.default')
     expect(cellBorderWidthField?.referencePath).toBe('table.border-width')
     expect(comfortableDensityPaddingField?.referencePath).toBe('table.cell.padding')
     expect(compactDensityHeaderSizeField?.referencePath).toBe('font-size.xs')

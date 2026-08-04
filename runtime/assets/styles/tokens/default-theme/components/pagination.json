@@ -5,19 +5,19 @@
     "$value": "{font-size.sm}"
   },
   "color": {
-    "$value": "{color.dark-gray}"
+    "$value": "{color.text.muted}"
   },
   "bg": {
     "$value": "transparent"
   },
   "border-color": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "color-hover": {
-    "$value": "{color.primary}"
+    "$value": "{color.text.default}"
   },
   "bg-hover": {
-    "$value": "transparent"
+    "$value": "{color.bg.surface-hover}"
   },
   "border-hover": {
     "$value": "{color.primary}"
@@ -26,19 +26,19 @@
     "$value": "{color.primary}"
   },
   "bg-active": {
-    "$value": "transparent"
+    "$value": "{color.bg.surface-hover}"
   },
   "border-active": {
     "$value": "{color.primary}"
   },
   "color-disabled": {
-    "$value": "{color.gray}"
+    "$value": "{color.text.muted}"
   },
   "bg-disabled": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.bg-disabled}"
   },
   "border-disabled": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "size": {
     "$value": "{space.xl}"

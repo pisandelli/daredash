@@ -32,6 +32,28 @@ export function useMenuRender(
 ): UseMenuRenderReturn {
   const DdBadge = resolveComponent(getPrefixName('Badge', { type: 'component' }))
 
+  const createFloatAnchorStyle = (anchorName: string) => ({
+    '--anchor-name': anchorName,
+    'anchor-name': anchorName
+  })
+
+  const createFloatPanelStyle = (
+    anchorName: string,
+    isOpen: boolean,
+    position?: { top: number; left: number }
+  ) => ({
+    '--anchor-name': anchorName,
+    ...(!options.usesCssAnchor.value && position
+      ? {
+          top: `${position.top}px`,
+          left: `${position.left}px`
+        }
+      : {}),
+    ...(!options.usesCssAnchor.value && isOpen && !position
+      ? { display: 'none' }
+      : {})
+  })
+
   const renderSeparator = (entry: MenuSeparator, index: number): VNode => {
     const children: VNode[] = []
 
@@ -116,22 +138,23 @@ export function useMenuRender(
         linkElement = h(NuxtLink, {
           class: [
             styles.link,
-            isFloat && options.usesCssAnchor.value ? styles.floatAnchor : ''
+            isFloat ? styles.floatAnchor : ''
           ],
           to: item.action.to,
           ...(item.action.target ? { target: item.action.target } : {}),
           'aria-current': isActive ? 'page' : undefined,
           'aria-disabled': item.disabled ? 'true' : undefined,
           title: hideLabel ? item.label : undefined,
-          ...(isFloat && !options.usesCssAnchor.value
+          ...(isFloat
             ? {
                 ref: (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
                   if (el && el instanceof HTMLElement) options.anchorRefs?.value?.set(item.key, el)
+                  else if (!el) options.anchorRefs?.value?.delete(item.key)
                 }
               }
             : {}),
-          style: isFloat && options.usesCssAnchor.value
-            ? { anchorName }
+          style: isFloat
+            ? createFloatAnchorStyle(anchorName)
             : undefined,
           onClick: hasChildren && isFloat
             ? (e: Event) => { e.preventDefault(); options.toggleFloat(item.key) }
@@ -144,19 +167,20 @@ export function useMenuRender(
           type: 'button',
           class: [
             styles.link,
-            isFloat && options.usesCssAnchor.value ? styles.floatAnchor : ''
+            isFloat ? styles.floatAnchor : ''
           ],
           disabled: item.disabled || undefined,
           'aria-expanded': hasChildren ? String(isFloat ? floatIsOpen : isExpanded) : undefined,
           'aria-controls': hasChildren ? `dd-submenu-${item.key}` : undefined,
           'aria-haspopup': hasChildren && isFloat ? 'true' : undefined,
           title: hideLabel ? item.label : undefined,
-          style: isFloat && options.usesCssAnchor.value
-            ? { anchorName }
+          style: isFloat
+            ? createFloatAnchorStyle(anchorName)
             : undefined,
-          ref: isFloat && !options.usesCssAnchor.value
+          ref: isFloat
             ? (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
                 if (el && el instanceof HTMLElement) options.anchorRefs?.value?.set(item.key, el)
+                else if (!el) options.anchorRefs?.value?.delete(item.key)
               }
             : undefined,
           onClick: item.disabled
@@ -183,13 +207,7 @@ export function useMenuRender(
             role: 'menu',
             'aria-label': item.label,
             'data-open': floatIsOpen ? '' : undefined,
-            style: [
-              options.usesCssAnchor.value
-                ? { '--anchor-name': anchorName }
-                : pos
-                  ? { top: `${pos.top}px`, left: `${pos.left}px` }
-                  : { display: 'none' }
-            ],
+            style: createFloatPanelStyle(anchorName, floatIsOpen, pos),
             ref: (el: ComponentPublicInstance | Element | null, _refs: Record<string, unknown>) => {
               if (el && el instanceof HTMLElement) options.floatPanelRefs?.value?.set(item.key, el)
               else if (!el) options.floatPanelRefs?.value?.delete(item.key)

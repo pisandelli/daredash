@@ -8,7 +8,7 @@
   --local-message-font-weight: v('input.error-label.font-weight');
   --local-message-color: v('input.error-label.color');
   --local-warning-message-color: v('input.warning-label.color');
-  --local-counter-color: v('color.secondary-500');
+  --local-counter-color: v('input.counter.color');
 
   display: flex;
   flex-direction: column;

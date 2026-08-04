@@ -15,7 +15,7 @@
   },
   "addon": {
     "background-color": {
-      "$value": "{color.secondary-50}"
+      "$value": "{color.gray.50}"
     },
     "color": {
       "$value": "contrast-color({input-group.addon.background-color})"

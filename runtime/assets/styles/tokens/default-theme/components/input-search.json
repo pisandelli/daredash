@@ -50,13 +50,13 @@
     },
     "neutral": {
       "background-color": {
-        "$value": "{color.secondary-100}"
+        "$value": "{color.gray.100}"
       },
       "color": {
         "$value": "contrast-color({input-search.button.neutral.background-color})"
       },
       "hover-background-color": {
-        "$value": "{color.secondary-200}"
+        "$value": "{color.gray.200}"
       }
     }
   },

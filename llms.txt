@@ -700,7 +700,8 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Restrictions:
   - supports semantic attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
   - `color` is a real prop for direct custom color, not a semantic alias API;
-  - prefer semantic attrs for status communication and reserve `color` for true one-off overrides.
+  - prefer semantic attrs for status communication and reserve `color` for true one-off overrides;
+  - neutral badges stay intentionally soft, but dark theme raises their contrast automatically so they remain readable on dark surfaces.
 
 ### `DdNotificationTrigger`
 
@@ -814,7 +815,8 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - semantic styling is primarily driven by attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
   - `color` is a real prop for arbitrary custom color overrides and should not be confused with semantic attrs;
   - prefer semantic attrs in generated page code unless the user explicitly asks for a custom color;
-  - relevant variants/attrs include `full`, `ghost`, `outline`, `icon-right`, `icon-only`, `tiny`, `small`, `large`, and `xlarge`.
+  - relevant variants/attrs include `full`, `ghost`, `outline`, `icon-right`, `icon-only`, `tiny`, `small`, `large`, and `xlarge`;
+  - disabled visuals are tokenized through `button.disabled.background-color` and `button.disabled.color`.
 
 ### `DdInput`
 
@@ -845,6 +847,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - supports sizing attrs `small` and `large`;
   - `error` and `warning` may be passed as booleans or as strings, and string values become visible helper messages;
   - use `no-message` in compact filter/search rows when the reserved helper/error area should not affect external alignment;
+  - simple fields and vee-validate wrappers share the same field shell structure for aligned labels, controls, counters, and helper text;
   - required fields render a dedicated marker styled by `input.required-marker.color`;
   - left and right icons are props (`icon`, `iconRight`), not slots.
 
@@ -871,7 +874,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdTextarea v-model="bio" name="bio" :rows="4" :max-length="280" />`.
 - Incorrect example: `<DdTextarea :options="options" />`.
 - Accessibility notes: use `label` or equivalent labeling.
-- Restrictions: states `error`, `warning`, `success`; use `no-message` to suppress visible helper/error text in compact layouts while preserving visual state; required marker color is shared through `input.required-marker.color`.
+- Restrictions: states `error`, `warning`, `success`; use `no-message` to suppress visible helper/error text in compact layouts while preserving visual state; helper layout is shared with `DdInput` and `DdSelect`; required marker color is shared through `input.required-marker.color`.
 
 ### `DdSelect`
 
@@ -900,6 +903,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - supports sizing attrs `small` and `large`;
   - `error` and `warning` may be passed as strings to surface inline helper text;
   - use `no-message` in compact filter/search rows when the reserved helper/error area should not affect external alignment;
+  - disabled select visuals follow the same shared field semantics used by `DdInput` and `DdTextarea`;
   - required marker color is shared through `input.required-marker.color`;
   - options must follow `{ label, value, disabled? }`.
 
@@ -951,7 +955,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdRadio v-model="plan" name="plan" value="pro">Pro</DdRadio>`.
 - Incorrect example: `<DdRadio v-model="value">Missing value</DdRadio>`.
 - Accessibility notes: radios in the same group should share `name`.
-- Restrictions: `value` is required.
+- Restrictions: `value` is required; checked and disabled dots are driven by tokens and CSS rather than hardcoded SVG fills.
 
 ### `DdToggle`
 
@@ -1088,7 +1092,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdToaster />`.
 - Incorrect example: `<DdToaster position="top-left" />`.
 - Accessibility notes: depends on `DdToast` semantics; keep only one global instance.
-- Restrictions: renders notifications from the global `useToaster` state.
+- Restrictions: renders notifications from the global `useToaster` state; even though it teleports to `body`, it mirrors the nearest `data-theme` host so scoped dark themes still apply.
 
 ### `DdToast`
 
@@ -1106,7 +1110,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Correct example: `<DdToast title="Success">Record saved.</DdToast>`.
 - Incorrect example: `<DdToast type="success">Record saved.</DdToast>`.
 - Accessibility notes: keep messages short; use together with `DdToaster`.
-- Restrictions: variants `success`, `error`, `warning`, `info`; visual variant `solid`.
+- Restrictions: variants `success`, `error`, `warning`, `info`; visual variant `solid`; toast surfaces are theme-token driven and receive dark-theme overrides when rendered through `DdToaster`.
 
 ### `DdAvatar`
 

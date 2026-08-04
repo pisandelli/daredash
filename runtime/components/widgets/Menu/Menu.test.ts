@@ -302,6 +302,32 @@ describe('Menu', () => {
     expect(floatItem).toBeDefined()
   })
 
+  test('float triggers render stable anchor markup', async () => {
+    const floatItems: MenuEntry[] = [
+      {
+        key: 'tools',
+        label: 'Tools',
+        float: true,
+        action: { type: 'none' },
+        children: [
+          { key: 'tools-a', label: 'Tool A', action: { type: 'link', to: '/tools/a' } }
+        ]
+      }
+    ]
+
+    const wrapper = await mountSuspended(Menu, {
+      props: { items: floatItems }
+    })
+
+    const trigger = wrapper.find('button[aria-controls="dd-submenu-tools"]')
+    expect(trigger.exists()).toBe(true)
+    expect(trigger.classes().some(className => className.includes('floatAnchor'))).toBe(true)
+    expect(trigger.attributes('style')).toContain('--anchor-name: --dd-menu-anchor-tools;')
+
+    const panel = wrapper.find('#dd-submenu-tools')
+    expect(panel.attributes('style')).toContain('--anchor-name: --dd-menu-anchor-tools;')
+  })
+
   test('collapsed state sets data-collapsed on nav', async () => {
     const wrapper = await mountSuspended(Menu, {
       props: {

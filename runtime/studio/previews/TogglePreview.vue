@@ -35,7 +35,7 @@ function focusField(path: string) {
         <strong>How to read this preview</strong>
         <span><b>Token-driven here:</b> default switch geometry, thumb styling, base track colors and disabled behavior.</span>
         <span><b>Token-driven per variant:</b> `primary`, `success`, `warning`, `danger` and `info` now have their own active-track tokens.</span>
-        <span><b>Not tokenized yet:</b> checked/unchecked inner content and the loading icon come from slots/runtime behavior, not from theme tokens.</span>
+        <span><b>Also token-driven:</b> label color, inner track content color and loading icon contrast now follow switch tokens instead of hardcoded neutrals.</span>
       </div>
     </header>
 

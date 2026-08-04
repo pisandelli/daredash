@@ -10,7 +10,10 @@
     }
   },
   "bg": {
-    "$value": "{color.white}"
+    "$value": "{color.bg.surface}"
+  },
+  "color": {
+    "$value": "{color.text.default}"
   },
   "box-shadow": {
     "$value": "{shadow.xl}"
@@ -27,7 +30,7 @@
   },
   "header": {
     "border-color": {
-      "$value": "{color.border.default}"
+      "$value": "{card.border-color}"
     },
     "border-style": {
       "$value": "solid"
@@ -38,7 +41,7 @@
   },
   "footer": {
     "border-color": {
-      "$value": "{color.border.default}"
+      "$value": "{card.border-color}"
     },
     "border-style": {
       "$value": "solid"
@@ -48,11 +51,27 @@
     }
   },
   "title": {
+    "color": {
+      "$value": "{color.text.default}"
+    },
     "font-size": {
       "$value": "{font-size.lg}"
     },
     "font-weight": {
       "$value": "{font-weight.bold}"
+    }
+  },
+  "close": {
+    "color": {
+      "$value": "{color.text.muted}"
+    },
+    "hover": {
+      "background-color": {
+        "$value": "{color.bg.surface-hover}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      }
     }
   },
   "z-index": {

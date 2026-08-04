@@ -14,7 +14,7 @@
     "$value": "{color.bg.surface}"
   },
   "border": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "hover": {
     "border": {
@@ -27,10 +27,6 @@
     },
     "dot-color": {
       "$value": "{color.primary.600}"
-    },
-    "dot-color-svg": {
-      "$value": "%230984e3",
-      "$description": "SVG encoded color for the checked dot"
     }
   },
   "disabled": {
@@ -38,10 +34,10 @@
       "$value": "{color.bg-disabled}"
     },
     "border": {
-      "$value": "{color.light-gray}"
+      "$value": "{color.border.default}"
     },
-    "dot-color-svg": {
-      "$value": "%239ca3af"
+    "dot-color": {
+      "$value": "{color.text.muted}"
     }
   },
   "transition": {
@@ -51,7 +47,7 @@
     "$value": "{font-size.sm}"
   },
   "color": {
-    "$value": "{color.darker-gray}"
+    "$value": "{color.text.default}"
   },
   "line-height": {
     "$value": "{line-height.snug}"

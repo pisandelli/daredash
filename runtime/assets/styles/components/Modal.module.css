@@ -5,11 +5,16 @@
   --local-border-radius: v('modal.border-radius');
   --local-box-shadow: v('modal.box-shadow');
   --local-z-index: v('modal.z-index');
+  --local-background-color: v('modal.background-color');
+  --local-color: v('modal.color');
   --local-backdrop-bg: v('modal.backdrop.background-color');
   --local-backdrop-filter: v('modal.backdrop.filter');
   --local-title-font-size: v('modal.title.font-size');
   --local-title-font-weight: v('modal.title.font-weight');
   --local-close-size: v('modal.close-size');
+  --local-close-color: v('modal.close.color');
+  --local-close-hover-color: v('modal.close.hover.color');
+  --local-close-hover-background-color: v('modal.close.hover.background-color');
   --local-body-font-family: v('modal.body.font-family');
   --local-padding: v('modal.padding');
 
@@ -17,8 +22,8 @@
   margin: auto;
   padding: 0;
   border: none;
-  background-color: v('color.white');
-  color: v('color.text.default');
+  background-color: var(--local-background-color);
+  color: var(--local-color);
 
   /* Layout & Design */
   display: flex;
@@ -72,15 +77,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: v('color.darker-gray');
+  color: var(--local-close-color);
   padding: v('space.xs');
   margin-inline-end: calc(var(--local-padding) * -0.25);
   border-radius: v('border-radius.full');
   transition: all 0.2s ease;
 
   &:hover {
-    color: v('color.danger.600');
-    background-color: v('color.danger.50');
+    color: var(--local-close-hover-color);
+    background-color: var(--local-close-hover-background-color);
   }
 }
 

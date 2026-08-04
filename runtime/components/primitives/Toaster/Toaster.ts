@@ -1,5 +1,16 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { computed, h, Teleport, TransitionGroup, type VNode, resolveComponent } from 'vue'
+import {
+  computed,
+  h,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  shallowRef,
+  Teleport,
+  TransitionGroup,
+  type VNode,
+  resolveComponent
+} from 'vue'
 import { useToaster } from '#dd/composables/useToaster'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import getPrefixName from '#dd/utils/getPrefixName'
@@ -11,6 +22,33 @@ export default defineNuxtComponent({
   setup(props, { attrs }): () => VNode {
     const { notifications, dismissToast } = useToaster()
     const { processedAttrs, classList } = useBaseComponent(attrs, styles, 'Toaster')
+    const anchorRef = ref<HTMLElement | null>(null)
+    const themeHostRef = shallowRef<HTMLElement | null>(null)
+    const themeName = ref<string | null>(null)
+    let themeObserver: MutationObserver | null = null
+
+    const syncTheme = () => {
+      themeName.value = themeHostRef.value?.getAttribute('data-theme') ?? null
+    }
+
+    onMounted(() => {
+      const host = anchorRef.value?.closest('[data-theme]') as HTMLElement | null
+      themeHostRef.value = host
+      syncTheme()
+
+      if (host && typeof MutationObserver !== 'undefined') {
+        themeObserver = new MutationObserver(syncTheme)
+        themeObserver.observe(host, {
+          attributes: true,
+          attributeFilter: ['data-theme']
+        })
+      }
+    })
+
+    onBeforeUnmount(() => {
+      themeObserver?.disconnect()
+      themeObserver = null
+    })
 
     const myPosition = computed(() => {
       if ('top-left' in attrs && attrs['top-left'] !== false) return 'top-left'
@@ -51,14 +89,17 @@ export default defineNuxtComponent({
 
       const toasterContainer = h(
         'div',
-        { 
+        {
           ...processedAttrs.value,
-          class: classList.value 
+          class: classList.value,
+          'data-theme': themeName.value ?? undefined
         },
         transitionGroup
       )
 
-      return h(Teleport, { to: 'body' }, toasterContainer)
+      return h('span', { ref: anchorRef, 'aria-hidden': 'true', style: 'display:none' }, [
+        h(Teleport, { to: 'body' }, toasterContainer)
+      ])
     }
   }
 })

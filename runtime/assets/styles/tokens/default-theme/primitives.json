@@ -83,37 +83,37 @@
     },
     "gray": {
       "50": {
-        "$value": "#f7f8fc"
+        "$value": "#fafafa"
       },
       "100": {
-        "$value": "#f0f1f9"
+        "$value": "#f5f5f5"
       },
       "200": {
-        "$value": "#e2e4f3"
+        "$value": "#e5e5e5"
       },
       "300": {
-        "$value": "#c4c8dc"
+        "$value": "#d4d4d4"
       },
       "400": {
-        "$value": "#a1a4ba"
+        "$value": "#a3a3a3"
       },
       "500": {
-        "$value": "#73768c"
+        "$value": "#737373"
       },
       "600": {
-        "$value": "#545778"
+        "$value": "#525252"
       },
       "700": {
-        "$value": "#393e64"
+        "$value": "#404040"
       },
       "800": {
-        "$value": "#242851"
+        "$value": "#262626"
       },
       "900": {
-        "$value": "#161943"
+        "$value": "#171717"
       },
       "950": {
-        "$value": "#0f123c"
+        "$value": "#0a0a0a"
       },
       "$value": "{color.gray.500}"
     },
@@ -358,6 +358,9 @@
     "text": {
       "default": {
         "$value": "{color.darker-gray}"
+      },
+      "muted": {
+        "$value": "{color.gray.500}"
       }
     },
     "border-hover": {

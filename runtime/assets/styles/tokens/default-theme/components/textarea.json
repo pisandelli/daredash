@@ -82,7 +82,7 @@
       "$value": "{input.disabled.cursor}"
     },
     "border-color": {
-      "$value": "{color.secondary-200}"
+      "$value": "{input.disabled.border-color}"
     }
   },
   "error-state": {
@@ -116,6 +116,12 @@
     },
     "font-size": {
       "$value": "{input.error-label.font-size}"
+    }
+  },
+  "placeholder": {
+    "$type": "object",
+    "color": {
+      "$value": "{input.placeholder.color}"
     }
   },
   "min-height": {

@@ -100,7 +100,7 @@
       "$value": "{input.disabled.cursor}"
     },
     "border-color": {
-      "$value": "{color.secondary-200}"
+      "$value": "{input.disabled.border-color}"
     }
   },
   "error-state": {
@@ -150,7 +150,7 @@
     "$description": "Tokens for the dropdown panel (options list)",
     "$type": "object",
     "background-color": {
-      "$value": "{input.background-color}"
+      "$value": "{color.bg.surface}"
     },
     "border-radius": {
       "$value": "{input.border-radius}"
@@ -169,7 +169,7 @@
       "$value": "{input.padding.inline.start}"
     },
     "hover-background-color": {
-      "$value": "{color.light-gray}"
+      "$value": "{color.bg.surface-hover}"
     },
     "selected-background-color": {
       "$value": "{color.primary}"

@@ -5,6 +5,9 @@
     "$description": "Base size for 'em' calculations",
     "$value": "{font-size.md}"
   },
+  "color": {
+    "$value": "{color.text.default}"
+  },
   "transition": {
     "$value": "{transition.fast}"
   },
@@ -14,7 +17,7 @@
       "$value": "1.25em"
     },
     "background-color": {
-      "$value": "#FFF"
+      "$value": "{color.bg.surface}"
     },
     "box-shadow": {
       "$value": "0 1px 2px rgba(0,0,0,0.2)"
@@ -41,11 +44,32 @@
     },
     "background-color": {
       "$description": "Track color ('off' state)",
-      "$value": "{color.gray}"
+      "$value": "{color.text.muted}"
+    },
+    "color": {
+      "$value": "{color.text.inverse}"
     },
     "background-color-active": {
       "$description": "Track color ('on' state)",
       "$value": "{color.success}"
+    },
+    "color-active": {
+      "$value": "{color.text.inverse}"
+    }
+  },
+  "label": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.default}"
+    }
+  },
+  "loading-icon": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.muted}"
+    },
+    "color-active": {
+      "$value": "{color.text.inverse}"
     }
   },
   "primary": {

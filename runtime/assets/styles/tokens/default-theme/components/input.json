@@ -2,7 +2,7 @@
   "$description": "Tokens for the Input component",
   "$type": "object",
   "background-color": {
-    "$value": "#FFF"
+    "$value": "{color.bg.surface}"
   },
   "height": {
     "$value": "2.5rem"
@@ -43,18 +43,18 @@
     "$value": "solid"
   },
   "border-color": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "color": {
     "$description": "Input text color",
-    "$value": "{color.darker-gray}"
+    "$value": "{color.text.default}"
   },
   "font-family": {
     "$value": "{font.base}"
   },
   "placeholder": {
     "color": {
-      "$value": "{color.secondary-600}"
+      "$value": "{color.text.muted}"
     }
   },
   "font-size": {
@@ -90,7 +90,7 @@
   "label": {
     "$type": "object",
     "color": {
-      "$value": "{color.dark-gray}"
+      "$value": "{color.text.default}"
     },
     "font-size": {
       "$value": "{font-size.sm}"
@@ -127,6 +127,21 @@
     },
     "cursor": {
       "$value": "not-allowed"
+    },
+    "border-color": {
+      "$value": "{color.border.default}"
+    }
+  },
+  "icon": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.muted}"
+    }
+  },
+  "counter": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.muted}"
     }
   },
   "error-state": {

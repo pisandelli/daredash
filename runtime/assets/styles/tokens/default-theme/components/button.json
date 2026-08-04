@@ -104,6 +104,14 @@
       "$value": "{space.xs}"
     }
   },
+  "disabled": {
+    "background-color": {
+      "$value": "{color.gray.200}"
+    },
+    "color": {
+      "$value": "{color.gray.400}"
+    }
+  },
   "primary": {
     "base-color": {
       "$value": "{color.primary.600}"

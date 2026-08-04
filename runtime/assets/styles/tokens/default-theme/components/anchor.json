@@ -5,28 +5,28 @@
     "$value": "600"
   },
   "active-color": {
-    "$value": "{color.primary.600}"
+    "$value": "{color.primary}"
   },
   "border-color": {
-    "$value": "{color.gray.200}"
+    "$value": "{color.border.default}"
   },
   "indicator-color": {
-    "$value": "{color.primary.600}"
+    "$value": "{color.primary}"
   },
   "indicator-color-hover": {
-    "$value": "{color.gray.300}"
+    "$value": "{color.border-hover}"
   },
   "link-color": {
-    "$value": "{color.gray.500}"
+    "$value": "{color.text.muted}"
   },
   "link-color-hover": {
-    "$value": "{color.gray.900}"
+    "$value": "{color.text.default}"
   },
   "font-family": {
     "$value": "{font.base}"
   },
   "item-bg-hover": {
-    "$value": "{color.gray.50}"
+    "$value": "{color.bg.surface-hover}"
   },
   "item-radius": {
     "$value": "{border-radius.base}"

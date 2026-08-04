@@ -3,7 +3,7 @@
   "$type": "object",
   "list": {
     "border-color": {
-      "$value": "{color.light-gray}"
+      "$value": "{color.border.default}"
     },
     "border-width": {
       "$value": "1px"
@@ -19,7 +19,7 @@
     "$description": "The individual 'button' (tab)",
     "$type": "object",
     "base-color": {
-      "$value": "{color.primary.600}"
+      "$value": "{color.primary}"
     },
     "padding": {
       "$value": "{tabs.trigger.size.regular.padding}"
@@ -34,7 +34,7 @@
       "$value": "{font-weight.medium}"
     },
     "color": {
-      "$value": "{color.gray}"
+      "$value": "{color.text.muted}"
     },
     "bg": {
       "$value": "transparent"
@@ -51,10 +51,10 @@
     "hover": {
       "$type": "object",
       "color": {
-        "$value": "{color.dark-gray}"
+        "$value": "{color.text.default}"
       },
       "bg": {
-        "$value": "{color.light-gray}"
+        "$value": "{color.bg.surface-hover}"
       }
     },
     "active": {

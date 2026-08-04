@@ -12,8 +12,10 @@
   --local-focus-box-shadow: v('input.focus.box-shadow');
   --local-hover-border-color: v('radio.hover.border');
   --local-checked-border-color: v('radio.checked.border');
+  --local-checked-dot-color: v('radio.checked.dot-color');
   --local-disabled-bg: v('radio.disabled.bg');
   --local-disabled-border-color: v('radio.disabled.border');
+  --local-disabled-dot-color: v('radio.disabled.dot-color');
 
   display: flex;
   align-items: center;
@@ -48,7 +50,7 @@
 
   &:checked {
     border-color: var(--local-checked-border-color);
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%230984e3' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='4'/%3e%3c/svg%3e");
+    background-image: radial-gradient(circle, var(--local-checked-dot-color) 0 26%, transparent 27%);
   }
 
   &:focus-visible {
@@ -62,7 +64,7 @@
     cursor: not-allowed;
 
     &:checked {
-      background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%239ca3af' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='4'/%3e%3c/svg%3e");
+      background-image: radial-gradient(circle, var(--local-disabled-dot-color) 0 26%, transparent 27%);
     }
   }
 

@@ -1,15 +1,33 @@
 .wrapper {
-  --local-track-active-bg: v('switch-track-background-color-active');
-  --local-thumb-size: 1.1em;
+  --local-track-background-color: v('switch.track.background-color');
+  --local-track-active-background-color: v('switch.track.background-color-active');
+  --local-track-color: v('switch.track.color');
+  --local-track-active-color: v('switch.track.color-active');
+  --local-transition: v('switch.transition');
+  --local-thumb-size: v('switch.thumb.size');
+  --local-thumb-background-color: v('switch.thumb.background-color');
+  --local-thumb-box-shadow: v('switch.thumb.box-shadow');
+  --local-track-width: v('switch.track.width');
+  --local-track-height: v('switch.track.height');
+  --local-track-padding: v('switch.track.padding');
+  --local-track-radius: v('switch.track.border-radius');
+  --local-focus-ring: v('switch.focus');
+  --local-disabled-opacity: v('switch.disabled.opacity');
+  --local-disabled-cursor: v('switch.disabled.cursor');
+  --local-label-color: v('switch.label.color');
+  --local-loading-icon-color: v('switch.loading-icon.color');
+  --local-loading-icon-active-color: v('switch.loading-icon.color-active');
+  --local-color: v('switch.color');
 
   display: inline-flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
-  font-family: v('font-base');
-  font-size: v('font-size.sm');
-  gap: v('space-sm');
-  transition: opacity 0.2s ease;
+  font-family: v('font.base');
+  font-size: v('switch.font-size');
+  gap: v('space.sm');
+  color: var(--local-color);
+  transition: opacity var(--local-transition, 0.2s ease);
 
   &[data-small] {
     font-size: v('font-size.xs');
@@ -24,25 +42,25 @@
   }
 
   &[data-primary] {
-    --local-track-active-bg: v('switch-primary-track-background-color-active');
+    --local-track-active-background-color: v('switch.primary.track.background-color-active');
   }
   &[data-success] {
-    --local-track-active-bg: v('switch-success-track-background-color-active');
+    --local-track-active-background-color: v('switch.success.track.background-color-active');
   }
   &[data-warning] {
-    --local-track-active-bg: v('switch-warning-track-background-color-active');
+    --local-track-active-background-color: v('switch.warning.track.background-color-active');
   }
   &[data-danger] {
-    --local-track-active-bg: v('switch-danger-track-background-color-active');
+    --local-track-active-background-color: v('switch.danger.track.background-color-active');
   }
   &[data-info] {
-    --local-track-active-bg: v('switch-info-track-background-color-active');
+    --local-track-active-background-color: v('switch.info.track.background-color-active');
   }
 
   &[data-disabled],
   &[data-loading] {
-    opacity: v('switch-disabled-opacity');
-    cursor: v('switch-disabled-cursor');
+    opacity: var(--local-disabled-opacity);
+    cursor: var(--local-disabled-cursor);
     pointer-events: none;
   }
 
@@ -52,7 +70,7 @@
 
   /* Focus ring mapped onto track */
   &:has(.input:focus-visible) .track {
-    box-shadow: v('switch-focus');
+    box-shadow: var(--local-focus-ring);
   }
 }
 
@@ -73,10 +91,10 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-inline-size: v('switch-track-width');
-  block-size: v('switch-track-height');
-  background-color: v('switch-track-background-color');
-  border-radius: v('switch-track-border-radius');
+  min-inline-size: var(--local-track-width);
+  block-size: var(--local-track-height);
+  background-color: var(--local-track-background-color);
+  border-radius: var(--local-track-radius);
   transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
 
@@ -87,35 +105,36 @@
 
 /* Checked State - Native Input Driven for 0 latency */
 .input:checked + .track {
-  background-color: var(--local-track-active-bg);
+  background-color: var(--local-track-active-background-color);
 }
 
 .input:checked + .track .thumb {
-  inset-inline-start: calc(100% - var(--local-thumb-size) - v('switch-track-padding'));
+  inset-inline-start: calc(100% - var(--local-thumb-size) - var(--local-track-padding));
 }
 
 .input:checked + .track:active .thumb {
-  inset-inline-start: calc(100% - (var(--local-thumb-size) + 0.3em) - v('switch-track-padding'));
+  inset-inline-start: calc(100% - (var(--local-thumb-size) + 0.3em) - var(--local-track-padding));
 }
 
 .input:checked + .track .inner {
-  padding-inline-start: calc(v('switch-track-padding') + 0.8em);
-  padding-inline-end: calc(var(--local-thumb-size) + v('switch-track-padding') + 0.8em);
+  padding-inline-start: calc(var(--local-track-padding) + 0.8em);
+  padding-inline-end: calc(var(--local-thumb-size) + var(--local-track-padding) + 0.8em);
+  color: var(--local-track-active-color);
 }
 
 .input:checked + .track .loadingIcon {
-  color: v('color.white');
+  color: var(--local-loading-icon-active-color);
 }
 
 .thumb {
   position: absolute;
   inset-block-start: 50%;
-  inset-inline-start: v('switch-track-padding');
+  inset-inline-start: var(--local-track-padding);
   inline-size: var(--local-thumb-size);
   block-size: var(--local-thumb-size);
-  background-color: v('switch-thumb-background-color');
-  border-radius: v('border-radius-full');
-  box-shadow: v('switch-thumb-box-shadow');
+  background-color: var(--local-thumb-background-color);
+  border-radius: v('border-radius.full');
+  box-shadow: var(--local-thumb-box-shadow);
   transform: translateY(-50%);
   transition: inset-inline-start 0.2s cubic-bezier(0.4, 0, 0.2, 1),
               inline-size 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -131,10 +150,10 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding-inline-start: calc(var(--local-thumb-size) + v('switch-track-padding') + 0.8em);
-  padding-inline-end: calc(v('switch-track-padding') + 0.8em);
+  padding-inline-start: calc(var(--local-thumb-size) + var(--local-track-padding) + 0.8em);
+  padding-inline-end: calc(var(--local-track-padding) + 0.8em);
   font-size: 0.75em;
-  color: #fff;
+  color: var(--local-track-color);
   transition: padding 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   font-weight: 500;
@@ -144,11 +163,11 @@
 .loadingIcon {
   inline-size: var(--local-thumb-size);
   block-size: var(--local-thumb-size);
-  color: v('color.dark-gray');
+  color: var(--local-loading-icon-color);
   opacity: 0.5;
   transition: color 0.2s ease;
 }
 
 .label {
-  color: v('color.dark-gray');
+  color: var(--local-label-color);
 }

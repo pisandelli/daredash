@@ -6,7 +6,7 @@
     "$value": "rotate 2s infinite linear"
   },
   "color": {
-    "$value": "{color.secondary}"
+    "$value": "{color.text.muted}"
   },
   "font-family": {
     "$value": "{font.system}"

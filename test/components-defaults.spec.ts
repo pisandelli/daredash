@@ -15,6 +15,51 @@ describe('default component tokens', () => {
     expect(badgeTokens.padding.inline.$value).toBe('{space.xs}')
   })
 
+  it('uses tokenized disabled button defaults', () => {
+    const buttonTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/button.json'
+    )
+    const buttonCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Button.module.css'
+    )
+
+    const buttonTokens = JSON.parse(readFileSync(buttonTokensPath, 'utf8'))
+    const buttonCss = readFileSync(buttonCssPath, 'utf8')
+
+    expect(buttonTokens.disabled['background-color'].$value).toBe('{color.gray.200}')
+    expect(buttonTokens.disabled.color.$value).toBe('{color.gray.400}')
+    expect(buttonCss).toContain("--local-disabled-background-color: v('button.disabled.background-color');")
+    expect(buttonCss).toContain("--local-disabled-color: v('button.disabled.color');")
+  })
+
+  it('boosts badge contrast inside dark theme scopes', () => {
+    const badgeCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Badge.module.css'
+    )
+
+    const badgeCss = readFileSync(badgeCssPath, 'utf8')
+
+    expect(badgeCss).toContain(":global([data-theme='dark']) .badge")
+    expect(badgeCss).toContain('background-color: color-mix(in srgb, var(--local-base-color) 24%, transparent);')
+    expect(badgeCss).toContain('color: color-mix(in srgb, var(--local-base-color) 35%, white);')
+  })
+
+  it('keeps teleported toaster content scoped to the active theme host', () => {
+    const toasterComponentPath = resolve(
+      process.cwd(),
+      'runtime/components/primitives/Toaster/Toaster.ts'
+    )
+
+    const toasterComponent = readFileSync(toasterComponentPath, 'utf8')
+
+    expect(toasterComponent).toContain("closest('[data-theme]')")
+    expect(toasterComponent).toContain("'data-theme': themeName.value ?? undefined")
+    expect(toasterComponent).toContain('new MutationObserver(syncTheme)')
+  })
+
   it('uses detached notification trigger badge defaults', () => {
     const notificationTriggerTokensPath = resolve(
       process.cwd(),
@@ -43,6 +88,17 @@ describe('default component tokens', () => {
     expect(notificationTriggerCss).toContain('pointer-events: none;')
   })
 
+  it('uses muted neutral defaults for loading feedback', () => {
+    const loadingTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/loading.json'
+    )
+
+    const loadingTokens = JSON.parse(readFileSync(loadingTokensPath, 'utf8'))
+
+    expect(loadingTokens.color.$value).toBe('{color.text.muted}')
+  })
+
   it('uses neutral skeleton defaults for placeholder states', () => {
     const skeletonTokensPath = resolve(
       process.cwd(),
@@ -51,10 +107,44 @@ describe('default component tokens', () => {
 
     const skeletonTokens = JSON.parse(readFileSync(skeletonTokensPath, 'utf8'))
 
-    expect(skeletonTokens['background-color'].$value).toBe('{color.gray.100}')
-    expect(skeletonTokens['highlight-color'].$value).toBe('{color.gray.50}')
+    expect(skeletonTokens['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(skeletonTokens['highlight-color'].$value).toBe('{color.bg.surface}')
     expect(skeletonTokens['border-radius'].$value).toBe('{border-radius.md}')
     expect(skeletonTokens['block-size'].$value).toBe('{space.md}')
+  })
+
+  it('keeps navigational primitives tied to semantic foreground and surface tokens', () => {
+    const anchorTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/anchor.json'
+    )
+    const breadcrumbsTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/breadcrumbs.json'
+    )
+    const tabsTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/tabs.json'
+    )
+
+    const anchorTokens = JSON.parse(readFileSync(anchorTokensPath, 'utf8'))
+    const breadcrumbsTokens = JSON.parse(readFileSync(breadcrumbsTokensPath, 'utf8'))
+    const tabsTokens = JSON.parse(readFileSync(tabsTokensPath, 'utf8'))
+
+    expect(anchorTokens['border-color'].$value).toBe('{color.border.default}')
+    expect(anchorTokens['link-color'].$value).toBe('{color.text.muted}')
+    expect(anchorTokens['link-color-hover'].$value).toBe('{color.text.default}')
+    expect(anchorTokens['item-bg-hover'].$value).toBe('{color.bg.surface-hover}')
+
+    expect(breadcrumbsTokens.item.color.$value).toBe('{color.text.muted}')
+    expect(breadcrumbsTokens['item-current'].color.$value).toBe('{color.text.default}')
+    expect(breadcrumbsTokens.separator.color.$value).toBe('{color.text.muted}')
+
+    expect(tabsTokens.list['border-color'].$value).toBe('{color.border.default}')
+    expect(tabsTokens.trigger['base-color'].$value).toBe('{color.primary}')
+    expect(tabsTokens.trigger.color.$value).toBe('{color.text.muted}')
+    expect(tabsTokens.trigger.hover.color.$value).toBe('{color.text.default}')
+    expect(tabsTokens.trigger.hover.bg.$value).toBe('{color.bg.surface-hover}')
   })
 
   it('keeps a dedicated gray ramp for neutral aliases', () => {
@@ -66,11 +156,12 @@ describe('default component tokens', () => {
     const primitives = JSON.parse(readFileSync(primitivesPath, 'utf8'))
 
     expect(primitives.color.secondary['600'].$value).toBe('#b000c3')
-    expect(primitives.color.gray['600'].$value).toBe('#545778')
+    expect(primitives.color.gray['600'].$value).toBe('#525252')
     expect(primitives.color.gray.$value).toBe('{color.gray.500}')
     expect(primitives.color['light-gray'].$value).toBe('{color.gray.200}')
     expect(primitives.color['dark-gray'].$value).toBe('{color.gray.600}')
     expect(primitives.color['darker-gray'].$value).toBe('{color.gray.900}')
+    expect(primitives.color.text.muted.$value).toBe('{color.gray.500}')
     expect(primitives.color['border-hover'].$value).toBe('{color.gray.300}')
   })
 
@@ -85,6 +176,24 @@ describe('default component tokens', () => {
     expect(menuTokens.submenu['padding-inline-start'].$value).toBe('{space.xs}')
   })
 
+  it('uses semantic pagination defaults that adapt better to dark themes', () => {
+    const paginationTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/pagination.json'
+    )
+
+    const paginationTokens = JSON.parse(readFileSync(paginationTokensPath, 'utf8'))
+
+    expect(paginationTokens.color.$value).toBe('{color.text.muted}')
+    expect(paginationTokens['border-color'].$value).toBe('{color.border.default}')
+    expect(paginationTokens['color-hover'].$value).toBe('{color.text.default}')
+    expect(paginationTokens['bg-hover'].$value).toBe('{color.bg.surface-hover}')
+    expect(paginationTokens['bg-active'].$value).toBe('{color.bg.surface-hover}')
+    expect(paginationTokens['color-disabled'].$value).toBe('{color.text.muted}')
+    expect(paginationTokens['bg-disabled'].$value).toBe('{color.bg-disabled}')
+    expect(paginationTokens['border-disabled'].$value).toBe('{color.border.default}')
+  })
+
   it('uses updated table header and cell defaults', () => {
     const tableTokensPath = resolve(
       process.cwd(),
@@ -93,16 +202,17 @@ describe('default component tokens', () => {
 
     const tableTokens = JSON.parse(readFileSync(tableTokensPath, 'utf8'))
 
-    expect(tableTokens.header.color.$value).toBe('{color.darker-gray}')
-    expect(tableTokens['border-color'].$value).toBe('{color.gray.100}')
-    expect(tableTokens.header['background-color'].$value).toBe('{color.gray.100}')
+    expect(tableTokens.header.color.$value).toBe('{color.text.default}')
+    expect(tableTokens['border-color'].$value).toBe('{card.border-color}')
+    expect(tableTokens.header['background-color'].$value).toBe('{color.bg.surface-hover}')
     expect(tableTokens.header['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.header.padding.$value).toBe('{space.sm}')
     expect(tableTokens.cell['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.cell.padding.$value).toBe('{space.sm}')
-    expect(tableTokens['row-striped']['background-color'].$value).toBe('{color.gray.50}')
+    expect(tableTokens.cell['border-color'].$value).toBe('{color.border.default}')
+    expect(tableTokens['row-striped']['background-color'].$value).toBe('{color.bg.surface-hover}')
     expect(tableTokens.row['background-color'].$value).toBe('transparent')
-    expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.primary.50}')
+    expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.bg.surface-hover}')
     expect(tableTokens.header['text-transform'].$value).toBe('none')
     expect(tableTokens.density.large.header['font-size'].$value).toBe('{font-size.base}')
     expect(tableTokens.density.large.header.padding.$value).toBe('{space.md}')
@@ -116,6 +226,54 @@ describe('default component tokens', () => {
     expect(tableTokens.density.compact.header.padding.$value).toBe('{space.xxs}')
     expect(tableTokens.density.compact.cell['font-size'].$value).toBe('{font-size.xs}')
     expect(tableTokens.density.compact.cell.padding.$value).toBe('{space.xxs}')
+  })
+
+  it('uses semantic menu and switch neutrals for dark-theme compatibility', () => {
+    const menuTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/menu.json'
+    )
+    const switchTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/switch.json'
+    )
+
+    const menuTokens = JSON.parse(readFileSync(menuTokensPath, 'utf8'))
+    const switchTokens = JSON.parse(readFileSync(switchTokensPath, 'utf8'))
+
+    expect(menuTokens.item['color-disabled'].$value).toBe('{color.text.muted}')
+    expect(menuTokens.item['bg-active'].$value).toBe('{color.bg.surface-hover}')
+    expect(menuTokens.separator.color.$value).toBe('{color.text.muted}')
+    expect(switchTokens.track['background-color'].$value).toBe('{color.text.muted}')
+  })
+
+  it('uses semantic textarea and radio neutrals for dark-theme compatibility', () => {
+    const textareaTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/textarea.json'
+    )
+    const radioTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/radio.json'
+    )
+    const radioCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Radio.module.css'
+    )
+
+    const textareaTokens = JSON.parse(readFileSync(textareaTokensPath, 'utf8'))
+    const radioTokens = JSON.parse(readFileSync(radioTokensPath, 'utf8'))
+    const radioCss = readFileSync(radioCssPath, 'utf8')
+
+    expect(textareaTokens.disabled['background-color'].$value).toBe('{input.disabled.background-color}')
+    expect(radioTokens.border.$value).toBe('{color.border.default}')
+    expect(radioTokens.disabled.border.$value).toBe('{color.border.default}')
+    expect(radioTokens.disabled['dot-color'].$value).toBe('{color.text.muted}')
+    expect(radioTokens.color.$value).toBe('{color.text.default}')
+    expect(radioCss).toContain("--local-checked-dot-color: v('radio.checked.dot-color');")
+    expect(radioCss).toContain("--local-disabled-dot-color: v('radio.disabled.dot-color');")
+    expect(radioCss).toContain('background-image: radial-gradient(circle, var(--local-checked-dot-color) 0 26%, transparent 27%);')
+    expect(radioCss).not.toContain('data:image/svg+xml')
   })
 
   it('uses a shared field shell for text field spacing and messages', () => {
@@ -155,14 +313,25 @@ describe('default component tokens', () => {
     expect(fieldShellCss).toContain('gap: 0.375rem;')
     expect(fieldShellCss).toContain('min-block-size: 1.25em;')
     expect(fieldShellCss).toContain("--local-required-marker-color: v('input.required-marker.color');")
+    expect(fieldShellCss).toContain("--local-counter-color: v('input.counter.color');")
+    expect(inputTokens['background-color'].$value).toBe('{color.bg.surface}')
+    expect(inputTokens.color.$value).toBe('{color.text.default}')
+    expect(inputTokens.placeholder.color.$value).toBe('{color.text.muted}')
+    expect(inputTokens.disabled['border-color'].$value).toBe('{color.border.default}')
+    expect(inputTokens.icon.color.$value).toBe('{color.text.muted}')
+    expect(inputTokens.counter.color.$value).toBe('{color.text.muted}')
     expect(inputTokens['required-marker'].color.$value).toBe('{color.danger}')
     expect(inputGroupCss).toContain('[data-field-shell] {')
     expect(inputGroupCss).toContain('[data-field-feedback] {')
     expect(inputGroupCss).toContain('> [data-field-shell] {')
     expect(inputGroupCss).toContain('flex: 1 1 0;')
     expect(inputGroupCss).toContain('gap: 0;')
+    expect(inputCss).toContain("--local-border-color: v('input.disabled.border-color');")
+    expect(inputCss).toContain("color: v('input.icon.color');")
     expect(inputCss).not.toContain('.wrapper')
     expect(selectCss).not.toContain('.wrapper')
+    expect(selectCss).not.toContain('secondary-200')
+    expect(textareaCss).toContain("color: v('textarea.placeholder.color');")
     expect(textareaCss).not.toContain('.wrapper')
     expect(selectCss).not.toContain("margin-block-end: v('space.xxs');")
   })
@@ -187,13 +356,26 @@ describe('default component tokens', () => {
   })
 
   it('uses modal body as the effective scroll container', () => {
+    const modalTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/modal.json'
+    )
     const modalCssPath = resolve(
       process.cwd(),
       'runtime/assets/styles/components/Modal.module.css'
     )
 
+    const modalTokens = JSON.parse(readFileSync(modalTokensPath, 'utf8'))
     const modalCss = readFileSync(modalCssPath, 'utf8')
 
+    expect(modalTokens['background-color'].$value).toBe('{color.bg.surface}')
+    expect(modalTokens.color.$value).toBe('{color.text.default}')
+    expect(modalTokens.close.color.$value).toBe('{color.text.muted}')
+    expect(modalTokens.close.hover.color.$value).toBe('{color.danger.600}')
+    expect(modalTokens.close.hover['background-color'].$value).toBe('{color.danger.50}')
+    expect(modalCss).toContain("--local-background-color: v('modal.background-color');")
+    expect(modalCss).toContain("--local-color: v('modal.color');")
+    expect(modalCss).toContain("--local-close-color: v('modal.close.color');")
     expect(modalCss).toContain('display: flex;')
     expect(modalCss).toContain('flex-direction: column;')
     expect(modalCss).toContain('block-size: 100%;')
@@ -203,6 +385,126 @@ describe('default component tokens', () => {
     expect(modalCss).toContain('.modal:not([open])')
     expect(modalCss).toContain('display: none;')
     expect(modalCss).toContain('.modal[open]')
+  })
+
+  it('keeps drawer surfaces and close affordances token-driven', () => {
+    const drawerTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/drawer.json'
+    )
+    const drawerCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Drawer.module.css'
+    )
+
+    const drawerTokens = JSON.parse(readFileSync(drawerTokensPath, 'utf8'))
+    const drawerCss = readFileSync(drawerCssPath, 'utf8')
+
+    expect(drawerTokens.bg.$value).toBe('{color.bg.surface}')
+    expect(drawerTokens.color.$value).toBe('{color.text.default}')
+    expect(drawerTokens.header['border-color'].$value).toBe('{card.border-color}')
+    expect(drawerTokens.footer['border-color'].$value).toBe('{card.border-color}')
+    expect(drawerTokens.title.color.$value).toBe('{color.text.default}')
+    expect(drawerTokens.close.color.$value).toBe('{color.text.muted}')
+    expect(drawerTokens.close.hover['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(drawerTokens.close.hover.color.$value).toBe('{color.text.default}')
+    expect(drawerCss).toContain("--local-color: v('drawer.color');")
+    expect(drawerCss).toContain("--local-title-color: v('drawer.title.color');")
+    expect(drawerCss).toContain("--local-close-hover-background-color: v('drawer.close.hover.background-color');")
+    expect(drawerCss).not.toContain("v('color.surface.hover')")
+    expect(drawerCss).not.toContain("v('color.text')")
+  })
+
+  it('keeps switch colors token-driven and ready for theming', () => {
+    const switchTokensPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/components/switch.json'
+    )
+    const switchCssPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/components/Toggle.module.css'
+    )
+
+    const switchTokens = JSON.parse(readFileSync(switchTokensPath, 'utf8'))
+    const switchCss = readFileSync(switchCssPath, 'utf8')
+
+    expect(switchTokens.color.$value).toBe('{color.text.default}')
+    expect(switchTokens.label.color.$value).toBe('{color.text.default}')
+    expect(switchTokens.thumb['background-color'].$value).toBe('{color.bg.surface}')
+    expect(switchTokens.track.color.$value).toBe('{color.text.inverse}')
+    expect(switchTokens.track['color-active'].$value).toBe('{color.text.inverse}')
+    expect(switchTokens['loading-icon'].color.$value).toBe('{color.text.muted}')
+    expect(switchTokens['loading-icon']['color-active'].$value).toBe('{color.text.inverse}')
+    expect(switchCss).toContain("--local-track-background-color: v('switch.track.background-color');")
+    expect(switchCss).toContain("--local-track-active-background-color: v('switch.track.background-color-active');")
+    expect(switchCss).toContain("--local-label-color: v('switch.label.color');")
+    expect(switchCss).toContain("--local-loading-icon-color: v('switch.loading-icon.color');")
+    expect(switchCss).toContain("--local-loading-icon-active-color: v('switch.loading-icon.color-active');")
+    expect(switchCss).not.toContain("v('color.white')")
+    expect(switchCss).not.toContain("v('color.dark-gray')")
+    expect(switchCss).not.toContain('#fff')
+  })
+
+  it('ships only a dark theme override layer for now', () => {
+    const themesPath = resolve(
+      process.cwd(),
+      'runtime/assets/styles/tokens/default-theme/themes.json'
+    )
+
+    const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
+
+    expect(Object.keys(themes)).toEqual(['dark'])
+    expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
+    expect(themes.dark.color.text.muted.$value).toBe('{color.gray.400}')
+    expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
+    expect(themes.dark.color.bg.surface.$value).toBe('{color.gray.900}')
+    expect(themes.dark.color.border.default.$value).toBe('{color.gray.700}')
+    expect(themes.dark.color.primary.default.$value).toBe('{color.primary.300}')
+    expect(themes.dark.card['background-color'].$value).toBe('{color.bg.surface}')
+    expect(themes.dark.card.color.$value).toBe('{color.text.default}')
+    expect(themes.dark.badge['base-color'].$value).toBe('{color.gray.300}')
+    expect(themes.dark.button['base-color'].$value).toBe('{color.primary.400}')
+    expect(themes.dark.button.disabled['background-color'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.button.disabled.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.input['background-color'].$value).toBe('{color.bg.surface}')
+    expect(themes.dark.input.color.$value).toBe('{color.text.default}')
+    expect(themes.dark.select['background-color'].$value).toBe('{color.bg.surface}')
+    expect(themes.dark.select.disabled['background-color'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.textarea.disabled['background-color'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.drawer.header['border-color'].$value).toBe('{card.border-color}')
+    expect(themes.dark.drawer.footer['border-color'].$value).toBe('{card.border-color}')
+    expect(themes.dark.drawer.title.color.$value).toBe('{color.gray.100}')
+    expect(themes.dark.drawer.close.color.$value).toBe('{color.gray.300}')
+    expect(themes.dark.menu.item.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.menu.item['color-active'].$value).toBe('{color.text.default}')
+    expect(themes.dark.menu.item['bg-active'].$value).toBe('{color.bg.surface-hover}')
+    expect(themes.dark.menu.separator['border-color'].$value).toBe('{color.border.default}')
+    expect(themes.dark.menu.toggle.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.anchor['link-color'].$value).toBe('{color.text.muted}')
+    expect(themes.dark.anchor['active-color'].$value).toBe('{color.text.default}')
+    expect(themes.dark.breadcrumbs.item.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.breadcrumbs.item['hover-color'].$value).toBe('{color.primary.300}')
+    expect(themes.dark.tabs.trigger.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.tabs.trigger.active.color.$value).toBe('{color.text.default}')
+    expect(themes.dark.skeleton['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(themes.dark.switch.track['background-color'].$value).toBe('{color.text.muted}')
+    expect(themes.dark.radio.border.$value).toBe('{color.border.default}')
+    expect(themes.dark.radio.checked['dot-color'].$value).toBe('{color.primary.300}')
+    expect(themes.dark.radio.disabled.bg.$value).toBe('{color.gray.800}')
+    expect(themes.dark.toast.background.$value).toBe('{color.bg.surface}')
+    expect(themes.dark.toast.color.$value).toBe('{color.text.default}')
+    expect(themes.dark.toast['border-color'].$value).toBe('{color.border.default}')
+    expect(themes.dark.toast['close-color'].$value).toBe('{color.text.muted}')
+    expect(themes.dark.toast['close-hover-bg'].$value).toBe('{color.bg.surface-hover}')
+    expect(themes.dark.popover.bg.$value).toBe('{color.bg.surface}')
+    expect(themes.dark.pagination.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.pagination['bg-hover'].$value).toBe('{color.bg.surface-hover}')
+    expect(themes.dark.pagination['color-active'].$value).toBe('{color.text.default}')
+    expect(themes.dark.pagination['border-active'].$value).toBe('{color.primary.300}')
+    expect(themes.dark.pagination['bg-disabled'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.table['border-color'].$value).toBe('{card.border-color}')
+    expect(themes.dark.table.cell['border-color'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.table.header['background-color'].$value).toBe('{color.bg.surface-hover}')
   })
 
   it('uses table density styles to override header and cell sizing', () => {

@@ -1,6 +1,12 @@
 {
   "$description": "Tokens for the Modal (dialog) component",
   "$type": "object",
+  "background-color": {
+    "$value": "{color.bg.surface}"
+  },
+  "color": {
+    "$value": "{color.text.default}"
+  },
   "border-radius": {
     "$value": "{border-radius.xl}"
   },
@@ -21,6 +27,20 @@
   "close-size": {
     "$description": "Size of the close icon",
     "$value": "{font-size.lg}"
+  },
+  "close": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.muted}"
+    },
+    "hover": {
+      "color": {
+        "$value": "{color.danger.600}"
+      },
+      "background-color": {
+        "$value": "{color.danger.50}"
+      }
+    }
   },
   "backdrop": {
     "$description": "Styles for the modal's scrim (backdrop)",
