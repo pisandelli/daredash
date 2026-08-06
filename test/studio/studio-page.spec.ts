@@ -52,4 +52,17 @@ describe('DareDash Studio page', () => {
     expect(wrapper.text()).toContain('Primary alert')
     expect(wrapper.text()).toContain('Success alert')
   })
+
+  it('switches preview theme dynamically via theme selector', async () => {
+    const wrapper = await mountSuspended(StudioPage)
+    const themeSelect = wrapper.find('#dde-theme-select')
+    const preview = wrapper.find('.dd-studio-preview-scope')
+
+    expect(themeSelect.exists()).toBe(true)
+    expect(preview.attributes('data-theme')).toBeUndefined()
+
+    await themeSelect.setValue('dark')
+
+    expect(preview.attributes('data-theme')).toBe('dark')
+  })
 })

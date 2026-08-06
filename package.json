@@ -27,6 +27,7 @@
     "pack:dry-run": "npm pack --dry-run --ignore-scripts",
     "lint:ts": "vue-tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
+    "test:studio": "vitest run test/studio",
     "verify:publish": "npm run prepack && npm run pack:dry-run"
   },
   "author": "Pedro Pisandelli",
@@ -73,6 +74,7 @@
     "@types/node": "^25.6.2",
     "@vitest/coverage-v8": "4.1.6",
     "@vue/test-utils": "^2.4.10",
+    "happy-dom": "^20.11.1",
     "playwright-core": "^1.59.1",
     "unbuild": "^3.6.1",
     "vite": "^7.3.3",

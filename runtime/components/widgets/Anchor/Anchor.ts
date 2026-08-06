@@ -77,7 +77,7 @@ export default defineNuxtComponent({
       let currentKey = ''
       
       let containerTop = 0
-      if (scrollContainer && scrollContainer !== window) {
+      if (scrollContainer && typeof window !== 'undefined' && scrollContainer !== window) {
         containerTop = (scrollContainer as HTMLElement).getBoundingClientRect().top
       }
       
@@ -94,7 +94,7 @@ export default defineNuxtComponent({
       }
 
       // Fallback: If reaching bottom of page/container, select the last item
-      if (scrollContainer === window) {
+      if (typeof window !== 'undefined' && scrollContainer === window) {
         if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 2) {
           const lastItem = props.items[props.items.length - 1]
           if (lastItem) currentKey = lastItem.key

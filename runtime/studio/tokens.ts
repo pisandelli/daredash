@@ -1,6 +1,23 @@
 import primitives from '../assets/styles/tokens/default-theme/primitives.json'
+import themes from '../assets/styles/tokens/default-theme/themes.json'
 import type { StudioFieldDefinition } from './types'
 import { STUDIO_COMPONENT_TOKENS } from './componentTokens'
+
+export interface StudioThemeOption {
+  id: string
+  label: string
+}
+
+export function availableStudioThemes(): StudioThemeOption[] {
+  const themeKeys = Object.keys(themes).filter((key) => !key.startsWith('$'))
+  return [
+    { id: 'default', label: 'Default (Light)' },
+    ...themeKeys.map((key) => ({
+      id: key,
+      label: key.charAt(0).toUpperCase() + key.slice(1)
+    }))
+  ]
+}
 
 function getTokenNode(tokens: any, path: string): Record<string, any> | null {
   if (!tokens || !path) return null
