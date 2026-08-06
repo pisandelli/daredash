@@ -27,7 +27,7 @@
     "$value": "{space.xs}"
   },
   "background": {
-    "$value": "{color.white}"
+    "$value": "{color.bg.surface-elevated}"
   },
   "color": {
     "$value": "{color.text.default}"

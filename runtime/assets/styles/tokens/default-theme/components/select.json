@@ -150,7 +150,7 @@
     "$description": "Tokens for the dropdown panel (options list)",
     "$type": "object",
     "background-color": {
-      "$value": "{color.bg.surface}"
+      "$value": "{color.bg.surface-elevated}"
     },
     "border-radius": {
       "$value": "{input.border-radius}"

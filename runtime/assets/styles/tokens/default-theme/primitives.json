@@ -348,11 +348,20 @@
       }
     },
     "bg": {
+      "canvas": {
+        "$value": "{color.gray.100}"
+      },
+      "surface-subtle": {
+        "$value": "{color.gray.50}"
+      },
       "surface": {
         "$value": "#ffffff"
       },
       "surface-hover": {
         "$value": "{color.gray.50}"
+      },
+      "surface-elevated": {
+        "$value": "#ffffff"
       }
     },
     "text": {

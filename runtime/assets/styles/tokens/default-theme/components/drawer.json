@@ -10,7 +10,7 @@
     }
   },
   "bg": {
-    "$value": "{color.bg.surface}"
+    "$value": "{color.bg.surface-elevated}"
   },
   "color": {
     "$value": "{color.text.default}"

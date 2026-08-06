@@ -17,11 +17,17 @@
         "canvas": {
           "$value": "{color.gray.950}"
         },
-        "surface": {
+        "surface-subtle": {
           "$value": "{color.gray.900}"
         },
-        "surface-hover": {
+        "surface": {
           "$value": "{color.gray.800}"
+        },
+        "surface-hover": {
+          "$value": "{color.gray.700}"
+        },
+        "surface-elevated": {
+          "$value": "{color.gray.700}"
         }
       },
       "border": {
@@ -190,13 +196,13 @@
       },
       "menu": {
         "background-color": {
-          "$value": "{color.bg.surface}"
+          "$value": "{color.bg.surface-elevated}"
         }
       }
     },
     "modal": {
       "background-color": {
-        "$value": "{color.bg.surface}"
+        "$value": "{color.bg.surface-elevated}"
       },
       "color": {
         "$value": "{color.text.default}"
@@ -204,7 +210,7 @@
     },
     "drawer": {
       "bg": {
-        "$value": "{color.bg.surface}"
+        "$value": "{color.bg.surface-elevated}"
       },
       "color": {
         "$value": "{color.text.default}"
@@ -277,7 +283,7 @@
       },
       "float": {
         "bg": {
-          "$value": "{color.bg.surface}"
+          "$value": "{color.bg.surface-elevated}"
         },
         "border-color": {
           "$value": "{color.border.default}"
@@ -453,7 +459,7 @@
     },
     "popover": {
       "bg": {
-        "$value": "{color.bg.surface}"
+        "$value": "{color.bg.surface-elevated}"
       },
       "border-color": {
         "$value": "{color.border.default}"
@@ -464,7 +470,7 @@
     },
     "toast": {
       "background": {
-        "$value": "{color.bg.surface}"
+        "$value": "{color.bg.surface-elevated}"
       },
       "color": {
         "$value": "{color.text.default}"
