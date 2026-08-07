@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 const isOpen = ref(false)
@@ -9,8 +10,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -115,27 +117,27 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-drawer-grid">
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.bg')">
           <span>Background</span>
-          <small>{{ resolveFieldValue('drawer.bg', 'var(--dd-drawer-bg)') }}</small>
+          <small>{{ resolveFieldValue('drawer.bg', 'drawer-bg') }}</small>
         </button>
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.size')">
           <span>Size</span>
-          <small>{{ resolveFieldValue('drawer.size', 'var(--dd-drawer-size)') }}</small>
+          <small>{{ resolveFieldValue('drawer.size', 'drawer-size') }}</small>
         </button>
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.box-shadow')">
           <span>Shadow</span>
-          <small>{{ resolveFieldValue('drawer.box-shadow', 'var(--dd-drawer-box-shadow)') }}</small>
+          <small>{{ resolveFieldValue('drawer.box-shadow', 'drawer-box-shadow') }}</small>
         </button>
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.title.font-size')">
           <span>Title size</span>
-          <small>{{ resolveFieldValue('drawer.title.font-size', 'var(--dd-drawer-title-font-size)') }}</small>
+          <small>{{ resolveFieldValue('drawer.title.font-size', 'drawer-title-font-size') }}</small>
         </button>
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.header.border-color')">
           <span>Header border</span>
-          <small>{{ resolveFieldValue('drawer.header.border-color', 'var(--dd-drawer-header-border-color)') }}</small>
+          <small>{{ resolveFieldValue('drawer.header.border-color', 'drawer-header-border-color') }}</small>
         </button>
         <button type="button" class="dd-drawer-token" @click="focusField('drawer.backdrop.filter')">
           <span>Backdrop filter</span>
-          <small>{{ resolveFieldValue('drawer.backdrop.filter', 'var(--dd-drawer-backdrop-filter)') }}</small>
+          <small>{{ resolveFieldValue('drawer.backdrop.filter', 'drawer-backdrop-filter') }}</small>
         </button>
       </div>
     </div>
@@ -254,7 +256,7 @@ function resolveFieldValue(path: string, fallback: string) {
   display: grid;
   gap: 0.85rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: calc(100% - min(100%, var(--dd-drawer-size)) + 2rem);
+  max-width: calc(100% - min(100%, v('drawer.size')) + 2rem);
 }
 
 .dd-drawer-app-card {
@@ -318,7 +320,7 @@ function resolveFieldValue(path: string, fallback: string) {
 }
 
 .dd-drawer-footer {
-  border-top: var(--dd-drawer-footer-border-width) var(--dd-drawer-footer-border-style) var(--dd-drawer-footer-border-color);
+  border-top: v('drawer.footer.border-width') v('drawer.footer.border-style') v('drawer.footer.border-color');
 }
 
 .dd-drawer-action {
@@ -360,7 +362,7 @@ function resolveFieldValue(path: string, fallback: string) {
 @media (max-width: 820px) {
   .dd-drawer-app-grid {
     grid-template-columns: 1fr;
-    max-width: calc(100% - min(100%, var(--dd-drawer-size)) + 1rem);
+    max-width: calc(100% - min(100%, v('drawer.size')) + 1rem);
   }
 
   .dd-drawer-app-header {

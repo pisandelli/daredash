@@ -182,8 +182,8 @@ function tokenValue(path: string, fallback = '') {
 
 <style scoped>
 .dd-typography-preview {
-  --type-card-border: var(--dd-color-border-default, rgba(148 163 184 / 0.2));
-  --type-card-bg: var(--dd-color-bg-surface, #ffffff);
+  --type-card-border: v('color.border.default');
+  --type-card-bg: v('color.bg.surface');
 }
 
 .dd-type-hero,
@@ -194,7 +194,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-size-row {
   border: 1px solid var(--type-card-border);
   background: var(--type-card-bg);
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
 }
 
 .dd-type-font-note {
@@ -203,16 +203,16 @@ function tokenValue(path: string, fallback = '') {
   padding: 0.95rem 1rem;
   border-color: rgba(47 155 143 / 0.24);
   border-radius: 16px;
-  background: var(--dd-color-bg-surface-subtle, var(--type-card-bg));
+  background: v('color.bg.surface-subtle');
 }
 
 .dd-type-font-note strong {
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
   font-size: 0.86rem;
 }
 
 .dd-type-font-note span {
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted');
   font-size: 0.82rem;
   line-height: 1.55;
 }
@@ -227,7 +227,7 @@ function tokenValue(path: string, fallback = '') {
   gap: 0.65rem;
   padding: clamp(1rem, 3vw, 2rem);
   border-radius: 20px;
-  background: var(--dd-color-bg-surface, #ffffff);
+  background: v('color.bg.surface');
 }
 
 .dd-type-hero span {
@@ -241,7 +241,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-hero h3 {
   margin: 0;
   max-inline-size: 13ch;
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
   font-size: clamp(2rem, 5vw, 4.25rem);
   line-height: 0.95;
   letter-spacing: -0.055em;
@@ -250,7 +250,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-hero p {
   margin: 0;
   max-inline-size: 44rem;
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted');
   font-size: 0.95rem;
   line-height: 1.65;
 }
@@ -277,7 +277,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-card span,
 .dd-type-line-card span,
 .dd-type-family-card span {
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted');
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -287,7 +287,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-size-row strong {
   min-inline-size: 0;
   overflow: hidden;
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
   line-height: 1.05;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -329,12 +329,12 @@ function tokenValue(path: string, fallback = '') {
 
 .dd-type-line-card p {
   margin: 0;
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
   font-size: 0.88rem;
 }
 
 .dd-type-family-card strong {
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default');
   font-size: 1.1rem;
   line-height: 1.35;
 }
@@ -344,7 +344,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-line-card code,
 .dd-type-family-card code {
   min-inline-size: 0;
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted');
   font-size: 0.68rem;
   line-height: 1.35;
   word-break: break-word;

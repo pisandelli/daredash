@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -30,19 +32,19 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-stack-grid">
         <button type="button" class="dd-stack-card" @click="focusField('stack.compact.gap')">
           <strong>Compact</strong>
-          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.compact.gap', 'var(--dd-stack-compact-gap)') }">
+          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.compact.gap', 'stack-compact-gap') }">
             <div class="dd-stack-item" v-for="item in 3" :key="`compact-${item}`">Row {{ item }}</div>
           </div>
         </button>
         <button type="button" class="dd-stack-card" @click="focusField('stack.gap')">
           <strong>Base</strong>
-          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.gap', 'var(--dd-stack-gap)') }">
+          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.gap', 'stack-gap') }">
             <div class="dd-stack-item" v-for="item in 3" :key="`base-${item}`">Row {{ item }}</div>
           </div>
         </button>
         <button type="button" class="dd-stack-card" @click="focusField('stack.spaced.gap')">
           <strong>Spaced</strong>
-          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.spaced.gap', 'var(--dd-stack-spaced-gap)') }">
+          <div class="dd-stack-column" :style="{ gap: resolveFieldValue('stack.spaced.gap', 'stack-spaced-gap') }">
             <div class="dd-stack-item" v-for="item in 3" :key="`spaced-${item}`">Row {{ item }}</div>
           </div>
         </button>

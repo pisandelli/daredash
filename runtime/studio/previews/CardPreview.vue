@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -37,7 +39,7 @@ function resolveFieldValue(path: string, fallback: string) {
           <template #header>
             <div class="dd-card-section-meta">
               <strong>Overview</strong>
-              <span>{{ resolveFieldValue('card.header.padding', 'var(--dd-card-header-padding)') }}</span>
+              <span>{{ resolveFieldValue('card.header.padding', 'card-header-padding') }}</span>
             </div>
           </template>
 
@@ -46,13 +48,13 @@ function resolveFieldValue(path: string, fallback: string) {
             <p>
               Cards combine spacing, borders and shadow into one composable surface. Section padding can now be controlled independently, while `card.padding` remains the shared fallback token.
             </p>
-            <span class="dd-card-body-token">{{ resolveFieldValue('card.body.padding', 'var(--dd-card-body-padding)') }}</span>
+            <span class="dd-card-body-token">{{ resolveFieldValue('card.body.padding', 'card-body-padding') }}</span>
           </div>
 
           <template #footer>
             <div class="dd-card-section-meta">
-              <span>{{ resolveFieldValue('card.footer.padding', 'var(--dd-card-footer-padding)') }}</span>
-              <span>{{ resolveFieldValue('card.border-radius', 'var(--dd-card-border-radius)') }}</span>
+              <span>{{ resolveFieldValue('card.footer.padding', 'card-footer-padding') }}</span>
+              <span>{{ resolveFieldValue('card.border-radius', 'card-border-radius') }}</span>
             </div>
           </template>
         </DdCard>
@@ -68,7 +70,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('card.background-color')"
         >
           <span class="dd-card-token-label">Background</span>
-          <span class="dd-card-token-value">{{ resolveFieldValue('card.background-color', 'var(--dd-card-background-color)') }}</span>
+          <span class="dd-card-token-value">{{ resolveFieldValue('card.background-color', 'card-background-color') }}</span>
         </button>
 
         <button
@@ -77,7 +79,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('card.border-color')"
         >
           <span class="dd-card-token-label">Border</span>
-          <span class="dd-card-token-value">{{ resolveFieldValue('card.border-color', 'var(--dd-card-border-color)') }}</span>
+          <span class="dd-card-token-value">{{ resolveFieldValue('card.border-color', 'card-border-color') }}</span>
         </button>
 
         <button
@@ -86,7 +88,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('card.box-shadow')"
         >
           <span class="dd-card-token-label">Shadow</span>
-          <span class="dd-card-token-value">{{ resolveFieldValue('card.box-shadow', 'var(--dd-card-box-shadow)') }}</span>
+          <span class="dd-card-token-value">{{ resolveFieldValue('card.box-shadow', 'card-box-shadow') }}</span>
         </button>
 
         <button
@@ -95,7 +97,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('card.max-width')"
         >
           <span class="dd-card-token-label">Max width</span>
-          <span class="dd-card-token-value">{{ resolveFieldValue('card.max-width', 'var(--dd-card-max-width)') }}</span>
+          <span class="dd-card-token-value">{{ resolveFieldValue('card.max-width', 'card-max-width') }}</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -40,13 +42,13 @@ function resolveFieldValue(path: string, fallback: string) {
           <template #header>
             <div class="dd-box-card-header">
               <strong>Box host</strong>
-              <span>{{ resolveFieldValue('box.gap', 'var(--dd-box-gap)') }}</span>
+              <span>{{ resolveFieldValue('box.gap', 'box-gap') }}</span>
             </div>
           </template>
 
           <div
             class="dd-box-proxy"
-            :style="{ padding: resolveFieldValue('box.gap', 'var(--dd-box-gap)') }"
+            :style="{ padding: resolveFieldValue('box.gap', 'box-gap') }"
           >
             <div class="dd-box-proxy-content">
               <strong>Inside the Box</strong>
@@ -75,13 +77,13 @@ function resolveFieldValue(path: string, fallback: string) {
         <div class="dd-box-nested-shell">
           <div
             class="dd-box-proxy dd-box-proxy-muted"
-            :style="{ padding: resolveFieldValue('box.gap', 'var(--dd-box-gap)') }"
+            :style="{ padding: resolveFieldValue('box.gap', 'box-gap') }"
           >
             <div class="dd-box-proxy-content">
               <strong>Outer Box</strong>
               <div
                 class="dd-box-proxy dd-box-proxy-inner"
-                :style="{ padding: resolveFieldValue('box.gap', 'var(--dd-box-gap)') }"
+                :style="{ padding: resolveFieldValue('box.gap', 'box-gap') }"
               >
                 <div class="dd-box-proxy-content">
                   <strong>Inner Box</strong>

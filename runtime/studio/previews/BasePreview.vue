@@ -1,148 +1,84 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
+function getCssVarDecl(fieldPath: string) {
+  return getPrefixName(fieldPath.replaceAll('.', '-'), { type: 'css-var-decl' })
+}
+
 const radiusTokens = [
-  { label: 'Radius None', path: '--dd-border-radius-none', fieldPath: 'border-radius.none', value: '0' },
-  { label: 'Radius SM', path: '--dd-border-radius-sm', fieldPath: 'border-radius.sm', value: '0.125rem' },
-  { label: 'Radius Base', path: '--dd-border-radius-base', fieldPath: 'border-radius.base', value: '0.25rem' },
-  { label: 'Radius MD', path: '--dd-border-radius-md', fieldPath: 'border-radius.md', value: '0.375rem' },
-  { label: 'Radius LG', path: '--dd-border-radius-lg', fieldPath: 'border-radius.lg', value: '0.5rem' },
-  { label: 'Radius XL', path: '--dd-border-radius-xl', fieldPath: 'border-radius.xl', value: '0.75rem' },
-  { label: 'Radius Full', path: '--dd-border-radius-full', fieldPath: 'border-radius.full', value: '9999px' }
-]
+  { label: 'Radius None', fieldPath: 'border-radius.none', value: '0' },
+  { label: 'Radius SM', fieldPath: 'border-radius.sm', value: '0.125rem' },
+  { label: 'Radius Base', fieldPath: 'border-radius.base', value: '0.25rem' },
+  { label: 'Radius MD', fieldPath: 'border-radius.md', value: '0.375rem' },
+  { label: 'Radius LG', fieldPath: 'border-radius.lg', value: '0.5rem' },
+  { label: 'Radius XL', fieldPath: 'border-radius.xl', value: '0.75rem' },
+  { label: 'Radius Full', fieldPath: 'border-radius.full', value: '9999px' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const spaceTokens = [
-  { label: 'Tiny', path: '--dd-space-tiny', fieldPath: 'space.tiny' },
-  { label: 'XXS', path: '--dd-space-xxs', fieldPath: 'space.xxs' },
-  { label: 'XS', path: '--dd-space-xs', fieldPath: 'space.xs' },
-  { label: 'SM', path: '--dd-space-sm', fieldPath: 'space.sm' },
-  { label: 'MD', path: '--dd-space-md', fieldPath: 'space.md' },
-  { label: 'LG', path: '--dd-space-lg', fieldPath: 'space.lg' },
-  { label: 'XL', path: '--dd-space-xl', fieldPath: 'space.xl' },
-  { label: 'SL', path: '--dd-space-sl', fieldPath: 'space.sl' },
-  { label: 'UL', path: '--dd-space-ul', fieldPath: 'space.ul' }
-]
+  { label: 'Tiny', fieldPath: 'space.tiny' },
+  { label: 'XXS', fieldPath: 'space.xxs' },
+  { label: 'XS', fieldPath: 'space.xs' },
+  { label: 'SM', fieldPath: 'space.sm' },
+  { label: 'MD', fieldPath: 'space.md' },
+  { label: 'LG', fieldPath: 'space.lg' },
+  { label: 'XL', fieldPath: 'space.xl' },
+  { label: 'SL', fieldPath: 'space.sl' },
+  { label: 'UL', fieldPath: 'space.ul' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const borderWidthTokens = [
-  { label: 'None', path: '--dd-border-width-none', fieldPath: 'border-width.none' },
-  { label: 'SM', path: '--dd-border-width-sm', fieldPath: 'border-width.sm' },
-  { label: 'MD', path: '--dd-border-width-md', fieldPath: 'border-width.md' },
-  { label: 'LG', path: '--dd-border-width-lg', fieldPath: 'border-width.lg' }
-]
+  { label: 'None', fieldPath: 'border-width.none' },
+  { label: 'SM', fieldPath: 'border-width.sm' },
+  { label: 'MD', fieldPath: 'border-width.md' },
+  { label: 'LG', fieldPath: 'border-width.lg' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const zIndexTokens = [
-  { label: '1', path: '--dd-z-index-1', fieldPath: 'z-index.1' },
-  { label: '2', path: '--dd-z-index-2', fieldPath: 'z-index.2' },
-  { label: '3', path: '--dd-z-index-3', fieldPath: 'z-index.3' },
-  { label: '4', path: '--dd-z-index-4', fieldPath: 'z-index.4' },
-  { label: '5', path: '--dd-z-index-5', fieldPath: 'z-index.5' },
-  { label: '6', path: '--dd-z-index-6', fieldPath: 'z-index.6' },
-  { label: '7', path: '--dd-z-index-7', fieldPath: 'z-index.7' },
-  { label: '8', path: '--dd-z-index-8', fieldPath: 'z-index.8' },
-  { label: '9', path: '--dd-z-index-9', fieldPath: 'z-index.9' }
-]
+  { label: '1', fieldPath: 'z-index.1' },
+  { label: '2', fieldPath: 'z-index.2' },
+  { label: '3', fieldPath: 'z-index.3' },
+  { label: '4', fieldPath: 'z-index.4' },
+  { label: '5', fieldPath: 'z-index.5' },
+  { label: '6', fieldPath: 'z-index.6' },
+  { label: '7', fieldPath: 'z-index.7' },
+  { label: '8', fieldPath: 'z-index.8' },
+  { label: '9', fieldPath: 'z-index.9' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const transitionTokens = [
-  { label: 'Fast', path: '--dd-transition-fast', fieldPath: 'transition.fast' },
-  { label: 'Base', path: '--dd-transition-base', fieldPath: 'transition.base' },
-  { label: 'Slow', path: '--dd-transition-slow', fieldPath: 'transition.slow' }
-]
+  { label: 'Fast', fieldPath: 'transition.fast' },
+  { label: 'Base', fieldPath: 'transition.base' },
+  { label: 'Slow', fieldPath: 'transition.slow' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const shadowTokens = [
-  { label: 'SM', path: '--dd-shadow-sm', fieldPath: 'shadow.sm' },
-  { label: 'MD', path: '--dd-shadow-md', fieldPath: 'shadow.md' },
-  { label: 'LG', path: '--dd-shadow-lg', fieldPath: 'shadow.lg' },
-  { label: 'XL', path: '--dd-shadow-xl', fieldPath: 'shadow.xl' },
-  { label: 'Inner', path: '--dd-shadow-inner', fieldPath: 'shadow.inner' },
-  { label: 'None', path: '--dd-shadow-none', fieldPath: 'shadow.none' }
-]
+  { label: 'SM', fieldPath: 'shadow.sm' },
+  { label: 'MD', fieldPath: 'shadow.md' },
+  { label: 'LG', fieldPath: 'shadow.lg' },
+  { label: 'XL', fieldPath: 'shadow.xl' },
+  { label: 'Inner', fieldPath: 'shadow.inner' },
+  { label: 'None', fieldPath: 'shadow.none' }
+].map((t) => ({ ...t, path: getCssVarDecl(t.fieldPath) }))
 
 const colorFamilies = [
-  {
-    label: 'Primary',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
+  'primary', 'secondary', 'gray', 'accent', 'success', 'warning', 'danger', 'error', 'info'
+].map((name) => ({
+  label: name.charAt(0).toUpperCase() + name.slice(1),
+  tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
+    .map((step) => {
+      const fieldPath = `color.${name}.${step}`
+      return {
         label: step,
-        path: `--dd-color-primary-${step}`,
-        fieldPath: `color.primary.${step}`
-      }))
-  },
-  {
-    label: 'Secondary',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-secondary-${step}`,
-        fieldPath: `color.secondary.${step}`
-      }))
-  },
-  {
-    label: 'Gray',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-gray-${step}`,
-        fieldPath: `color.gray.${step}`
-      }))
-  },
-  {
-    label: 'Accent',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-accent-${step}`,
-        fieldPath: `color.accent.${step}`
-      }))
-  },
-  {
-    label: 'Success',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-success-${step}`,
-        fieldPath: `color.success.${step}`
-      }))
-  },
-  {
-    label: 'Warning',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-warning-${step}`,
-        fieldPath: `color.warning.${step}`
-      }))
-  },
-  {
-    label: 'Danger',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-danger-${step}`,
-        fieldPath: `color.danger.${step}`
-      }))
-  },
-  {
-    label: 'Error',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-error-${step}`,
-        fieldPath: `color.error.${step}`
-      }))
-  },
-  {
-    label: 'Info',
-    tokens: ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950']
-      .map((step) => ({
-        label: step,
-        path: `--dd-color-info-${step}`,
-        fieldPath: `color.info.${step}`
-      }))
-  }
-]
+        fieldPath,
+        path: getCssVarDecl(fieldPath)
+      }
+    })
+}))
 
 const paletteContrastThresholds: Record<string, number> = {
   Primary: 400,
@@ -168,49 +104,37 @@ const semanticColorGroups = [
     fullWidth: true,
     wideGrid: true,
     tokens: [
-      { label: 'Primary', path: '--dd-color-primary' },
-      { label: 'Secondary', path: '--dd-color-secondary' },
-      { label: 'Accent', path: '--dd-color-accent' },
-      { label: 'Success', path: '--dd-color-success' },
-      { label: 'Danger', path: '--dd-color-danger' },
-      { label: 'Error', path: '--dd-color-error' },
-      { label: 'Info', path: '--dd-color-info' },
-      { label: 'Warning', path: '--dd-color-warning' }
-    ]
-      .map((token) => ({
-        ...token,
-        fieldPath: token.path.replace('--dd-', '').replaceAll('-', '.')
-      }))
+      { label: 'Primary', fieldPath: 'color.primary' },
+      { label: 'Secondary', fieldPath: 'color.secondary' },
+      { label: 'Accent', fieldPath: 'color.accent' },
+      { label: 'Success', fieldPath: 'color.success' },
+      { label: 'Danger', fieldPath: 'color.danger' },
+      { label: 'Error', fieldPath: 'color.error' },
+      { label: 'Info', fieldPath: 'color.info' },
+      { label: 'Warning', fieldPath: 'color.warning' }
+    ].map((token) => ({ ...token, path: getCssVarDecl(token.fieldPath) }))
   },
   {
     label: 'Neutrals',
     description: 'Gray scale and borders',
     tokens: [
-      { label: 'Gray', path: '--dd-color-gray' },
-      { label: 'Dark Gray', path: '--dd-color-dark-gray' },
-      { label: 'Darker Gray', path: '--dd-color-darker-gray' },
-      { label: 'Light Gray', path: '--dd-color-light-gray' },
-      { label: 'Border Default', path: '--dd-color-border-default' },
-      { label: 'Border Hover', path: '--dd-color-border-hover' }
-    ]
-      .map((token) => ({
-        ...token,
-        fieldPath: token.path.replace('--dd-', '').replaceAll('-', '.')
-      }))
+      { label: 'Gray', fieldPath: 'color.gray' },
+      { label: 'Dark Gray', fieldPath: 'color.dark-gray' },
+      { label: 'Darker Gray', fieldPath: 'color.darker-gray' },
+      { label: 'Light Gray', fieldPath: 'color.light-gray' },
+      { label: 'Border Default', fieldPath: 'color.border.default' },
+      { label: 'Border Hover', fieldPath: 'color.border.hover' }
+    ].map((token) => ({ ...token, path: getCssVarDecl(token.fieldPath) }))
   },
   {
     label: 'Surfaces',
     description: 'Base canvas and text colors',
     tokens: [
-      { label: 'Surface', path: '--dd-color-bg-surface' },
-      { label: 'Surface Hover', path: '--dd-color-bg-surface-hover' },
-      { label: 'Text Default', path: '--dd-color-text-default' },
-      { label: 'Background Disabled', path: '--dd-color-bg-disabled' }
-    ]
-      .map((token) => ({
-        ...token,
-        fieldPath: token.path.replace('--dd-', '').replaceAll('-', '.')
-      }))
+      { label: 'Surface', fieldPath: 'color.bg.surface' },
+      { label: 'Surface Hover', fieldPath: 'color.bg.surface-hover' },
+      { label: 'Text Default', fieldPath: 'color.text.default' },
+      { label: 'Background Disabled', fieldPath: 'color.bg.disabled' }
+    ].map((token) => ({ ...token, path: getCssVarDecl(token.fieldPath) }))
   }
 ]
 
@@ -297,7 +221,7 @@ function tokenValue(fieldPath: string, fallback: string) {
               />
               <div>
                 <strong>{{ token.label }}</strong>
-                <code>{{ token.path.replace('--dd-', '') }}</code>
+                <code>{{ token.path.replace(/^--[^-]+-/, '') }}</code>
               </div>
             </button>
           </div>
@@ -344,7 +268,7 @@ function tokenValue(fieldPath: string, fallback: string) {
             />
           </div>
           <strong>{{ token.label }}</strong>
-          <code>{{ tokenValue(token.fieldPath, token.path.replace('--dd-', '')) }}</code>
+          <code>{{ tokenValue(token.fieldPath, token.path.replace(/^--[^-]+-/, '')) }}</code>
         </button>
       </div>
     </div>
@@ -366,7 +290,7 @@ function tokenValue(fieldPath: string, fallback: string) {
               :style="{ borderWidth: `var(${token.path})` }"
             />
             <strong>{{ token.label }}</strong>
-            <code>{{ tokenValue(token.fieldPath, token.path.replace('--dd-', '')) }}</code>
+            <code>{{ tokenValue(token.fieldPath, token.path.replace(/^--[^-]+-/, '')) }}</code>
           </button>
         </div>
       </div>
@@ -387,7 +311,7 @@ function tokenValue(fieldPath: string, fallback: string) {
               :style="{ boxShadow: `var(${token.path})` }"
             />
             <strong>{{ token.label }}</strong>
-            <code>{{ tokenValue(token.fieldPath, token.path.replace('--dd-', '')) }}</code>
+            <code>{{ tokenValue(token.fieldPath, token.path.replace(/^--[^-]+-/, '')) }}</code>
           </button>
         </div>
       </div>
@@ -407,12 +331,12 @@ function tokenValue(fieldPath: string, fallback: string) {
           >
             <div
               class="dd-base-motion-sample"
-              :style="{ '--dd-base-motion-duration': `var(${token.path})` }"
+              :style="{ [getCssVarDecl('base.motion-duration')]: `var(${token.path})` }"
             >
               <span />
             </div>
             <strong>{{ token.label }}</strong>
-            <code>{{ tokenValue(token.fieldPath, token.path.replace('--dd-', '')) }}</code>
+            <code>{{ tokenValue(token.fieldPath, token.path.replace(/^--[^-]+-/, '')) }}</code>
           </button>
         </div>
       </div>
@@ -438,7 +362,7 @@ function tokenValue(fieldPath: string, fallback: string) {
               </span>
             </div>
             <strong>Layer {{ token.label }}</strong>
-            <code>{{ tokenValue(token.fieldPath, token.path.replace('--dd-', '')) }}</code>
+            <code>{{ tokenValue(token.fieldPath, token.path.replace(/^--[^-]+-/, '')) }}</code>
           </button>
         </div>
       </div>
@@ -477,15 +401,15 @@ function tokenValue(fieldPath: string, fallback: string) {
 
 .dd-base-surface-card,
 .dd-base-token-card {
-  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
+  border: 1px solid v('color.border.default', 'rgba(148 163 184 / 0.2)');
   border-radius: 16px;
-  background: var(--dd-color-bg-surface, #ffffff);
-  color: var(--dd-color-text-default, inherit);
+  background: v('color.bg.surface', '#ffffff');
+  color: v('color.text.default', 'inherit');
 }
 
 .dd-base-token-card,
 .dd-base-surface-card-button {
-  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
+  border: 1px solid v('color.border.default', 'rgba(148 163 184 / 0.2)');
   cursor: pointer;
   text-align: left;
   font: inherit;
@@ -514,12 +438,12 @@ function tokenValue(fieldPath: string, fallback: string) {
 
 .dd-base-surface-card strong,
 .dd-base-token-card strong {
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default', 'inherit');
   font-size: 0.9rem;
 }
 
 .dd-base-surface-card span {
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted', 'inherit');
   font-size: 0.78rem;
 }
 
@@ -576,9 +500,9 @@ function tokenValue(fieldPath: string, fallback: string) {
   min-block-size: 4rem;
   padding: 0.7rem 0.8rem;
   border-radius: 12px;
-  background: var(--dd-color-bg-surface-subtle, var(--dd-color-bg-surface, rgba(255 255 255 / 0.7)));
-  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
-  color: var(--dd-color-text-default, inherit);
+  background: v('color.bg.surface-subtle', v('color.bg.surface', 'rgba(255 255 255 / 0.7)'));
+  border: 1px solid v('color.border.default', 'rgba(148 163 184 / 0.2)');
+  color: v('color.text.default', 'inherit');
   cursor: pointer;
   text-align: left;
 }
@@ -602,7 +526,7 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-token-card code,
 .dd-base-surface-card code {
   margin-top: 0.2rem;
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted', 'inherit');
   font-size: 0.68rem;
   word-break: break-word;
 }
@@ -647,20 +571,20 @@ function tokenValue(fieldPath: string, fallback: string) {
 }
 
 .dd-base-border-sample {
-  background: var(--dd-color-bg-surface, #ffffff);
+  background: v('color.bg.surface', '#ffffff');
   border-style: solid;
   border-color: #2f9b8f;
 }
 
 .dd-base-shadow-sample {
-  background: var(--dd-color-bg-surface, #ffffff);
+  background: v('color.bg.surface', '#ffffff');
 }
 
 .dd-base-space-sample {
   block-size: 2.25rem;
   display: flex;
   align-items: center;
-  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.12));
+  background: v('color.bg.surface-hover', 'rgba(148 163 184 / 0.12)');
   border-radius: 12px;
   padding-inline: 0.5rem;
 }
@@ -675,7 +599,7 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-motion-sample {
   block-size: 3rem;
   border-radius: 14px;
-  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.12));
+  background: v('color.bg.surface-hover', 'rgba(148 163 184 / 0.12)');
   display: flex;
   align-items: center;
   padding-inline: 0.45rem;
@@ -686,7 +610,7 @@ function tokenValue(fieldPath: string, fallback: string) {
   block-size: 1rem;
   border-radius: 999px;
   background: #2f9b8f;
-  transition: transform var(--dd-base-motion-duration, 180ms ease-in-out);
+  transition: transform v('base.motion-duration', '180ms ease-in-out');
 }
 
 .dd-base-token-card:hover .dd-base-motion-sample span {
@@ -713,14 +637,14 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-z-layer-back {
   inset-inline-start: 0.75rem;
   inset-block-start: 0.65rem;
-  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.3));
-  color: var(--dd-color-text-muted, inherit);
+  background: v('color.bg.surface-hover', 'rgba(148 163 184 / 0.3)');
+  color: v('color.text.muted', 'inherit');
 }
 
 .dd-base-z-layer-front {
   inset-inline-start: 1.55rem;
-  background: var(--dd-color-primary-200, rgba(47 155 143 / 0.22));
-  color: var(--dd-color-text-default, inherit);
+  background: v('color.primary-200', 'rgba(47 155 143 / 0.22)');
+  color: v('color.text.default', 'inherit');
   box-shadow: 0 8px 20px rgba(0 0 0 / 0.15);
 }
 
@@ -744,7 +668,7 @@ function tokenValue(fieldPath: string, fallback: string) {
 }
 
 .dd-base-max-width-inner {
-  inline-size: min(100%, var(--dd-max-width));
+  inline-size: min(100%, v('max-width'));
   block-size: 4rem;
   margin-inline: auto;
   border-radius: 14px;

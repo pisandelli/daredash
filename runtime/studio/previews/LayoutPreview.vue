@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -29,19 +31,19 @@ function resolveFieldValue(path: string, fallback: string) {
       <h3>Shell rhythm</h3>
       <button type="button" class="dd-layout-stage" @click="focusField('layout.gap')">
         <div class="dd-shell">
-          <div class="dd-shell-section dd-shell-header" :style="{ minBlockSize: resolveFieldValue('layout.header-height', 'var(--dd-layout-header-height)') }">
+          <div class="dd-shell-section dd-shell-header" :style="{ minBlockSize: resolveFieldValue('layout.header-height', 'layout-header-height') }">
             <strong>Header</strong>
-            <span>{{ resolveFieldValue('layout.header-height', 'var(--dd-layout-header-height)') }}</span>
+            <span>{{ resolveFieldValue('layout.header-height', 'layout-header-height') }}</span>
           </div>
-          <div class="dd-shell-gap" :style="{ blockSize: resolveFieldValue('layout.gap', 'var(--dd-layout-gap)') }" />
+          <div class="dd-shell-gap" :style="{ blockSize: resolveFieldValue('layout.gap', 'layout-gap') }" />
           <div class="dd-shell-section dd-shell-body">
             <strong>Body</strong>
             <span>Main flexible region</span>
           </div>
-          <div class="dd-shell-gap" :style="{ blockSize: resolveFieldValue('layout.gap', 'var(--dd-layout-gap)') }" />
-          <div class="dd-shell-section dd-shell-footer" :style="{ minBlockSize: resolveFieldValue('layout.footer-height', 'var(--dd-layout-footer-height)') }">
+          <div class="dd-shell-gap" :style="{ blockSize: resolveFieldValue('layout.gap', 'layout-gap') }" />
+          <div class="dd-shell-section dd-shell-footer" :style="{ minBlockSize: resolveFieldValue('layout.footer-height', 'layout-footer-height') }">
             <strong>Footer</strong>
-            <span>{{ resolveFieldValue('layout.footer-height', 'var(--dd-layout-footer-height)') }}</span>
+            <span>{{ resolveFieldValue('layout.footer-height', 'layout-footer-height') }}</span>
           </div>
         </div>
       </button>

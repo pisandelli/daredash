@@ -43,9 +43,9 @@ export default defineNuxtComponent({
         {
           ...attrs,
           name: props.name,
-          modelValue: value.value,
+          modelValue: value.value !== undefined && value.value !== null ? String(value.value) : undefined,
           isInvalid: isInvalid.value,
-          errorMessage: fieldError.value,
+          errorMessage: fieldError.value ? String(fieldError.value) : undefined,
           'onUpdate:modelValue': handleChange,
           onBlur: handleBlur
         },

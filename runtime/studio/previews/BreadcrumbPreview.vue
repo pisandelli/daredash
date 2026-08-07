@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -21,8 +22,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -52,8 +54,8 @@ function resolveFieldValue(path: string, fallback: string) {
       >
         <DdBreadcrumb :config="{ routes: baseRoutes }" />
         <div class="dd-breadcrumb-meta">
-          <span>{{ resolveFieldValue('breadcrumbs.font-size', 'var(--dd-breadcrumbs-font-size)') }}</span>
-          <span>{{ resolveFieldValue('breadcrumbs.gap', 'var(--dd-breadcrumbs-gap)') }}</span>
+          <span>{{ resolveFieldValue('breadcrumbs.font-size', 'breadcrumbs-font-size') }}</span>
+          <span>{{ resolveFieldValue('breadcrumbs.gap', 'breadcrumbs-gap') }}</span>
         </div>
       </div>
     </div>
@@ -71,8 +73,8 @@ function resolveFieldValue(path: string, fallback: string) {
       >
         <DdBreadcrumb :config="{ separator: 'lucide:chevrons-right', routes: compactRoutes }" />
         <div class="dd-breadcrumb-meta">
-          <span>{{ resolveFieldValue('breadcrumbs.separator.color', 'var(--dd-breadcrumbs-separator-color)') }}</span>
-          <span>{{ resolveFieldValue('breadcrumbs.item-current.font-weight', 'var(--dd-breadcrumbs-item-current-font-weight)') }}</span>
+          <span>{{ resolveFieldValue('breadcrumbs.separator.color', 'breadcrumbs-separator-color') }}</span>
+          <span>{{ resolveFieldValue('breadcrumbs.item-current.font-weight', 'breadcrumbs-item-current-font-weight') }}</span>
         </div>
       </div>
       <p class="dd-breadcrumb-note">

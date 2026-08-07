@@ -7,7 +7,7 @@
 
     <div class="dd-studio-preview-block">
       <h3>Basic</h3>
-      <div class="dd-studio-preview-row" style="flex-direction: column; align-items: stretch; max-width: 250px; padding: 1.5rem; border: 1px solid var(--dd-color-gray-200); border-radius: var(--dd-border-radius-base); background-color: var(--dd-color-white);">
+      <div class="dd-studio-preview-row" style="flex-direction: column; align-items: stretch; max-width: 250px; padding: 1.5rem; border: 1px solid v('color.gray.200'); border-radius: v('border-radius.base'); background-color: v('color.white');">
         <DdAnchor :items="mockItems" />
       </div>
     </div>

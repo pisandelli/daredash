@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -39,14 +41,14 @@ function resolveFieldValue(path: string, fallback: string) {
         <DdSidebar class="dd-sidebar-stage">
           <aside class="dd-sidebar-pane dd-sidebar-pane-side">
             <strong>Sidebar</strong>
-            <span>{{ resolveFieldValue('sidebar.column-size', 'var(--dd-sidebar-column-size)') }}</span>
+            <span>{{ resolveFieldValue('sidebar.column-size', 'sidebar-column-size') }}</span>
           </aside>
           <div class="dd-sidebar-pane dd-sidebar-pane-main">
             <strong>Main content</strong>
             <p>
               This region stays flexible until it hits the content threshold defined by `sidebar.content-size`.
             </p>
-            <span>{{ resolveFieldValue('sidebar.content-size', 'var(--dd-sidebar-content-size)') }}</span>
+            <span>{{ resolveFieldValue('sidebar.content-size', 'sidebar-content-size') }}</span>
           </div>
         </DdSidebar>
       </button>
@@ -83,7 +85,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('sidebar.gap')"
         >
           <span class="dd-sidebar-token-label">Gap</span>
-          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.gap', 'var(--dd-sidebar-gap)') }}</span>
+          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.gap', 'sidebar-gap') }}</span>
         </button>
 
         <button
@@ -92,7 +94,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('sidebar.column-size')"
         >
           <span class="dd-sidebar-token-label">Sidebar column</span>
-          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.column-size', 'var(--dd-sidebar-column-size)') }}</span>
+          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.column-size', 'sidebar-column-size') }}</span>
         </button>
 
         <button
@@ -101,7 +103,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('sidebar.content-size')"
         >
           <span class="dd-sidebar-token-label">Content threshold</span>
-          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.content-size', 'var(--dd-sidebar-content-size)') }}</span>
+          <span class="dd-sidebar-token-value">{{ resolveFieldValue('sidebar.content-size', 'sidebar-content-size') }}</span>
         </button>
       </div>
     </div>

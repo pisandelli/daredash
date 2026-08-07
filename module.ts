@@ -60,8 +60,9 @@ export default defineNuxtModule<ModuleOptions>().with({
     const debugMode = options.debug
     if (debugMode) debugLog('Debug mode is enabled.', 'warn')
 
-    nuxt.options.routeRules ||= {}
-    const studioRouteRules = nuxt.options.routeRules['/studio'] || {}
+    const optionsAny = nuxt.options as any
+    optionsAny.routeRules ||= {}
+    const studioRouteRules = optionsAny.routeRules['/studio'] || {}
     const studioHeaders = {
       ...(studioRouteRules.headers || {}),
       'X-Frame-Options': 'SAMEORIGIN',
@@ -74,7 +75,7 @@ export default defineNuxtModule<ModuleOptions>().with({
       ].join(' ')
     }
 
-    nuxt.options.routeRules['/studio'] = {
+    optionsAny.routeRules['/studio'] = {
       ...studioRouteRules,
       headers: studioHeaders
     }

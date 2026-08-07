@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import StudioPage from '../../runtime/pages/studio.vue'
+import getPrefixName from '../../runtime/shared/utils/getPrefixName'
 
 describe('DareDash Studio page', () => {
   it('renders inside its own sandbox root', async () => {
@@ -13,13 +14,15 @@ describe('DareDash Studio page', () => {
 
   it('updates preview styles without relying on :root overrides', async () => {
     const wrapper = await mountSuspended(StudioPage)
-    const preview = wrapper.find('.dd-studio-preview-scope')
     const colorInput = wrapper.find('#field-color\\.primary\\.600')
 
     await colorInput.setValue('#123456')
+    await wrapper.vm.$nextTick()
 
-    expect(preview.attributes('style')).toContain('--dd-color-primary-600: #123456;')
-    expect(preview.attributes('style')).not.toContain(':root')
+    const varDecl = getPrefixName('color-primary-600', { type: 'css-var-decl' })
+    const styleText = wrapper.find('style').text()
+    expect(styleText).toContain(`${varDecl}: #123456;`)
+    expect(styleText).not.toContain(':root')
   })
 
   it('reflects referenced color aliases in the base palette ramp', async () => {
@@ -27,6 +30,7 @@ describe('DareDash Studio page', () => {
     const dangerInput = wrapper.find('#field-color\\.danger\\.600')
 
     await dangerInput.setValue('#ffee00')
+    await wrapper.vm.$nextTick()
 
     const errorRampSwatch = wrapper.find('[title="Edit color.error.600"]')
 
@@ -38,9 +42,11 @@ describe('DareDash Studio page', () => {
     const componentTrigger = wrapper.find('.dde-component-trigger')
 
     await componentTrigger.trigger('click')
+    await wrapper.vm.$nextTick()
 
     const search = wrapper.find('.dde-component-search')
     await search.setValue('alert')
+    await wrapper.vm.$nextTick()
 
     const alertOption = wrapper.findAll('.dde-component-option')
       .find((option) => option.text().includes('Alert'))
@@ -48,6 +54,7 @@ describe('DareDash Studio page', () => {
     expect(alertOption).toBeDefined()
 
     await alertOption!.trigger('click')
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.text()).toContain('Primary alert')
     expect(wrapper.text()).toContain('Success alert')
@@ -64,6 +71,7 @@ describe('DareDash Studio page', () => {
     expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.100')
 
     await themeSelect.setValue('dark')
+    await wrapper.vm.$nextTick()
 
     expect(preview.attributes('data-theme')).toBe('dark')
     expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.950')

@@ -2,6 +2,7 @@ import primitives from '../assets/styles/tokens/default-theme/primitives.json'
 import themes from '../assets/styles/tokens/default-theme/themes.json'
 import type { StudioFieldDefinition } from './types'
 import { STUDIO_COMPONENT_TOKENS } from './componentTokens'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 export interface StudioThemeOption {
   id: string
@@ -55,7 +56,7 @@ function resolveTokenValue(tokens: any, path: string, themeId?: string): string 
     if (typeof value === 'string' && value.includes('{')) {
       value = value.replace(/{([^}]+)}/g, (_: string, refPath: string) => {
         const refValue = resolveTokenValue(tokens, refPath, themeId)
-        return refValue || `var(--dd-${refPath.replace(/\./g, '-')})`
+        return refValue || getPrefixName(refPath.replace(/\./g, '-'), { type: 'css-var' })
       })
     }
 
@@ -183,7 +184,7 @@ export function tokenValue(path: string, fallback?: string, themeId?: string): s
   const resolved = resolveTokenValue(flatTokens, path, themeId)
 
   if (!resolved) return fallback ?? ''
-  if (fallback && resolved.includes('var(--dd-')) return fallback
+  if (fallback && resolved.includes('var(')) return fallback
   return resolved
 }
 

@@ -41,11 +41,11 @@ export default defineNuxtComponent({
       default: undefined
     },
     wrapperClass: {
-      type: [String, Array, Object],
+      type: [String, Array, Object] as PropType<any>,
       default: undefined
     },
     wrapperStyle: {
-      type: [String, Object, Array],
+      type: [String, Object, Array] as PropType<any>,
       default: undefined
     }
   },

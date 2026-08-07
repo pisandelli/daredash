@@ -4,9 +4,9 @@
   --local-border-radius: v('skeleton.border-radius');
   --local-block-size: v('skeleton.block-size');
   --local-animation-duration: v('skeleton.animation-duration');
-  --local-inline-size: var(--dd-skeleton-inline-size, 100%);
-  --local-block-size-override: var(--dd-skeleton-block-size, var(--local-block-size));
-  --local-radius-override: var(--dd-skeleton-radius, var(--local-border-radius));
+  --local-inline-size: v('skeleton.inline-size', 100%);
+  --local-block-size-override: v('skeleton.block-size', var(--local-block-size));
+  --local-radius-override: v('skeleton.radius', var(--local-border-radius));
 
   position: relative;
   display: block;

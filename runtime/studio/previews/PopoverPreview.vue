@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -33,7 +35,7 @@ function resolveFieldValue(path: string, fallback: string) {
         <button type="button" class="dd-popover-shell" @click="focusField('popover.bg')">
           <div class="dd-popover-arrow" @click.stop="focusField('popover.arrow-size')"></div>
           <div class="dd-popover-header" @click.stop="focusField('popover.border-color')">Popover title</div>
-          <div class="dd-popover-content" :style="{ padding: resolveFieldValue('popover.padding', 'var(--dd-popover-padding)') }">
+          <div class="dd-popover-content" :style="{ padding: resolveFieldValue('popover.padding', 'popover-padding') }">
             <p>Use this shell to tune the panel surface, text color, border and arrow geometry.</p>
             <div class="dd-popover-actions">
               <span @click.stop="focusField('popover.color')">Text</span>
@@ -97,38 +99,38 @@ function resolveFieldValue(path: string, fallback: string) {
   padding: 0;
   text-align: left;
   overflow: visible;
-  color: var(--dd-popover-color);
+  color: v('popover.color');
   background: transparent;
   filter: drop-shadow(0 10px 15px rgb(0 0 0 / 0.1));
 }
 
 .dd-popover-arrow {
   position: absolute;
-  inset-block-start: calc(var(--dd-popover-arrow-size) / -2);
+  inset-block-start: calc(v('popover.arrow-size') / -2);
   inset-inline-start: 1.3rem;
-  width: var(--dd-popover-arrow-size);
-  height: var(--dd-popover-arrow-size);
-  background: var(--dd-popover-bg);
-  border: 1px solid var(--dd-popover-border-color);
+  width: v('popover.arrow-size');
+  height: v('popover.arrow-size');
+  background: v('popover.bg');
+  border: 1px solid v('popover.border-color');
   transform: rotate(45deg);
 }
 
 .dd-popover-header {
-  padding: var(--dd-popover-padding);
+  padding: v('popover.padding');
   font-weight: 700;
-  border: 1px solid var(--dd-popover-border-color);
+  border: 1px solid v('popover.border-color');
   border-bottom: 0;
-  border-radius: var(--dd-popover-border-radius) var(--dd-popover-border-radius) 0 0;
-  background: var(--dd-popover-bg);
+  border-radius: v('popover.border-radius') v('popover.border-radius') 0 0;
+  background: v('popover.bg');
 }
 
 .dd-popover-content {
   display: grid;
   gap: 0.8rem;
-  border: 1px solid var(--dd-popover-border-color);
-  border-radius: 0 0 var(--dd-popover-border-radius) var(--dd-popover-border-radius);
-  background: var(--dd-popover-bg);
-  box-shadow: var(--dd-popover-shadow);
+  border: 1px solid v('popover.border-color');
+  border-radius: 0 0 v('popover.border-radius') v('popover.border-radius');
+  background: v('popover.bg');
+  box-shadow: v('popover.shadow');
 }
 
 .dd-popover-content p {

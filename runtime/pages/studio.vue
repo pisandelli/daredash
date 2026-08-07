@@ -1642,8 +1642,8 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background: var(--dd-color-bg-canvas, var(--dd-color-bg-surface, #ffffff));
-  color: var(--dd-color-text-default, inherit);
+  background: v('color.bg.canvas', v('color.bg.surface', '#ffffff'));
+  color: v('color.text.default', 'inherit');
   border-radius: 18px;
   padding: 2rem;
   box-shadow: 0 24px 60px rgba(15 23 42 / 0.08);
@@ -1665,13 +1665,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   margin: 0;
   font-size: 1.1rem;
   letter-spacing: 0.02em;
-  color: var(--dd-color-text-default, inherit);
+  color: v('color.text.default', 'inherit');
 }
 
 .dd-studio-preview-header p {
   margin: 0.35rem 0 0;
   font-size: 0.85rem;
-  color: var(--dd-color-text-muted, inherit);
+  color: v('color.text.muted', 'inherit');
 }
 
 .dd-studio-preview-block {
@@ -1685,7 +1685,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--dd-color-text-muted, #94a3b8);
+  color: v('color.text.muted', '#94a3b8');
 }
 
 .dd-studio-preview-row {

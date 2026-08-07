@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -181,7 +183,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toast.padding')"
         >
           <span class="dd-toast-token-label">Padding</span>
-          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.padding', 'var(--dd-toast-padding)') }}</span>
+          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.padding', 'toast-padding') }}</span>
         </button>
 
         <button
@@ -190,7 +192,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toast.border-radius')"
         >
           <span class="dd-toast-token-label">Radius</span>
-          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.border-radius', 'var(--dd-toast-border-radius)') }}</span>
+          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.border-radius', 'toast-border-radius') }}</span>
         </button>
 
         <button
@@ -199,7 +201,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toast.box-shadow')"
         >
           <span class="dd-toast-token-label">Shadow</span>
-          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.box-shadow', 'var(--dd-toast-box-shadow)') }}</span>
+          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.box-shadow', 'toast-box-shadow') }}</span>
         </button>
 
         <button
@@ -208,7 +210,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toast.font-family')"
         >
           <span class="dd-toast-token-label">Font</span>
-          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.font-family', 'var(--dd-toast-font-family)') }}</span>
+          <span class="dd-toast-token-value">{{ resolveFieldValue('toast.font-family', 'toast-font-family') }}</span>
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -35,7 +37,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.position.top')"
         >
           <span class="dd-toaster-metric-label">Top offset</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.top', 'var(--dd-toaster-position-top)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.top', 'toaster-position-top') }}</span>
         </button>
         <button
           type="button"
@@ -43,7 +45,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.position.right')"
         >
           <span class="dd-toaster-metric-label">Right offset</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.right', 'var(--dd-toaster-position-right)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.right', 'toaster-position-right') }}</span>
         </button>
         <button
           type="button"
@@ -51,7 +53,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.gap')"
         >
           <span class="dd-toaster-metric-label">Stack gap</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.gap', 'var(--dd-toaster-gap)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.gap', 'toaster-gap') }}</span>
         </button>
       </div>
       <div class="dd-toaster-stage">
@@ -83,7 +85,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.position.bottom')"
         >
           <span class="dd-toaster-metric-label">Bottom offset</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.bottom', 'var(--dd-toaster-position-bottom)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.bottom', 'toaster-position-bottom') }}</span>
         </button>
         <button
           type="button"
@@ -91,7 +93,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.position.left')"
         >
           <span class="dd-toaster-metric-label">Left offset</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.left', 'var(--dd-toaster-position-left)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.position.left', 'toaster-position-left') }}</span>
         </button>
         <button
           type="button"
@@ -99,7 +101,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.gap')"
         >
           <span class="dd-toaster-metric-label">Stack gap</span>
-          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.gap', 'var(--dd-toaster-gap)') }}</span>
+          <span class="dd-toaster-metric-value">{{ resolveFieldValue('toaster.gap', 'toaster-gap') }}</span>
         </button>
       </div>
       <div class="dd-toaster-stage">
@@ -131,7 +133,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.z-index')"
         >
           <span class="dd-toaster-token-label">Z-Index</span>
-          <span class="dd-toaster-token-value">{{ resolveFieldValue('toaster.z-index', 'var(--dd-toaster-z-index)') }}</span>
+          <span class="dd-toaster-token-value">{{ resolveFieldValue('toaster.z-index', 'toaster-z-index') }}</span>
         </button>
 
         <button
@@ -140,7 +142,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('toaster.gap')"
         >
           <span class="dd-toaster-token-label">Stack Gap</span>
-          <span class="dd-toaster-token-value">{{ resolveFieldValue('toaster.gap', 'var(--dd-toaster-gap)') }}</span>
+          <span class="dd-toaster-token-value">{{ resolveFieldValue('toaster.gap', 'toaster-gap') }}</span>
         </button>
 
         <button
@@ -150,9 +152,9 @@ function resolveFieldValue(path: string, fallback: string) {
         >
           <span class="dd-toaster-token-label">Top / Right</span>
           <span class="dd-toaster-token-value">
-            {{ resolveFieldValue('toaster.position.top', 'var(--dd-toaster-position-top)') }}
+            {{ resolveFieldValue('toaster.position.top', 'toaster-position-top') }}
             /
-            {{ resolveFieldValue('toaster.position.right', 'var(--dd-toaster-position-right)') }}
+            {{ resolveFieldValue('toaster.position.right', 'toaster-position-right') }}
           </span>
         </button>
 
@@ -163,9 +165,9 @@ function resolveFieldValue(path: string, fallback: string) {
         >
           <span class="dd-toaster-token-label">Bottom / Left</span>
           <span class="dd-toaster-token-value">
-            {{ resolveFieldValue('toaster.position.bottom', 'var(--dd-toaster-position-bottom)') }}
+            {{ resolveFieldValue('toaster.position.bottom', 'toaster-position-bottom') }}
             /
-            {{ resolveFieldValue('toaster.position.left', 'var(--dd-toaster-position-left)') }}
+            {{ resolveFieldValue('toaster.position.left', 'toaster-position-left') }}
           </span>
         </button>
       </div>
@@ -225,20 +227,20 @@ function resolveFieldValue(path: string, fallback: string) {
 }
 
 .dd-toaster-host-top-right {
-  inset-block-start: var(--dd-toaster-position-top);
-  inset-inline-end: var(--dd-toaster-position-right);
+  inset-block-start: v('toaster.position.top');
+  inset-inline-end: v('toaster.position.right');
 }
 
 .dd-toaster-host-bottom-left {
-  inset-block-end: var(--dd-toaster-position-bottom);
-  inset-inline-start: var(--dd-toaster-position-left);
+  inset-block-end: v('toaster.position.bottom');
+  inset-inline-start: v('toaster.position.left');
 }
 
 .dd-toaster-stack {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: var(--dd-toaster-gap);
+  gap: v('toaster.gap');
 }
 
 .dd-toaster-stack-reverse {

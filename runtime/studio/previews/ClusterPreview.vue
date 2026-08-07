@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -28,7 +30,7 @@ function resolveFieldValue(path: string, fallback: string) {
     <div class="dd-studio-preview-block">
       <h3>Base cluster</h3>
       <button type="button" class="dd-layout-stage" @click="focusField('cluster.gap')">
-        <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.gap', 'var(--dd-cluster-gap)') }">
+        <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.gap', 'cluster-gap') }">
           <span v-for="label in ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon']" :key="label" class="dd-layout-chip">{{ label }}</span>
         </div>
       </button>
@@ -39,13 +41,13 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-layout-grid">
         <button type="button" class="dd-layout-card" @click="focusField('cluster.narrow.gap')">
           <strong>Narrow</strong>
-          <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.narrow.gap', 'var(--dd-cluster-narrow-gap)') }">
+          <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.narrow.gap', 'cluster-narrow-gap') }">
             <span v-for="label in ['One', 'Two', 'Three', 'Four']" :key="label" class="dd-layout-chip dd-layout-chip-tight">{{ label }}</span>
           </div>
         </button>
         <button type="button" class="dd-layout-card" @click="focusField('cluster.wide.gap')">
           <strong>Wide</strong>
-          <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.wide.gap', 'var(--dd-cluster-wide-gap)') }">
+          <div class="dd-cluster-row" :style="{ gap: resolveFieldValue('cluster.wide.gap', 'cluster-wide-gap') }">
             <span v-for="label in ['North', 'South', 'East', 'West']" :key="label" class="dd-layout-chip">{{ label }}</span>
           </div>
         </button>

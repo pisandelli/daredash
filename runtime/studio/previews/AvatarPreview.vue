@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -22,8 +23,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -55,8 +57,8 @@ function resolveFieldValue(path: string, fallback: string) {
         >
           <DdAvatar v-bind="size.attrs" :alt="size.text" />
           <strong>{{ size.label }}</strong>
-          <span>{{ resolveFieldValue(size.fieldPath, 'var(--dd-avatar-size)') }}</span>
-          <small>{{ resolveFieldValue(size.fontFieldPath, 'var(--dd-avatar-font-size)') }}</small>
+          <span>{{ resolveFieldValue(size.fieldPath, 'avatar-size') }}</span>
+          <small>{{ resolveFieldValue(size.fontFieldPath, 'avatar-font-size') }}</small>
         </button>
       </div>
     </div>
@@ -71,7 +73,7 @@ function resolveFieldValue(path: string, fallback: string) {
         >
           <DdAvatar alt="RD" />
           <strong>Rounded</strong>
-          <span>{{ resolveFieldValue('avatar.border-radius', 'var(--dd-avatar-border-radius)') }}</span>
+          <span>{{ resolveFieldValue('avatar.border-radius', 'avatar-border-radius') }}</span>
         </button>
 
         <button
@@ -109,18 +111,18 @@ function resolveFieldValue(path: string, fallback: string) {
           <span
             class="dd-avatar-color-sample"
             :style="{
-              backgroundColor: resolveFieldValue('avatar.background-color', 'var(--dd-avatar-background-color)'),
-              color: resolveFieldValue('avatar.color', 'var(--dd-avatar-color)'),
-              borderRadius: resolveFieldValue('avatar.border-radius', 'var(--dd-avatar-border-radius)'),
-              fontSize: resolveFieldValue('avatar.font-size', 'var(--dd-avatar-font-size)'),
-              fontWeight: resolveFieldValue('avatar.font-weight', 'var(--dd-avatar-font-weight)')
+              backgroundColor: resolveFieldValue('avatar.background-color', 'avatar-background-color'),
+              color: resolveFieldValue('avatar.color', 'avatar-color'),
+              borderRadius: resolveFieldValue('avatar.border-radius', 'avatar-border-radius'),
+              fontSize: resolveFieldValue('avatar.font-size', 'avatar-font-size'),
+              fontWeight: resolveFieldValue('avatar.font-weight', 'avatar-font-weight')
             }"
           >
             AV
           </span>
           <strong>Fallback initials</strong>
-          <span>{{ resolveFieldValue('avatar.background-color', 'var(--dd-avatar-background-color)') }}</span>
-          <small>{{ resolveFieldValue('avatar.color', 'var(--dd-avatar-color)') }}</small>
+          <span>{{ resolveFieldValue('avatar.background-color', 'avatar-background-color') }}</span>
+          <small>{{ resolveFieldValue('avatar.color', 'avatar-color') }}</small>
         </button>
 
         <div class="dd-avatar-color-card dd-avatar-color-card-muted">
@@ -145,7 +147,7 @@ function resolveFieldValue(path: string, fallback: string) {
           <DdAvatar alt="Clara Nunes" />
           <DdAvatar alt="Diego Costa" />
         </DdAvatarGroup>
-        <span>{{ resolveFieldValue('avatar.overlap', 'var(--dd-avatar-overlap)') }}</span>
+        <span>{{ resolveFieldValue('avatar.overlap', 'avatar-overlap') }}</span>
       </button>
     </div>
   </section>

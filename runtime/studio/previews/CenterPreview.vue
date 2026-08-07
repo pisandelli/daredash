@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -40,15 +42,15 @@ function resolveFieldValue(path: string, fallback: string) {
           <div
             class="dd-center-inner"
             :style="{
-              maxInlineSize: resolveFieldValue('center.max-width', 'var(--dd-center-max-width)'),
-              paddingInline: resolveFieldValue('center.gap', 'var(--dd-center-gap)')
+              maxInlineSize: resolveFieldValue('center.max-width', 'center-max-width'),
+              paddingInline: resolveFieldValue('center.gap', 'center-gap')
             }"
           >
             <DdCard>
               <template #header>
                 <div class="dd-center-card-meta">
                   <strong>Centered content</strong>
-                  <span>{{ resolveFieldValue('center.max-width', 'var(--dd-center-max-width)') }}</span>
+                  <span>{{ resolveFieldValue('center.max-width', 'center-max-width') }}</span>
                 </div>
               </template>
 
@@ -61,7 +63,7 @@ function resolveFieldValue(path: string, fallback: string) {
 
               <template #footer>
                 <div class="dd-center-card-meta">
-                  <span>{{ resolveFieldValue('center.gap', 'var(--dd-center-gap)') }}</span>
+                  <span>{{ resolveFieldValue('center.gap', 'center-gap') }}</span>
                   <span>inline padding</span>
                 </div>
               </template>
@@ -80,7 +82,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('center.max-width')"
         >
           <span class="dd-center-token-label">Max width</span>
-          <span class="dd-center-token-value">{{ resolveFieldValue('center.max-width', 'var(--dd-center-max-width)') }}</span>
+          <span class="dd-center-token-value">{{ resolveFieldValue('center.max-width', 'center-max-width') }}</span>
         </button>
 
         <button
@@ -89,7 +91,7 @@ function resolveFieldValue(path: string, fallback: string) {
           @click="focusField('center.gap')"
         >
           <span class="dd-center-token-label">Inline padding</span>
-          <span class="dd-center-token-value">{{ resolveFieldValue('center.gap', 'var(--dd-center-gap)') }}</span>
+          <span class="dd-center-token-value">{{ resolveFieldValue('center.gap', 'center-gap') }}</span>
         </button>
       </div>
     </div>

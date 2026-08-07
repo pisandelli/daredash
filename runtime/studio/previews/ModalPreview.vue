@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -31,18 +33,18 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-modal-stage">
         <div class="dd-modal-backdrop" @click="focusField('modal.backdrop.background-color')"></div>
         <button type="button" class="dd-modal-shell" @click="focusField('modal.border-radius')">
-          <div class="dd-modal-header" :style="{ padding: resolveFieldValue('modal.padding', 'var(--dd-modal-padding)') }">
+          <div class="dd-modal-header" :style="{ padding: resolveFieldValue('modal.padding', 'modal-padding') }">
             <div>
               <strong>Confirm publish</strong>
               <p>Review the final token delta before exporting.</p>
             </div>
             <span class="dd-modal-close" @click.stop="focusField('modal.close-size')">×</span>
           </div>
-          <div class="dd-modal-body" :style="{ padding: `0 ${resolveFieldValue('modal.padding', 'var(--dd-modal-padding)')}` }">
+          <div class="dd-modal-body" :style="{ padding: `0 ${resolveFieldValue('modal.padding', 'modal-padding')}` }">
             <p>Body typography follows the dedicated modal body font family token.</p>
             <div class="dd-modal-card">Impacted tabs: Base, Toast, Toggle</div>
           </div>
-          <div class="dd-modal-footer" :style="{ padding: resolveFieldValue('modal.padding', 'var(--dd-modal-padding)') }">
+          <div class="dd-modal-footer" :style="{ padding: resolveFieldValue('modal.padding', 'modal-padding') }">
             <button type="button" class="dd-modal-action" @click.stop="focusField('modal.padding')">Padding</button>
             <button type="button" class="dd-modal-action dd-modal-action-primary" @click.stop="focusField('modal.inline-size')">Inline size</button>
           </div>
@@ -55,19 +57,19 @@ function resolveFieldValue(path: string, fallback: string) {
       <div class="dd-modal-grid">
         <button type="button" class="dd-modal-token" @click="focusField('modal.inline-size')">
           <span>Inline size</span>
-          <small>{{ resolveFieldValue('modal.inline-size', 'var(--dd-modal-inline-size)') }}</small>
+          <small>{{ resolveFieldValue('modal.inline-size', 'modal-inline-size') }}</small>
         </button>
         <button type="button" class="dd-modal-token" @click="focusField('modal.max-inline-size')">
           <span>Max width</span>
-          <small>{{ resolveFieldValue('modal.max-inline-size', 'var(--dd-modal-max-inline-size)') }}</small>
+          <small>{{ resolveFieldValue('modal.max-inline-size', 'modal-max-inline-size') }}</small>
         </button>
         <button type="button" class="dd-modal-token" @click="focusField('modal.box-shadow')">
           <span>Shadow</span>
-          <small>{{ resolveFieldValue('modal.box-shadow', 'var(--dd-modal-box-shadow)') }}</small>
+          <small>{{ resolveFieldValue('modal.box-shadow', 'modal-box-shadow') }}</small>
         </button>
         <button type="button" class="dd-modal-token" @click="focusField('modal.title.font-size')">
           <span>Title size</span>
-          <small>{{ resolveFieldValue('modal.title.font-size', 'var(--dd-modal-title-font-size)') }}</small>
+          <small>{{ resolveFieldValue('modal.title.font-size', 'modal-title-font-size') }}</small>
         </button>
       </div>
     </div>
@@ -114,8 +116,8 @@ function resolveFieldValue(path: string, fallback: string) {
 .dd-modal-backdrop {
   position: absolute;
   inset: 0;
-  background: var(--dd-modal-backdrop-background-color);
-  backdrop-filter: var(--dd-modal-backdrop-filter);
+  background: v('modal.backdrop.background-color');
+  backdrop-filter: v('modal.backdrop.filter');
 }
 
 .dd-modal-shell {
@@ -123,16 +125,16 @@ function resolveFieldValue(path: string, fallback: string) {
   inset-block-start: 50%;
   inset-inline-start: 50%;
   transform: translate(-50%, -50%);
-  width: min(var(--dd-modal-inline-size), calc(100% - 2rem));
-  max-width: var(--dd-modal-max-inline-size);
+  width: min(v('modal.inline-size'), calc(100% - 2rem));
+  max-width: v('modal.max-inline-size');
   overflow: hidden;
   border: 0;
-  border-radius: var(--dd-modal-border-radius);
+  border-radius: v('modal.border-radius');
   padding: 0;
   text-align: left;
   color: #0f172a;
   background: #fff;
-  box-shadow: var(--dd-modal-box-shadow);
+  box-shadow: v('modal.box-shadow');
 }
 
 .dd-modal-header,
@@ -145,8 +147,8 @@ function resolveFieldValue(path: string, fallback: string) {
 
 .dd-modal-header strong {
   display: block;
-  font-size: var(--dd-modal-title-font-size);
-  font-weight: var(--dd-modal-title-font-weight);
+  font-size: v('modal.title.font-size');
+  font-weight: v('modal.title.font-weight');
 }
 
 .dd-modal-header p,
@@ -157,7 +159,7 @@ function resolveFieldValue(path: string, fallback: string) {
 }
 
 .dd-modal-close {
-  font-size: var(--dd-modal-close-size);
+  font-size: v('modal.close-size');
   line-height: 1;
   color: #64748b;
 }
@@ -165,7 +167,7 @@ function resolveFieldValue(path: string, fallback: string) {
 .dd-modal-body {
   display: grid;
   gap: 0.85rem;
-  font-family: var(--dd-modal-body-font-family);
+  font-family: v('modal.body.font-family');
 }
 
 .dd-modal-card {

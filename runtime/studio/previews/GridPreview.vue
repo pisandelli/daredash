@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
 
@@ -8,8 +9,9 @@ function focusField(path: string) {
   previewContext?.focusField(path)
 }
 
-function resolveFieldValue(path: string, fallback: string) {
-  return previewContext?.resolveFieldValue(path) || fallback
+function resolveFieldValue(path: string, fallbackCssVar: string) {
+  const cssVar = getPrefixName(fallbackCssVar, { type: 'css-var' })
+  return previewContext?.resolveFieldValue(path) || cssVar
 }
 </script>
 
@@ -31,13 +33,13 @@ function resolveFieldValue(path: string, fallback: string) {
         <div
           class="dd-grid-stage"
           :style="{
-            gap: resolveFieldValue('grid.gap', 'var(--dd-grid-gap)'),
-            gridTemplateColumns: `repeat(auto-fit, minmax(min(${resolveFieldValue('grid.column-min-width', 'var(--dd-grid-column-min-width)')}, 100%), 1fr))`
+            gap: resolveFieldValue('grid.gap', 'grid-gap'),
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${resolveFieldValue('grid.column-min-width', 'grid-column-min-width')}, 100%), 1fr))`
           }"
         >
           <div v-for="index in 6" :key="index" class="dd-grid-card">
             <strong>Card {{ index }}</strong>
-            <span>{{ resolveFieldValue('grid.column-min-width', 'var(--dd-grid-column-min-width)') }}</span>
+            <span>{{ resolveFieldValue('grid.column-min-width', 'grid-column-min-width') }}</span>
           </div>
         </div>
       </button>
