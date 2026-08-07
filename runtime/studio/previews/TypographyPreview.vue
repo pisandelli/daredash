@@ -182,8 +182,8 @@ function tokenValue(path: string, fallback = '') {
 
 <style scoped>
 .dd-typography-preview {
-  --type-card-border: rgba(15 23 42 / 0.08);
-  --type-card-bg: linear-gradient(180deg, rgba(248 250 252 / 0.95) 0%, rgba(255 255 255 / 0.96) 100%);
+  --type-card-border: var(--dd-color-border-default, rgba(148 163 184 / 0.2));
+  --type-card-bg: var(--dd-color-bg-surface, #ffffff);
 }
 
 .dd-type-hero,
@@ -194,7 +194,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-size-row {
   border: 1px solid var(--type-card-border);
   background: var(--type-card-bg);
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
 }
 
 .dd-type-font-note {
@@ -203,17 +203,16 @@ function tokenValue(path: string, fallback = '') {
   padding: 0.95rem 1rem;
   border-color: rgba(47 155 143 / 0.24);
   border-radius: 16px;
-  background:
-    linear-gradient(135deg, rgba(47 155 143 / 0.1), rgba(255 255 255 / 0.96));
+  background: var(--dd-color-bg-surface-subtle, var(--type-card-bg));
 }
 
 .dd-type-font-note strong {
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   font-size: 0.86rem;
 }
 
 .dd-type-font-note span {
-  color: #475569;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.82rem;
   line-height: 1.55;
 }
@@ -228,9 +227,7 @@ function tokenValue(path: string, fallback = '') {
   gap: 0.65rem;
   padding: clamp(1rem, 3vw, 2rem);
   border-radius: 20px;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(47 155 143 / 0.16), transparent 34%),
-    linear-gradient(135deg, #f8fafc 0%, #ffffff 52%, #eff6ff 100%);
+  background: var(--dd-color-bg-surface, #ffffff);
 }
 
 .dd-type-hero span {
@@ -244,7 +241,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-hero h3 {
   margin: 0;
   max-inline-size: 13ch;
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   font-size: clamp(2rem, 5vw, 4.25rem);
   line-height: 0.95;
   letter-spacing: -0.055em;
@@ -253,7 +250,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-hero p {
   margin: 0;
   max-inline-size: 44rem;
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.95rem;
   line-height: 1.65;
 }
@@ -280,7 +277,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-card span,
 .dd-type-line-card span,
 .dd-type-family-card span {
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -290,7 +287,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-size-row strong {
   min-inline-size: 0;
   overflow: hidden;
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   line-height: 1.05;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -332,12 +329,12 @@ function tokenValue(path: string, fallback = '') {
 
 .dd-type-line-card p {
   margin: 0;
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   font-size: 0.88rem;
 }
 
 .dd-type-family-card strong {
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   font-size: 1.1rem;
   line-height: 1.35;
 }
@@ -347,7 +344,7 @@ function tokenValue(path: string, fallback = '') {
 .dd-type-line-card code,
 .dd-type-family-card code {
   min-inline-size: 0;
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.68rem;
   line-height: 1.35;
   word-break: break-word;

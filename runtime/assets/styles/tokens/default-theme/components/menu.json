@@ -93,7 +93,7 @@
   "float": {
     "$type": "object",
     "bg": {
-      "$value": "{color.bg.surface}"
+      "$value": "{color.bg.surface-elevated}"
     },
     "border-color": {
       "$value": "{color.border.default}"

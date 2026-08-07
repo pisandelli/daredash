@@ -2,8 +2,21 @@
   --local-gap: v('box.gap');
 
   padding: var(--local-gap);
+
   &[data-nogap]:not([data-nogap='false']) {
     --local-gap: 0;
     overflow: clip;
+  }
+
+  &[data-subtle] {
+    background-color: v('color.bg.surface-subtle');
+  }
+
+  &[data-elevated] {
+    background-color: v('color.bg.surface-elevated');
+  }
+
+  &[data-canvas] {
+    background-color: v('color.bg.canvas');
   }
 }

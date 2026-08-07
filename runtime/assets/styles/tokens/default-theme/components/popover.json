@@ -2,7 +2,7 @@
   "$description": "Tokens for the Popover component",
   "$type": "object",
   "bg": {
-    "$value": "{color.bg.surface}"
+    "$value": "{color.bg.surface-elevated}"
   },
   "border-color": {
     "$value": "{color.border.default}"

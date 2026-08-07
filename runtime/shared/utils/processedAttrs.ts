@@ -53,6 +53,10 @@ export const customAttributes = new Set([
   'spaced',
   'reverse',
   'split-after',
+  // surface variants
+  'subtle',
+  'elevated',
+  'canvas',
   // from Card.vue
   'noborder',
   'flat',

@@ -38,6 +38,18 @@
     border-radius: 0;
     box-shadow: none;
   }
+
+  &[data-subtle] {
+    --local-bg: v('color.bg.surface-subtle');
+  }
+
+  &[data-elevated] {
+    --local-bg: v('color.bg.surface-elevated');
+  }
+
+  &[data-canvas] {
+    --local-bg: v('color.bg.canvas');
+  }
 }
 
 /* -- Sections -- */

@@ -252,7 +252,7 @@ describe('DareDash Studio registry', () => {
 
     expect(drawerTab).toBeDefined()
     expect(drawerTab!.navigationKind).toBe('component')
-    expect(backgroundField?.referencePath).toBe('color.bg.surface')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface-elevated')
     expect(shadowField?.referencePath).toBe('shadow.xl')
   })
 
@@ -340,7 +340,7 @@ describe('DareDash Studio registry', () => {
 
     expect(popoverTab).toBeDefined()
     expect(popoverTab!.navigationKind).toBe('component')
-    expect(backgroundField?.referencePath).toBe('color.bg.surface')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface-elevated')
     expect(shadowField?.referencePath).toBe('shadow.md')
   })
 
@@ -414,7 +414,7 @@ describe('DareDash Studio registry', () => {
     expect(paddingField?.referencePath).toBe('space.md')
     expect(shadowField?.referencePath).toBe('card.box-shadow')
     expect(iconSizeField?.defaultValue).toBe('1.5rem')
-    expect(backgroundField?.referencePath).toBe('color.white')
+    expect(backgroundField?.referencePath).toBe('color.bg.surface-elevated')
     expect(iconField?.referencePath).toBe('color.info')
     expect(successIconField?.referencePath).toBe('color.success')
     expect(solidDangerField?.referencePath).toBe('color.danger')

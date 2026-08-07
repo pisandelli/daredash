@@ -52,4 +52,20 @@ describe('DareDash Studio page', () => {
     expect(wrapper.text()).toContain('Primary alert')
     expect(wrapper.text()).toContain('Success alert')
   })
+
+  it('switches preview theme dynamically via theme selector and updates input fields', async () => {
+    const wrapper = await mountSuspended(StudioPage)
+    const themeSelect = wrapper.find('#dde-theme-select')
+    const preview = wrapper.find('.dd-studio-preview-scope')
+    const canvasInput = wrapper.find('#field-color\\.bg\\.canvas')
+
+    expect(themeSelect.exists()).toBe(true)
+    expect(preview.attributes('data-theme')).toBeUndefined()
+    expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.100')
+
+    await themeSelect.setValue('dark')
+
+    expect(preview.attributes('data-theme')).toBe('dark')
+    expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.950')
+  })
 })

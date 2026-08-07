@@ -368,7 +368,7 @@ describe('default component tokens', () => {
     const modalTokens = JSON.parse(readFileSync(modalTokensPath, 'utf8'))
     const modalCss = readFileSync(modalCssPath, 'utf8')
 
-    expect(modalTokens['background-color'].$value).toBe('{color.bg.surface}')
+    expect(modalTokens['background-color'].$value).toBe('{color.bg.surface-elevated}')
     expect(modalTokens.color.$value).toBe('{color.text.default}')
     expect(modalTokens.close.color.$value).toBe('{color.text.muted}')
     expect(modalTokens.close.hover.color.$value).toBe('{color.danger.600}')
@@ -400,7 +400,7 @@ describe('default component tokens', () => {
     const drawerTokens = JSON.parse(readFileSync(drawerTokensPath, 'utf8'))
     const drawerCss = readFileSync(drawerCssPath, 'utf8')
 
-    expect(drawerTokens.bg.$value).toBe('{color.bg.surface}')
+    expect(drawerTokens.bg.$value).toBe('{color.bg.surface-elevated}')
     expect(drawerTokens.color.$value).toBe('{color.text.default}')
     expect(drawerTokens.header['border-color'].$value).toBe('{card.border-color}')
     expect(drawerTokens.footer['border-color'].$value).toBe('{card.border-color}')
@@ -445,7 +445,7 @@ describe('default component tokens', () => {
     expect(switchCss).not.toContain('#fff')
   })
 
-  it('ships only a dark theme override layer for now', () => {
+  it('ships dark, redish, and blueish theme override layers', () => {
     const themesPath = resolve(
       process.cwd(),
       'runtime/assets/styles/tokens/default-theme/themes.json'
@@ -453,13 +453,22 @@ describe('default component tokens', () => {
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['dark'])
+    expect(Object.keys(themes)).toEqual(['dark', 'redish', 'blueish'])
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
-    expect(themes.dark.color.text.muted.$value).toBe('{color.gray.400}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
-    expect(themes.dark.color.bg.surface.$value).toBe('{color.gray.900}')
+    expect(themes.dark.color.bg['surface-subtle'].$value).toBe('{color.gray.900}')
+    expect(themes.dark.color.bg.surface.$value).toBe('{color.gray.800}')
+    expect(themes.dark.color.bg['surface-elevated'].$value).toBe('{color.gray.700}')
     expect(themes.dark.color.border.default.$value).toBe('{color.gray.700}')
     expect(themes.dark.color.primary.default.$value).toBe('{color.primary.300}')
+
+    expect(themes.redish.color.bg.canvas.$value).toBe('{color.danger.950}')
+    expect(themes.redish.color.bg.surface.$value).toBe('{color.danger.800}')
+    expect(themes.redish.color.primary.default.$value).toBe('{color.danger.400}')
+
+    expect(themes.blueish.color.bg.canvas.$value).toBe('{color.primary.950}')
+    expect(themes.blueish.color.bg.surface.$value).toBe('{color.primary.800}')
+    expect(themes.blueish.color.primary.default.$value).toBe('{color.primary.400}')
     expect(themes.dark.card['background-color'].$value).toBe('{color.bg.surface}')
     expect(themes.dark.card.color.$value).toBe('{color.text.default}')
     expect(themes.dark.badge['base-color'].$value).toBe('{color.gray.300}')
@@ -491,12 +500,12 @@ describe('default component tokens', () => {
     expect(themes.dark.radio.border.$value).toBe('{color.border.default}')
     expect(themes.dark.radio.checked['dot-color'].$value).toBe('{color.primary.300}')
     expect(themes.dark.radio.disabled.bg.$value).toBe('{color.gray.800}')
-    expect(themes.dark.toast.background.$value).toBe('{color.bg.surface}')
+    expect(themes.dark.toast.background.$value).toBe('{color.bg.surface-elevated}')
     expect(themes.dark.toast.color.$value).toBe('{color.text.default}')
     expect(themes.dark.toast['border-color'].$value).toBe('{color.border.default}')
     expect(themes.dark.toast['close-color'].$value).toBe('{color.text.muted}')
     expect(themes.dark.toast['close-hover-bg'].$value).toBe('{color.bg.surface-hover}')
-    expect(themes.dark.popover.bg.$value).toBe('{color.bg.surface}')
+    expect(themes.dark.popover.bg.$value).toBe('{color.bg.surface-elevated}')
     expect(themes.dark.pagination.color.$value).toBe('{color.text.muted}')
     expect(themes.dark.pagination['bg-hover'].$value).toBe('{color.bg.surface-hover}')
     expect(themes.dark.pagination['color-active'].$value).toBe('{color.text.default}')

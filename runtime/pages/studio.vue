@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, provide } from 'vue'
+import { ref, computed, nextTick, provide, watch } from 'vue'
 import { useThemeEditor } from '#dd/composables/useThemeEditor'
 import { STUDIO_TABS } from '../studio/registry'
+import { availableStudioThemes } from '../studio/tokens'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../studio/interaction'
 import type {
   StudioComponentCategory,
@@ -10,6 +11,8 @@ import type {
 } from '../studio/types'
 
 const tabs = STUDIO_TABS
+const availableThemes = availableStudioThemes()
+const activeThemeId = ref('default')
 const activeTabId = ref(tabs[0]?.id ?? 'base')
 const componentSearch = ref('')
 const isComponentPickerOpen = ref(false)
@@ -73,6 +76,7 @@ const {
   previewStyle,
   previewCss,
   reset,
+  loadTheme,
   downloadTokens,
   isFieldChanged,
   rawValueForPath,
@@ -82,6 +86,10 @@ const {
   setReferenceExpression,
   setMode
 } = useThemeEditor(tabs)
+
+watch(activeThemeId, (newThemeId) => {
+  loadTheme(newThemeId)
+})
 
 const isDownloading = ref(false)
 const focusedFieldPath = ref('')
@@ -341,6 +349,23 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
         </div>
       </div>
       <div class="dde-header-actions">
+        <div class="dde-theme-selector">
+          <label for="dde-theme-select" class="dde-theme-label">Theme</label>
+          <select
+            id="dde-theme-select"
+            v-model="activeThemeId"
+            class="dde-theme-select"
+            aria-label="Select preview theme"
+          >
+            <option
+              v-for="theme in availableThemes"
+              :key="theme.id"
+              :value="theme.id"
+            >
+              {{ theme.label }}
+            </option>
+          </select>
+        </div>
         <button
           class="dde-btn dde-btn-ghost"
           :disabled="!hasChanges"
@@ -735,7 +760,11 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 
       <section class="dde-panel dde-panel-preview">
         <div class="dde-preview-canvas">
-          <div class="dd-studio-preview-scope" :style="previewStyle">
+          <div
+            class="dd-studio-preview-scope"
+            :data-theme="activeThemeId !== 'default' ? activeThemeId : undefined"
+            :style="previewStyle"
+          >
             <component :is="activeTab.preview" v-if="activeTab" />
             <div v-else class="dde-empty-preview">
               Studio preview unavailable.
@@ -1559,6 +1588,43 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   gap: 0.6rem;
 }
 
+.dde-theme-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-end: 0.5rem;
+}
+
+.dde-theme-label {
+  font-size: 0.78rem;
+  color: var(--studio-text-muted);
+  font-weight: 500;
+}
+
+.dde-theme-select {
+  block-size: 2.15rem;
+  padding-inline: 0.65rem;
+  background: var(--studio-field);
+  border: 1px solid var(--studio-border);
+  border-radius: var(--studio-radius-sm);
+  color: var(--studio-text);
+  font-family: var(--studio-font);
+  font-size: 0.82rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 140ms ease-in-out;
+}
+
+.dde-theme-select:focus {
+  border-color: var(--studio-accent);
+  box-shadow: 0 0 0 3px var(--studio-accent-glow);
+}
+
+.dde-theme-select option {
+  background: var(--studio-field);
+  color: var(--studio-text);
+}
+
 .dde-panel-preview {
   overflow-y: auto;
   background:
@@ -1576,10 +1642,17 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background: #ffffff;
+  background: var(--dd-color-bg-canvas, var(--dd-color-bg-surface, #ffffff));
+  color: var(--dd-color-text-default, inherit);
   border-radius: 18px;
   padding: 2rem;
   box-shadow: 0 24px 60px rgba(15 23 42 / 0.08);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dd-studio-preview-scope[data-theme] {
+  color-scheme: dark;
+  box-shadow: 0 24px 60px rgba(0 0 0 / 0.4);
 }
 
 .dd-studio-preview {
@@ -1592,13 +1665,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   margin: 0;
   font-size: 1.1rem;
   letter-spacing: 0.02em;
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
 }
 
 .dd-studio-preview-header p {
   margin: 0.35rem 0 0;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
 }
 
 .dd-studio-preview-block {
@@ -1612,7 +1685,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--dd-color-text-muted, #94a3b8);
 }
 
 .dd-studio-preview-row {
