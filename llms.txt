@@ -392,7 +392,12 @@ Confirmed in `runtime/assets/styles/tokens/default-theme/primitives.json` and co
 - `error` is currently an alias of `danger`;
 - `secondary` is a dedicated semantic ramp rooted in `#C800DE`, not the neutral palette;
 - `color.gray` is the dedicated neutral ramp and exposes `50` through `950` plus `color.gray` as an alias to `color.gray.500`;
-- neutral utility tokens `light-gray`, `gray`, `dark-gray`, `darker-gray`, `border.default`, and `border-hover` inherit from the gray ramp and should be preferred for neutral surfaces, borders, and copy.
+- neutral utility tokens `light-gray`, `gray`, `dark-gray`, `darker-gray`, `border.default`, and `border-hover` inherit from the gray ramp and should be preferred for neutral surfaces, borders, and copy;
+- **4-tier semantic surface scale under `{color.bg.*}`**:
+  - `canvas`: level 0 root background (`#f5f5f5` light / `#0a0a0a` dark);
+  - `surface-subtle`: level 1 recessed surface (`#fafafa` light / `#171717` dark);
+  - `surface`: level 2 standard surface (`#ffffff` light / `#262626` dark);
+  - `surface-elevated`: level 3 floating / overlay surface (`#ffffff` light / `#404040` dark).
 
 ### Global variants and sizes
 
@@ -406,6 +411,10 @@ Confirmed in `runtime/shared/utils/processedAttrs.ts`:
   - `danger`
   - `error`
   - `info`
+- globally recognized surface boolean attributes:
+  - `subtle`
+  - `elevated`
+  - `canvas`
 - globally recognized sizes:
   - `tiny`
   - `small`
@@ -477,9 +486,11 @@ Do not document as an application API.
 
 ### Application shells
 
-- For app-level shells, prefer `DdLayout` as the outer frame.
-- Use `DdSidebar` together with `DdMenu` for primary navigation.
+- For app-level shells, prefer `DdLayout canvas` as the outer frame sitting on the `canvas` surface.
+- Use `DdSidebar subtle` together with `DdMenu` for primary navigation to visually separate navigation from main content.
 - Put page content in a semantic container such as `DdBox tag="main"` or `DdStack tag="main"`.
+- Use `DdCard` for standard level-2 surface cards and `DdCard elevated` for highlighted/elevated content blocks.
+- Overlays (`DdModal`, `DdDrawer`, `DdPopover`, `DdToast`, floating menus) automatically use level-3 `surface-elevated`.
 - Use `DdBreadcrumb` at the top of the content area when the page belongs to a deeper hierarchy.
 
 ### Dashboards

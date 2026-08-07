@@ -139,24 +139,66 @@ Common examples include:
 
 These attrs matter because they are part of the styling contract. Human documentation should treat them as real supported capabilities only when they are actually implemented in the component code and CSS.
 
-## 8. Themes
+## 8. Surface Hierarchy (Depth & Visual Layering)
+
+DareDash uses a **4-tier semantic surface hierarchy** under `{color.bg.*}` to establish visual depth, contrast, and clean elevation across light and dark themes:
+
+1. **`canvas` (Level 0):** The baseline application background (`#f5f5f5` in Light / `#0a0a0a` in Dark). Used on layout roots and page containers (`<DdLayout canvas>`).
+2. **`surface-subtle` (Level 1):** Recessed or secondary background surfaces (`#fafafa` in Light / `#171717` in Dark). Used for sidebars, panel backgrounds, and secondary groupings (`<DdSidebar subtle>` / `<DdCard subtle>`).
+3. **`surface` (Level 2):** Standard interactive and content surfaces (`#ffffff` in Light / `#262626` in Dark). Used for default cards, form inputs, and content blocks (`<DdCard>`).
+4. **`surface-elevated` (Level 3):** Floating or overlapping overlays (`#ffffff` in Light / `#404040` in Dark). Used for Modals, Drawers, Popovers, Toast notifications, and Floating Menus (`<DdCard elevated>`).
+
+### Surface Layering Best Practices Guide
+
+When composing pages and complex dashboards, follow these elevation rules:
+
+- **Rule 1 (Baseline):** The outer application frame (`<DdLayout>`) should sit on `canvas`.
+- **Rule 2 (Recessed Sidebars & Panels):** Use `subtle` on sidebars (`<DdSidebar subtle>`) or secondary control panels to visually separate navigation from the main canvas.
+- **Rule 3 (Content Cards):** Use default `surface` or `<DdCard>` for primary content. When nesting cards within a subtle panel, use default `surface` cards to create natural elevation.
+- **Rule 4 (Overlays & Floating UI):** Overlapping components (`DdModal`, `DdDrawer`, `DdPopover`, `DdToast`, dropdown menus) automatically consume `surface-elevated` so they stay distinct and readable over lower-level content in both Light and Dark themes.
+
+```vue
+<!-- Example: Best practice surface layering -->
+<dd-layout canvas>
+  <dd-sidebar subtle>
+    <dd-menu :items="navItems" />
+  </dd-sidebar>
+
+  <dd-box tag="main">
+    <dd-stack spaced>
+      <!-- Base content card (Level 2) -->
+      <dd-card>
+        <template #header>Dashboard Overview</template>
+        <p>Main content on standard surface level.</p>
+      </dd-card>
+
+      <!-- Elevated highlight card (Level 3) -->
+      <dd-card elevated>
+        <template #header>Featured Action</template>
+        <p>Elevated card standing out over the canvas.</p>
+      </dd-card>
+    </dd-stack>
+  </dd-box>
+</dd-layout>
+```
+
+## 9. Themes
 
 The current architecture supports:
 
-- a default token layer
-- named themes such as `light` and `dark`
-- runtime selectors such as `[data-theme="..."]`
+- a default token layer in `primitives.json`
+- named themes defined in `themes.json` (such as `light` and `dark`)
+- runtime selectors applied scoped via `[data-theme="..."]`
 
-Today, the strongest supported workflow for theme iteration is still tied to Studio and token preview/export, even though the theme infrastructure exists at runtime.
-
-## 9. Studio
+## 10. Studio & Dynamic Theme Selector
 
 Studio is where DareDash becomes more than a static component library.
 
 It helps teams:
 
-- inspect components in one place
-- preview token changes
+- inspect components in a live sandbox
+- switch themes dynamically via the built-in **Theme Selector** dropdown
+- preview token changes across `light`, `dark`, and custom themes
 - experiment with semantic scales and component tokens
 - export token overrides as JSON
 
