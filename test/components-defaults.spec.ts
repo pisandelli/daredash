@@ -445,7 +445,7 @@ describe('default component tokens', () => {
     expect(switchCss).not.toContain('#fff')
   })
 
-  it('ships only a dark theme override layer for now', () => {
+  it('ships dark, redish, and blueish theme override layers', () => {
     const themesPath = resolve(
       process.cwd(),
       'runtime/assets/styles/tokens/default-theme/themes.json'
@@ -453,7 +453,7 @@ describe('default component tokens', () => {
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['dark'])
+    expect(Object.keys(themes)).toEqual(['dark', 'redish', 'blueish'])
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
     expect(themes.dark.color.bg['surface-subtle'].$value).toBe('{color.gray.900}')
@@ -461,6 +461,14 @@ describe('default component tokens', () => {
     expect(themes.dark.color.bg['surface-elevated'].$value).toBe('{color.gray.700}')
     expect(themes.dark.color.border.default.$value).toBe('{color.gray.700}')
     expect(themes.dark.color.primary.default.$value).toBe('{color.primary.300}')
+
+    expect(themes.redish.color.bg.canvas.$value).toBe('{color.danger.950}')
+    expect(themes.redish.color.bg.surface.$value).toBe('{color.danger.800}')
+    expect(themes.redish.color.primary.default.$value).toBe('{color.danger.400}')
+
+    expect(themes.blueish.color.bg.canvas.$value).toBe('{color.primary.950}')
+    expect(themes.blueish.color.bg.surface.$value).toBe('{color.primary.800}')
+    expect(themes.blueish.color.primary.default.$value).toBe('{color.primary.400}')
     expect(themes.dark.card['background-color'].$value).toBe('{color.bg.surface}')
     expect(themes.dark.card.color.$value).toBe('{color.text.default}')
     expect(themes.dark.badge['base-color'].$value).toBe('{color.gray.300}')
