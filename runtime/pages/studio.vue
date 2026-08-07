@@ -124,7 +124,8 @@ const groupedFields = computed(() => {
 })
 
 function eventValue(event: Event): string {
-  return (event.target as HTMLInputElement | HTMLSelectElement | null)?.value ?? ''
+  const target = (event.target || event.currentTarget) as HTMLInputElement | HTMLSelectElement | null
+  return target?.value ?? ''
 }
 
 function displayFieldLabel(field: StudioFieldDefinition): string {

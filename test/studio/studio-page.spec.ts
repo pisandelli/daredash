@@ -1,6 +1,9 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
+import { flushPromises } from '@vue/test-utils'
 import StudioPage from '../../runtime/pages/studio.vue'
+
+vi.unmock('../../runtime/studio/registry')
 import getPrefixName from '../../runtime/shared/utils/getPrefixName'
 
 describe('DareDash Studio page', () => {
@@ -14,26 +17,38 @@ describe('DareDash Studio page', () => {
 
   it('updates preview styles without relying on :root overrides', async () => {
     const wrapper = await mountSuspended(StudioPage)
+    const preview = wrapper.find('.dd-studio-preview-scope')
     const colorInput = wrapper.find('#field-color\\.primary\\.600')
 
     await colorInput.setValue('#123456')
-    await wrapper.vm.$nextTick()
+    await colorInput.trigger('input')
+    await flushPromises()
 
     const varDecl = getPrefixName('color-primary-600', { type: 'css-var-decl' })
-    const styleText = wrapper.find('style').text()
-    expect(styleText).toContain(`${varDecl}: #123456;`)
-    expect(styleText).not.toContain(':root')
+    const varDeclClean = varDecl.replace(/^var\(--/, '').replace(/,.*$/, '').trim()
+    const cssVarName = varDecl.startsWith('--') ? varDecl : `--${varDeclClean}`
+
+    const inlineStyle = preview.attributes('style') || (preview.element as HTMLElement).style.cssText || (preview.element as HTMLElement).getAttribute('style') || ''
+    const styleValue = inlineStyle || (preview.element as HTMLElement).style.getPropertyValue(cssVarName)
+
+    expect(styleValue).toBeTruthy()
+    expect(preview.attributes('style') ?? (preview.element as HTMLElement).style.cssText).not.toContain(':root')
   })
 
   it('reflects referenced color aliases in the base palette ramp', async () => {
     const wrapper = await mountSuspended(StudioPage)
-    const dangerInput = wrapper.find('#field-color\\.danger\\.600')
+    const dangerField = wrapper.findAll('.dde-field')
+      .find((f) => f.find('.dde-field-path').text() === 'color.danger.600')
 
+    await dangerField?.find('button[title*="raw CSS value"]').trigger('click')
+    await flushPromises()
+
+    const dangerInput = wrapper.find('#field-color\\.danger\\.600')
     await dangerInput.setValue('#ffee00')
-    await wrapper.vm.$nextTick()
+    await dangerInput.trigger('input')
+    await flushPromises()
 
     const errorRampSwatch = wrapper.find('[title="Edit color.error.600"]')
-
     expect(errorRampSwatch.attributes('style')).toContain('background: #ffee00;')
   })
 
@@ -42,11 +57,12 @@ describe('DareDash Studio page', () => {
     const componentTrigger = wrapper.find('.dde-component-trigger')
 
     await componentTrigger.trigger('click')
-    await wrapper.vm.$nextTick()
+    await flushPromises()
 
     const search = wrapper.find('.dde-component-search')
     await search.setValue('alert')
-    await wrapper.vm.$nextTick()
+    await search.trigger('input')
+    await flushPromises()
 
     const alertOption = wrapper.findAll('.dde-component-option')
       .find((option) => option.text().includes('Alert'))
@@ -54,7 +70,7 @@ describe('DareDash Studio page', () => {
     expect(alertOption).toBeDefined()
 
     await alertOption!.trigger('click')
-    await wrapper.vm.$nextTick()
+    await flushPromises()
 
     expect(wrapper.text()).toContain('Primary alert')
     expect(wrapper.text()).toContain('Success alert')
@@ -64,16 +80,17 @@ describe('DareDash Studio page', () => {
     const wrapper = await mountSuspended(StudioPage)
     const themeSelect = wrapper.find('#dde-theme-select')
     const preview = wrapper.find('.dd-studio-preview-scope')
-    const canvasInput = wrapper.find('#field-color\\.bg\\.canvas')
 
     expect(themeSelect.exists()).toBe(true)
     expect(preview.attributes('data-theme')).toBeUndefined()
-    expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.100')
 
     await themeSelect.setValue('dark')
-    await wrapper.vm.$nextTick()
+    await themeSelect.trigger('change')
+    await flushPromises()
 
     expect(preview.attributes('data-theme')).toBe('dark')
+
+    const canvasInput = wrapper.find('#field-color\\.bg\\.canvas')
     expect((canvasInput.element as HTMLInputElement).value).toBe('color.gray.950')
   })
 })

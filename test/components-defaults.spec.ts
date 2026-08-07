@@ -2,10 +2,16 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
+function getModulePath(relativePath: string): string {
+  const rootDir = process.cwd().endsWith('modules/daredash')
+    ? process.cwd()
+    : resolve(process.cwd(), 'modules/daredash')
+  return resolve(rootDir, relativePath)
+}
+
 describe('default component tokens', () => {
   it('uses compact badge typography defaults', () => {
-    const badgeTokensPath = resolve(
-      process.cwd(),
+    const badgeTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/badge.json'
     )
 
@@ -16,12 +22,10 @@ describe('default component tokens', () => {
   })
 
   it('uses tokenized disabled button defaults', () => {
-    const buttonTokensPath = resolve(
-      process.cwd(),
+    const buttonTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/button.json'
     )
-    const buttonCssPath = resolve(
-      process.cwd(),
+    const buttonCssPath = getModulePath(
       'runtime/assets/styles/components/Button.module.css'
     )
 
@@ -35,8 +39,7 @@ describe('default component tokens', () => {
   })
 
   it('boosts badge contrast inside dark theme scopes', () => {
-    const badgeCssPath = resolve(
-      process.cwd(),
+    const badgeCssPath = getModulePath(
       'runtime/assets/styles/components/Badge.module.css'
     )
 
@@ -48,8 +51,7 @@ describe('default component tokens', () => {
   })
 
   it('keeps teleported toaster content scoped to the active theme host', () => {
-    const toasterComponentPath = resolve(
-      process.cwd(),
+    const toasterComponentPath = getModulePath(
       'runtime/components/primitives/Toaster/Toaster.ts'
     )
 
@@ -61,12 +63,10 @@ describe('default component tokens', () => {
   })
 
   it('uses detached notification trigger badge defaults', () => {
-    const notificationTriggerTokensPath = resolve(
-      process.cwd(),
+    const notificationTriggerTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/notification-trigger.json'
     )
-    const notificationTriggerCssPath = resolve(
-      process.cwd(),
+    const notificationTriggerCssPath = getModulePath(
       'runtime/assets/styles/components/NotificationTrigger.module.css'
     )
 
@@ -89,8 +89,7 @@ describe('default component tokens', () => {
   })
 
   it('uses muted neutral defaults for loading feedback', () => {
-    const loadingTokensPath = resolve(
-      process.cwd(),
+    const loadingTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/loading.json'
     )
 
@@ -100,8 +99,7 @@ describe('default component tokens', () => {
   })
 
   it('uses neutral skeleton defaults for placeholder states', () => {
-    const skeletonTokensPath = resolve(
-      process.cwd(),
+    const skeletonTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/skeleton.json'
     )
 
@@ -114,16 +112,13 @@ describe('default component tokens', () => {
   })
 
   it('keeps navigational primitives tied to semantic foreground and surface tokens', () => {
-    const anchorTokensPath = resolve(
-      process.cwd(),
+    const anchorTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/anchor.json'
     )
-    const breadcrumbsTokensPath = resolve(
-      process.cwd(),
+    const breadcrumbsTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/breadcrumbs.json'
     )
-    const tabsTokensPath = resolve(
-      process.cwd(),
+    const tabsTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/tabs.json'
     )
 
@@ -148,8 +143,7 @@ describe('default component tokens', () => {
   })
 
   it('keeps a dedicated gray ramp for neutral aliases', () => {
-    const primitivesPath = resolve(
-      process.cwd(),
+    const primitivesPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/primitives.json'
     )
 
@@ -166,8 +160,7 @@ describe('default component tokens', () => {
   })
 
   it('uses a compact default submenu indent for menu items', () => {
-    const menuTokensPath = resolve(
-      process.cwd(),
+    const menuTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/menu.json'
     )
 
@@ -177,8 +170,7 @@ describe('default component tokens', () => {
   })
 
   it('uses semantic pagination defaults that adapt better to dark themes', () => {
-    const paginationTokensPath = resolve(
-      process.cwd(),
+    const paginationTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/pagination.json'
     )
 
@@ -195,8 +187,7 @@ describe('default component tokens', () => {
   })
 
   it('uses updated table header and cell defaults', () => {
-    const tableTokensPath = resolve(
-      process.cwd(),
+    const tableTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/table.json'
     )
 
@@ -229,12 +220,10 @@ describe('default component tokens', () => {
   })
 
   it('uses semantic menu and switch neutrals for dark-theme compatibility', () => {
-    const menuTokensPath = resolve(
-      process.cwd(),
+    const menuTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/menu.json'
     )
-    const switchTokensPath = resolve(
-      process.cwd(),
+    const switchTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/switch.json'
     )
 
@@ -248,16 +237,13 @@ describe('default component tokens', () => {
   })
 
   it('uses semantic textarea and radio neutrals for dark-theme compatibility', () => {
-    const textareaTokensPath = resolve(
-      process.cwd(),
+    const textareaTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/textarea.json'
     )
-    const radioTokensPath = resolve(
-      process.cwd(),
+    const radioTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/radio.json'
     )
-    const radioCssPath = resolve(
-      process.cwd(),
+    const radioCssPath = getModulePath(
       'runtime/assets/styles/components/Radio.module.css'
     )
 
@@ -277,30 +263,24 @@ describe('default component tokens', () => {
   })
 
   it('uses a shared field shell for text field spacing and messages', () => {
-    const fieldShellCssPath = resolve(
-      process.cwd(),
+    const fieldShellCssPath = getModulePath(
       'runtime/assets/styles/components/FieldShell.module.css'
     )
-    const inputCssPath = resolve(
-      process.cwd(),
+    const inputCssPath = getModulePath(
       'runtime/assets/styles/components/Input.module.css'
     )
-    const selectCssPath = resolve(
-      process.cwd(),
+    const selectCssPath = getModulePath(
       'runtime/assets/styles/components/Select.module.css'
     )
-    const textareaCssPath = resolve(
-      process.cwd(),
+    const textareaCssPath = getModulePath(
       'runtime/assets/styles/components/Textarea.module.css'
     )
-    const inputGroupCssPath = resolve(
-      process.cwd(),
+    const inputGroupCssPath = getModulePath(
       'runtime/assets/styles/components/InputGroup.module.css'
     )
 
     const fieldShellCss = readFileSync(fieldShellCssPath, 'utf8')
-    const inputTokensPath = resolve(
-      process.cwd(),
+    const inputTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/input.json'
     )
     const inputTokens = JSON.parse(readFileSync(inputTokensPath, 'utf8'))
@@ -337,12 +317,10 @@ describe('default component tokens', () => {
   })
 
   it('uses section-specific card padding tokens with shared fallback', () => {
-    const cardTokensPath = resolve(
-      process.cwd(),
+    const cardTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/card.json'
     )
-    const cardCssPath = resolve(
-      process.cwd(),
+    const cardCssPath = getModulePath(
       'runtime/assets/styles/components/Card.module.css'
     )
 
@@ -356,12 +334,10 @@ describe('default component tokens', () => {
   })
 
   it('uses modal body as the effective scroll container', () => {
-    const modalTokensPath = resolve(
-      process.cwd(),
+    const modalTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/modal.json'
     )
-    const modalCssPath = resolve(
-      process.cwd(),
+    const modalCssPath = getModulePath(
       'runtime/assets/styles/components/Modal.module.css'
     )
 
@@ -388,12 +364,10 @@ describe('default component tokens', () => {
   })
 
   it('keeps drawer surfaces and close affordances token-driven', () => {
-    const drawerTokensPath = resolve(
-      process.cwd(),
+    const drawerTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/drawer.json'
     )
-    const drawerCssPath = resolve(
-      process.cwd(),
+    const drawerCssPath = getModulePath(
       'runtime/assets/styles/components/Drawer.module.css'
     )
 
@@ -416,12 +390,10 @@ describe('default component tokens', () => {
   })
 
   it('keeps switch colors token-driven and ready for theming', () => {
-    const switchTokensPath = resolve(
-      process.cwd(),
+    const switchTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/switch.json'
     )
-    const switchCssPath = resolve(
-      process.cwd(),
+    const switchCssPath = getModulePath(
       'runtime/assets/styles/components/Toggle.module.css'
     )
 
@@ -446,8 +418,7 @@ describe('default component tokens', () => {
   })
 
   it('ships dark, redish, and blueish theme override layers', () => {
-    const themesPath = resolve(
-      process.cwd(),
+    const themesPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/themes.json'
     )
 
@@ -517,8 +488,7 @@ describe('default component tokens', () => {
   })
 
   it('uses table density styles to override header and cell sizing', () => {
-    const tableCssPath = resolve(
-      process.cwd(),
+    const tableCssPath = getModulePath(
       'runtime/assets/styles/components/Table.module.css'
     )
 

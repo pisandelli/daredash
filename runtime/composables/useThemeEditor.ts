@@ -344,11 +344,17 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   }
 
   function setLiteralValue(path: string, value: string): void {
-    literalValues.value[path] = value
+    literalValues.value = {
+      ...literalValues.value,
+      [path]: value
+    }
   }
 
   function setReferencePath(path: string, value: string): void {
-    references.value[path] = normalizeReferencePath(path, value)
+    references.value = {
+      ...references.value,
+      [path]: normalizeReferencePath(path, value)
+    }
   }
 
   function setReferenceExpression(path: string, value: string): void {
@@ -387,6 +393,10 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   }
 
   function loadTheme(themeId: string): void {
+    const newLiterals = { ...literalValues.value }
+    const newReferences = { ...references.value }
+    const newModes = { ...modes.value }
+
     for (const field of allFields) {
       const refPath = tokenReference(field.path, themeId)
       const val = tokenValue(field.path, undefined, themeId)
@@ -395,14 +405,21 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
       defaultReferenceValues[field.path] = refPath ?? ''
       defaultModeValues[field.path] = refPath ? 'reference' : 'literal'
 
-      literalValues.value[field.path] = val
-      references.value[field.path] = refPath ?? ''
-      modes.value[field.path] = refPath ? 'reference' : 'literal'
+      newLiterals[field.path] = val
+      newReferences[field.path] = refPath ?? ''
+      newModes[field.path] = refPath ? 'reference' : 'literal'
     }
+
+    literalValues.value = newLiterals
+    references.value = newReferences
+    modes.value = newModes
   }
 
   function setMode(path: string, mode: TokenEditorMode): void {
-    modes.value[path] = mode
+    modes.value = {
+      ...modes.value,
+      [path]: mode
+    }
   }
 
   return {
