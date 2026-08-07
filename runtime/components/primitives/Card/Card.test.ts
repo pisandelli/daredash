@@ -39,15 +39,21 @@ describe('Card Primitive', () => {
 
   it('renders `data-` attributes from boolean properties using useBaseComponent', async () => {
     const wrapper = await mountSuspended(Card, {
-      props: {
+      attrs: {
         flat: true,
-        noborder: true
+        noborder: true,
+        subtle: true,
+        elevated: true,
+        canvas: true
       }
     })
 
     // The Card wraps around a root component, so the attributes should be applied to the topmost container
     expect(wrapper.attributes('data-flat')).toBeDefined()
     expect(wrapper.attributes('data-noborder')).toBeDefined()
+    expect(wrapper.attributes('data-subtle')).toBeDefined()
+    expect(wrapper.attributes('data-elevated')).toBeDefined()
+    expect(wrapper.attributes('data-canvas')).toBeDefined()
   })
 
   it('preserves consumer classes on the card root', async () => {
