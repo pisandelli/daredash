@@ -20,7 +20,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "llms.txt",
+    ".agents"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",

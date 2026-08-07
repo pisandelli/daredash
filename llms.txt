@@ -20,7 +20,7 @@ If time is short, scan these sections first:
 - `8. Page composition patterns`
 - `9. Component reference`
 
-> **AI Skill Activation:** When asked to create a page, flow, dashboard, or layout using DareDash, invoke and follow the instructions in `.agents/skills/daredash-theme-composition/SKILL.md` for surface layering and theme composition best practices.
+> **AI Skill Activation:** When asked to create a page, flow, dashboard, or layout using DareDash, invoke and follow the instructions in `./.agents/skills/daredash-theme-composition/SKILL.md` (or `node_modules/@pisandelli/daredash/.agents/skills/daredash-theme-composition/SKILL.md` in consumer applications) for surface layering and theme composition best practices.
 
 ## 1. Library overview
 
