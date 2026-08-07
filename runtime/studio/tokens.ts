@@ -36,15 +36,25 @@ function getTokenNode(tokens: any, path: string): Record<string, any> | null {
   return current && typeof current === 'object' ? current : null
 }
 
-function resolveTokenValue(tokens: any, path: string): string | null {
-  const current = getTokenNode(tokens, path)
+function getNodeForTheme(path: string, themeId?: string): Record<string, any> | null {
+  if (themeId && themeId !== 'default' && (themes as Record<string, any>)[themeId]) {
+    const themeNode = getTokenNode((themes as Record<string, any>)[themeId], path)
+    if (themeNode && '$value' in themeNode) {
+      return themeNode
+    }
+  }
+  return getTokenNode(flatTokens, path)
+}
+
+function resolveTokenValue(tokens: any, path: string, themeId?: string): string | null {
+  const current = getNodeForTheme(path, themeId)
 
   if (current && '$value' in current) {
     let value = current.$value
 
     if (typeof value === 'string' && value.includes('{')) {
       value = value.replace(/{([^}]+)}/g, (_: string, refPath: string) => {
-        const refValue = resolveTokenValue(tokens, refPath)
+        const refValue = resolveTokenValue(tokens, refPath, themeId)
         return refValue || `var(--dd-${refPath.replace(/\./g, '-')})`
       })
     }
@@ -72,8 +82,8 @@ function flattenTokens(
   return flat
 }
 
-export function tokenReference(path: string): string | undefined {
-  const node = getTokenNode(flatTokens, path)
+export function tokenReference(path: string, themeId?: string): string | undefined {
+  const node = getNodeForTheme(path, themeId)
   const rawValue = node?.$value
 
   if (typeof rawValue !== 'string') return undefined
@@ -83,8 +93,8 @@ export function tokenReference(path: string): string | undefined {
   return matches[0]?.[1]
 }
 
-export function rawTokenValue(path: string): string | undefined {
-  const node = getTokenNode(flatTokens, path)
+export function rawTokenValue(path: string, themeId?: string): string | undefined {
+  const node = getNodeForTheme(path, themeId)
   if (node?.$value == null) return undefined
   return String(node.$value)
 }
@@ -169,8 +179,8 @@ function labelForPrimitivePath(path: string): string {
   return tokenLabel ? `${sectionLabel} ${tokenLabel}` : sectionLabel
 }
 
-export function tokenValue(path: string, fallback?: string): string {
-  const resolved = resolveTokenValue(flatTokens, path)
+export function tokenValue(path: string, fallback?: string, themeId?: string): string {
+  const resolved = resolveTokenValue(flatTokens, path, themeId)
 
   if (!resolved) return fallback ?? ''
   if (fallback && resolved.includes('var(--dd-')) return fallback

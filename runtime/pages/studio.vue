@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, provide } from 'vue'
+import { ref, computed, nextTick, provide, watch } from 'vue'
 import { useThemeEditor } from '#dd/composables/useThemeEditor'
 import { STUDIO_TABS } from '../studio/registry'
 import { availableStudioThemes } from '../studio/tokens'
@@ -76,6 +76,7 @@ const {
   previewStyle,
   previewCss,
   reset,
+  loadTheme,
   downloadTokens,
   isFieldChanged,
   rawValueForPath,
@@ -85,6 +86,10 @@ const {
   setReferenceExpression,
   setMode
 } = useThemeEditor(tabs)
+
+watch(activeThemeId, (newThemeId) => {
+  loadTheme(newThemeId)
+})
 
 const isDownloading = ref(false)
 const focusedFieldPath = ref('')

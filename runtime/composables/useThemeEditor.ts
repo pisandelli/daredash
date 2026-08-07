@@ -1,6 +1,6 @@
 import { ref, computed, readonly, type Ref } from 'vue'
 import { useRuntimeConfig } from '#app'
-import { tokenValue } from '../studio/tokens'
+import { tokenValue, tokenReference, rawTokenValue } from '../studio/tokens'
 import type { StudioTabDefinition, StudioTokenGroup, StudioFieldDefinition } from '../studio/types'
 
 // ---------------------------------------------------------------------------
@@ -386,6 +386,21 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     modes.value[path] = 'reference'
   }
 
+  function loadTheme(themeId: string): void {
+    for (const field of allFields) {
+      const refPath = tokenReference(field.path, themeId)
+      const val = tokenValue(field.path, undefined, themeId)
+
+      defaultLiteralValues[field.path] = val
+      defaultReferenceValues[field.path] = refPath ?? ''
+      defaultModeValues[field.path] = refPath ? 'reference' : 'literal'
+
+      literalValues.value[field.path] = val
+      references.value[field.path] = refPath ?? ''
+      modes.value[field.path] = refPath ? 'reference' : 'literal'
+    }
+  }
+
   function setMode(path: string, mode: TokenEditorMode): void {
     modes.value[path] = mode
   }
@@ -399,6 +414,7 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     previewStyle,
     previewCss,
     reset,
+    loadTheme,
     downloadTokens,
     exportTokensJson,
     isFieldChanged: publicIsFieldChanged,
