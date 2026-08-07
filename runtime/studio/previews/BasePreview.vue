@@ -477,14 +477,15 @@ function tokenValue(fieldPath: string, fallback: string) {
 
 .dd-base-surface-card,
 .dd-base-token-card {
-  border: 1px solid rgba(15 23 42 / 0.08);
+  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(248 250 252 / 0.95) 0%, rgba(255 255 255 / 0.96) 100%);
+  background: var(--dd-color-bg-surface, #ffffff);
+  color: var(--dd-color-text-default, inherit);
 }
 
 .dd-base-token-card,
 .dd-base-surface-card-button {
-  border: 1px solid rgba(15 23 42 / 0.08);
+  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
   cursor: pointer;
   text-align: left;
   font: inherit;
@@ -513,12 +514,12 @@ function tokenValue(fieldPath: string, fallback: string) {
 
 .dd-base-surface-card strong,
 .dd-base-token-card strong {
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
   font-size: 0.9rem;
 }
 
 .dd-base-surface-card span {
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.78rem;
 }
 
@@ -575,8 +576,9 @@ function tokenValue(fieldPath: string, fallback: string) {
   min-block-size: 4rem;
   padding: 0.7rem 0.8rem;
   border-radius: 12px;
-  background: rgba(255 255 255 / 0.7);
-  border: 1px solid rgba(15 23 42 / 0.06);
+  background: var(--dd-color-bg-surface-subtle, var(--dd-color-bg-surface, rgba(255 255 255 / 0.7)));
+  border: 1px solid var(--dd-color-border-default, rgba(148 163 184 / 0.2));
+  color: var(--dd-color-text-default, inherit);
   cursor: pointer;
   text-align: left;
 }
@@ -600,7 +602,7 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-token-card code,
 .dd-base-surface-card code {
   margin-top: 0.2rem;
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
   font-size: 0.68rem;
   word-break: break-word;
 }
@@ -641,24 +643,24 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-shadow-sample {
   inline-size: 100%;
   aspect-ratio: 1 / 1;
-  background: linear-gradient(135deg, rgba(47 155 143 / 0.18), rgba(15 23 42 / 0.08));
+  background: linear-gradient(135deg, rgba(47 155 143 / 0.18), rgba(148 163 184 / 0.15));
 }
 
 .dd-base-border-sample {
-  background: #fff;
+  background: var(--dd-color-bg-surface, #ffffff);
   border-style: solid;
   border-color: #2f9b8f;
 }
 
 .dd-base-shadow-sample {
-  background: #fff;
+  background: var(--dd-color-bg-surface, #ffffff);
 }
 
 .dd-base-space-sample {
   block-size: 2.25rem;
   display: flex;
   align-items: center;
-  background: rgba(15 23 42 / 0.04);
+  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.12));
   border-radius: 12px;
   padding-inline: 0.5rem;
 }
@@ -673,7 +675,7 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-motion-sample {
   block-size: 3rem;
   border-radius: 14px;
-  background: rgba(15 23 42 / 0.05);
+  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.12));
   display: flex;
   align-items: center;
   padding-inline: 0.45rem;
@@ -711,15 +713,15 @@ function tokenValue(fieldPath: string, fallback: string) {
 .dd-base-z-layer-back {
   inset-inline-start: 0.75rem;
   inset-block-start: 0.65rem;
-  background: rgba(148 163 184 / 0.3);
-  color: #475569;
+  background: var(--dd-color-bg-surface-hover, rgba(148 163 184 / 0.3));
+  color: var(--dd-color-text-muted, inherit);
 }
 
 .dd-base-z-layer-front {
   inset-inline-start: 1.55rem;
-  background: rgba(47 155 143 / 0.22);
-  color: #0f172a;
-  box-shadow: 0 8px 20px rgba(15 23 42 / 0.08);
+  background: var(--dd-color-primary-200, rgba(47 155 143 / 0.22));
+  color: var(--dd-color-text-default, inherit);
+  box-shadow: 0 8px 20px rgba(0 0 0 / 0.15);
 }
 
 .dd-base-max-width-stage {
@@ -734,8 +736,8 @@ function tokenValue(fieldPath: string, fallback: string) {
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(15 23 42 / 0.05),
-      rgba(15 23 42 / 0.05) 20px,
+      rgba(148 163 184 / 0.1),
+      rgba(148 163 184 / 0.1) 20px,
       transparent 20px,
       transparent 40px
     );
@@ -747,7 +749,7 @@ function tokenValue(fieldPath: string, fallback: string) {
   margin-inline: auto;
   border-radius: 14px;
   background: linear-gradient(135deg, rgba(47 155 143 / 0.2), rgba(110 231 183 / 0.45));
-  box-shadow: inset 0 0 0 1px rgba(15 23 42 / 0.08);
+  box-shadow: inset 0 0 0 1px rgba(148 163 184 / 0.2);
 }
 
 @media (max-width: 960px) {

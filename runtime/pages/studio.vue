@@ -1665,13 +1665,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   margin: 0;
   font-size: 1.1rem;
   letter-spacing: 0.02em;
-  color: #0f172a;
+  color: var(--dd-color-text-default, inherit);
 }
 
 .dd-studio-preview-header p {
   margin: 0.35rem 0 0;
   font-size: 0.85rem;
-  color: #64748b;
+  color: var(--dd-color-text-muted, inherit);
 }
 
 .dd-studio-preview-block {
@@ -1685,7 +1685,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: var(--dd-color-text-muted, #94a3b8);
 }
 
 .dd-studio-preview-row {
