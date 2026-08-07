@@ -9,22 +9,27 @@ This skill provides step-by-step instructions and operational patterns for AI ag
 
 ---
 
-## 1. Core Visual Principles
+## 1. Core Visual Principles & Conventions
 
 1. **Token-Driven Design:** Never hardcode colors, margins, radiuses, or padding in custom CSS. Rely on JSON design tokens and `v('token.path')`.
 2. **Semantic Attributes First:** Use recognized boolean attributes (`subtle`, `elevated`, `canvas`, `primary`, `success`, `outline`, `ghost`, `small`, `large`) instead of inline styles or class overrides.
 3. **4-Tier Surface Hierarchy:** Establish clear visual depth by layering backgrounds from level 0 (`canvas`) up to level 3 (`surface-elevated`).
+4. **Dynamic Project Component Prefixing:**
+   - The `dd-` prefix (e.g. `<dd-card>`, `<dd-stack>`, `DdButton`) is the **default** component prefix shipped by DareDash.
+   - However, the prefix is **fully configurable** in `nuxt.config.ts` via `daredash.prefix` (e.g., `prefix: 'acme'` results in `<acme-card>`, `<acme-stack>`, `AcmeButton`).
+   - AI agents **must check `nuxt.config.ts`** or the project configuration context before outputting hardcoded `<dd-*>` tags.
+   - When resolving components dynamically in JS/TS, agents **must use `getPrefixName('Card', { type: 'component' })`** instead of string concatenation.
 
 ---
 
 ## 2. The 4-Tier Surface Elevation Matrix
 
-| Level | Surface Token | Boolean Attribute | RGB Light | RGB Dark | Primary Use Cases |
+| Level | Surface Token | Component / Attribute | RGB Light | RGB Dark | Primary Use Cases |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **0** | `color.bg.canvas` | `<DdLayout canvas>` | `#f5f5f5` | `#0a0a0a` | Outer app layout, page background wrapper |
-| **1** | `color.bg.surface-subtle` | `<DdSidebar subtle>`, `<DdCard subtle>` | `#fafafa` | `#171717` | Recessed sidebars, secondary filter bars, nested panels |
-| **2** | `color.bg.surface` | `<DdCard>` (default) | `#ffffff` | `#262626` | Standard content cards, form inputs, table containers |
-| **3** | `color.bg.surface-elevated` | `<DdCard elevated>`, Overlays | `#ffffff` | `#404040` | Modals, Drawers, Popovers, Toasts, Dropdown Menus, Highlighted Cards |
+| **0** | `color.bg.canvas` | `<dd-layout canvas>` | `#f5f5f5` | `#0a0a0a` | Outer application shell, root page background wrapper |
+| **1** | `color.bg.surface-subtle` | `<dd-sidebar subtle>`, `<dd-card subtle>` | `#fafafa` | `#171717` | Recessed navigation sidebars, secondary filter panels, nested cards |
+| **2** | `color.bg.surface` | `<dd-card>` (default) | `#ffffff` | `#262626` | Standard content cards, form inputs, data tables, main containers |
+| **3** | `color.bg.surface-elevated` | `<dd-card elevated>`, Overlays | `#ffffff` | `#404040` | Modals, Drawers, Popovers, Toasts, Dropdown Menus, Highlighted Cards |
 
 ---
 
@@ -32,15 +37,17 @@ This skill provides step-by-step instructions and operational patterns for AI ag
 
 When asked to generate a page, flow, or dashboard using DareDash, follow this sequence:
 
-### Step 1: Establish the Application Shell
-- Wrap the view in `<dd-layout canvas>`.
-- Add primary navigation via `<dd-sidebar subtle>`.
-- Place main content in `<dd-box tag="main">` or `<dd-stack tag="main">`.
+### Step 1: Establish the Application Shell (`dd-layout` & `dd-sidebar`)
+- Wrap the main application or view inside `<dd-layout canvas>` (Level 0 canvas background). `<dd-layout>` acts as the root structural container.
+- For pages requiring navigation or side panels, use `<dd-sidebar subtle>` (Level 1 recessed surface). `<dd-sidebar>` provides side-by-side layout splitting for navigation menus, filter drawers, or master-detail views.
+- Place main page content in `<dd-box tag="main">` or `<dd-stack tag="main">`.
 
-### Step 2: Structure Content Rhythm
-- Use `<dd-stack spaced>` for vertical section rhythm.
-- Use `<dd-grid>` for metric cards or multi-column summaries.
-- Add `<dd-breadcrumb>` at the top of deep contextual pages.
+### Step 2: Structure Layout Rhythm & Horizontal Grouping (`dd-stack`, `dd-cluster`, `dd-grid`)
+- **Vertical Rhythm (`dd-stack`):** Use `<dd-stack>` for standard vertical section spacing. Standard `<dd-stack>` automatically provides the optimal vertical rhythm (`gap: var(--dd-space-md)`). **Do NOT add `spaced` by default**; reserve `<dd-stack spaced>` (or `<dd-stack wide>`) specifically for views requiring large section gaps.
+- **Horizontal Grouping (`dd-cluster`):** Use `<dd-cluster>` for horizontal inline elements with flex wrapping (e.g., action button groups, status badge lists, metadata tags, filter bars, card header controls).
+  - *Best scenarios:* Grouping buttons in card headers (`<dd-cluster between align-center>`), action bars, form button footers (`<dd-cluster end>`), badge chips.
+  - *Attributes:* Use `start`, `center`, `end`, `between`, `around`, `evenly`, `nowrap`, `stretch`, `nogap` to control alignment and wrapping.
+- **Multi-column Layouts (`dd-grid`):** Use `<dd-grid>` for responsive metric cards, dashboard summaries, or multi-column media catalogs.
 
 ### Step 3: Frame Cards & Content Surface Elevation
 - Use standard `<dd-card>` for primary content sections (Level 2 surface).
@@ -56,11 +63,11 @@ When asked to generate a page, flow, or dashboard using DareDash, follow this se
 
 ## 4. Golden Page Template
 
-Below is a complete, production-ready Nuxt page example demonstrating ideal surface layering and composition:
+Below is a complete, production-ready Nuxt page example demonstrating ideal surface layering and component composition:
 
 ```vue
 <template>
-  <!-- Level 0: Outer canvas background -->
+  <!-- Level 0: Outer application layout and canvas background -->
   <dd-layout canvas>
     <!-- Level 1: Recessed navigation sidebar -->
     <dd-sidebar subtle>
@@ -69,14 +76,14 @@ Below is a complete, production-ready Nuxt page example demonstrating ideal surf
 
     <!-- Main Content Area -->
     <dd-box tag="main">
-      <dd-stack spaced>
-        <dd-breadcrumb :config="breadcrumbConfig" />
-
-        <!-- Dashboard Grid -->
+      <!-- Standard vertical rhythm without unnecessary 'spaced' -->
+      <dd-stack>
+        <!-- Dashboard Metric Grid -->
         <dd-grid>
           <!-- Level 2: Standard surface card -->
           <dd-card>
             <template #header>Total Users</template>
+            <!-- dd-cluster for inline metric + badge alignment -->
             <dd-cluster align-center between>
               <span class="text-2xl font-bold">12,450</span>
               <dd-badge success icon="heroicons:arrow-trending-up">+14%</dd-badge>
@@ -144,10 +151,6 @@ const menuItems = [
   { key: 'analytics', label: 'Analytics', icon: 'heroicons:chart-bar', action: { type: 'link', to: '/analytics' } }
 ]
 
-const breadcrumbConfig = {
-  routes: [{ label: 'Home', to: '/' }, { label: 'Dashboard' }]
-}
-
 const tableColumns = [
   { key: 'id', label: 'ID' },
   { key: 'user', label: 'User' },
@@ -176,9 +179,10 @@ function saveTransaction() {
 
 Before delivering code generated with DareDash:
 
-- [ ] Does the root wrapper use `<dd-layout canvas>`?
-- [ ] Does the sidebar use `<dd-sidebar subtle>`?
-- [ ] Are primary cards on standard surface level, and overlays/highlighted cards on `elevated`?
+- [ ] Has the project prefix been checked (defaulting to `dd-` unless configured differently in `nuxt.config.ts`)?
+- [ ] Does the root structural wrapper use `<dd-layout canvas>`?
+- [ ] Are navigation or side panels styled with `<dd-sidebar subtle>`?
+- [ ] Is vertical spacing handled by standard `<dd-stack>` (reserving `spaced` only for large section gaps)?
+- [ ] Are horizontal button bars, badge tags, and card header actions aligned using `<dd-cluster>`?
+- [ ] Are primary cards on standard surface level (`<dd-card>`), and overlays/highlighted cards on `elevated` (`<dd-card elevated>`)?
 - [ ] Are semantic boolean attributes (`primary`, `success`, `warning`, `danger`, `ghost`, `outline`) used instead of made-up `variant="..."` or `color="..."` props?
-- [ ] Are forms wrapped with standard `dd-stack` spacing?
-- [ ] Are interactive actions wrapped in `dd-cluster` for clean alignment?
