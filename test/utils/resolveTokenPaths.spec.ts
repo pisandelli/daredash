@@ -7,8 +7,9 @@ describe('resolveTokenPaths', () => {
     const rootDir = '/project/root'
     const tokenOption = './app/assets/tokens/my-tokens.json'
     const resolver = {
-      resolve: vi.fn((path) => `/module/path/${path}`)
-    }
+      resolve: vi.fn((path) => `/module/path/${path}`),
+      resolvePath: vi.fn((path) => Promise.resolve(`/module/path/${path}`))
+    } as any
 
     const result = resolveTokenPaths(rootDir, resolver, tokenOption)
 
@@ -25,8 +26,9 @@ describe('resolveTokenPaths', () => {
     const rootDir = '/project/root'
     const tokenOption = '/project/root/app/assets/tokens/my-tokens.json'
     const resolver = {
-      resolve: vi.fn((path) => `/module/path/${path}`)
-    }
+      resolve: vi.fn((path) => `/module/path/${path}`),
+      resolvePath: vi.fn((path) => Promise.resolve(`/module/path/${path}`))
+    } as any
 
     const result = resolveTokenPaths(rootDir, resolver, tokenOption)
 
