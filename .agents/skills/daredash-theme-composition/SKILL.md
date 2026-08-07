@@ -86,7 +86,7 @@ Below is a complete, production-ready Nuxt page example demonstrating ideal surf
             <!-- dd-cluster for inline metric + badge alignment -->
             <dd-cluster align-center between>
               <span class="text-2xl font-bold">12,450</span>
-              <dd-badge success icon="heroicons:arrow-trending-up">+14%</dd-badge>
+              <dd-badge success icon="lucide:trending-up">+14%</dd-badge>
             </dd-cluster>
           </dd-card>
 
@@ -114,7 +114,7 @@ Below is a complete, production-ready Nuxt page example demonstrating ideal surf
           <template #header>
             <dd-cluster between align-center>
               <h3>Recent Transactions</h3>
-              <dd-button primary icon="heroicons:plus" @click="isModalOpen = true">
+              <dd-button primary icon="lucide:plus" @click="isModalOpen = true">
                 Add Transaction
               </dd-button>
             </dd-cluster>
@@ -147,8 +147,8 @@ import { ref } from 'vue'
 const isModalOpen = ref(false)
 
 const menuItems = [
-  { key: 'dashboard', label: 'Dashboard', icon: 'heroicons:home', action: { type: 'link', to: '/' } },
-  { key: 'analytics', label: 'Analytics', icon: 'heroicons:chart-bar', action: { type: 'link', to: '/analytics' } }
+  { key: 'dashboard', label: 'Dashboard', icon: 'lucide:house', action: { type: 'link', to: '/' } },
+  { key: 'analytics', label: 'Analytics', icon: 'lucide:chart-bar', action: { type: 'link', to: '/analytics' } }
 ]
 
 const tableColumns = [
