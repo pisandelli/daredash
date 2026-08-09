@@ -68,6 +68,21 @@
         }
       }
     },
+    "layout": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      }
+    },
+    "accordion": {
+      "header": {
+        "background-color": { "$value": "{color.bg.surface}" },
+        "background-color-hover": { "$value": "{color.bg.surface-hover}" }
+      },
+      "content": {
+        "background-color": { "$value": "{color.bg.surface}" }
+      },
+      "border-color": { "$value": "{color.border.default}" }
+    },
     "card": {
       "background-color": {
         "$value": "{color.bg.surface}"
@@ -629,6 +644,21 @@
         }
       }
     },
+    "layout": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      }
+    },
+    "accordion": {
+      "header": {
+        "background-color": { "$value": "{color.bg.surface}" },
+        "background-color-hover": { "$value": "{color.bg.surface-hover}" }
+      },
+      "content": {
+        "background-color": { "$value": "{color.bg.surface}" }
+      },
+      "border-color": { "$value": "{color.border.default}" }
+    },
     "card": {
       "background-color": {
         "$value": "{color.bg.surface}"
@@ -1189,6 +1219,21 @@
           "$value": "{color.primary.400}"
         }
       }
+    },
+    "layout": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      }
+    },
+    "accordion": {
+      "header": {
+        "background-color": { "$value": "{color.bg.surface}" },
+        "background-color-hover": { "$value": "{color.bg.surface-hover}" }
+      },
+      "content": {
+        "background-color": { "$value": "{color.bg.surface}" }
+      },
+      "border-color": { "$value": "{color.border.default}" }
     },
     "card": {
       "background-color": {

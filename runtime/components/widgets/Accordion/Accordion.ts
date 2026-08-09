@@ -1,5 +1,5 @@
 import { defineNuxtComponent } from 'nuxt/app'
-import { h, inject, type VNode } from 'vue'
+import { h, inject, type VNode, ref, computed, useId } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import getPrefixName from '#dd/utils/getPrefixName'
 import styles from '#dd/styles/Accordion.module.css'
@@ -33,11 +33,11 @@ export default defineNuxtComponent({
       default: undefined
     },
     /**
-     * Explicit native name attribute. If omitted, it will inherit from a parent AccordionGroup if present.
+     * Whether the accordion is open by default.
      */
-    name: {
-      type: String,
-      default: undefined
+    defaultOpen: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { slots, attrs }) {
@@ -47,38 +47,53 @@ export default defineNuxtComponent({
       'Accordion'
     )
 
+    const id = useId()
+    const localIsOpen = ref(props.defaultOpen)
+
     // Inject context if nested inside an AccordionGroup
     const groupContext = inject(AccordionGroupInjectionKey, null) as {
-      name?: string
+      openItems?: { value: Set<string> }
+      toggleItem?: (id: string, isOpen: boolean) => void
       accentColor?: string
+      isControlled?: boolean
     } | null
+
+    const isOpen = computed(() => {
+      if (groupContext?.isControlled && groupContext.openItems) {
+        return groupContext.openItems.value.has(id)
+      }
+      return localIsOpen.value
+    })
+
+    const toggle = () => {
+      const nextState = !isOpen.value
+      if (groupContext?.isControlled && groupContext.toggleItem) {
+        groupContext.toggleItem(id, nextState)
+      } else {
+        localIsOpen.value = nextState
+      }
+    }
 
     return () => {
       // Determine final properties combining local props and injected context
-      const finalName = props.name || groupContext?.name
       const finalAccentColor = props.accentColor || groupContext?.accentColor
 
-      // Prepare attributes for the details element
-      const detailsAttrs: Record<string, any> = {
+      // Prepare attributes for the root div element
+      const wrapperAttrs: Record<string, any> = {
         ...processedAttrs.value,
-        class: classList.value
+        class: [classList.value, { [styles.isopen]: isOpen.value }]
       }
 
       // Map custom color to the public component token or standard semantic data attribute
       if (finalAccentColor) {
         const semanticVariants = ['primary', 'success', 'warning', 'danger', 'info']
         if (semanticVariants.includes(finalAccentColor)) {
-          detailsAttrs[`data-${finalAccentColor}`] = ''
+          wrapperAttrs[`data-${finalAccentColor}`] = ''
         } else {
-          detailsAttrs.style = {
+          wrapperAttrs.style = {
             [getPrefixName('accordion-accent-color', { type: 'css-var-decl' })]: finalAccentColor
           }
         }
-      }
-
-      // Mutual exclusivity native HTML5 implementation
-      if (finalName) {
-        detailsAttrs.name = finalName
       }
 
       // Title Content (Header)
@@ -108,12 +123,32 @@ export default defineNuxtComponent({
       )
 
       // Body Content wrapper EXACTLY matching the Vue Example for Grid Animation
-      const bodyContent = h('div', { class: styles.contentwrapper }, [
-        h('div', { class: styles.contentinner }, [slots.default?.()])
-      ])
+      const bodyContent = h(
+        'div',
+        { 
+          class: styles.contentwrapper,
+          id: `accordion-content-${id}`,
+          role: 'region',
+          'aria-labelledby': `accordion-header-${id}`
+        },
+        [
+          h('div', { class: styles.contentinner }, [slots.default?.()])
+        ]
+      )
 
-      return h('details', detailsAttrs, [
-        h('summary', { class: styles.summary }, summaryChildren),
+      return h('div', wrapperAttrs, [
+        h(
+          'button',
+          {
+            class: styles.summary,
+            id: `accordion-header-${id}`,
+            type: 'button',
+            'aria-expanded': isOpen.value,
+            'aria-controls': `accordion-content-${id}`,
+            onClick: toggle
+          },
+          summaryChildren
+        ),
         bodyContent
       ])
     }

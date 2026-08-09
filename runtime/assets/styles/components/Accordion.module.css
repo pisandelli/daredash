@@ -30,14 +30,10 @@
   --current-accent: var(--local-accent);
 
   /* -- Layout -- */
-  border-block-end: var(--local-border-width) solid var(--local-border-color);
+  /* Border is now managed entirely by AccordionGroup or custom wrapper */
 
-  &[data-borderless],
-  &[data-noborder] {
-    border-block-end: 0;
-  }
 
-  &[open] {
+  &.isopen {
     & .summary {
       color: var(--current-accent);
     }
@@ -63,12 +59,18 @@
   }
 }
 
-/* Override native details closed-state display:none so collapse can animate every time in modern browsers */
-.accordion::details-content {
-  display: block;
+.accordion:not(.isopen) > .contentwrapper {
+  display: grid;
 }
 
 .summary {
+  /* -- Reset Button Styles -- */
+  appearance: none;
+  width: 100%;
+  border: none;
+  text-align: inherit;
+  margin: 0;
+
   /* -- Layout -- */
   padding: var(--local-header-padding);
   display: flex;
@@ -87,7 +89,7 @@
   cursor: pointer;
   list-style: none;
   user-select: none;
-  border-radius: v('border-radius.base');
+  border-radius: var(--accordion-item-radius, v('border-radius.base'));
   transition: background-color v('transition.fast'), color v('transition.fast');
 
   &::-webkit-details-marker {
@@ -156,9 +158,7 @@
     visibility 0s linear 250ms;
 }
 
-.accordion:not([open]) > .contentwrapper {
-  display: grid;
-}
+
 
 .contentinner {
   min-block-size: 0;

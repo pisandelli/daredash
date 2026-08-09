@@ -1,6 +1,9 @@
 {
   "$description": "Tokens for the Layout component (Head / Body / Footer)",
   "$type": "object",
+  "background-color": {
+    "$value": "{color.bg.canvas}"
+  },
   "footer-height": {
     "$value": "min-content"
   },

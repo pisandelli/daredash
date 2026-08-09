@@ -5,7 +5,7 @@
     "$value": "1px"
   },
   "border-color": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "border-radius": {
     "$value": "{border-radius.base}"
@@ -19,7 +19,7 @@
       "$value": "{color.bg.surface}"
     },
     "background-color-hover": {
-      "$value": "{color.light-gray}"
+      "$value": "{color.bg.surface-hover}"
     },
     "padding": {
       "$value": "{space.sm}"
@@ -53,7 +53,7 @@
       "$value": "{accordion.header.padding}"
     },
     "background-color": {
-      "$value": "#FFF"
+      "$value": "{color.bg.surface}"
     },
     "font-family": {
       "$value": "{font.system}"

@@ -1,4 +1,5 @@
 .accordiongroup {
+  --accordion-item-radius: 0;
   display: flex;
   flex-direction: column;
   /* Visual grouping: Outer border and no internal gap */
@@ -8,7 +9,7 @@
   background-color: v('color.bg.surface');
 }
 
-/* Remove the duplicate bottom border of the last accordion in the group */
-.accordiongroup > :last-child {
-  border-block-end: 0;
+/* Add borders between items, except for the last one */
+.accordiongroup > :not(:last-child) {
+  border-block-end: v('accordion.border-width') solid v('accordion.border-color');
 }

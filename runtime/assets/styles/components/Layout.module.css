@@ -15,4 +15,9 @@
     display: flex;
     min-block-size: 0;
   }
+
+  &[data-canvas] {
+    --local-bg: v('layout.background-color');
+    background-color: var(--local-bg);
+  }
 }
