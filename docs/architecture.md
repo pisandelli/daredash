@@ -122,8 +122,28 @@ The current model supports:
 - a default token layer
 - named themes such as `light` and `dark`
 - runtime theme selectors such as `[data-theme="..."]`
+- granular deep-merging of custom tokens over the default themes
 
-The infrastructure exists broadly, but the strongest supported workflow today is still closely tied to Studio.
+### Deep Merge and Theme Overrides
+
+When consumers define a custom `tokens` path in their `nuxt.config.ts`, DareDash does not blindly overwrite the entire token file. Instead, it uses `defu` to perform a strict deep-merge. 
+This allows consumers to override very specific properties of the default theme, including named themes (like `dark`), without having to redeclare the rest of the tokens.
+
+For example, to override only the primary color in dark mode, the custom JSON only needs to mirror the target path:
+```json
+{
+  "themes": {
+    "dark": {
+      "color": {
+        "primary": { "$value": "#ff0000" }
+      }
+    }
+  }
+}
+```
+All other light and dark mode tokens remain intact from the default theme.
+
+> **Note on DareDash Studio:** When using the DareDash Studio interface to edit tokens, the "Export JSON" functionality automatically handles this nested structure for you. If you are editing the "dark" theme and export your changes, the exported JSON will already be correctly nested under `"themes": { "dark": { ... } }`, preventing accidental overrides of the default theme.
 
 ### The Nuxt module
 

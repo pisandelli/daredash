@@ -100,7 +100,9 @@ export default defineNuxtConfig({
 - `tokens?: string`
   - path to a JSON token file or directory, resolved from the consumer app `rootDir`;
   - default: `./runtime/assets/styles/tokens/default-theme`
-  - custom token sources are merged over the built-in `default-theme`, so partial override files are supported;
+  - custom token sources are merged over the built-in `default-theme` using a strict deep-merge (`defu`). This means partial override files are fully supported.
+  - To override specific themes (like `dark`), consumers just need to nest their keys under `"themes": { "dark": { ... } }` in their custom JSON. Only the specific tokens declared will be overwritten, leaving the rest of the light/dark themes intact.
+  - **DareDash Studio Exports**: When using DareDash Studio, clicking "Export JSON" while a specific theme is selected automatically outputs the JSON nested inside the correct `"themes": { "themeName": { ... } }` block, ensuring safe merging.
 - `prefix?: string`
   - prefix for components and CSS variables;
   - default: `dd`
