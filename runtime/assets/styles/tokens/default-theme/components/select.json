@@ -140,7 +140,7 @@
     "$description": "Tokens for the arrow/chevron icon",
     "$type": "object",
     "color": {
-      "$value": "{input.color}"
+      "$value": "{color.text.muted}"
     },
     "size": {
       "$value": "1em"
