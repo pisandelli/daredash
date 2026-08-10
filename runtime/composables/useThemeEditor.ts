@@ -1,4 +1,4 @@
-import { ref, computed, readonly, type Ref } from 'vue'
+import { ref, computed, readonly, reactive, type Ref } from 'vue'
 import { useRuntimeConfig } from '#app'
 import { tokenValue, tokenReference, rawTokenValue } from '../studio/tokens'
 import type { StudioTabDefinition, StudioTokenGroup, StudioFieldDefinition } from '../studio/types'
@@ -286,7 +286,8 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
   const hasChanges = computed(() => {
     if (allFields.some((f) => publicIsFieldChanged(f.path))) return true
 
-    for (const [themeId, state] of Object.entries(themeStates)) {
+    for (const [themeId, stateValue] of Object.entries(themeStates)) {
+      const state = stateValue as ThemeState
       if (themeId === activeThemeId.value) continue
       if (allFields.some((f) => isFieldChanged(
         f.path,
@@ -354,7 +355,8 @@ export function useThemeEditor(tabs: StudioTabDefinition[]) {
     }
 
     // Iterate through all modified themes
-    for (const [themeId, state] of Object.entries(themeStates)) {
+    for (const [themeId, stateValue] of Object.entries(themeStates)) {
+      const state = stateValue as ThemeState
       let target = overrides
 
       if (themeId !== 'default') {
