@@ -215,7 +215,43 @@ When a directory is used, DareDash reads `.json` files recursively and merges th
 
 This is the preferred model once the design system grows beyond a single file.
 
-## 11. Practical guidance
+## 11. Custom App-Level Tokens
+
+You can define entirely new, non-DareDash tokens (e.g., for styling an external SVG logo) directly in your custom JSON. These tokens will automatically generate CSS variables (e.g., `--dd-logo-fill`) that react to theme changes!
+
+Because DareDash discards root-level keys during the build process to generate clean CSS variables, you must wrap new global tokens in a dummy namespace (like `"globals"` or `"custom"`):
+
+```json
+{
+  "globals": {
+    "logo": {
+      "fill": {
+        "$value": "#1c2f48"
+      }
+    }
+  }
+}
+```
+
+Inside `"themes": { "dark": { ... } }`, this wrapping is not needed:
+
+```json
+{
+  "themes": {
+    "dark": {
+      "logo": {
+        "fill": {
+          "$value": "red"
+        }
+      }
+    }
+  }
+}
+```
+
+You can then consume this in your app's CSS via standard DareDash mechanics (`v('logo.fill')`) or standard CSS (`var(--dd-logo-fill)`).
+
+## 12. Practical guidance
 
 - Use semantic attrs before arbitrary color overrides.
 - Add component tokens when a visual control should be reusable and themeable.
@@ -223,7 +259,7 @@ This is the preferred model once the design system grows beyond a single file.
 - Avoid `!important` when token layering or attrs can solve the problem cleanly.
 - Treat Studio as part of the design-system workflow, not as an unrelated demo surface.
 
-## 12. Contrast with `contrast-color()`
+## 13. Contrast with `contrast-color()`
 
 MDN currently marks `contrast-color()` as Baseline 2026 and widely available in current engines since April 2026, which makes it a practical default in modern-only DareDash environments.
 

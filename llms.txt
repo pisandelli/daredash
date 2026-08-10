@@ -102,6 +102,7 @@ export default defineNuxtConfig({
   - default: `./runtime/assets/styles/tokens/default-theme`
   - custom token sources are merged over the built-in `default-theme` using a strict deep-merge (`defu`). This means partial override files are fully supported.
   - To override specific themes (like `dark`), consumers just need to nest their keys under `"themes": { "dark": { ... } }` in their custom JSON. Only the specific tokens declared will be overwritten, leaving the rest of the light/dark themes intact.
+  - **Custom App-Level Tokens**: You can define entirely new, non-DareDash tokens (e.g. for styling an external SVG logo) directly in your custom JSON. Because DareDash discards root-level keys during the build process, you must wrap new global tokens in a dummy namespace (e.g. `"globals": { "logo": { "fill": { "$value": "#1c2f48" } } }`). Inside `"themes": { "dark": { ... } }`, this wrapping is not needed. These new tokens will automatically generate CSS variables (e.g. `--dd-logo-fill`) that react to theme changes!
   - **DareDash Studio Exports**: When using DareDash Studio, clicking "Export JSON" while a specific theme is selected automatically outputs the JSON nested inside the correct `"themes": { "themeName": { ... } }` block, ensuring safe merging.
 - `prefix?: string`
   - prefix for components and CSS variables;
