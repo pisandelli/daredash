@@ -18,8 +18,8 @@ describe('AccordionGroup & Accordion', () => {
 
     expect(wrapper.html()).toContain('Accordion Title')
     expect(wrapper.html()).toContain('Accordion Content')
-    expect(wrapper.find('details').exists()).toBe(true)
-    expect(wrapper.find('summary').exists()).toBe(true)
+    expect(wrapper.find('button[aria-expanded]').exists()).toBe(true)
+    expect(wrapper.find('div[role="region"]').exists()).toBe(true)
   })
 
   test('applies accentColor when provided directly', async () => {
@@ -31,12 +31,12 @@ describe('AccordionGroup & Accordion', () => {
     })
 
     // Inline style should bind the public accordion accent token override.
-    expect(wrapper.find('details').attributes('style')).toContain(
+    expect(wrapper.attributes('style')).toContain(
       '--dd-accordion-accent-color: color.danger;'
     )
   })
 
-  test('AccordionGroup passes mutual exclusivity name to children when multiple is false', async () => {
+  test('AccordionGroup mutually excludes items when multiple is false', async () => {
     const wrapper = await mountSuspended(AccordionGroup, {
       props: {
         multiple: false
@@ -49,22 +49,28 @@ describe('AccordionGroup & Accordion', () => {
       }
     })
 
-    const detailsElements = wrapper.findAll('details')
-    expect(detailsElements.length).toBe(2)
+    const buttons = wrapper.findAll('button[aria-expanded]')
+    expect(buttons.length).toBe(2)
 
-    const firstDetails = detailsElements[0]
-    const secondDetails = detailsElements[1]
-    expect(firstDetails).toBeDefined()
-    expect(secondDetails).toBeDefined()
+    const firstButton = buttons[0]
+    const secondButton = buttons[1]
 
-    const name1 = firstDetails!.attributes('name')
-    const name2 = secondDetails!.attributes('name')
+    // Initially both closed
+    expect(firstButton!.attributes('aria-expanded')).toBe('false')
+    expect(secondButton!.attributes('aria-expanded')).toBe('false')
 
-    expect(name1).toBeDefined()
-    expect(name1).toBe(name2) // Must share the exact same generated name
+    // Click first
+    await firstButton!.trigger('click')
+    expect(firstButton!.attributes('aria-expanded')).toBe('true')
+    expect(secondButton!.attributes('aria-expanded')).toBe('false')
+
+    // Click second - first should close
+    await secondButton!.trigger('click')
+    expect(firstButton!.attributes('aria-expanded')).toBe('false')
+    expect(secondButton!.attributes('aria-expanded')).toBe('true')
   })
 
-  test('AccordionGroup does NOT pass a shared name when multiple is true', async () => {
+  test('AccordionGroup allows multiple items to be open when multiple is true', async () => {
     const wrapper = await mountSuspended(AccordionGroup, {
       props: {
         multiple: true
@@ -77,14 +83,18 @@ describe('AccordionGroup & Accordion', () => {
       }
     })
 
-    const detailsElements = wrapper.findAll('details')
-    const firstDetails = detailsElements[0]
-    const secondDetails = detailsElements[1]
-    expect(firstDetails).toBeDefined()
-    expect(secondDetails).toBeDefined()
+    const buttons = wrapper.findAll('button[aria-expanded]')
+    const firstButton = buttons[0]
+    const secondButton = buttons[1]
 
-    // Since multiple is true, no internal default name should be injected
-    expect(firstDetails!.attributes('name')).toBeUndefined()
-    expect(secondDetails!.attributes('name')).toBeUndefined()
+    // Click first
+    await firstButton!.trigger('click')
+    expect(firstButton!.attributes('aria-expanded')).toBe('true')
+    expect(secondButton!.attributes('aria-expanded')).toBe('false')
+
+    // Click second - first should STAY open
+    await secondButton!.trigger('click')
+    expect(firstButton!.attributes('aria-expanded')).toBe('true')
+    expect(secondButton!.attributes('aria-expanded')).toBe('true')
   })
 })

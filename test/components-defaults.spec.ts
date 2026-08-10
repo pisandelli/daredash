@@ -483,7 +483,7 @@ describe('default component tokens', () => {
     expect(themes.dark.pagination['border-active'].$value).toBe('{color.primary.300}')
     expect(themes.dark.pagination['bg-disabled'].$value).toBe('{color.gray.800}')
     expect(themes.dark.table['border-color'].$value).toBe('{card.border-color}')
-    expect(themes.dark.table.cell['border-color'].$value).toBe('{color.gray.800}')
+    expect(themes.dark.table.cell['border-color'].$value).toBe('{color.border.default}')
     expect(themes.dark.table.header['background-color'].$value).toBe('{color.bg.surface-hover}')
   })
 
