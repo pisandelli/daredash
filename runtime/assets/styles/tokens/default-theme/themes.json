@@ -109,6 +109,29 @@
         "$value": "{color.gray.300}"
       }
     },
+    "input-group": {
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "addon": {
+        "background-color": {
+          "$value": "{color.bg.surface-subtle}"
+        },
+        "color": {
+          "$value": "{color.text.default}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "input-search": {
+      "group": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
     "input": {
       "background-color": {
         "$value": "{color.bg.surface}"
@@ -435,6 +458,12 @@
     "checkbox": {
       "bg": {
         "$value": "{color.bg.surface}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border": {
+        "$value": "{color.border.default}"
       }
     },
     "radio": {
@@ -547,7 +576,7 @@
       },
       "cell": {
         "border-color": {
-          "$value": "{color.gray.800}"
+          "$value": "{color.border.default}"
         }
       },
       "header": {
@@ -683,6 +712,29 @@
     "badge": {
       "base-color": {
         "$value": "{color.danger.300}"
+      }
+    },
+    "input-group": {
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "addon": {
+        "background-color": {
+          "$value": "{color.bg.surface-subtle}"
+        },
+        "color": {
+          "$value": "{color.text.default}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "input-search": {
+      "group": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
       }
     },
     "input": {
@@ -1011,6 +1063,12 @@
     "checkbox": {
       "bg": {
         "$value": "{color.bg.surface}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border": {
+        "$value": "{color.border.default}"
       }
     },
     "radio": {
@@ -1123,7 +1181,7 @@
       },
       "cell": {
         "border-color": {
-          "$value": "{color.danger.700}"
+          "$value": "{color.border.default}"
         }
       },
       "header": {
@@ -1259,6 +1317,29 @@
     "badge": {
       "base-color": {
         "$value": "{color.primary.300}"
+      }
+    },
+    "input-group": {
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "addon": {
+        "background-color": {
+          "$value": "{color.bg.surface-subtle}"
+        },
+        "color": {
+          "$value": "{color.text.default}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "input-search": {
+      "group": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
       }
     },
     "input": {
@@ -1587,6 +1668,12 @@
     "checkbox": {
       "bg": {
         "$value": "{color.bg.surface}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border": {
+        "$value": "{color.border.default}"
       }
     },
     "radio": {
@@ -1699,7 +1786,7 @@
       },
       "cell": {
         "border-color": {
-          "$value": "{color.primary.700}"
+          "$value": "{color.border.default}"
         }
       },
       "header": {

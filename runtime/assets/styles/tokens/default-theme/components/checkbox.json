@@ -14,7 +14,7 @@
     "$value": "{color.bg.surface}"
   },
   "border": {
-    "$value": "{color.light-gray}"
+    "$value": "{color.border.default}"
   },
   "hover": {
     "border": {
@@ -34,7 +34,7 @@
       "$value": "{color.bg-disabled}"
     },
     "border": {
-      "$value": "{color.light-gray}"
+      "$value": "{color.border.default}"
     }
   },
   "transition": {
@@ -44,7 +44,7 @@
     "$value": "{font-size.sm}"
   },
   "color": {
-    "$value": "{color.darker-gray}"
+    "$value": "{color.text.default}"
   },
   "line-height": {
     "$value": "{line-height.snug}"
