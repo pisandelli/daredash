@@ -39,15 +39,19 @@
         }
       },
       "primary": {
-        "default": {
-          "$value": "{color.primary.300}"
-        },
-        "fg": {
-          "$value": "{color.white}"
-        },
-        "hover": {
-          "$value": "{color.primary.200}"
-        }
+        "$value": "{color.primary.400}"
+      },
+      "success": {
+        "$value": "{color.success.400}"
+      },
+      "danger": {
+        "$value": "{color.danger.400}"
+      },
+      "warning": {
+        "$value": "{color.warning.400}"
+      },
+      "info": {
+        "$value": "{color.info.400}"
       }
     },
     "button": {
@@ -644,15 +648,7 @@
         }
       },
       "primary": {
-        "default": {
-          "$value": "{color.danger.400}"
-        },
-        "fg": {
-          "$value": "{color.white}"
-        },
-        "hover": {
-          "$value": "{color.danger.300}"
-        }
+        "$value": "{color.danger.400}"
       }
     },
     "button": {
@@ -1249,15 +1245,7 @@
         }
       },
       "primary": {
-        "default": {
-          "$value": "{color.primary.400}"
-        },
-        "fg": {
-          "$value": "{color.white}"
-        },
-        "hover": {
-          "$value": "{color.primary.300}"
-        }
+        "$value": "{color.primary.400}"
       }
     },
     "button": {

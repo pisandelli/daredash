@@ -431,15 +431,15 @@ describe('default component tokens', () => {
     expect(themes.dark.color.bg.surface.$value).toBe('{color.gray.800}')
     expect(themes.dark.color.bg['surface-elevated'].$value).toBe('{color.gray.700}')
     expect(themes.dark.color.border.default.$value).toBe('{color.gray.700}')
-    expect(themes.dark.color.primary.default.$value).toBe('{color.primary.300}')
+    expect(themes.dark.color.primary.$value).toBe('{color.primary.400}')
 
     expect(themes.redish.color.bg.canvas.$value).toBe('{color.danger.950}')
     expect(themes.redish.color.bg.surface.$value).toBe('{color.danger.800}')
-    expect(themes.redish.color.primary.default.$value).toBe('{color.danger.400}')
+    expect(themes.redish.color.primary.$value).toBe('{color.danger.400}')
 
     expect(themes.blueish.color.bg.canvas.$value).toBe('{color.primary.950}')
     expect(themes.blueish.color.bg.surface.$value).toBe('{color.primary.800}')
-    expect(themes.blueish.color.primary.default.$value).toBe('{color.primary.400}')
+    expect(themes.blueish.color.primary.$value).toBe('{color.primary.400}')
     expect(themes.dark.card['background-color'].$value).toBe('{color.bg.surface}')
     expect(themes.dark.card.color.$value).toBe('{color.text.default}')
     expect(themes.dark.badge['base-color'].$value).toBe('{color.gray.300}')
