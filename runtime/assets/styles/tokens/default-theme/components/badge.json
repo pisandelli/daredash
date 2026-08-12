@@ -4,6 +4,12 @@
   "base-color": {
     "$value": "{color.gray}"
   },
+  "background-color": {
+    "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+  },
+  "color": {
+    "$value": "hsl(from var(--local-base-color) h s 35%)"
+  },
   "font-size": {
     "$value": "{font-size.xs}"
   },
@@ -27,26 +33,56 @@
   "primary": {
     "base-color": {
       "$value": "{color.primary}"
+    },
+    "background-color": {
+      "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+    },
+    "color": {
+      "$value": "hsl(from var(--local-base-color) h s 35%)"
     }
   },
   "success": {
     "base-color": {
       "$value": "{color.success}"
+    },
+    "background-color": {
+      "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+    },
+    "color": {
+      "$value": "hsl(from var(--local-base-color) h s 35%)"
     }
   },
   "warning": {
     "base-color": {
       "$value": "{color.warning}"
+    },
+    "background-color": {
+      "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+    },
+    "color": {
+      "$value": "hsl(from var(--local-base-color) h s 35%)"
     }
   },
   "danger": {
     "base-color": {
       "$value": "{color.danger}"
+    },
+    "background-color": {
+      "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+    },
+    "color": {
+      "$value": "hsl(from var(--local-base-color) h s 35%)"
     }
   },
   "info": {
     "base-color": {
       "$value": "{color.info}"
+    },
+    "background-color": {
+      "$value": "hsl(from var(--local-base-color) h s l / 0.15)"
+    },
+    "color": {
+      "$value": "hsl(from var(--local-base-color) h s 35%)"
     }
   },
   "letter-spacing": {

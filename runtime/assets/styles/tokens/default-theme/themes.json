@@ -111,6 +111,52 @@
     "badge": {
       "base-color": {
         "$value": "{color.gray.300}"
+      },
+      "background-color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+      },
+      "color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 15%, white)"
+      },
+      "primary": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "success": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "warning": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "danger": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "info": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
       }
     },
     "input-group": {
@@ -708,6 +754,52 @@
     "badge": {
       "base-color": {
         "$value": "{color.danger.300}"
+      },
+      "background-color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+      },
+      "color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+      },
+      "primary": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "success": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "warning": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "danger": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "info": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
       }
     },
     "input-group": {
@@ -1305,6 +1397,52 @@
     "badge": {
       "base-color": {
         "$value": "{color.primary.300}"
+      },
+      "background-color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+      },
+      "color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+      },
+      "primary": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "success": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "warning": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "danger": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "info": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
       }
     },
     "input-group": {
@@ -1799,6 +1937,663 @@
         "color": {
           "$value": "{color.text.muted}"
         }
+      }
+    }
+  },
+  "darker": {
+    "$description": "Darker theme",
+    "color": {
+      "text": {
+        "default": {
+          "$value": "{color.gray.50}"
+        },
+        "muted": {
+          "$value": "{color.gray.400}"
+        },
+        "inverse": {
+          "$value": "{color.gray.950}"
+        }
+      },
+      "bg": {
+        "canvas": {
+          "$value": "{color.gray.950}"
+        },
+        "surface-subtle": {
+          "$value": "{color.gray.900}"
+        },
+        "surface": {
+          "$value": "{color.gray.800}"
+        },
+        "surface-elevated": {
+          "$value": "{color.gray.700}"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{color.gray.700}"
+        },
+        "active": {
+          "$value": "{color.primary.500}"
+        }
+      },
+      "primary": {
+        "$value": "{color.primary.500}"
+      },
+      "success": {
+        "$value": "{color.success.500}"
+      },
+      "danger": {
+        "$value": "{color.danger.500}"
+      },
+      "warning": {
+        "$value": "{color.warning.500}"
+      },
+      "info": {
+        "$value": "{color.info.500}"
+      }
+    },
+    "button": {
+      "base-color": {
+        "$value": "{color.primary.500}"
+      },
+      "disabled": {
+        "background-color": {
+          "$value": "{color.gray.800}"
+        },
+        "color": {
+          "$value": "{color.gray.500}"
+        }
+      },
+      "primary": {
+        "base-color": {
+          "$value": "{color.primary.500}"
+        }
+      }
+    },
+    "layout": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      }
+    },
+    "accordion": {
+      "header": {
+        "background-color": {
+          "$value": "{color.bg.canvas}"
+        }
+      },
+      "content": {
+        "background-color": {
+          "$value": "{color.bg.canvas}"
+        }
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      }
+    },
+    "card": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "header": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      },
+      "footer": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "badge": {
+      "base-color": {
+        "$value": "{color.gray.300}"
+      },
+      "background-color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+      },
+      "color": {
+        "$value": "color-mix(in srgb, var(--local-base-color) 15%, white)"
+      },
+      "primary": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "success": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "warning": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "danger": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      },
+      "info": {
+        "background-color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        },
+        "color": {
+          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        }
+      }
+    },
+    "input-group": {
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "addon": {
+        "background-color": {
+          "$value": "{color.bg.surface-subtle}"
+        },
+        "color": {
+          "$value": "{color.text.default}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "input-search": {
+      "group": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "input": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "label": {
+        "color": {
+          "$value": "{color.text.default}"
+        }
+      },
+      "placeholder": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "icon": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "disabled": {
+        "background-color": {
+          "$value": "{color.gray.800}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        },
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      }
+    },
+    "textarea": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "disabled": {
+        "background-color": {
+          "$value": "{color.gray.800}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        },
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "placeholder": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      }
+    },
+    "select": {
+      "background-color": {
+        "$value": "{color.bg.canvas}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "label": {
+        "color": {
+          "$value": "{color.text.default}"
+        }
+      },
+      "placeholder": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "arrow": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "disabled": {
+        "background-color": {
+          "$value": "{color.gray.800}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        },
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "menu": {
+        "background-color": {
+          "$value": "{color.bg.surface-elevated}"
+        }
+      }
+    },
+    "modal": {
+      "background-color": {
+        "$value": "{color.bg.surface-elevated}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      }
+    },
+    "drawer": {
+      "bg": {
+        "$value": "{color.bg.surface-elevated}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "header": {
+        "border-color": {
+          "$value": "{card.border-color}"
+        }
+      },
+      "footer": {
+        "border-color": {
+          "$value": "{card.border-color}"
+        }
+      },
+      "title": {
+        "color": {
+          "$value": "{color.gray.100}"
+        }
+      },
+      "close": {
+        "color": {
+          "$value": "{color.gray.300}"
+        },
+        "hover": {
+          "background-color": {
+            "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+          },
+          "color": {
+            "$value": "{color.gray.50}"
+          }
+        }
+      }
+    },
+    "menu": {
+      "bg": {
+        "$value": "{color.bg.surface}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "item": {
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "color-active": {
+          "$value": "{color.text.default}"
+        },
+        "bg-hover": {
+          "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        },
+        "bg-active": {
+          "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        }
+      },
+      "separator": {
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      },
+      "toggle": {
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "bg-hover": {
+          "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        }
+      },
+      "float": {
+        "bg": {
+          "$value": "{color.bg.surface-elevated}"
+        },
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      }
+    },
+    "anchor": {
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "link-color": {
+        "$value": "{color.text.muted}"
+      },
+      "link-color-hover": {
+        "$value": "{color.text.default}"
+      },
+      "active-color": {
+        "$value": "{color.text.default}"
+      },
+      "indicator-color": {
+        "$value": "{color.primary.500}"
+      },
+      "indicator-color-hover": {
+        "$value": "{color.border-hover}"
+      },
+      "item-bg-hover": {
+        "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+      }
+    },
+    "breadcrumbs": {
+      "item": {
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "hover-color": {
+          "$value": "{color.primary.500}"
+        }
+      },
+      "item-current": {
+        "color": {
+          "$value": "{color.text.default}"
+        }
+      },
+      "separator": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      }
+    },
+    "tabs": {
+      "list": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      },
+      "trigger": {
+        "base-color": {
+          "$value": "{color.primary.500}"
+        },
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "bg": {
+          "$value": "transparent"
+        },
+        "hover": {
+          "color": {
+            "$value": "{color.text.default}"
+          },
+          "bg": {
+            "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+          }
+        },
+        "active": {
+          "color": {
+            "$value": "{color.text.default}"
+          },
+          "bg": {
+            "$value": "transparent"
+          },
+          "border-color": {
+            "$value": "{color.primary.500}"
+          }
+        },
+        "indicator": {
+          "color": {
+            "$value": "{color.primary.500}"
+          }
+        }
+      }
+    },
+    "skeleton": {
+      "background-color": {
+        "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+      },
+      "highlight-color": {
+        "$value": "{color.bg.surface}"
+      }
+    },
+    "switch": {
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "thumb": {
+        "background-color": {
+          "$value": "{color.bg.surface}"
+        }
+      },
+      "track": {
+        "background-color": {
+          "$value": "{color.text.muted}"
+        },
+        "color": {
+          "$value": "{color.text.inverse}"
+        },
+        "color-active": {
+          "$value": "{color.text.inverse}"
+        }
+      },
+      "label": {
+        "color": {
+          "$value": "{color.text.default}"
+        }
+      },
+      "loading-icon": {
+        "color": {
+          "$value": "{color.text.muted}"
+        },
+        "color-active": {
+          "$value": "{color.text.inverse}"
+        }
+      }
+    },
+    "checkbox": {
+      "bg": {
+        "$value": "{color.bg.surface}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border": {
+        "$value": "{color.border.default}"
+      }
+    },
+    "radio": {
+      "bg": {
+        "$value": "{color.bg.surface}"
+      },
+      "border": {
+        "$value": "{color.border.default}"
+      },
+      "hover": {
+        "border": {
+          "$value": "{color.primary.500}"
+        }
+      },
+      "checked": {
+        "border": {
+          "$value": "{color.primary.500}"
+        },
+        "dot-color": {
+          "$value": "{color.primary.500}"
+        }
+      },
+      "disabled": {
+        "bg": {
+          "$value": "{color.gray.800}"
+        },
+        "border": {
+          "$value": "{color.border.default}"
+        },
+        "dot-color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      }
+    },
+    "popover": {
+      "bg": {
+        "$value": "{color.bg.surface-elevated}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      }
+    },
+    "toast": {
+      "background": {
+        "$value": "{color.bg.surface-elevated}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "close-color": {
+        "$value": "{color.text.muted}"
+      },
+      "close-hover-color": {
+        "$value": "{color.text.default}"
+      },
+      "close-hover-bg": {
+        "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+      }
+    },
+    "pagination": {
+      "color": {
+        "$value": "{color.text.muted}"
+      },
+      "border-color": {
+        "$value": "{color.border.default}"
+      },
+      "color-hover": {
+        "$value": "{color.text.default}"
+      },
+      "bg-hover": {
+        "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+      },
+      "border-hover": {
+        "$value": "{color.primary.500}"
+      },
+      "color-active": {
+        "$value": "{color.text.default}"
+      },
+      "bg-active": {
+        "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+      },
+      "border-active": {
+        "$value": "{color.primary.500}"
+      },
+      "color-disabled": {
+        "$value": "{color.text.muted}"
+      },
+      "bg-disabled": {
+        "$value": "{color.gray.800}"
+      },
+      "border-disabled": {
+        "$value": "{color.border.default}"
+      }
+    },
+    "table": {
+      "border-color": {
+        "$value": "{card.border-color}"
+      },
+      "color": {
+        "$value": "{color.text.default}"
+      },
+      "cell": {
+        "border-color": {
+          "$value": "{color.border.default}"
+        }
+      },
+      "header": {
+        "background-color": {
+          "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        }
+      },
+      "row-striped": {
+        "background-color": {
+          "$value": "{color.bg.surface}"
+        }
+      },
+      "row-hover": {
+        "background-color": {
+          "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        }
+      },
+      "empty-state": {
+        "color": {
+          "$value": "{color.text.muted}"
+        }
+      },
+      "background-color": {
+        "$value": "{color.bg.canvas}"
       }
     }
   }

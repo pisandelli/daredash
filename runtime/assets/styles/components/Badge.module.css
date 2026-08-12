@@ -10,6 +10,8 @@
   --local-gap: v('badge.gap');
   --local-text-transform: v('badge.text-transform');
   --local-letter-spacing: v('badge.letter-spacing');
+  --local-background-color: v('badge.background-color');
+  --local-color: v('badge.color');
 
   /* -- Layout -- */
   display: inline-flex;
@@ -33,20 +35,35 @@
   letter-spacing: var(--local-letter-spacing);
 
   /* -- Colors -- */
-  background-color: hsl(from var(--local-base-color) h s l / 0.15);
-  color: hsl(from var(--local-base-color) h s 35%);
+  background-color: var(--local-background-color);
+  color: var(--local-color);
 
   /* -- Variants -- */
-  &[data-primary] { --local-base-color: v('badge.primary.base-color'); }
-  &[data-success] { --local-base-color: v('badge.success.base-color'); }
-  &[data-warning] { --local-base-color: v('badge.warning.base-color'); }
-  &[data-danger]  { --local-base-color: v('badge.danger.base-color'); }
-  &[data-info]    { --local-base-color: v('badge.info.base-color'); }
-}
-
-:global([data-theme='dark']) .badge {
-  background-color: color-mix(in srgb, var(--local-base-color) 24%, transparent);
-  color: color-mix(in srgb, var(--local-base-color) 35%, white);
+  &[data-primary] {
+    --local-base-color: v('badge.primary.base-color');
+    --local-background-color: v('badge.primary.background-color');
+    --local-color: v('badge.primary.color');
+  }
+  &[data-success] {
+    --local-base-color: v('badge.success.base-color');
+    --local-background-color: v('badge.success.background-color');
+    --local-color: v('badge.success.color');
+  }
+  &[data-warning] {
+    --local-base-color: v('badge.warning.base-color');
+    --local-background-color: v('badge.warning.background-color');
+    --local-color: v('badge.warning.color');
+  }
+  &[data-danger] {
+    --local-base-color: v('badge.danger.base-color');
+    --local-background-color: v('badge.danger.background-color');
+    --local-color: v('badge.danger.color');
+  }
+  &[data-info] {
+    --local-base-color: v('badge.info.base-color');
+    --local-background-color: v('badge.info.background-color');
+    --local-color: v('badge.info.color');
+  }
 }
 
 .icon {

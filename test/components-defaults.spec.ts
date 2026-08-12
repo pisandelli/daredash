@@ -39,15 +39,14 @@ describe('default component tokens', () => {
   })
 
   it('boosts badge contrast inside dark theme scopes', () => {
-    const badgeCssPath = getModulePath(
-      'runtime/assets/styles/components/Badge.module.css'
+    const themesPath = getModulePath(
+      'runtime/assets/styles/tokens/default-theme/themes.json'
     )
 
-    const badgeCss = readFileSync(badgeCssPath, 'utf8')
+    const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(badgeCss).toContain(":global([data-theme='dark']) .badge")
-    expect(badgeCss).toContain('background-color: color-mix(in srgb, var(--local-base-color) 24%, transparent);')
-    expect(badgeCss).toContain('color: color-mix(in srgb, var(--local-base-color) 35%, white);')
+    expect(themes.dark.badge['background-color'].$value).toBe('color-mix(in srgb, {badge.base-color} 24%, transparent)')
+    expect(themes.dark.badge.color.$value).toBe('color-mix(in srgb, {badge.base-color} 35%, white)')
   })
 
   it('keeps teleported toaster content scoped to the active theme host', () => {
@@ -424,7 +423,7 @@ describe('default component tokens', () => {
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['dark', 'redish', 'blueish'])
+    expect(Object.keys(themes)).toEqual(['dark', 'redish', 'blueish', 'darker'])
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
     expect(themes.dark.color.bg['surface-subtle'].$value).toBe('{color.gray.900}')

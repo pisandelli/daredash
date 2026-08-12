@@ -82,8 +82,12 @@
     "size": {
       "$description": "Sizing scale for the tabs",
       "small": {
-        "padding": { "$value": "{space.xs} {space.sm}" },
-        "font-size": { "$value": "{font-size.sm}" }
+        "padding": {
+          "$value": "{space.xs} {space.sm}"
+        },
+        "font-size": {
+          "$value": "{font-size.sm}"
+        }
       },
       "regular": {
         "padding": { "$value": "{space.sm} {space.md}" },

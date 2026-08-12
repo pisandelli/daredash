@@ -1,6 +1,6 @@
 .wrapper {
   /* -- Local Tokens -- */
-  --local-bg: v('color.bg.surface');
+  --local-bg: v('table.background-color');
   --local-color: v('table.color');
   --local-border-color: v('table.border-color');
   --local-border-width: v('table.border-width');

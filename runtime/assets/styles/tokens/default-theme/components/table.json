@@ -4,6 +4,9 @@
   "width": {
     "$value": "100%"
   },
+  "background-color": {
+    "$value": "{color.bg.surface}"
+  },
   "border-color": {
     "$value": "{card.border-color}"
   },
