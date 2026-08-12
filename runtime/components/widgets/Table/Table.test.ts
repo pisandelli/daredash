@@ -5,7 +5,10 @@ import Table from './Table.vue'
 import styles from '#dd/styles/Table.module.css'
 
 config.global.components = {
-  DdLoading: { template: '<div class="dd-loading-stub">Loading...</div>' }
+  DdLoading: {
+    props: ['label', 'icon'],
+    template: '<div class="dd-loading-stub">{{ label }}</div>'
+  }
 }
 
 describe('Table primitive', () => {
@@ -79,6 +82,20 @@ describe('Table primitive', () => {
     expect(rows[0]!.text()).toContain('No data available')
   })
 
+  it('allows overriding built-in state messages through the messages prop', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: [],
+        messages: {
+          empty: 'Brak danych'
+        }
+      }
+    })
+
+    expect(wrapper.text()).toContain('Brak danych')
+  })
+
   it('allows overriding empty state slot', () => {
     const wrapper = mount(Table, {
       props: {
@@ -99,7 +116,10 @@ describe('Table primitive', () => {
       props: {
         columns: sampleColumns,
         data: [],
-        loading: true
+        loading: true,
+        messages: {
+          loading: 'Fetching rows'
+        }
       }
     })
 
@@ -107,22 +127,26 @@ describe('Table primitive', () => {
     expect(rows.length).toBe(1)
     expect(rows[0]!.classes()).toContain(styles['loading-row']) // Exclusively loading row
     expect(rows[0]!.classes()).not.toContain(styles['empty-row'])
+    expect(wrapper.text()).toContain('Fetching rows')
   })
 
-  it('renders data and loading indicator overlapping row when data exists and loading is true', () => {
+  it('renders data with a loading overlay when rows already exist and loading is true', () => {
     const wrapper = mount(Table, {
       props: {
         columns: sampleColumns,
         data: sampleData,
-        loading: true
+        loading: true,
+        messages: {
+          updating: 'Refreshing rows'
+        }
       }
     })
 
     const rows = wrapper.findAll('tbody > tr')
-    // 2 data rows + 1 overlay loading row at the bottom
-    expect(rows.length).toBe(3)
-    expect(rows[2]!.classes()).toContain(styles['loading-row'])
-    expect(rows[2]!.text()).toContain('Updating table...') // sr-only text
+    expect(rows.length).toBe(2)
+    expect(wrapper.find(`.${styles['loading-overlay']}`).exists()).toBe(true)
+    expect(wrapper.attributes('data-loading-overlay')).toBeDefined()
+    expect(wrapper.text()).toContain('Refreshing rows')
   })
 
   it('renders error row priority when isInvalid', () => {
@@ -139,6 +163,20 @@ describe('Table primitive', () => {
     expect(rows.length).toBe(1) // Assuming it replaces entire table display body if error
     expect(rows[0]!.classes()).toContain(styles['error-row'])
     expect(rows[0]!.text()).toContain('Connection failed API')
+  })
+
+  it('allows overriding built-in state icons through the icons prop', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: [],
+        icons: {
+          empty: 'lucide:package-open'
+        }
+      }
+    })
+
+    expect(wrapper.html()).toContain('lucide:package-open')
   })
 
   it('forwards density attrs as data attributes on the wrapper', () => {

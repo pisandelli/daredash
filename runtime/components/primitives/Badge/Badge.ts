@@ -22,6 +22,14 @@ export default defineNuxtComponent({
     color: {
       type: String,
       default: undefined
+    },
+    /**
+     * Custom foreground color for the badge text and icon.
+     * Overrides the automatic contrast color for this instance only.
+     */
+    textColor: {
+      type: String,
+      default: undefined
     }
   },
   setup(props, { slots, attrs }): () => VNode {
@@ -35,12 +43,28 @@ export default defineNuxtComponent({
       return undefined
     })
 
+    const defineTextColor = computed(() => {
+      if (props.textColor) return props.textColor
+
+      return undefined
+    })
+
     const badgeStyle = computed(() => {
       const styles: Record<string, string> = {}
       if (defineColor.value) {
         styles[getPrefixName('badge-base-color', { type: 'css-var-decl' })] =
           defineColor.value
+        styles[getPrefixName('badge-background-color', { type: 'css-var-decl' })] =
+          defineColor.value
+        styles[getPrefixName('badge-color', { type: 'css-var-decl' })] =
+          defineTextColor.value || `contrast-color(${defineColor.value})`
       }
+
+      if (!defineColor.value && defineTextColor.value) {
+        styles[getPrefixName('badge-color', { type: 'css-var-decl' })] =
+          defineTextColor.value
+      }
+
       return styles
     })
 

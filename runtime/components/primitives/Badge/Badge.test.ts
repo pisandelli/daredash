@@ -52,6 +52,29 @@ describe('Badge Primitive', () => {
     expect(styleAttr).toContain(
       getPrefixName('badge-base-color', { type: 'css-var-decl' })
     )
+    expect(styleAttr).toContain(
+      getPrefixName('badge-background-color', { type: 'css-var-decl' })
+    )
+    expect(styleAttr).toContain(
+      getPrefixName('badge-color', { type: 'css-var-decl' })
+    )
+    expect(styleAttr).toContain('contrast-color(#ffba00)')
+  })
+
+  it('allows custom `textColor` to override the automatic foreground', async () => {
+    const wrapper = await mountSuspended(Badge, {
+      props: {
+        color: '#ffba00',
+        textColor: '#111111'
+      }
+    })
+
+    const styleAttr = wrapper.attributes('style')
+    expect(styleAttr).toBeDefined()
+    expect(styleAttr).toContain(
+      `${getPrefixName('badge-color', { type: 'css-var-decl' })}: #111111`
+    )
+    expect(styleAttr).not.toContain('contrast-color(#ffba00)')
   })
 
   it('renders the given icon through the Icon component', async () => {

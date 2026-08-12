@@ -157,6 +157,24 @@
       "$value": "{color.text.muted}"
     }
   },
+  "loading-state": {
+    "$type": "object",
+    "color": {
+      "$value": "{color.text.default}"
+    }
+  },
+  "loading-overlay": {
+    "$type": "object",
+    "background-color": {
+      "$value": "transparent"
+    },
+    "backdrop-blur": {
+      "$value": "5px"
+    },
+    "z-index": {
+      "$value": "{z-index.1}"
+    }
+  },
   "error-state": {
     "$type": "object",
     "background-color": {

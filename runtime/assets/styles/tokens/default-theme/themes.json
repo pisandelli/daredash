@@ -113,49 +113,49 @@
         "$value": "{color.gray.300}"
       },
       "background-color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        "$value": "color-mix(in srgb, {badge.base-color} 24%, transparent)"
       },
       "color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 15%, white)"
+        "$value": "color-mix(in srgb, {badge.base-color} 35%, white)"
       },
       "primary": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 35%, white)"
         }
       },
       "success": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 35%, white)"
         }
       },
       "warning": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 35%, white)"
         }
       },
       "danger": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 35%, white)"
         }
       },
       "info": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 35%, white)"
         }
       }
     },
@@ -756,49 +756,49 @@
         "$value": "{color.danger.300}"
       },
       "background-color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        "$value": "color-mix(in srgb, {badge.base-color} 24%, transparent)"
       },
       "color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        "$value": "color-mix(in srgb, {badge.base-color} 35%, white)"
       },
       "primary": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 35%, white)"
         }
       },
       "success": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 35%, white)"
         }
       },
       "warning": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 35%, white)"
         }
       },
       "danger": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 35%, white)"
         }
       },
       "info": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 35%, white)"
         }
       }
     },
@@ -1399,49 +1399,49 @@
         "$value": "{color.primary.300}"
       },
       "background-color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        "$value": "color-mix(in srgb, {badge.base-color} 24%, transparent)"
       },
       "color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+        "$value": "color-mix(in srgb, {badge.base-color} 35%, white)"
       },
       "primary": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.primary.base-color} 35%, white)"
         }
       },
       "success": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.success.base-color} 35%, white)"
         }
       },
       "warning": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.warning.base-color} 35%, white)"
         }
       },
       "danger": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.danger.base-color} 35%, white)"
         }
       },
       "info": {
         "background-color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, {badge.info.base-color} 35%, white)"
         }
       }
     },
@@ -1966,6 +1966,9 @@
         },
         "surface-elevated": {
           "$value": "{color.gray.700}"
+        },
+        "surface-hover": {
+          "$value": "{color.gray.700}"
         }
       },
       "border": {
@@ -2056,17 +2059,17 @@
         "$value": "{color.gray.300}"
       },
       "background-color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
+        "$value": "color-mix(in srgb, var(--local-base-color) 22%, {color.bg.surface-elevated})"
       },
       "color": {
-        "$value": "color-mix(in srgb, var(--local-base-color) 15%, white)"
+        "$value": "{color.gray.100}"
       },
       "primary": {
         "background-color": {
           "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, var(--local-base-color) 72%, white)"
         }
       },
       "success": {
@@ -2074,7 +2077,7 @@
           "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, var(--local-base-color) 72%, white)"
         }
       },
       "warning": {
@@ -2082,7 +2085,7 @@
           "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, var(--local-base-color) 72%, white)"
         }
       },
       "danger": {
@@ -2090,7 +2093,7 @@
           "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, var(--local-base-color) 72%, white)"
         }
       },
       "info": {
@@ -2098,7 +2101,7 @@
           "$value": "color-mix(in srgb, var(--local-base-color) 24%, transparent)"
         },
         "color": {
-          "$value": "color-mix(in srgb, var(--local-base-color) 35%, white)"
+          "$value": "color-mix(in srgb, var(--local-base-color) 72%, white)"
         }
       }
     },
@@ -2567,14 +2570,17 @@
       "color": {
         "$value": "{color.text.default}"
       },
-      "cell": {
-        "border-color": {
-          "$value": "{color.border.default}"
-        }
-      },
       "header": {
         "background-color": {
           "$value": "color-mix(in srgb, {color.bg.surface} 94%, {color.text.default})"
+        },
+        "color": {
+          "$value": "{color.text.default}"
+        }
+      },
+      "cell": {
+        "border-color": {
+          "$value": "{color.border.default}"
         }
       },
       "row-striped": {

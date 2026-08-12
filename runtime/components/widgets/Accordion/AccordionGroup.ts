@@ -39,17 +39,33 @@ export default defineNuxtComponent({
     )
 
     const openItems = ref(new Set<string>())
+
+    const registerItem = (id: string, defaultOpen: boolean) => {
+      if (!defaultOpen) return
+      if (props.multiple) {
+        const nextOpenItems = new Set(openItems.value)
+        nextOpenItems.add(id)
+        openItems.value = nextOpenItems
+        return
+      }
+      if (openItems.value.size === 0) {
+        openItems.value = new Set([id])
+      }
+    }
     
     const toggleItem = (id: string, isOpen: boolean) => {
+      const nextOpenItems = new Set(openItems.value)
+
       if (props.multiple) {
-        if (isOpen) openItems.value.add(id)
-        else openItems.value.delete(id)
+        if (isOpen) nextOpenItems.add(id)
+        else nextOpenItems.delete(id)
+        openItems.value = nextOpenItems
       } else {
         if (isOpen) {
-          openItems.value.clear()
-          openItems.value.add(id)
+          openItems.value = new Set([id])
         } else {
-          openItems.value.delete(id)
+          nextOpenItems.delete(id)
+          openItems.value = nextOpenItems
         }
       }
     }
@@ -68,6 +84,7 @@ export default defineNuxtComponent({
 
     provide(AccordionGroupInjectionKey, {
       openItems,
+      registerItem,
       toggleItem,
       accentColor: injectedAccentColor,
       isControlled: true

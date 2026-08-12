@@ -10,7 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
-    "ignoreDeprecations": "5.0",
     "baseUrl": ".",
     "types": [
       "node"

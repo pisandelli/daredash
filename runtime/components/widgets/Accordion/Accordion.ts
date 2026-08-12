@@ -53,6 +53,7 @@ export default defineNuxtComponent({
     // Inject context if nested inside an AccordionGroup
     const groupContext = inject(AccordionGroupInjectionKey, null) as {
       openItems?: { value: Set<string> }
+      registerItem?: (id: string, defaultOpen: boolean) => void
       toggleItem?: (id: string, isOpen: boolean) => void
       accentColor?: string
       isControlled?: boolean
@@ -73,6 +74,7 @@ export default defineNuxtComponent({
         localIsOpen.value = nextState
       }
     }
+    groupContext?.registerItem?.(id, props.defaultOpen)
 
     return () => {
       // Determine final properties combining local props and injected context

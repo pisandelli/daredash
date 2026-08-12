@@ -1,9 +1,25 @@
 import { describe, expect, test } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { h } from 'vue'
+import { flushPromises } from '@vue/test-utils'
+import { h, nextTick } from 'vue'
 
 import AccordionGroup from './AccordionGroup'
 import Accordion from './Accordion'
+
+const waitForRender = async (wrapper?: any) => {
+  await nextTick()
+  await flushPromises()
+  await nextTick()
+}
+
+const forceComponentUpdates = async (components: Array<any | undefined>) => {
+  for (const component of components) {
+    component?.vm?.$forceUpdate?.()
+  }
+  await nextTick()
+  await flushPromises()
+  await nextTick()
+}
 
 describe('AccordionGroup & Accordion', () => {
   test('renders Accordion item properly', async () => {
@@ -36,6 +52,24 @@ describe('AccordionGroup & Accordion', () => {
     )
   })
 
+  test('toggles standalone accordion state on click', async () => {
+    const wrapper = await mountSuspended(Accordion, {
+      props: {
+        title: 'Toggle me'
+      }
+    })
+
+    const button = wrapper.find('button[aria-expanded]')
+    expect(button.attributes('aria-expanded')).toBe('false')
+
+    await button.trigger('click')
+    await waitForRender(wrapper)
+    wrapper.vm?.$forceUpdate?.()
+    await waitForRender(wrapper)
+
+    expect(wrapper.find('button[aria-expanded]').attributes('aria-expanded')).toBe('true')
+  })
+
   test('AccordionGroup mutually excludes items when multiple is false', async () => {
     const wrapper = await mountSuspended(AccordionGroup, {
       props: {
@@ -52,8 +86,8 @@ describe('AccordionGroup & Accordion', () => {
     const buttons = wrapper.findAll('button[aria-expanded]')
     expect(buttons.length).toBe(2)
 
-    const firstButton = buttons[0]
-    const secondButton = buttons[1]
+    let firstButton = buttons[0]
+    let secondButton = buttons[1]
 
     // Initially both closed
     expect(firstButton!.attributes('aria-expanded')).toBe('false')
@@ -61,11 +95,19 @@ describe('AccordionGroup & Accordion', () => {
 
     // Click first
     await firstButton!.trigger('click')
+    let accordionItems = wrapper.findAllComponents(Accordion)
+    await forceComponentUpdates(accordionItems)
+    firstButton = wrapper.findAll('button[aria-expanded]')[0]
+    secondButton = wrapper.findAll('button[aria-expanded]')[1]
     expect(firstButton!.attributes('aria-expanded')).toBe('true')
     expect(secondButton!.attributes('aria-expanded')).toBe('false')
 
     // Click second - first should close
     await secondButton!.trigger('click')
+    accordionItems = wrapper.findAllComponents(Accordion)
+    await forceComponentUpdates(accordionItems)
+    firstButton = wrapper.findAll('button[aria-expanded]')[0]
+    secondButton = wrapper.findAll('button[aria-expanded]')[1]
     expect(firstButton!.attributes('aria-expanded')).toBe('false')
     expect(secondButton!.attributes('aria-expanded')).toBe('true')
   })
@@ -84,17 +126,42 @@ describe('AccordionGroup & Accordion', () => {
     })
 
     const buttons = wrapper.findAll('button[aria-expanded]')
-    const firstButton = buttons[0]
-    const secondButton = buttons[1]
+    let firstButton = buttons[0]
+    let secondButton = buttons[1]
 
     // Click first
     await firstButton!.trigger('click')
+    let accordionItems = wrapper.findAllComponents(Accordion)
+    await forceComponentUpdates(accordionItems)
+    firstButton = wrapper.findAll('button[aria-expanded]')[0]
+    secondButton = wrapper.findAll('button[aria-expanded]')[1]
     expect(firstButton!.attributes('aria-expanded')).toBe('true')
     expect(secondButton!.attributes('aria-expanded')).toBe('false')
 
     // Click second - first should STAY open
     await secondButton!.trigger('click')
+    accordionItems = wrapper.findAllComponents(Accordion)
+    await forceComponentUpdates(accordionItems)
+    firstButton = wrapper.findAll('button[aria-expanded]')[0]
+    secondButton = wrapper.findAll('button[aria-expanded]')[1]
     expect(firstButton!.attributes('aria-expanded')).toBe('true')
     expect(secondButton!.attributes('aria-expanded')).toBe('true')
+  })
+
+  test('preserves defaultOpen for grouped accordions', async () => {
+    const wrapper = await mountSuspended(AccordionGroup, {
+      slots: {
+        default: () => [
+          h(Accordion, { title: 'First', defaultOpen: true }),
+          h(Accordion, { title: 'Second' })
+        ]
+      }
+    })
+
+    await waitForRender(wrapper)
+
+    const buttons = wrapper.findAll('button[aria-expanded]')
+    expect(buttons[0]?.attributes('aria-expanded')).toBe('true')
+    expect(buttons[1]?.attributes('aria-expanded')).toBe('false')
   })
 })

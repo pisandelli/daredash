@@ -20,6 +20,17 @@ type RowAttrsValue = Omit<HTMLAttributes, 'class'> & {
 }
 type RowClassResolver = RowClassValue | ((row: Row, index: number) => RowClassValue)
 type RowAttrsResolver = RowAttrsValue | ((row: Row, index: number) => RowAttrsValue | undefined)
+type TableMessages = Partial<{
+  empty: string
+  loading: string
+  updating: string
+  error: string
+}>
+type TableStateIcons = Partial<{
+  empty: string
+  loading: string
+  error: string
+}>
 
 interface Props {
   /**
@@ -54,6 +65,14 @@ interface Props {
    * Error message to display when the table is invalid.
    */
   errorMessage?: string
+  /**
+   * Custom copy for the built-in table states.
+   */
+  messages?: TableMessages
+  /**
+   * Custom icons for the built-in empty and error states.
+   */
+  icons?: TableStateIcons
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,7 +81,9 @@ const props = withDefaults(defineProps<Props>(), {
   rowKey: 'id',
   loading: false,
   isInvalid: false,
-  errorMessage: undefined
+  errorMessage: undefined,
+  messages: () => ({}),
+  icons: () => ({})
 })
 
 const attrs = useAttrs()
@@ -74,8 +95,8 @@ const globalIcons = (appConfig.daredash?.icons || {}) as Record<
   string,
   string | undefined
 >
-
 const DdLoading = resolveComponent(getPrefixName('Loading', { type: 'component' }))
+
 type SortDirection = 'asc' | 'desc'
 
 const sortKey = ref<string | undefined>(undefined)
@@ -89,6 +110,17 @@ const getRowKey = (row: Row): string => {
 }
 
 const hasData = computed(() => props.data && props.data.length > 0)
+const resolvedMessages = computed(() => ({
+  empty: props.messages?.empty || 'No data available',
+  loading: props.messages?.loading || 'Loading table...',
+  updating: props.messages?.updating || 'Updating table...',
+  error: props.messages?.error || 'An error occurred while fetching data.'
+}))
+const loadingLabel = computed(() =>
+  hasData.value
+    ? (props.messages?.updating || resolvedMessages.value.loading)
+    : resolvedMessages.value.loading
+)
 
 const getSortValue = (row: Row, key: string) => row[key]
 
@@ -178,8 +210,21 @@ const CellContent = ({
 
 const EmptyContent = () => {
   return slots.empty?.() ?? [
-    h(Icon, { name: globalIcons.emptyTable || 'lucide:inbox', size: '2rem' }),
-    h('span', 'No data available')
+    h(Icon, {
+      name: props.icons?.empty || globalIcons.emptyTable || 'lucide:inbox',
+      size: '2rem'
+    }),
+    h('span', resolvedMessages.value.empty)
+  ]
+}
+
+const ErrorContent = () => {
+  return slots.error?.() ?? [
+    h(Icon, {
+      name: props.icons?.error || globalIcons.tableError || 'lucide:triangle-alert',
+      size: '2rem'
+    }),
+    h('span', props.errorMessage || resolvedMessages.value.error)
   ]
 }
 
@@ -220,7 +265,12 @@ defineExpose({
 </script>
 
 <template>
-  <div :class="[styles.wrapper, classList]" v-bind="processedAttrs">
+  <div
+    :class="[styles.wrapper, classList]"
+    :data-loading-overlay="props.loading && hasData ? '' : undefined"
+    :aria-busy="props.loading ? 'true' : 'false'"
+    v-bind="processedAttrs"
+  >
     <table :class="styles.table">
       <thead>
         <tr :class="styles.tr">
@@ -256,9 +306,7 @@ defineExpose({
         <tr v-if="props.isInvalid" :class="[styles.tr, styles['error-row']]">
           <td :class="styles.td" :colspan="columns.length">
             <div :class="styles['empty-state']">
-              <Icon :name="globalIcons.tableError || 'lucide:triangle-alert'" size="2rem" />
-              <span>{{ props.errorMessage || 'An error occurred while fetching data.'
-                }}</span>
+              <ErrorContent />
             </div>
           </td>
         </tr>
@@ -267,7 +315,13 @@ defineExpose({
         <tr v-else-if="props.loading && !hasData" :class="[styles.tr, styles['loading-row']]">
           <td :class="styles.td" :colspan="columns.length">
             <div :class="styles['loading-state']">
-              <component :is="DdLoading" />
+              <slot v-if="slots.loading" name="loading" />
+              <component
+                :is="DdLoading"
+                v-else
+                :label="loadingLabel"
+                :icon="props.icons?.loading"
+              />
             </div>
           </td>
         </tr>
@@ -298,18 +352,23 @@ defineExpose({
               <CellContent :row="row" :column="column" :index="rowIndex" />
             </td>
           </tr>
-
-          <!-- Loading Overlay appended to end if data exists but it is updating -->
-          <tr v-if="props.loading && hasData" :class="[styles.tr, styles['loading-row']]">
-            <td :class="styles.td" :colspan="columns.length">
-              <div :class="styles['loading-state']">
-                <component :is="DdLoading" />
-                <span class="sr-only">Updating table...</span>
-              </div>
-            </td>
-          </tr>
         </template>
       </tbody>
     </table>
+    <div
+      v-if="props.loading && hasData"
+      :class="styles['loading-overlay']"
+      aria-live="polite"
+    >
+      <div :class="styles['loading-state']">
+        <slot v-if="slots.loading" name="loading" />
+        <component
+          :is="DdLoading"
+          v-else
+          :label="loadingLabel"
+          :icon="props.icons?.loading"
+        />
+      </div>
+    </div>
   </div>
 </template>

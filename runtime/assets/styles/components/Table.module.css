@@ -28,6 +28,10 @@
   --local-width: v('table.width');
   --local-border-collapse: v('table.border-collapse');
   --local-empty-color: v('table.empty-state.color');
+  --local-loading-color: v('table.loading-state.color');
+  --local-loading-overlay-bg: v('table.loading-overlay.background-color');
+  --local-loading-overlay-blur: v('table.loading-overlay.backdrop-blur');
+  --local-loading-overlay-z-index: v('table.loading-overlay.z-index');
   --local-error-bg: v('table.error-state.background-color');
   --local-error-color: v('table.error-state.color');
   --local-density-large-header-font-size: v('table.density.large.header.font-size', var(--local-header-font-size-base));
@@ -46,6 +50,7 @@
 
   inline-size: 100%;
   overflow-x: auto;
+  position: relative;
   border: var(--local-border-width) solid var(--local-border-color);
   border-radius: var(--local-border-radius);
   background-color: var(--local-bg);
@@ -174,8 +179,30 @@
 
 .loading-state {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: v('space.xs');
   padding-block: calc(var(--local-cell-padding) * 2);
+  color: var(--local-loading-color);
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--local-loading-overlay-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--local-cell-padding);
+  background-color: var(--local-loading-overlay-bg);
+  backdrop-filter: blur(var(--local-loading-overlay-blur));
+}
+
+.wrapper[data-loading-overlay] .table {
+  filter: blur(calc(var(--local-loading-overlay-blur) * 0.65));
+  pointer-events: none;
+  user-select: none;
 }
 
 .error-row {

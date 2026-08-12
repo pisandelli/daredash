@@ -99,13 +99,14 @@ Use `dd-badge` for short status labels, counts, or metadata.
 | Prop | Type | Description |
 | :--- | :--- | :--- |
 | `icon` | `string` | Optional icon. |
-| `color` | `string` | Direct custom color override. |
+| `color` | `string` | Direct custom background/base color override. |
+| `textColor` | `string` | Optional direct foreground color override. |
 
 #### Common attrs
 
 - semantic attrs such as `primary`, `success`, `warning`, `danger`, `info`
 
-Badges stay soft by default, but the dark theme boosts contrast automatically so neutral badges remain readable on darker surfaces.
+Badges stay soft by default, but the dark theme boosts contrast automatically so neutral badges remain readable on darker surfaces. When `color` is used for an arbitrary custom badge color, the badge uses that color as its instance background/base and derives the foreground automatically for readability, similar to filled buttons. Use `textColor` only when you intentionally want to override that automatic contrast.
 
 ### Notification Trigger (`<dd-notification-trigger>`)
 
@@ -576,12 +577,14 @@ Use accordions for reveal/hide patterns that stay in the same scroll flow.
 - `title`
 - `icon`
 - `accent-color`
-- `name`
+- `default-open`
 
 `dd-accordion-group` props:
 
 - `multiple`
 - `accent-color`
+
+When `default-open` is used inside `dd-accordion-group`, the group honors that initial open state. With the default `multiple=false`, only the first `default-open` item stays open on first render.
 
 ### Modal (`<dd-modal>`)
 
@@ -710,10 +713,14 @@ Set `sortable: true` on a column to enable built-in click sorting for that colum
 - `loading`
 - `is-invalid`
 - `error-message`
+- `messages`
+- `icons`
 
 #### Slots
 
 - `empty`
+- `loading`
+- `error`
 - `header-${column.key}`
 - `cell-${column.key}`
 
@@ -755,6 +762,12 @@ const rowAttrs = row => ({
 ```
 
 `row-class` and `row-attrs.class` support the same formats as Vue `:class` (`string`, array, or object) and are applied directly to the data row `<tr>`.
+
+#### State Customization
+
+Use `messages` to override the built-in copy for `empty`, `loading`, `updating`, and `error` states without replacing the full layout. Use `icons` to override the built-in `empty`, `loading`, and `error` icons.
+
+When `loading` is `true` and the table already has rows, the component keeps the current body visible and renders a centered loading overlay on top of it. That overlay uses the existing `dd-loading` API internally, so only one loading message is rendered.
 
 #### Density presets
 

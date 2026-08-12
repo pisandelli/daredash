@@ -707,6 +707,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Props:
   - `icon?: string`
   - `color?: string`
+  - `textColor?: string`
 - Emits: none explicitly declared.
 - Slots: `default`.
 - Correct example: `<DdBadge success icon="lucide:check">Active</DdBadge>`.
@@ -715,7 +716,9 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Accessibility notes: does not replace a fuller status description when that is needed.
 - Restrictions:
   - supports semantic attrs such as `primary`, `success`, `warning`, `danger`, and `info`;
-  - `color` is a real prop for direct custom color, not a semantic alias API;
+- `color` is a real prop for direct custom color, not a semantic alias API;
+- when `color` is used on `DdBadge`, it becomes the badge background/base and the component derives the foreground automatically for readability at the instance level;
+- `textColor` can override that automatic foreground when a custom badge needs an explicit text/icon color;
   - prefer semantic attrs for status communication and reserve `color` for true one-off overrides;
   - neutral badges stay intentionally soft, but dark theme raises their contrast automatically so they remain readable on dark surfaces.
 
@@ -1283,14 +1286,14 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `title: string`
   - `icon?: string`
   - `accentColor?: string`
-  - `name?: string`
+  - `defaultOpen?: boolean = false`
 - Emits: none explicitly declared.
 - Slots:
   - `default`
 - Correct example: `<DdAccordion title="Details">Content</DdAccordion>`.
 - Incorrect example: `<DdAccordion open title="Details" />`.
 - Accessibility notes: based on semantic disclosure elements.
-- Restrictions: `title` is required; can inherit coordination from `DdAccordionGroup`.
+- Restrictions: `title` is required; can inherit coordination from `DdAccordionGroup`; `defaultOpen` is supported for initial state and is honored inside `DdAccordionGroup`.
 
 ### `DdAccordionGroup`
 
@@ -1308,6 +1311,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Incorrect example: `<DdAccordionGroup :open="true" />`.
 - Accessibility notes: the main semantics live in the inner accordions.
 - Restrictions: `multiple=false` implies exclusive behavior.
+  - If multiple children declare `defaultOpen` while `multiple=false`, only the first open item is preserved initially.
 
 ### `DdTabs`
 
@@ -1498,9 +1502,13 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `loading: boolean = false`
   - `isInvalid: boolean = false`
   - `errorMessage?: string`
+  - `messages?: { empty?: string; loading?: string; updating?: string; error?: string }`
+  - `icons?: { empty?: string; loading?: string; error?: string }`
 - Emits: none explicitly declared.
 - Slots:
   - `empty`
+  - `loading`
+  - `error`
   - `header-${column.key}`
   - `cell-${column.key}`
 - Correct example: `<DdTable :columns="columns" :data="rows"><template #cell-status="{ row }"><DdBadge>{{ row.status }}</DdBadge></template></DdTable>`.
@@ -1516,10 +1524,14 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `rowClass` and `rowAttrs` apply only to data row `<tr>` elements, not loading, empty, or error rows;
   - `rowClass` and `rowAttrs.class` are merged with the internal table row class and support Vue-compatible class values;
   - prefer `rowClass`/`rowAttrs` over structural selectors such as `tr:has(...)` for semantic row state styling;
-  - loading with existing data renders an updating row instead of replacing the table body entirely;
+  - loading with existing data keeps the current rows visible and renders a centered loading overlay instead of appending an extra loading row;
+  - the loading overlay delegates to `DdLoading`, so a single loading message is rendered;
+  - `messages` customizes built-in copy without requiring full slot replacement;
+  - `icons` customizes built-in empty/loading/error state icons without requiring full slot replacement;
   - header and body typography are tokenized separately through `table.header.font-size` and `table.cell.font-size`;
   - density presets are tokenized through `table.density.large.*`, `table.density.comfortable.*`, and `table.density.compact.*`;
   - base row background is tokenized through `table.row.background-color`;
+  - loading overlay visuals are tokenized through `table.loading-overlay.*` and `table.loading-state.color`;
   - set `sortable: true` on a `TableColumn` to enable built-in header click sorting for that column.
 
 ### `DdPopover`

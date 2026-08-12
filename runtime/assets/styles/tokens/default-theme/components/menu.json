@@ -68,6 +68,9 @@
     "color": {
       "$value": "{color.text.muted}"
     },
+    "background-color": {
+      "$value": "transparent"
+    },
     "font-size": {
       "$value": "{font-size.xs}"
     },
