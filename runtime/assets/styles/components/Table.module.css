@@ -150,6 +150,58 @@
   transition: background-color var(--local-transition);
 }
 
+.tr[data-success] {
+  background-color: v('state.success.surface');
+  color: v('state.success.on-surface');
+}
+
+.tr[data-success] .td {
+  border-block-end-color: v('state.success.border');
+}
+
+.tr[data-success]:hover {
+  background-color: v('state.success.surface-hover');
+}
+
+.tr[data-warning] {
+  background-color: v('state.warning.surface');
+  color: v('state.warning.on-surface');
+}
+
+.tr[data-warning] .td {
+  border-block-end-color: v('state.warning.border');
+}
+
+.tr[data-warning]:hover {
+  background-color: v('state.warning.surface-hover');
+}
+
+.tr[data-danger] {
+  background-color: v('state.danger.surface');
+  color: v('state.danger.on-surface');
+}
+
+.tr[data-danger] .td {
+  border-block-end-color: v('state.danger.border');
+}
+
+.tr[data-danger]:hover {
+  background-color: v('state.danger.surface-hover');
+}
+
+.tr[data-info] {
+  background-color: v('state.info.surface');
+  color: v('state.info.on-surface');
+}
+
+.tr[data-info] .td {
+  border-block-end-color: v('state.info.border');
+}
+
+.tr[data-info]:hover {
+  background-color: v('state.info.surface-hover');
+}
+
 .wrapper[data-striped] tbody .tr:nth-child(even):not(.empty-row):not(.loading-row):not(.error-row) {
   background-color: var(--local-row-striped-bg);
 }

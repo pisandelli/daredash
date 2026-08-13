@@ -379,6 +379,65 @@
       "$value": "#eef1f3"
     }
   },
+  "state": {
+    "$description": "Semantic surface tokens for reusable operational states",
+    "success": {
+      "surface": {
+        "$value": "color-mix(in srgb, {color.success} 14%, {color.bg.surface})"
+      },
+      "surface-hover": {
+        "$value": "color-mix(in srgb, {color.success} 20%, {color.bg.surface})"
+      },
+      "border": {
+        "$value": "color-mix(in srgb, {color.success} 32%, {color.border.default})"
+      },
+      "on-surface": {
+        "$value": "color-mix(in srgb, {color.success} 72%, {color.text.default})"
+      }
+    },
+    "warning": {
+      "surface": {
+        "$value": "color-mix(in srgb, {color.warning} 14%, {color.bg.surface})"
+      },
+      "surface-hover": {
+        "$value": "color-mix(in srgb, {color.warning} 20%, {color.bg.surface})"
+      },
+      "border": {
+        "$value": "color-mix(in srgb, {color.warning} 32%, {color.border.default})"
+      },
+      "on-surface": {
+        "$value": "color-mix(in srgb, {color.warning} 72%, {color.text.default})"
+      }
+    },
+    "danger": {
+      "surface": {
+        "$value": "color-mix(in srgb, {color.danger} 14%, {color.bg.surface})"
+      },
+      "surface-hover": {
+        "$value": "color-mix(in srgb, {color.danger} 20%, {color.bg.surface})"
+      },
+      "border": {
+        "$value": "color-mix(in srgb, {color.danger} 32%, {color.border.default})"
+      },
+      "on-surface": {
+        "$value": "color-mix(in srgb, {color.danger} 72%, {color.text.default})"
+      }
+    },
+    "info": {
+      "surface": {
+        "$value": "color-mix(in srgb, {color.info} 14%, {color.bg.surface})"
+      },
+      "surface-hover": {
+        "$value": "color-mix(in srgb, {color.info} 20%, {color.bg.surface})"
+      },
+      "border": {
+        "$value": "color-mix(in srgb, {color.info} 32%, {color.border.default})"
+      },
+      "on-surface": {
+        "$value": "color-mix(in srgb, {color.info} 72%, {color.text.default})"
+      }
+    }
+  },
   "font": {
     "$description": "Font family definitions",
     "$type": "fontFamily",

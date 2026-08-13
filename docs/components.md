@@ -763,11 +763,34 @@ const rowAttrs = row => ({
 
 `row-class` and `row-attrs.class` support the same formats as Vue `:class` (`string`, array, or object) and are applied directly to the data row `<tr>`.
 
+The row `<tr>` can also receive semantic attrs through `row-attrs`, such as `data-success`, `data-warning`, `data-danger`, or `data-info`, which now map to the reusable `state.*` surface tokens for real row highlighting without local color composition.
+
 #### State Customization
 
 Use `messages` to override the built-in copy for `empty`, `loading`, `updating`, and `error` states without replacing the full layout. Use `icons` to override the built-in `empty`, `loading`, and `error` icons.
 
 When `loading` is `true` and the table already has rows, the component keeps the current body visible and renders a centered loading overlay on top of it. That overlay uses the existing `dd-loading` API internally, so only one loading message is rendered.
+
+For semantic highlights across tables, cards, list items, or timelines, prefer the global state surface tokens instead of app-level `color-mix(...)` hacks:
+
+- `state.success.surface`
+- `state.success.surface-hover`
+- `state.success.border`
+- `state.success.on-surface`
+- `state.warning.surface`
+- `state.warning.surface-hover`
+- `state.warning.border`
+- `state.warning.on-surface`
+- `state.danger.surface`
+- `state.danger.surface-hover`
+- `state.danger.border`
+- `state.danger.on-surface`
+- `state.info.surface`
+- `state.info.surface-hover`
+- `state.info.border`
+- `state.info.on-surface`
+
+These tokens are already used by `dd-card` and can also be used by `dd-table` rows via `row-attrs` semantic data attrs, which makes them a safe baseline for real container-state UI.
 
 #### Density presets
 

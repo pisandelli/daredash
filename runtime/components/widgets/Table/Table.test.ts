@@ -277,6 +277,26 @@ describe('Table primitive', () => {
     expect(rows[1]!.attributes('data-state')).toBe('Inactive')
   })
 
+  it('allows semantic state attrs on rows for reusable state-surface styling', () => {
+    const wrapper = mount(Table, {
+      props: {
+        columns: sampleColumns,
+        data: sampleData,
+        rowAttrs: row => ({
+          'data-success': row.status === 'Active' ? '' : undefined,
+          'data-warning': row.status === 'Inactive' ? '' : undefined
+        })
+      }
+    })
+
+    const rows = wrapper.findAll('tbody > tr')
+
+    expect(rows[0]!.attributes('data-success')).toBeDefined()
+    expect(rows[0]!.attributes('data-warning')).toBeUndefined()
+    expect(rows[1]!.attributes('data-warning')).toBeDefined()
+    expect(rows[1]!.attributes('data-success')).toBeUndefined()
+  })
+
   it('sorts rows for sortable columns', async () => {
     const columns = [
       { key: 'name', title: 'Name', sortable: true },

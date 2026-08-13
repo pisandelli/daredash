@@ -158,6 +158,34 @@ describe('default component tokens', () => {
     expect(primitives.color['border-hover'].$value).toBe('{color.gray.300}')
   })
 
+  it('ships reusable semantic state surface tokens', () => {
+    const primitivesPath = getModulePath(
+      'runtime/assets/styles/tokens/default-theme/primitives.json'
+    )
+
+    const primitives = JSON.parse(readFileSync(primitivesPath, 'utf8'))
+
+    expect(primitives.state.success.surface.$value).toBe("color-mix(in srgb, {color.success} 14%, {color.bg.surface})")
+    expect(primitives.state.success['surface-hover'].$value).toBe("color-mix(in srgb, {color.success} 20%, {color.bg.surface})")
+    expect(primitives.state.success.border.$value).toBe("color-mix(in srgb, {color.success} 32%, {color.border.default})")
+    expect(primitives.state.success['on-surface'].$value).toBe("color-mix(in srgb, {color.success} 72%, {color.text.default})")
+
+    expect(primitives.state.warning.surface.$value).toBe("color-mix(in srgb, {color.warning} 14%, {color.bg.surface})")
+    expect(primitives.state.warning['surface-hover'].$value).toBe("color-mix(in srgb, {color.warning} 20%, {color.bg.surface})")
+    expect(primitives.state.warning.border.$value).toBe("color-mix(in srgb, {color.warning} 32%, {color.border.default})")
+    expect(primitives.state.warning['on-surface'].$value).toBe("color-mix(in srgb, {color.warning} 72%, {color.text.default})")
+
+    expect(primitives.state.danger.surface.$value).toBe("color-mix(in srgb, {color.danger} 14%, {color.bg.surface})")
+    expect(primitives.state.danger['surface-hover'].$value).toBe("color-mix(in srgb, {color.danger} 20%, {color.bg.surface})")
+    expect(primitives.state.danger.border.$value).toBe("color-mix(in srgb, {color.danger} 32%, {color.border.default})")
+    expect(primitives.state.danger['on-surface'].$value).toBe("color-mix(in srgb, {color.danger} 72%, {color.text.default})")
+
+    expect(primitives.state.info.surface.$value).toBe("color-mix(in srgb, {color.info} 14%, {color.bg.surface})")
+    expect(primitives.state.info['surface-hover'].$value).toBe("color-mix(in srgb, {color.info} 20%, {color.bg.surface})")
+    expect(primitives.state.info.border.$value).toBe("color-mix(in srgb, {color.info} 32%, {color.border.default})")
+    expect(primitives.state.info['on-surface'].$value).toBe("color-mix(in srgb, {color.info} 72%, {color.text.default})")
+  })
+
   it('uses a compact default submenu indent for menu items', () => {
     const menuTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/menu.json'

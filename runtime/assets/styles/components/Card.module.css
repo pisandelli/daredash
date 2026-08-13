@@ -50,6 +50,38 @@
   &[data-canvas] {
     --local-bg: v('color.bg.canvas');
   }
+
+  &[data-success] {
+    --local-bg: v('state.success.surface');
+    --local-color: v('state.success.on-surface');
+    --local-border-color: v('state.success.border');
+    --local-header-border-color: v('state.success.border');
+    --local-footer-border-color: v('state.success.border');
+  }
+
+  &[data-warning] {
+    --local-bg: v('state.warning.surface');
+    --local-color: v('state.warning.on-surface');
+    --local-border-color: v('state.warning.border');
+    --local-header-border-color: v('state.warning.border');
+    --local-footer-border-color: v('state.warning.border');
+  }
+
+  &[data-danger] {
+    --local-bg: v('state.danger.surface');
+    --local-color: v('state.danger.on-surface');
+    --local-border-color: v('state.danger.border');
+    --local-header-border-color: v('state.danger.border');
+    --local-footer-border-color: v('state.danger.border');
+  }
+
+  &[data-info] {
+    --local-bg: v('state.info.surface');
+    --local-color: v('state.info.on-surface');
+    --local-border-color: v('state.info.border');
+    --local-header-border-color: v('state.info.border');
+    --local-footer-border-color: v('state.info.border');
+  }
 }
 
 /* -- Sections -- */

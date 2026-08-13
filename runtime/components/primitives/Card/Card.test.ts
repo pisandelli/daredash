@@ -68,4 +68,20 @@ describe('Card Primitive', () => {
 
     expect(wrapper.classes()).toContain('is-read')
   })
+
+  it('forwards semantic state attrs to the card root for state-surface styling', async () => {
+    const wrapper = await mountSuspended(Card, {
+      attrs: {
+        success: true,
+        warning: true,
+        danger: true,
+        info: true
+      }
+    })
+
+    expect(wrapper.attributes('data-success')).toBeDefined()
+    expect(wrapper.attributes('data-warning')).toBeDefined()
+    expect(wrapper.attributes('data-danger')).toBeDefined()
+    expect(wrapper.attributes('data-info')).toBeDefined()
+  })
 })

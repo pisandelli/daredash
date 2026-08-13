@@ -398,6 +398,14 @@ Confirmed in `runtime/assets/styles/tokens/default-theme/primitives.json` and co
 - `secondary` is a dedicated semantic ramp rooted in `#C800DE`, not the neutral palette;
 - `color.gray` is the dedicated neutral ramp and exposes `50` through `950` plus `color.gray` as an alias to `color.gray.500`;
 - neutral utility tokens `light-gray`, `gray`, `dark-gray`, `darker-gray`, `border.default`, and `border-hover` inherit from the gray ramp and should be preferred for neutral surfaces, borders, and copy;
+- semantic surface tokens under `{state.*}` are the preferred reusable vocabulary for status-driven containers:
+  - `state.success.surface`, `state.success.surface-hover`, `state.success.border`, `state.success.on-surface`
+  - `state.warning.surface`, `state.warning.surface-hover`, `state.warning.border`, `state.warning.on-surface`
+  - `state.danger.surface`, `state.danger.surface-hover`, `state.danger.border`, `state.danger.on-surface`
+  - `state.info.surface`, `state.info.surface-hover`, `state.info.border`, `state.info.on-surface`
+  - these tokens are semantic and component-agnostic; use them for highlighted rows, cards, list items, timelines, panels, and similar container states;
+  - prefer them over local `color-mix(...)` composition in apps whenever the intent is an operational surface state rather than a one-off decorative effect;
+  - `DdCard` already maps semantic attrs such as `success`, `warning`, `danger`, and `info` to these state-surface tokens;
 - **4-tier semantic surface scale under `{color.bg.*}`**:
   - `canvas`: level 0 root background (`#f5f5f5` light / `#0a0a0a` dark);
   - `surface-subtle`: level 1 recessed surface (`#fafafa` light / `#171717` dark);
@@ -1523,6 +1531,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `rowKey` may be a property name or a function;
   - `rowClass` and `rowAttrs` apply only to data row `<tr>` elements, not loading, empty, or error rows;
   - `rowClass` and `rowAttrs.class` are merged with the internal table row class and support Vue-compatible class values;
+  - `rowAttrs` may also forward semantic state attrs such as `data-success`, `data-warning`, `data-danger`, and `data-info` directly to the row `<tr>` for reusable state-surface styling;
   - prefer `rowClass`/`rowAttrs` over structural selectors such as `tr:has(...)` for semantic row state styling;
   - loading with existing data keeps the current rows visible and renders a centered loading overlay instead of appending an extra loading row;
   - the loading overlay delegates to `DdLoading`, so a single loading message is rendered;
