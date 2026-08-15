@@ -473,6 +473,10 @@ describe('default component tokens', () => {
     expect(themes.dark.button['base-color'].$value).toBe('{color.primary.400}')
     expect(themes.dark.button.disabled['background-color'].$value).toBe('{color.gray.800}')
     expect(themes.dark.button.disabled.color.$value).toBe('{color.text.muted}')
+    expect(themes.dark.button.success.color.$value).toBe('{color.gray.50}')
+    expect(themes.dark.button.warning.color.$value).toBe('{color.gray.50}')
+    expect(themes.dark.button.danger.color.$value).toBe('{color.gray.50}')
+    expect(themes.dark.button.info.color.$value).toBe('{color.gray.50}')
     expect(themes.dark.input['background-color'].$value).toBe('{color.bg.surface}')
     expect(themes.dark.input.color.$value).toBe('{color.text.default}')
     expect(themes.dark.select['background-color'].$value).toBe('{color.bg.surface}')
@@ -512,6 +516,10 @@ describe('default component tokens', () => {
     expect(themes.dark.table['border-color'].$value).toBe('{card.border-color}')
     expect(themes.dark.table.cell['border-color'].$value).toBe('{color.border.default}')
     expect(themes.dark.table.header['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(themes.darker.button.success.color.$value).toBe('{color.gray.50}')
+    expect(themes.darker.button.warning.color.$value).toBe('{color.gray.50}')
+    expect(themes.darker.button.danger.color.$value).toBe('{color.gray.50}')
+    expect(themes.darker.button.info.color.$value).toBe('{color.gray.50}')
   })
 
   it('uses table density styles to override header and cell sizing', () => {

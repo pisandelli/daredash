@@ -152,6 +152,7 @@
     top: anchor(top);
     bottom: anchor(bottom);
     left: auto;
+    height: auto;
   }
 
   /* Dot - Vertical */

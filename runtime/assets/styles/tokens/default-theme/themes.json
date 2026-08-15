@@ -42,15 +42,114 @@
         "$value": "{color.primary.400}"
       },
       "success": {
+        "50": {
+          "$value": "#f3fbf4"
+        },
+        "100": {
+          "$value": "#e7f6e8"
+        },
+        "200": {
+          "$value": "#ceedd1"
+        },
+        "300": {
+          "$value": "#aee2b3"
+        },
+        "400": {
+          "$value": "#89d590"
+        },
+        "500": {
+          "$value": "#61c66a"
+        },
+        "600": {
+          "$value": "#34b640"
+        },
+        "700": {
+          "$value": "#2c9936"
+        },
+        "800": {
+          "$value": "#237c2c"
+        },
+        "900": {
+          "$value": "#1a5b20"
+        },
+        "950": {
+          "$value": "#144518"
+        },
         "$value": "{color.success.400}"
       },
       "danger": {
+        "50": {
+          "$value": "#fbf3f4"
+        },
+        "100": {
+          "$value": "#f8e7e9"
+        },
+        "200": {
+          "$value": "#f1d0d2"
+        },
+        "300": {
+          "$value": "#e7b0b4"
+        },
+        "400": {
+          "$value": "#dc8d93"
+        },
+        "500": {
+          "$value": "#d0656d"
+        },
+        "600": {
+          "$value": "#c33a44"
+        },
+        "700": {
+          "$value": "#a43139"
+        },
+        "800": {
+          "$value": "#85272e"
+        },
+        "900": {
+          "$value": "#621d22"
+        },
+        "950": {
+          "$value": "#4a161a"
+        },
         "$value": "{color.danger.400}"
       },
       "warning": {
         "$value": "{color.warning.400}"
       },
       "info": {
+        "50": {
+          "$value": "#f4f8fa"
+        },
+        "100": {
+          "$value": "#eaf0f5"
+        },
+        "200": {
+          "$value": "#d5e1ea"
+        },
+        "300": {
+          "$value": "#b9cddd"
+        },
+        "400": {
+          "$value": "#9ab6cd"
+        },
+        "500": {
+          "$value": "#769ebc"
+        },
+        "600": {
+          "$value": "#5082a9"
+        },
+        "700": {
+          "$value": "#436d8e"
+        },
+        "800": {
+          "$value": "#365873"
+        },
+        "900": {
+          "$value": "#284154"
+        },
+        "950": {
+          "$value": "#1e3140"
+        },
         "$value": "{color.info.400}"
       }
     },
@@ -69,6 +168,26 @@
       "primary": {
         "base-color": {
           "$value": "{color.primary.400}"
+        }
+      },
+      "success": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "warning": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "danger": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "info": {
+        "color": {
+          "$value": "{color.gray.50}"
         }
       }
     },
@@ -1983,15 +2102,114 @@
         "$value": "{color.primary.500}"
       },
       "success": {
+        "50": {
+          "$value": "#f3fbf4"
+        },
+        "100": {
+          "$value": "#e7f6e8"
+        },
+        "200": {
+          "$value": "#ceedd1"
+        },
+        "300": {
+          "$value": "#aee2b3"
+        },
+        "400": {
+          "$value": "#89d590"
+        },
+        "500": {
+          "$value": "#61c66a"
+        },
+        "600": {
+          "$value": "#34b640"
+        },
+        "700": {
+          "$value": "#2c9936"
+        },
+        "800": {
+          "$value": "#237c2c"
+        },
+        "900": {
+          "$value": "#1a5b20"
+        },
+        "950": {
+          "$value": "#144518"
+        },
         "$value": "{color.success.500}"
       },
       "danger": {
+        "50": {
+          "$value": "#fbf3f4"
+        },
+        "100": {
+          "$value": "#f8e7e9"
+        },
+        "200": {
+          "$value": "#f1d0d2"
+        },
+        "300": {
+          "$value": "#e7b0b4"
+        },
+        "400": {
+          "$value": "#dc8d93"
+        },
+        "500": {
+          "$value": "#d0656d"
+        },
+        "600": {
+          "$value": "#c33a44"
+        },
+        "700": {
+          "$value": "#a43139"
+        },
+        "800": {
+          "$value": "#85272e"
+        },
+        "900": {
+          "$value": "#621d22"
+        },
+        "950": {
+          "$value": "#4a161a"
+        },
         "$value": "{color.danger.500}"
       },
       "warning": {
         "$value": "{color.warning.500}"
       },
       "info": {
+        "50": {
+          "$value": "#f4f8fa"
+        },
+        "100": {
+          "$value": "#eaf0f5"
+        },
+        "200": {
+          "$value": "#d5e1ea"
+        },
+        "300": {
+          "$value": "#b9cddd"
+        },
+        "400": {
+          "$value": "#9ab6cd"
+        },
+        "500": {
+          "$value": "#769ebc"
+        },
+        "600": {
+          "$value": "#5082a9"
+        },
+        "700": {
+          "$value": "#436d8e"
+        },
+        "800": {
+          "$value": "#365873"
+        },
+        "900": {
+          "$value": "#284154"
+        },
+        "950": {
+          "$value": "#1e3140"
+        },
         "$value": "{color.info.500}"
       }
     },
@@ -2010,6 +2228,26 @@
       "primary": {
         "base-color": {
           "$value": "{color.primary.500}"
+        }
+      },
+      "success": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "warning": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "danger": {
+        "color": {
+          "$value": "{color.gray.50}"
+        }
+      },
+      "info": {
+        "color": {
+          "$value": "{color.gray.50}"
         }
       }
     },

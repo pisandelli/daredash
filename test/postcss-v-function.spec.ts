@@ -63,4 +63,62 @@ describe('createPostCSSVPlugin', () => {
       '--local-color: var(--dd-button-color, contrast-color(var(--dd-color-gray-50, #f9fafb)))'
     )
   })
+
+  it('preserves referenced semantic aliases in automatic fallbacks', () => {
+    const plugin = createPostCSSVPlugin('dd', {
+      color: {
+        success: {
+          $value: '{color.success.600}',
+          '600': {
+            $value: '#2e7d32'
+          }
+        }
+      },
+      button: {
+        success: {
+          'base-color': {
+            $value: '{color.success}'
+          }
+        }
+      }
+    })
+
+    const decl = {
+      value: "--local-base-color: v('button.success.base-color')"
+    }
+    plugin.Declaration(decl)
+
+    expect(decl.value).toBe(
+      '--local-base-color: var(--dd-button-success-base-color, var(--dd-color-success))'
+    )
+  })
+
+  it('preserves embedded reference expressions in automatic fallbacks', () => {
+    const plugin = createPostCSSVPlugin('dd', {
+      color: {
+        success: {
+          $value: '{color.success.600}',
+          '600': {
+            $value: '#2e7d32'
+          }
+        }
+      },
+      button: {
+        success: {
+          color: {
+            $value: 'contrast-color({color.success})'
+          }
+        }
+      }
+    })
+
+    const decl = {
+      value: "--local-color: v('button.success.color')"
+    }
+    plugin.Declaration(decl)
+
+    expect(decl.value).toBe(
+      '--local-color: var(--dd-button-success-color, contrast-color(var(--dd-color-success)))'
+    )
+  })
 })

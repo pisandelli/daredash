@@ -7,6 +7,8 @@ import type { ModuleOptions, TokensFile, TypedTokenValue } from '../types'
 import { debugLog } from '../utils'
 import { parseTokens } from '../parser'
 import { loadResolvedTokens } from '../utils/loadResolvedTokens'
+import { flattenTokens } from '../utils/tokens'
+import { buildThemeScopedDependentTokens } from '../utils/themeScopedTokens'
 
 export async function setupTokens(
   options: ModuleOptions,
@@ -18,6 +20,7 @@ export async function setupTokens(
   const typedTokens: { name: string; value: TypedTokenValue }[] = []
   let tokens: TokensFile
   const debugMode = options.debug
+  let flattenedTokens: Record<string, any> = {}
 
   let filePath = ''
   try {
@@ -28,6 +31,7 @@ export async function setupTokens(
     })
     filePath = resolvedTokens.sourcePath
     tokens = resolvedTokens.tokens as TokensFile
+    flattenedTokens = flattenTokens(tokens)
     if (debugMode && resolvedTokens.mergedWithDefaults) {
       debugLog(`Merged custom tokens over default theme tokens.`)
     }
@@ -73,6 +77,19 @@ export async function setupTokens(
         [],
         themeTokens,
         typedTokens, // Typed tokens still go to the global list (or could be separated if needed)
+        options.prefix || 'dd'
+      )
+
+      const dependentThemeTokens = buildThemeScopedDependentTokens(
+        flattenedTokens,
+        tokens.themes[themeName]
+      )
+
+      parseTokens(
+        dependentThemeTokens,
+        [],
+        themeTokens,
+        typedTokens,
         options.prefix || 'dd'
       )
 

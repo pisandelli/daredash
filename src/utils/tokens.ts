@@ -40,6 +40,54 @@ export function resolveTokenValue(tokens: any, path: string): string | null {
 }
 
 /**
+ * Resolves a dot-notation token path into a CSS expression that preserves
+ * token references as CSS variable links instead of collapsing them to the
+ * current flattened literal value.
+ *
+ * Example:
+ * - `button.success.base-color` -> `var(--dd-color-success)`
+ * - `contrast-color({color.success})` -> `contrast-color(var(--dd-color-success))`
+ *
+ * This is important for theme-aware CSS fallbacks, because a compiled literal
+ * fallback from the default theme would prevent `[data-theme]` overrides from
+ * flowing through semantic aliases.
+ */
+export function resolveTokenExpression(
+  tokens: any,
+  path: string,
+  prefix: string = 'dd'
+): string | null {
+  if (!tokens || !path) return null
+
+  const parts = path.split('.')
+  let current = tokens
+
+  for (const part of parts) {
+    if (current && typeof current === 'object' && part in current) {
+      current = current[part]
+    } else {
+      return null
+    }
+  }
+
+  if (current && typeof current === 'object' && '$value' in current) {
+    const value = current['$value']
+
+    if (typeof value === 'string' && value.includes('{')) {
+      return value.replace(/{([^}]+)}/g, (_, refPath: string) => {
+        return `var(--${prefix}-${refPath.replace(/\./g, '-')})`
+      })
+    }
+
+    if (typeof value === 'string' || typeof value === 'number') {
+      return String(value)
+    }
+  }
+
+  return null
+}
+
+/**
  * Flattens a structured tokens JSON object (with top-level group keys like
  * `primitives`, `components`, etc.) into a single flat record where each
  * group's children are merged to the root level.

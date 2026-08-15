@@ -1,4 +1,4 @@
-import { resolveTokenValue } from '../utils/tokens'
+import { resolveTokenExpression } from '../utils/tokens'
 
 function replaceVFunctions(
   value: string,
@@ -72,7 +72,9 @@ function replaceVFunctions(
     }
 
     const varName = `--${prefix}-${path.replace(/\./g, '-')}`
-    const tokenFallback = tokens ? resolveTokenValue(tokens, path) : null
+    const tokenFallback = tokens
+      ? resolveTokenExpression(tokens, path, prefix)
+      : null
     const fallback = explicitFallback
       ? replaceVFunctions(explicitFallback, prefix, tokens)
       : tokenFallback
