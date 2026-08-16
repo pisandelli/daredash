@@ -124,9 +124,15 @@ export function useMenuRender(
 
       const hideLabel = options.isCollapsed.value && depth === 0
 
+      const chevronIconName = isFloat
+        ? 'lucide:chevron-right'
+        : isExpanded
+          ? 'lucide:chevron-down'
+          : 'lucide:chevron-right'
+
       const chevronNode = (hasChildren && !hideLabel)
         ? h(Icon, {
-            name: 'lucide:chevron-right',
+            name: chevronIconName,
             class: styles.chevron,
             'aria-hidden': 'true'
           })

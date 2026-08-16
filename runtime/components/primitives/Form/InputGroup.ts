@@ -1,8 +1,8 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, computed, useSlots, resolveComponent } from 'vue'
-import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/InputGroup.module.css'
 import getPrefixName from '#dd/utils/getPrefixName'
+import FieldShell from './FieldShell'
 
 export default defineNuxtComponent({
   name: 'InputGroup',
@@ -49,19 +49,14 @@ export default defineNuxtComponent({
     warningMessage: {
       type: String,
       default: undefined
-    }
+  }
   },
   setup(props, { attrs }) {
-    const { processedAttrs } = useBaseComponent(attrs, styles, 'InputGroup')
     const slots = useSlots()
 
     const DdCluster = resolveComponent(
       getPrefixName('Cluster', { type: 'component' })
     )
-    const DdStack = resolveComponent(
-      getPrefixName('Stack', { type: 'component' })
-    )
-
     // State from boolean attrs (same pattern as Input)
     const hasError = computed(
       () => attrs.error !== undefined && attrs.error !== false
@@ -78,6 +73,12 @@ export default defineNuxtComponent({
         !hasWarning.value &&
         attrs.success !== undefined &&
         attrs.success !== false
+    )
+    const isRequired = computed(
+      () => attrs.required !== undefined && attrs.required !== false
+    )
+    const shouldRenderMessage = computed(
+      () => attrs['no-message'] === undefined || attrs['no-message'] === false
     )
 
     const activeMessage = computed(() => {
@@ -96,12 +97,7 @@ export default defineNuxtComponent({
       const hasPre = props.pre || !!slots.pre
       const hasPost = props.post || !!slots.post
 
-      // 1. Label (same as Input)
-      const labelNode = props.label
-        ? h('label', { class: styles.label, for: props.id }, props.label)
-        : null
-
-      // 2. Pre addon
+      // 1. Pre addon
       const preNode = hasPre
         ? h(
             'div',
@@ -110,10 +106,10 @@ export default defineNuxtComponent({
           )
         : null
 
-      // 3. Default slot (the input/select fields)
+      // 2. Default slot (the input/select fields)
       const defaultContent = slots.default?.() ?? []
 
-      // 4. Post addon
+      // 3. Post addon
       const postNode = hasPost
         ? h(
             'div',
@@ -122,7 +118,7 @@ export default defineNuxtComponent({
           )
         : null
 
-      // 5. Visual group box
+      // 4. Visual group box
       const groupBox = h(
         DdCluster as any,
         {
@@ -141,23 +137,19 @@ export default defineNuxtComponent({
         () => [preNode, ...defaultContent, postNode].filter(Boolean)
       )
 
-      // 6. Always-rendered message container (same pattern as Input)
-      const messageNode = h(
-        'small',
-        {
-          class: [
-            styles.message,
-            hasError.value ? styles.errorMessage : undefined,
-            hasWarning.value ? styles.warningMessage : undefined
-          ]
-        },
-        activeMessage.value ?? ''
-      )
-
       return h(
-        DdStack as any,
-        { class: [styles.wrapper, processedAttrs.value.class] },
-        () => [labelNode, groupBox, messageNode].filter(Boolean)
+        FieldShell,
+        {
+          label: props.label,
+          forId: props.id,
+          required: isRequired.value,
+          message: activeMessage.value,
+          messageState: hasError.value ? 'error' : hasWarning.value ? 'warning' : undefined,
+          noMessage: !shouldRenderMessage.value,
+          wrapperClass: attrs.class,
+          wrapperStyle: attrs.style
+        },
+        () => [groupBox]
       )
     }
   }

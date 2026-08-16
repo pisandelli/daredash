@@ -190,11 +190,16 @@ describe('default component tokens', () => {
     const menuTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/menu.json'
     )
+    const menuCssPath = getModulePath(
+      'runtime/assets/styles/components/Menu.module.css'
+    )
 
     const menuTokens = JSON.parse(readFileSync(menuTokensPath, 'utf8'))
-
+    const menuCss = readFileSync(menuCssPath, 'utf8')
     expect(menuTokens.item.gap.$value).toBe('1px')
     expect(menuTokens.submenu['padding-inline-start'].$value).toBe('{space.xs}')
+    expect(menuCss).toContain('.list {')
+    expect(menuCss).toContain('gap: var(--local-item-gap);')
   })
 
   it('uses semantic pagination defaults that adapt better to dark themes', () => {
