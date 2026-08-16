@@ -6,9 +6,14 @@
  *
  * @param tokens - The flattened tokens object (top-level groups merged).
  * @param path   - Dot-notation path, e.g. `'button.border-radius'`.
+ * @param prefix - CSS variable prefix used for unresolved reference fallbacks.
  * @returns The resolved string value, or `null` if not found.
  */
-export function resolveTokenValue(tokens: any, path: string): string | null {
+export function resolveTokenValue(
+  tokens: any,
+  path: string,
+  prefix: string = 'dd'
+): string | null {
   if (!tokens || !path) return null
 
   const parts = path.split('.')
@@ -28,8 +33,8 @@ export function resolveTokenValue(tokens: any, path: string): string | null {
     // Resolve Design Token references like {color.primary}
     if (typeof value === 'string' && value.includes('{')) {
       value = value.replace(/{([^}]+)}/g, (_, refPath: string) => {
-        const refValue = resolveTokenValue(tokens, refPath)
-        return refValue || `var(--dd-${refPath.replace(/\./g, '-')})`
+        const refValue = resolveTokenValue(tokens, refPath, prefix)
+        return refValue || `var(--${prefix}-${refPath.replace(/\./g, '-')})`
       })
     }
 

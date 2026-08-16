@@ -91,7 +91,11 @@ export default defineNuxtComponent({
         tag = 'a'
       }
 
-      const anchorName = `--dd-tab-${String(props.value).replace(/[^a-zA-Z0-9-]/g, '-')}`
+      const anchorName = getPrefixName(
+        `tab-${String(props.value).replace(/[^a-zA-Z0-9-]/g, '-')}`,
+        { type: 'css-var-decl' }
+      )
+      const iconSize = getPrefixName('tabs-trigger-icon-size')
 
       const tabAttrs: Record<string, any> = {
         ...processedAttrs.value,
@@ -120,13 +124,13 @@ export default defineNuxtComponent({
         children.push(h(Icon, {
           name: 'svg-spinners:gooey-balls-2',
           'aria-hidden': 'true',
-          size: 'var(--dd-tabs-trigger-icon-size)'
+          size: iconSize
         }))
       } else if (props.icon) {
         children.push(h(Icon, {
           name: props.icon,
           'aria-hidden': 'true',
-          size: 'var(--dd-tabs-trigger-icon-size)'
+          size: iconSize
         }))
       } else if (slots.prefix) {
         children.push(slots.prefix())
@@ -143,7 +147,7 @@ export default defineNuxtComponent({
         }, [
           h(Icon, {
             name: 'lucide:x',
-            size: 'var(--dd-tabs-trigger-icon-size)'
+            size: iconSize
           })
         ]))
       } else if (slots.suffix) {

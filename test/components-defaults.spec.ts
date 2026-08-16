@@ -193,6 +193,7 @@ describe('default component tokens', () => {
 
     const menuTokens = JSON.parse(readFileSync(menuTokensPath, 'utf8'))
 
+    expect(menuTokens.item.gap.$value).toBe('1px')
     expect(menuTokens.submenu['padding-inline-start'].$value).toBe('{space.xs}')
   })
 

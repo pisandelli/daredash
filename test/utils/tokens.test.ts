@@ -131,6 +131,13 @@ describe('tokens util', () => {
       expect(resolveTokenValue(tokensWithMissingRef, 'a')).toBe('var(--dd-missing)')
     })
 
+    it('uses a custom prefix for unresolved reference fallbacks', () => {
+      const tokensWithMissingRef = {
+        a: { $value: '{missing}' }
+      }
+      expect(resolveTokenValue(tokensWithMissingRef, 'a', 'acme')).toBe('var(--acme-missing)')
+    })
+
     it('returns null for invalid inputs', () => {
       expect(resolveTokenValue(null, 'path')).toBeNull()
       expect(resolveTokenValue({}, '')).toBeNull()

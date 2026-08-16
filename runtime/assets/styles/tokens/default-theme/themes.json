@@ -2474,7 +2474,7 @@
     },
     "modal": {
       "background-color": {
-        "$value": "{color.bg.surface-elevated}"
+        "$value": "{color.bg.canvas}"
       },
       "color": {
         "$value": "{color.text.default}"
@@ -2482,7 +2482,7 @@
     },
     "drawer": {
       "bg": {
-        "$value": "{color.bg.surface-elevated}"
+        "$value": "{color.bg.canvas}"
       },
       "color": {
         "$value": "{color.text.default}"

@@ -1,6 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { h, nextTick } from 'vue'
+import getPrefixName from '#dd/utils/getPrefixName'
 import Menu from './Menu'
 import type { MenuEntry } from './types'
 
@@ -319,13 +320,14 @@ describe('Menu', () => {
       props: { items: floatItems }
     })
 
+    const expectedAnchorName = `${getPrefixName('menu-anchor-', { type: 'css-var-decl' })}tools`
     const trigger = wrapper.find('button[aria-controls="dd-submenu-tools"]')
     expect(trigger.exists()).toBe(true)
     expect(trigger.classes().some(className => className.includes('floatAnchor'))).toBe(true)
-    expect(trigger.attributes('style')).toContain('--anchor-name: --dd-menu-anchor-tools;')
+    expect(trigger.attributes('style')).toContain(`--anchor-name: ${expectedAnchorName};`)
 
     const panel = wrapper.find('#dd-submenu-tools')
-    expect(panel.attributes('style')).toContain('--anchor-name: --dd-menu-anchor-tools;')
+    expect(panel.attributes('style')).toContain(`--anchor-name: ${expectedAnchorName};`)
   })
 
   test('collapsed state sets data-collapsed on nav', async () => {

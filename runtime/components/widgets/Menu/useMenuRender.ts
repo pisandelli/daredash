@@ -31,6 +31,7 @@ export function useMenuRender(
   options: UseMenuRenderOptions
 ): UseMenuRenderReturn {
   const DdBadge = resolveComponent(getPrefixName('Badge', { type: 'component' }))
+  const menuAnchorPrefix = getPrefixName('menu-anchor-', { type: 'css-var-decl' })
 
   const createFloatAnchorStyle = (anchorName: string) => ({
     '--anchor-name': anchorName,
@@ -118,7 +119,7 @@ export function useMenuRender(
       const isExpanded = options.expandedKeys?.value?.has(item.key) ?? false
 
       const isFloat = item.float || (options.isCollapsed.value && hasChildren)
-      const anchorName = `--dd-menu-anchor-${item.key}`
+      const anchorName = `${menuAnchorPrefix}${item.key}`
       const floatIsOpen = options.openFloatKey.value === item.key
 
       const hideLabel = options.isCollapsed.value && depth === 0

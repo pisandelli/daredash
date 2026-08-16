@@ -1,6 +1,7 @@
 import { defineNuxtComponent } from 'nuxt/app'
 import { h, inject } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
+import getPrefixName from '#dd/utils/getPrefixName'
 import styles from '#dd/styles/Tabs.module.css'
 import { TabsContextKey, type TabsContext } from './Tabs'
 
@@ -27,12 +28,17 @@ export default defineNuxtComponent({
         children.push(h('div', { class: styles['header-prefix'] }, slots.prefix()))
       }
       
+      const activeAnchorName = getPrefixName(
+        `tab-${String(context?.activeTab.value).replace(/[^a-zA-Z0-9-]/g, '-')}`,
+        { type: 'css-var-decl' }
+      )
+
       const indicator = h('div', {
         class: styles.indicator,
         'data-type': context?.indicatorType.value,
         'aria-hidden': 'true',
         style: {
-          'position-anchor': `--dd-tab-${String(context?.activeTab.value).replace(/[^a-zA-Z0-9-]/g, '-')}`
+          'position-anchor': activeAnchorName
         }
       })
 

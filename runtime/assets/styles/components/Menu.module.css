@@ -17,6 +17,7 @@
   /* -- Item Tokens -- */
   --local-item-padding-block: v('menu.item.padding-block');
   --local-item-padding-inline: v('menu.item.padding-inline');
+  --local-item-gap: v('menu.item.gap');
   --local-item-radius: v('menu.item.border-radius');
   --local-item-color: v('menu.item.color');
   --local-item-color-active: v('menu.item.color-active');
@@ -226,6 +227,9 @@
 .item {
   list-style: none;
   min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--local-item-gap);
 }
 
 /* -- The interactive link/button element -- */
@@ -388,6 +392,9 @@
   padding: 0;
   padding-inline-start: var(--local-submenu-padding-inline-start);
   padding-block-end: v('space.xxs');
+  display: flex;
+  flex-direction: column;
+  gap: var(--local-item-gap);
 }
 
 /* ==========================================================================

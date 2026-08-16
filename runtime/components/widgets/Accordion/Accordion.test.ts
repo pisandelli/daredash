@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { h, nextTick } from 'vue'
+import getPrefixName from '#dd/utils/getPrefixName'
 
 import AccordionGroup from './AccordionGroup'
 import Accordion from './Accordion'
@@ -48,7 +49,7 @@ describe('AccordionGroup & Accordion', () => {
 
     // Inline style should bind the public accordion accent token override.
     expect(wrapper.attributes('style')).toContain(
-      '--dd-accordion-accent-color: color.danger;'
+      `${getPrefixName('accordion-accent-color', { type: 'css-var-decl' })}: color.danger;`
     )
   })
 

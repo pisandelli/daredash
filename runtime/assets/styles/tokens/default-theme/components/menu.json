@@ -32,6 +32,9 @@
     "padding-inline": {
       "$value": "{space.sm}"
     },
+    "gap": {
+      "$value": "1px"
+    },
     "border-radius": {
       "$value": "{border-radius.md}"
     },

@@ -3,6 +3,7 @@ import { h, computed, type VNode } from 'vue'
 import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import styles from '#dd/styles/Input.module.css'
 import { Icon } from '#components'
+import getPrefixName from '#dd/utils/getPrefixName'
 import FieldShell from './FieldShell'
 
 export default defineNuxtComponent({
@@ -162,7 +163,7 @@ export default defineNuxtComponent({
                 isSuccess.value && styles.success
               ]
             },
-            [h(Icon, { name: props.icon, size: 'var(--dd-input-icon-size)' })]
+            [h(Icon, { name: props.icon, size: getPrefixName('input-icon-size') })]
           )
         )
       }
@@ -202,7 +203,7 @@ export default defineNuxtComponent({
                 isSuccess.value && styles.success
               ]
             },
-            [h(Icon, { name: props.iconRight, size: 'var(--dd-input-icon-size)' })]
+            [h(Icon, { name: props.iconRight, size: getPrefixName('input-icon-size') })]
           )
         )
       }

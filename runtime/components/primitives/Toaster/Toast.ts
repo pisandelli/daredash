@@ -47,7 +47,7 @@ export default defineNuxtComponent({
 
     return () => {
       const iconNode = h('div', { class: styles.iconWrapper }, [
-        h(Icon, { name: iconName.value, size: 'var(--dd-toast-icon-size)' })
+        h(Icon, { name: iconName.value, size: getPrefixName('toast-icon-size') })
       ])
 
       const titleNode = props.title
@@ -77,7 +77,7 @@ export default defineNuxtComponent({
           },
           h(Icon, {
             name: globalIcons.toastClose || 'lucide:x',
-            size: 'var(--dd-toast-close-size)'
+            size: getPrefixName('toast-close-size')
           })
         )
       )

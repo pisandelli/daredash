@@ -4,6 +4,7 @@ import { useBaseComponent } from '#dd/composables/useBaseComponent'
 import { useAppConfig } from '#imports'
 import styles from '#dd/styles/Select.module.css'
 import { Icon } from '#components'
+import getPrefixName from '#dd/utils/getPrefixName'
 import FieldShell from './FieldShell'
 
 export default defineNuxtComponent({
@@ -182,7 +183,7 @@ export default defineNuxtComponent({
       const arrowNode = h('div', { class: styles.arrowWrapper }, [
         h(Icon, {
           name: globalIcons.selectArrow || 'lucide:chevron-down',
-          size: 'var(--dd-select-arrow-size)'
+          size: getPrefixName('select-arrow-size')
         })
       ])
 

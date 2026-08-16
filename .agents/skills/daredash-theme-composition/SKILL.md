@@ -186,3 +186,57 @@ Before delivering code generated with DareDash:
 - [ ] Are horizontal button bars, badge tags, and card header actions aligned using `<dd-cluster>`?
 - [ ] Are primary cards on standard surface level (`<dd-card>`), and overlays/highlighted cards on `elevated` (`<dd-card elevated>`)?
 - [ ] Are semantic boolean attributes (`primary`, `success`, `warning`, `danger`, `ghost`, `outline`) used instead of made-up `variant="..."` or `color="..."` props?
+
+---
+
+## 6. Operational Lessons for Themes, CSS, and Component Refinement
+
+These rules come from real implementation and debugging work in DareDash and should guide future changes.
+
+### Theme Alias Inheritance Must Be Preserved and Tested
+
+- In themed contexts, changing a primitive token must continue to propagate through semantic aliases and derived component tokens.
+- AI agents should not treat this as an optional polish step; it is part of the theme contract.
+- When adjusting theme primitives or semantic aliases, verify that dependent tokens are still re-emitted or resolved in the correct theme scope.
+- Add regression coverage for theme inheritance behaviour, not only for final literal values.
+
+### Inspect the Winning Rule Before Refactoring Visual Bugs
+
+- For visual regressions, inspect the browser-applied selector and computed rule before proposing a refactor.
+- Distinguish carefully between:
+  - a wrong token value
+  - a wrong selector
+  - a fallback path being used
+  - CSS not being reloaded or reflected by the consuming app
+- Do not assume a structural architecture problem when a bug may be caused by one specific active rule.
+
+### Keep Navigational Components Visually Coherent
+
+- Components such as Tabs, Anchor, Menu, Breadcrumbs, and similar navigational primitives should share a compatible visual language.
+- When refining one of these components, compare:
+  - active-state treatment
+  - hover treatment
+  - indicator/trail behaviour
+  - alignment and spacing rhythm
+- Consistency matters more than making each navigation primitive visually clever in isolation.
+
+### Test Architectural CSS and Token Decisions, Not Only End Values
+
+- When a change affects token inheritance, theme behaviour, fallbacks, or CSS structure, create regression tests that verify the decision itself.
+- Prefer tests that assert:
+  - semantic aliases remain connected
+  - theme overrides continue to affect derived tokens
+  - CSS fallbacks or structural rules are present when they are part of the intended behaviour
+- Avoid relying only on screenshots or manual browser checks for sensitive token-pipeline behaviour.
+
+### Prefer Semantic Tokens First; Add Abstractions Only When Repetition Is Real
+
+- Do not introduce a new API, prop, helper, or wrapper only because it might be useful later.
+- First try to solve the requirement with:
+  - existing semantic tokens
+  - existing layout primitives
+  - existing boolean semantic attributes
+- Add a new abstraction only when:
+  - repetition is concrete
+  - multiple components share the same pain point
+  - the new abstraction reduces ambiguity rather than adding another competing path
