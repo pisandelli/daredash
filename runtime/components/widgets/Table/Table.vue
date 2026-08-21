@@ -17,6 +17,7 @@ type Row = Record<string, any>
 type RowClassValue = HTMLAttributes['class']
 type RowAttrsValue = Omit<HTMLAttributes, 'class'> & {
   class?: RowClassValue
+  [key: `data-${string}`]: string | boolean | undefined
 }
 type RowClassResolver = RowClassValue | ((row: Row, index: number) => RowClassValue)
 type RowAttrsResolver = RowAttrsValue | ((row: Row, index: number) => RowAttrsValue | undefined)

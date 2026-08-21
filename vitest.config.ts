@@ -25,6 +25,11 @@ globalThis.structuredClone = ((value: unknown, options?: StructuredSerializeOpti
 }) as typeof structuredClone
 
 export default defineVitestConfig({
+  resolve: {
+    alias: {
+      vue: 'vue-test-runtime'
+    }
+  },
   test: {
     environment: 'nuxt',
     environmentOptions: {

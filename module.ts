@@ -15,6 +15,29 @@ import { resolveTokenPaths } from './src/utils/resolveTokenPaths'
 const moduleTokensPath =
   './runtime/assets/styles/tokens/default-theme'
 
+const menuExpandIcon = 'lucide:chevron-right'
+
+const defaultIcons = {
+  success: 'lucide:circle-check',
+  error: 'lucide:circle-x',
+  warning: 'lucide:triangle-alert',
+  info: 'lucide:circle-alert',
+  toastClose: 'lucide:x',
+  selectArrow: 'lucide:chevron-down',
+  breadcrumbSeparator: menuExpandIcon,
+  modalClose: 'lucide:x',
+  menuCollapse: 'lucide:chevron-left',
+  menuExpand: menuExpandIcon,
+  search: 'lucide:search',
+  loading: 'svg-spinners:ring-resize',
+  drawerClose: 'lucide:x',
+  tableError: 'lucide:triangle-alert',
+  emptyTable: 'lucide:inbox',
+  notification: 'lucide:bell',
+  paginationPrev: 'lucide:chevron-left',
+  paginationNext: 'lucide:chevron-right'
+}
+
 interface PublicAssetConfig {
   dir: string
   maxAge: number
@@ -40,7 +63,13 @@ export default defineNuxtModule<ModuleOptions>().with({
       }
     },
     '@nuxt/icon': {
-      version: '^2.2.2'
+      version: '^2.5.0',
+      defaults: {
+        clientBundle: {
+          icons: Object.values(defaultIcons),
+          scan: true
+        }
+      }
     },
     '@vee-validate/nuxt': {
       version: '^4.15.1',
@@ -95,29 +124,6 @@ export default defineNuxtModule<ModuleOptions>().with({
      * `app.config.ts`.
      * @see Rule §12 — Iconography (Agnostic Architecture)
      */
-    const menuExpandIcon = 'lucide:chevron-right'
-
-    const defaultIcons = {
-      success: 'lucide:circle-check',
-      error: 'lucide:circle-x',
-      warning: 'lucide:triangle-alert',
-      info: 'lucide:circle-alert',
-      toastClose: 'lucide:x',
-      selectArrow: 'lucide:chevron-down',
-      breadcrumbSeparator: menuExpandIcon,
-      modalClose: 'lucide:x',
-      menuCollapse: 'lucide:chevron-left',
-      menuExpand: menuExpandIcon,
-      search: 'lucide:search',
-      loading: 'svg-spinners:ring-resize',
-      drawerClose: 'lucide:x',
-      tableError: 'lucide:triangle-alert',
-      emptyTable: 'lucide:inbox',
-      notification: 'lucide:bell',
-      paginationPrev: 'lucide:chevron-left',
-      paginationNext: 'lucide:chevron-right'
-    }
-
     const daredashAppConfig = (nuxt.options.appConfig.daredash as Record<string, any>) || {}
 
     nuxt.options.appConfig.daredash = {

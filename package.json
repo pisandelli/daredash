@@ -57,12 +57,12 @@
     "nuxt": "^4.3.0"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.82",
+    "@iconify-json/lucide": "^1.2.124",
     "@iconify-json/svg-spinners": "^1.2.4",
     "@nuxt/devtools-kit": "^3.2.4",
     "@nuxt/fonts": "^0.14.0",
-    "@nuxt/icon": "^2.2.2",
-    "@nuxt/kit": "^4.4.6",
+    "@nuxt/icon": "^2.5.0",
+    "@nuxt/kit": "^4.5.2",
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/zod": "^4.15.1",
     "defu": "^6.1.4",
@@ -71,17 +71,19 @@
   },
   "devDependencies": {
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.4.6",
-    "@nuxt/test-utils": "^4.0.3",
+    "@nuxt/schema": "^4.5.2",
+    "@nuxt/test-utils": "^4.1.0",
     "@types/node": "^25.6.2",
     "@vitest/coverage-v8": "4.1.10",
-    "@vue/test-utils": "^2.4.10",
+    "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.11.1",
+    "nuxt": "^4.5.2",
     "playwright-core": "^1.59.1",
     "unbuild": "^3.6.1",
     "vite": "^8.2.1",
     "vitest": "^4.1.10",
     "vitest-environment-nuxt": "^2.0.0",
+    "vue-test-runtime": "npm:vue@3.5.34",
     "vue-tsc": "^3.1.1"
   }
 }

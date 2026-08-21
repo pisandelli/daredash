@@ -283,8 +283,8 @@ describe('Table primitive', () => {
         columns: sampleColumns,
         data: sampleData,
         rowAttrs: row => ({
-          'data-success': row.status === 'Active' ? '' : undefined,
-          'data-warning': row.status === 'Inactive' ? '' : undefined
+          'data-success': row.status === 'Active' || undefined,
+          'data-warning': row.status === 'Inactive' || undefined
         })
       }
     })
