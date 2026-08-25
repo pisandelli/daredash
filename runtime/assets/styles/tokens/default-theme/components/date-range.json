@@ -1,0 +1,20 @@
+{
+  "$description": "Tokens for the Date Range component",
+  "$type": "object",
+  "background": { "$value": "{color.bg.surface-elevated}" },
+  "border-color": { "$value": "color-mix(in srgb, {color.text.default} 18%, {color.bg.surface-elevated})" },
+  "border-radius": { "$value": "{border-radius.md}" },
+  "shadow": { "$value": "{shadow.lg}" },
+  "padding": { "$value": "{space.lg}" },
+  "width": { "$value": "52rem" },
+  "color": { "$value": "{color.text.default}" },
+  "muted-color": { "$value": "{color.text.muted}" },
+  "accent-color": { "$value": "{color.primary}" },
+  "accent-contrast-color": { "$value": "contrast-color({date-range.accent-color})" },
+  "range-background": { "$value": "{color.primary.50}" },
+  "range-color": { "$value": "{color.primary.950}" },
+  "day-hover-background": { "$value": "{color.bg.surface-hover}" },
+  "day-hover-color": { "$value": "{color.text.default}" },
+  "footer-border-color": { "$value": "color-mix(in srgb, {color.text.default} 18%, {color.bg.surface-elevated})" },
+  "z-index": { "$value": "{z-index.8}" }
+}

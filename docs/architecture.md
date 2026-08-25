@@ -73,6 +73,7 @@ Examples:
 - `Menu`
 - `Table`
 - `Popover`
+- `DateRange`
 - `Anchor`
 
 These components usually contain more coordination logic and richer runtime behavior.

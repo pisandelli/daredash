@@ -1,6 +1,17 @@
 {
   "dark": {
     "$description": "Dark theme",
+    "date-range": {
+      "range-background": {
+        "$value": "{color.primary.200}"
+      },
+      "day-hover-background": {
+        "$value": "{color.primary.100}"
+      },
+      "day-hover-color": {
+        "$value": "{color.primary.950}"
+      }
+    },
     "color": {
       "text": {
         "default": {
@@ -2061,6 +2072,17 @@
   },
   "darker": {
     "$description": "Darker theme",
+    "date-range": {
+      "range-background": {
+        "$value": "{color.primary.200}"
+      },
+      "day-hover-background": {
+        "$value": "{color.primary.100}"
+      },
+      "day-hover-color": {
+        "$value": "{color.primary.950}"
+      }
+    },
     "color": {
       "text": {
         "default": {

@@ -10,6 +10,22 @@ function getModulePath(relativePath: string): string {
 }
 
 describe('default component tokens', () => {
+  it('keeps DateRange trail text contrast tokenized', () => {
+    const tokensPath = getModulePath(
+      'runtime/assets/styles/tokens/default-theme/components/date-range.json'
+    )
+    const cssPath = getModulePath(
+      'runtime/assets/styles/components/DateRange.module.css'
+    )
+    const tokens = JSON.parse(readFileSync(tokensPath, 'utf8'))
+    const css = readFileSync(cssPath, 'utf8')
+
+    expect(tokens['range-background'].$value).toBe('{color.primary.50}')
+    expect(tokens['range-color'].$value).toBe('{color.primary.950}')
+    expect(css).toContain("--local-range-color: v('date-range.range-color');")
+    expect(css).toContain('color: var(--local-range-color);')
+  })
+
   it('uses compact badge typography defaults', () => {
     const badgeTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/badge.json'
@@ -465,6 +481,9 @@ describe('default component tokens', () => {
     expect(themes.dark.color.bg['surface-elevated'].$value).toBe('{color.gray.700}')
     expect(themes.dark.color.border.default.$value).toBe('{color.gray.700}')
     expect(themes.dark.color.primary.$value).toBe('{color.primary.400}')
+    expect(themes.dark['date-range']['range-background'].$value).toBe('{color.primary.200}')
+    expect(themes.dark['date-range']['day-hover-background'].$value).toBe('{color.primary.100}')
+    expect(themes.dark['date-range']['day-hover-color'].$value).toBe('{color.primary.950}')
 
     expect(themes.redish.color.bg.canvas.$value).toBe('{color.danger.950}')
     expect(themes.redish.color.bg.surface.$value).toBe('{color.danger.800}')
@@ -473,6 +492,9 @@ describe('default component tokens', () => {
     expect(themes.blueish.color.bg.canvas.$value).toBe('{color.primary.950}')
     expect(themes.blueish.color.bg.surface.$value).toBe('{color.primary.800}')
     expect(themes.blueish.color.primary.$value).toBe('{color.primary.400}')
+    expect(themes.darker['date-range']['range-background'].$value).toBe('{color.primary.200}')
+    expect(themes.darker['date-range']['day-hover-background'].$value).toBe('{color.primary.100}')
+    expect(themes.darker['date-range']['day-hover-color'].$value).toBe('{color.primary.950}')
     expect(themes.dark.card['background-color'].$value).toBe('{color.bg.surface}')
     expect(themes.dark.card.color.$value).toBe('{color.text.default}')
     expect(themes.dark.badge['base-color'].$value).toBe('{color.gray.300}')

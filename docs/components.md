@@ -859,6 +859,60 @@ Use `dd-popover` for compact contextual content.
 - `header`
 - `content`
 
+### Date Range (`<dd-date-range>`)
+
+Use `dd-date-range` to select a custom date interval from any trigger. Its default slot is the trigger, so it can wrap a button, a page heading control, or a fully custom element. `initial-date` keeps the displayed calendar aligned with external period navigation whenever the popover opens.
+
+```vue
+<script setup lang="ts">
+const range = ref({ start: '2026-08-01', end: '2026-08-31' })
+</script>
+
+<template>
+  <dd-date-range
+    v-model="range"
+    initial-date="2026-08-01"
+    locale="pt-BR"
+    :year-range="30"
+  >
+    <dd-button outline>Agosto 2026</dd-button>
+  </dd-date-range>
+</template>
+```
+
+#### Props
+
+- `model-value` — `{ start: string, end: string }` using ISO `YYYY-MM-DD` dates
+- `initial-date` — ISO date used to open the calendar at the currently visible period
+- `locale` — BCP 47 locale used for labels and date formatting; defaults to the browser/user locale
+- `week-starts-on` — first weekday, from `0` (Sunday) to `6` (Saturday); defaults to the locale convention
+- `year-range` — number of years before and after the displayed year in the native scrollable menu (defaults to `30`)
+- `presets` — optional preset list; pass `false` to hide the preset column
+- `disabled`
+
+#### Selection behavior
+
+- The trigger is the default slot and may contain any interactive element.
+- The picker shows two consecutive months. The selected start and end dates use the accent color; intermediate days use `date-range.range-background` and `date-range.range-color`.
+- The light theme defaults the trail to `color.primary.50`; Dark and Darker use `color.primary.200` for stronger separation. Hover background and text are independently tokenized.
+- When an endpoint appears again as an outside day in the adjacent month, it remains part of the trail instead of rendering a duplicate endpoint highlight.
+- `model-value` remains ISO for reliable application state; labels, weekday order and built-in preset copy follow `locale` (or the browser locale by default).
+- Calendar month headings use a plain `Month Year` format (for example, `agosto 2026`) without locale connector words.
+- Once a date is selected, the helper displays the localized selected date; completed intervals display `start – end` instead of the initial instruction.
+- The range between years is symmetric: `year-range="10"` yields 21 options, from 10 years before through 10 years after the displayed year.
+
+#### Emits
+
+- `update:modelValue`
+- `confirm`
+- `reset`
+
+#### Slots
+
+- `default` — arbitrary trigger content
+
+The built-in presets include the last 7, 30 and 90 days; this month, last month and this year; plus the next 7, 30 and 90 days.
+
 ### Menu (`<dd-menu>`)
 
 Use `dd-menu` for hierarchical, persistent navigation.

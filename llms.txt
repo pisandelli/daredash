@@ -1565,6 +1565,38 @@ If a slot is not explicit in the code, do not describe it just because it would 
 - Accessibility notes: depends on trigger and content; keep content short and focus behavior clear.
 - Restrictions: closing uses the `onClose` prop, not an emit.
 
+### `DdDateRange`
+
+- Description: native-popover date interval picker with a custom trigger, preset periods, two consecutive months, and tokenized selection trail.
+- When to use: reporting filters, date-based dashboards, and any period navigation that needs a confirmed start/end interval.
+- When not to use: a single date input or a static date display.
+- Import: auto-registered by the module.
+- Props:
+  - `modelValue?: { start: string; end: string } | null` — ISO `YYYY-MM-DD` dates.
+  - `initialDate?: string` — ISO date used to align the displayed calendar whenever the trigger opens.
+  - `locale?: string` — BCP 47 locale for month names, weekday labels and built-in copy; defaults to the browser locale.
+  - `weekStartsOn?: number` — weekday index from `0` (Sunday) through `6` (Saturday); defaults to the locale convention.
+  - `yearRange: number = 30` — number of years before and after the displayed year in the scrollable native year select.
+  - `presets?: DateRangePreset[] | false` — custom presets, or `false` to hide the preset column.
+  - `disabled: boolean = false`.
+- Emits:
+  - `update:modelValue`
+  - `confirm`
+  - `reset`
+- Slots:
+  - `default` — arbitrary trigger content.
+- Correct example: `<DdDateRange v-model="range" initial-date="2026-08-01" locale="pt-BR" :year-range="10"><DdButton outline>Agosto 2026</DdButton></DdDateRange>`.
+- Incorrect example: `<DdDateRange v-model:range="range" year-count="10" />`.
+- Accessibility notes: the trigger should have a clear accessible name; day controls have locale-formatted labels; the native year menu scrolls when its configured range exceeds the platform menu height.
+- Restrictions:
+  - keep `modelValue.start` and `modelValue.end` as ISO strings; format dates only for display;
+  - calendar headings use plain `Month Year` output without locale connector words such as `de`;
+  - after selection, the helper text becomes a localized single date or `start – end` summary instead of the selection instruction;
+  - `yearRange` is symmetric around the displayed year, so the option count is `yearRange * 2 + 1`;
+  - start/end cells use `date-range.accent-color`, while intermediate cells use `date-range.range-background` and `date-range.range-color`; light defaults to `color.primary.50`, while Dark and Darker use `color.primary.200`;
+  - hover visuals are controlled independently by `date-range.day-hover-background` and `date-range.day-hover-color`;
+  - duplicate outside-day instances of an endpoint render as trail, not as a second endpoint marker.
+
 ### `DdAnchor`
 
 - Description: anchor navigation with active item tracking on scroll.
@@ -1657,6 +1689,8 @@ Confirmed in `runtime/assets/styles/tokens/default-theme/components/menu.json`:
   - `DdDrawer side`
   - `DdPagination v-model:page`
   - `DdPopover #trigger`
+  - `DdDateRange v-model:range`
+  - `DdDateRange year-count`
 
 ## 12. Complete usage examples
 

@@ -187,6 +187,10 @@ export const components: Record<string, ComponentConfig> = {
     filePath: './runtime/components/widgets/Popover/Popover.ts',
     style: './runtime/assets/styles/components/Popover.module.css'
   },
+  DateRange: {
+    filePath: './runtime/components/widgets/DateRange/DateRange.vue',
+    style: './runtime/assets/styles/components/DateRange.module.css'
+  },
   Anchor: {
     filePath: './runtime/components/widgets/Anchor/Anchor.ts',
     style: './runtime/assets/styles/components/Anchor.module.css'

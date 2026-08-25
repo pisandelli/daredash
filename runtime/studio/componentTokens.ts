@@ -11,6 +11,7 @@ import center from '../assets/styles/tokens/default-theme/components/center.json
 import checkbox from '../assets/styles/tokens/default-theme/components/checkbox.json'
 import cluster from '../assets/styles/tokens/default-theme/components/cluster.json'
 import drawer from '../assets/styles/tokens/default-theme/components/drawer.json'
+import dateRange from '../assets/styles/tokens/default-theme/components/date-range.json'
 import grid from '../assets/styles/tokens/default-theme/components/grid.json'
 import input from '../assets/styles/tokens/default-theme/components/input.json'
 import inputGroup from '../assets/styles/tokens/default-theme/components/input-group.json'
@@ -49,6 +50,7 @@ export const STUDIO_COMPONENT_TOKENS = {
   checkbox,
   cluster,
   drawer,
+  'date-range': dateRange,
   grid,
   input,
   'input-group': inputGroup,

@@ -16,6 +16,7 @@ import CenterPreview from './previews/CenterPreview.vue'
 import CheckboxPreview from './previews/CheckboxPreview.vue'
 import ClusterPreview from './previews/ClusterPreview.vue'
 import DrawerPreview from './previews/DrawerPreview.vue'
+import DateRangePreview from './previews/DateRangePreview.vue'
 import GridPreview from './previews/GridPreview.vue'
 import InputGroupPreview from './previews/InputGroupPreview.vue'
 import InputPreview from './previews/InputPreview.vue'
@@ -163,6 +164,25 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('drawer.footer.border-width', 'Footer Border Width', 'text', 'Footer'),
       componentField('drawer.backdrop.background-color', 'Backdrop Background', 'text', 'Backdrop'),
       componentField('drawer.backdrop.filter', 'Backdrop Filter', 'text', 'Backdrop')
+    ]
+  }),
+  componentTab('date-range', 'widget', {
+    label: 'Date Range',
+    preview: DateRangePreview,
+    fields: [
+      componentField('date-range.background', 'Background', 'color', 'Core'),
+      componentField('date-range.border-color', 'Border Color', 'color', 'Core'),
+      componentField('date-range.border-radius', 'Border Radius', 'text', 'Core'),
+      componentField('date-range.shadow', 'Shadow', 'text', 'Core'),
+      componentField('date-range.padding', 'Padding', 'text', 'Core'),
+      componentField('date-range.width', 'Panel Width', 'text', 'Core'),
+      componentField('date-range.accent-color', 'Accent Color', 'color', 'Selection'),
+      componentField('date-range.range-background', 'Range Trail Background', 'color', 'Selection'),
+      componentField('date-range.range-color', 'Range Trail Text', 'color', 'Selection'),
+      componentField('date-range.day-hover-background', 'Day Hover Background', 'color', 'Days'),
+      componentField('date-range.day-hover-color', 'Day Hover Text', 'color', 'Days'),
+      componentField('date-range.muted-color', 'Muted Text', 'color', 'Days'),
+      componentField('date-range.footer-border-color', 'Footer Border Color', 'color', 'Footer')
     ]
   }),
   componentTab('button', 'primitive', {

@@ -135,6 +135,7 @@ describe('DareDash Studio registry', () => {
     expect(widgetTabIds).toEqual([
       'accordion',
       'anchor',
+      'date-range',
       'drawer',
       'menu',
       'modal',
