@@ -26,6 +26,7 @@ function focusField(path: string) {
             <DdTab value="overview">Overview</DdTab>
             <DdTab value="tokens">Tokens</DdTab>
             <DdTab value="history">History</DdTab>
+            <DdTab value="audit" disabled>Audit locked</DdTab>
           </DdTabList>
           <DdTabPanels>
             <DdTabPanel value="overview">Shared foundation controls for the active studio context.</DdTabPanel>
@@ -37,6 +38,7 @@ function focusField(path: string) {
           <button type="button" class="dd-tabs-action" @click="focusField('tabs.list.border-color')">List border</button>
           <button type="button" class="dd-tabs-action" @click="focusField('tabs.trigger.padding')">Trigger padding</button>
           <button type="button" class="dd-tabs-action" @click="focusField('tabs.trigger.active.color')">Active color</button>
+          <button type="button" class="dd-tabs-action" @click="focusField('tabs.trigger.disabled.opacity')">Disabled opacity</button>
           <button type="button" class="dd-tabs-action" @click="focusField('tabs.trigger.indicator.color')">Indicator</button>
         </div>
       </div>
