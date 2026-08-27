@@ -52,6 +52,13 @@ describe('Studio token diagnostics', () => {
     )
   })
 
+  it('uses a distinct active surface for Precision menu navigation', () => {
+    expect(tokenValue('menu.item.bg-hover', undefined, 'precision')).toBe('#f1f5f9')
+    expect(tokenValue('menu.item.bg-active', undefined, 'precision')).toBe(
+      'color-mix(in srgb, #2563eb 8%, #ffffff)'
+    )
+  })
+
   it('resolves theme aliases recursively and exposes their chain', () => {
     const diagnostic = studioTokenDiagnostic('button.base-color', 'dark')
 
