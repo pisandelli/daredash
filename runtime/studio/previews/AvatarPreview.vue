@@ -40,7 +40,7 @@ function resolveFieldValue(path: string, fallbackCssVar: string) {
           Fallback avatars use the theme tokens `avatar.background-color` and `avatar.color` by default. `avatar.color` can be a direct color or a CSS expression such as `contrast-color({avatar.background-color})`.
         </span>
         <span>
-          Use the optional `random` variant only when you want the component to ignore those theme tokens and generate its own pastel background with automatic contrast for the initials.
+          The optional `random` variant uses the editable `avatar.random-palette.*` tokens and automatic contrast for the initials.
         </span>
       </div>
     </header>
@@ -128,8 +128,8 @@ function resolveFieldValue(path: string, fallbackCssVar: string) {
         <div class="dd-avatar-color-card dd-avatar-color-card-muted">
           <DdAvatar alt="RN" random />
           <strong>Optional random variant</strong>
-          <span>Uses the generated palette only when `random` is set on the component.</span>
-          <small>Not controlled by theme tokens</small>
+          <span>Uses the theme palette only when `random` is set on the component.</span>
+          <small>Uses the editable random palette</small>
         </div>
       </div>
     </div>

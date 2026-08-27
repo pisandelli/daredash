@@ -640,6 +640,12 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('avatar.border-radius', 'Border Radius', 'text', 'Core'),
       componentField('avatar.background-color', 'Background Color', 'color', 'Colors'),
       componentField('avatar.color', 'Text Color', 'text', 'Colors'),
+      ...Array.from({ length: 9 }, (_, index) => componentField(
+        `avatar.random-palette.${index + 1}`,
+        `Random Palette ${index + 1}`,
+        'color',
+        'Random Palette'
+      )),
       componentField('avatar.font-size', 'Font Size', 'text', 'Typography'),
       componentField('avatar.font-weight', 'Font Weight', 'text', 'Typography', '500'),
       componentField('avatar.sm.size', 'Small Size', 'text', 'Sizes'),
