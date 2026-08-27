@@ -45,6 +45,13 @@ describe('Studio token diagnostics', () => {
     )
   })
 
+  it('keeps Precision table hierarchy subtle and scannable', () => {
+    expect(tokenValue('table.row-striped.background-color', undefined, 'precision')).toBe('#fbfcfe')
+    expect(tokenValue('table.row-hover.background-color', undefined, 'precision')).toBe(
+      'color-mix(in srgb, #2563eb 4%, #ffffff)'
+    )
+  })
+
   it('resolves theme aliases recursively and exposes their chain', () => {
     const diagnostic = studioTokenDiagnostic('button.base-color', 'dark')
 

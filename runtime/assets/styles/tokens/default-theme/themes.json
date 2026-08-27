@@ -88,6 +88,15 @@
       "header": {
         "font-weight": { "$value": "{font-weight.semi-bold}" },
         "background-color": { "$value": "#f8fafc" }
+      },
+      "cell": {
+        "border-color": { "$value": "{color.border.default}" }
+      },
+      "row-striped": {
+        "background-color": { "$value": "{color.bg.surface-subtle}" }
+      },
+      "row-hover": {
+        "background-color": { "$value": "color-mix(in srgb, {color.primary} 4%, {color.bg.surface})" }
       }
     }
   },
