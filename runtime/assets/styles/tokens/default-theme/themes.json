@@ -35,6 +35,11 @@
       "xs": { "$value": "clamp(0.75rem, 0.72rem + 0.08vw, 0.8125rem)" },
       "sm": { "$value": "clamp(0.875rem, 0.84rem + 0.1vw, 0.9375rem)" }
     },
+    "typography": {
+      "label": { "font-size": { "$value": "{font-size.sm}" }, "font-weight": { "$value": "{font-weight.medium}" } },
+      "caption": { "font-size": { "$value": "{font-size.xs}" }, "line-height": { "$value": "{line-height.normal}" } },
+      "table-header": { "font-size": { "$value": "{font-size.sm}" }, "font-weight": { "$value": "{font-weight.semi-bold}" } }
+    },
     "card": {
       "border-radius": { "$value": "{shape.container}" },
       "box-shadow": { "$value": "0 1px 2px rgb(15 23 42 / 0.03), 0 1px 3px rgb(15 23 42 / 0.06)" }
