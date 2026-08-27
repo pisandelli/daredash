@@ -108,13 +108,13 @@
   "focus": {
     "$type": "object",
     "border-color": {
-      "$value": "{color.primary}"
+      "$value": "{focus.border-color}"
     },
     "box-shadow": {
-      "$value": "0 0 0 4px color-mix(in srgb, {color.primary} 30%, transparent)"
+      "$value": "{focus.ring}"
     },
     "outline": {
-      "$value": "none"
+      "$value": "{focus.outline}"
     }
   },
   "disabled": {

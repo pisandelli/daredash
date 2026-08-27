@@ -438,6 +438,12 @@
       }
     }
   },
+  "focus": {
+    "$description": "Shared keyboard focus treatment",
+    "border-color": { "$value": "{color.primary}" },
+    "ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.primary} 30%, transparent)" },
+    "outline": { "$value": "none" }
+  },
   "font": {
     "$description": "Font family definitions",
     "$type": "fontFamily",
