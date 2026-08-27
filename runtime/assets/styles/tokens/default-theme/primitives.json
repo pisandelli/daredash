@@ -262,9 +262,6 @@
       },
       "$value": "{color.error.600}"
     },
-    "error": {
-      "focus-ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.error} 30%, transparent)" }
-    },
     "info": {
       "50": {
         "$value": "#ccfffd"
@@ -428,6 +425,9 @@
       "on-surface": {
         "$value": "color-mix(in srgb, {color.danger} 72%, {color.text.default})"
       }
+    },
+    "error": {
+      "focus-ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.error} 30%, transparent)" }
     },
     "info": {
       "surface": {
