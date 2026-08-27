@@ -2,7 +2,7 @@
 import { ref, computed, nextTick, provide, watch } from 'vue'
 import { useThemeEditor } from '#dd/composables/useThemeEditor'
 import { STUDIO_TABS } from '../studio/registry'
-import { availableStudioThemes } from '../studio/tokens'
+import { availableStudioThemes, studioTokenDiagnostic } from '../studio/tokens'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../studio/interaction'
 import type {
   StudioComponentCategory,
@@ -251,6 +251,20 @@ function referenceSummaryLabel(field: StudioFieldDefinition): string {
 function resolvedValueLabel(field: StudioFieldDefinition): string {
   if (field.type === 'color') return 'Resolved color'
   return 'Resolved value'
+}
+
+function diagnosticForField(field: StudioFieldDefinition) {
+  return studioTokenDiagnostic(field.path, activeThemeId.value)
+}
+
+function diagnosticStatusLabel(field: StudioFieldDefinition): string {
+  const status = diagnosticForField(field).status
+  return {
+    resolved: 'Resolved',
+    'unresolved-reference': 'Reference unavailable',
+    'cyclic-reference': 'Reference cycle',
+    'invalid-path': 'Token unavailable'
+  }[status]
 }
 
 function referenceSuggestions(field: StudioFieldDefinition): string[] {
@@ -552,6 +566,27 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                       >
                         <span class="dde-field-info-title">Default value</span>
                         <code class="dde-field-info-inline">{{ field.rawDefaultValue }}</code>
+                      </div>
+
+                      <div class="dde-field-info-section">
+                        <span class="dde-field-info-title">Theme resolution</span>
+                        <div class="dde-field-info-chips">
+                          <code
+                            class="dde-field-info-chip"
+                            :class="`dde-field-info-chip-${diagnosticForField(field).status}`"
+                          >
+                            {{ diagnosticStatusLabel(field) }}
+                          </code>
+                        </div>
+                        <code class="dde-field-info-inline">
+                          {{ diagnosticForField(field).chain.join(' → ') }}
+                        </code>
+                        <code
+                          v-if="diagnosticForField(field).cycle"
+                          class="dde-field-info-inline"
+                        >
+                          Cycle: {{ diagnosticForField(field).cycle?.join(' → ') }}
+                        </code>
                       </div>
 
                       <p
@@ -1343,6 +1378,26 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   border: 1px solid rgba(255 255 255 / 0.08);
   border-radius: 999px;
   background: rgba(255 255 255 / 0.04);
+}
+
+.dde-field-info-chip-resolved {
+  border-color: rgba(76 201 143 / 0.32);
+  color: #90e7bd;
+}
+
+.dde-field-info-chip-unresolved-reference,
+.dde-field-info-chip-invalid-path {
+  border-color: rgba(255 190 92 / 0.36);
+  color: #ffd08a;
+}
+
+.dde-field-info-chip-cyclic-reference {
+  border-color: rgba(255 111 120 / 0.38);
+  color: #ffabb1;
+}
+
+.dde-field-info-inline {
+  overflow-wrap: anywhere;
 }
 
 .dde-field-info-note {

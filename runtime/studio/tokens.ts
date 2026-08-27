@@ -9,6 +9,22 @@ export interface StudioThemeOption {
   label: string
 }
 
+export type StudioTokenResolutionStatus =
+  | 'resolved'
+  | 'unresolved-reference'
+  | 'cyclic-reference'
+  | 'invalid-path'
+
+export interface StudioTokenDiagnostic {
+  path: string
+  rawValue?: string
+  value: string | null
+  references: string[]
+  chain: string[]
+  status: StudioTokenResolutionStatus
+  cycle?: string[]
+}
+
 export function availableStudioThemes(): StudioThemeOption[] {
   const themeKeys = Object.keys(themes).filter((key) => !key.startsWith('$'))
   return [
@@ -47,23 +63,72 @@ function getNodeForTheme(path: string, themeId?: string): Record<string, any> | 
   return getTokenNode(flatTokens, path)
 }
 
-function resolveTokenValue(tokens: any, path: string, themeId?: string): string | null {
-  const current = getNodeForTheme(path, themeId)
-
-  if (current && '$value' in current) {
-    let value = current.$value
-
-    if (typeof value === 'string' && value.includes('{')) {
-      value = value.replace(/{([^}]+)}/g, (_: string, refPath: string) => {
-        const refValue = resolveTokenValue(tokens, refPath, themeId)
-        return refValue || getPrefixName(refPath.replace(/\./g, '-'), { type: 'css-var' })
-      })
+export function studioTokenDiagnostic(path: string, themeId?: string): StudioTokenDiagnostic {
+  const resolve = (currentPath: string, stack: string[]): StudioTokenDiagnostic => {
+    const current = getNodeForTheme(currentPath, themeId)
+    if (!current || !('$value' in current)) {
+      return {
+        path: currentPath,
+        value: null,
+        references: [],
+        chain: [...stack, currentPath],
+        status: 'invalid-path'
+      }
     }
 
-    return String(value)
+    const rawValue = String(current.$value)
+    const references = [...rawValue.matchAll(/{([^}]+)}/g)].map((match) => match[1]!)
+
+    if (stack.includes(currentPath)) {
+      const cycleStart = stack.indexOf(currentPath)
+      return {
+        path: currentPath,
+        rawValue,
+        value: getPrefixName(currentPath.replace(/\./g, '-'), { type: 'css-var' }),
+        references,
+        chain: [...stack, currentPath],
+        status: 'cyclic-reference',
+        cycle: [...stack.slice(cycleStart), currentPath]
+      }
+    }
+
+    if (!references.length) {
+      return {
+        path: currentPath,
+        rawValue,
+        value: rawValue,
+        references,
+        chain: [...stack, currentPath],
+        status: 'resolved'
+      }
+    }
+
+    let status: StudioTokenResolutionStatus = 'resolved'
+    let cycle: string[] | undefined
+    let chain = [...stack, currentPath]
+    const value = rawValue.replace(/{([^}]+)}/g, (_: string, refPath: string) => {
+      const reference = resolve(refPath, [...stack, currentPath])
+      chain = [...chain, ...reference.chain.slice(stack.length + 1)]
+
+      if (reference.status === 'cyclic-reference') {
+        status = 'cyclic-reference'
+        cycle = reference.cycle
+      } else if (reference.status !== 'resolved' && status === 'resolved') {
+        status = 'unresolved-reference'
+      }
+
+      return reference.value || getPrefixName(refPath.replace(/\./g, '-'), { type: 'css-var' })
+    })
+
+    return { path: currentPath, rawValue, value, references, chain, status, cycle }
   }
 
-  return null
+  return resolve(path, [])
+}
+
+function resolveTokenValue(tokens: any, path: string, themeId?: string): string | null {
+  void tokens
+  return studioTokenDiagnostic(path, themeId).value
 }
 
 function flattenTokens(

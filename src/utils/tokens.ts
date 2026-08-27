@@ -9,17 +9,25 @@
  * @param prefix - CSS variable prefix used for unresolved reference fallbacks.
  * @returns The resolved string value, or `null` if not found.
  */
-export function resolveTokenValue(
-  tokens: any,
-  path: string,
-  prefix: string = 'dd'
-): string | null {
+export type TokenResolutionStatus =
+  | 'resolved'
+  | 'invalid-path'
+  | 'unresolved-reference'
+  | 'cyclic-reference'
+
+export interface TokenResolution {
+  value: string | null
+  rawValue?: string
+  references: string[]
+  status: TokenResolutionStatus
+  cycle?: string[]
+}
+
+function tokenNode(tokens: any, path: string): Record<string, any> | null {
   if (!tokens || !path) return null
 
-  const parts = path.split('.')
   let current = tokens
-
-  for (const part of parts) {
+  for (const part of path.split('.')) {
     if (current && typeof current === 'object' && part in current) {
       current = current[part]
     } else {
@@ -27,21 +35,67 @@ export function resolveTokenValue(
     }
   }
 
-  if (current && typeof current === 'object' && '$value' in current) {
-    let value = current['$value']
+  return current && typeof current === 'object' && '$value' in current ? current : null
+}
 
-    // Resolve Design Token references like {color.primary}
-    if (typeof value === 'string' && value.includes('{')) {
-      value = value.replace(/{([^}]+)}/g, (_, refPath: string) => {
-        const refValue = resolveTokenValue(tokens, refPath, prefix)
-        return refValue || `var(--${prefix}-${refPath.replace(/\./g, '-')})`
-      })
+/**
+ * Resolves a token and reports the reference chain used to obtain its value.
+ * Missing references remain CSS-variable fallbacks so existing runtime
+ * behaviour is preserved; cycles are reported rather than recursing forever.
+ */
+export function resolveToken(
+  tokens: any,
+  path: string,
+  prefix: string = 'dd'
+): TokenResolution {
+  const resolve = (currentPath: string, stack: string[]): TokenResolution => {
+    const node = tokenNode(tokens, currentPath)
+    if (!node) return { value: null, references: [], status: 'invalid-path' }
+
+    const rawValue = String(node.$value)
+    const references = [...rawValue.matchAll(/{([^}]+)}/g)].map((match) => match[1]!)
+
+    if (stack.includes(currentPath)) {
+      const cycleStart = stack.indexOf(currentPath)
+      return {
+        value: `var(--${prefix}-${currentPath.replace(/\./g, '-')})`,
+        rawValue,
+        references,
+        status: 'cyclic-reference',
+        cycle: [...stack.slice(cycleStart), currentPath]
+      }
     }
 
-    return String(value)
+    if (!references.length) {
+      return { value: rawValue, rawValue, references, status: 'resolved' }
+    }
+
+    let status: TokenResolutionStatus = 'resolved'
+    let cycle: string[] | undefined
+    const value = rawValue.replace(/{([^}]+)}/g, (_match, refPath: string) => {
+      const reference = resolve(refPath, [...stack, currentPath])
+      if (reference.status === 'cyclic-reference') {
+        status = 'cyclic-reference'
+        cycle = reference.cycle
+      } else if (reference.status !== 'resolved' && status === 'resolved') {
+        status = 'unresolved-reference'
+      }
+
+      return reference.value ?? `var(--${prefix}-${refPath.replace(/\./g, '-')})`
+    })
+
+    return { value, rawValue, references, status, cycle }
   }
 
-  return null
+  return resolve(path, [])
+}
+
+export function resolveTokenValue(
+  tokens: any,
+  path: string,
+  prefix: string = 'dd'
+): string | null {
+  return resolveToken(tokens, path, prefix).value
 }
 
 /**

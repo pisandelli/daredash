@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { flattenTokens, resolveTokenValue } from '../../src/utils/tokens'
+import { flattenTokens, resolveToken, resolveTokenValue } from '../../src/utils/tokens'
 
 describe('tokens util', () => {
   describe('flattenTokens', () => {
@@ -136,6 +136,37 @@ describe('tokens util', () => {
         a: { $value: '{missing}' }
       }
       expect(resolveTokenValue(tokensWithMissingRef, 'a', 'acme')).toBe('var(--acme-missing)')
+    })
+
+    it('reports the full direct reference list for a resolved expression', () => {
+      const result = resolveToken(tokens, 'button.primary.background')
+
+      expect(result).toMatchObject({
+        value: '#0000ff',
+        rawValue: '{blue}',
+        references: ['blue'],
+        status: 'resolved'
+      })
+    })
+
+    it('reports unresolved references without changing the fallback expression', () => {
+      const result = resolveToken({ a: { $value: '{missing}' } }, 'a')
+
+      expect(result).toMatchObject({
+        value: 'var(--dd-missing)',
+        status: 'unresolved-reference'
+      })
+    })
+
+    it('detects reference cycles rather than recursing indefinitely', () => {
+      const result = resolveToken({
+        a: { $value: '{b}' },
+        b: { $value: '{a}' }
+      }, 'a')
+
+      expect(result.status).toBe('cyclic-reference')
+      expect(result.cycle).toEqual(['a', 'b', 'a'])
+      expect(result.value).toBe('var(--dd-a)')
     })
 
     it('returns null for invalid inputs', () => {
