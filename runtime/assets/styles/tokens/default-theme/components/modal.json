@@ -22,7 +22,7 @@
     "$value": "37.5rem"
   },
   "z-index": {
-    "$value": "{z-index.4}"
+    "$value": "{z-index.modal}"
   },
   "close-size": {
     "$description": "Size of the close icon",
