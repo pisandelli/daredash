@@ -828,7 +828,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   --studio-radius-md: 10px;
   --studio-radius-lg: 14px;
   --studio-header-h: 3.75rem;
-  --studio-font: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --studio-font: 'Inter', system-ui, -apple-system, sans-serif;
   --studio-code-font: 'JetBrains Mono', 'Fira Code', monospace;
 
   display: grid;
