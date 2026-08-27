@@ -6,6 +6,8 @@ import { STUDIO_COMPONENT_TOKENS } from './componentTokens'
 export interface StudioThemeOption {
   id: string
   label: string
+  profile: 'brand' | 'accessible'
+  accessibilityTarget: 'best-effort' | 'wcag-aa'
 }
 
 export type StudioTokenResolutionStatus =
@@ -31,10 +33,17 @@ function studioCssFallback(path: string): string {
 export function availableStudioThemes(): StudioThemeOption[] {
   const themeKeys = Object.keys(themes).filter((key) => !key.startsWith('$'))
   return [
-    { id: 'default', label: 'Default (Light)' },
+    {
+      id: 'default',
+      label: 'Default (Light)',
+      profile: 'brand',
+      accessibilityTarget: 'best-effort'
+    },
     ...themeKeys.map((key) => ({
       id: key,
-      label: key.charAt(0).toUpperCase() + key.slice(1)
+      label: key === 'accessible' ? 'Accessible (WCAG AA)' : key.charAt(0).toUpperCase() + key.slice(1),
+      profile: key === 'accessible' ? 'accessible' as const : 'brand' as const,
+      accessibilityTarget: key === 'accessible' ? 'wcag-aa' as const : 'best-effort' as const
     }))
   ]
 }

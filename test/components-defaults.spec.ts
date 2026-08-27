@@ -473,9 +473,10 @@ describe('default component tokens', () => {
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['precision', 'dark', 'redish', 'blueish', 'darker'])
+    expect(Object.keys(themes)).toEqual(['precision', 'accessible', 'dark', 'redish', 'blueish', 'darker'])
     expect(themes.precision['border-radius'].base.$value).toBe('0.5rem')
     expect(themes.precision['font-size'].sm.$value).toContain('clamp(')
+    expect(themes.accessible.focus.ring.$value).toBe('0 0 0 3px #1d4ed8')
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
     expect(themes.dark.color.bg['surface-subtle'].$value).toBe('{color.gray.900}')

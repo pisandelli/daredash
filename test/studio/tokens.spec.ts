@@ -3,8 +3,29 @@ import { availableStudioThemes, studioTokenDiagnostic, tokenValue } from '../../
 
 describe('Studio token diagnostics', () => {
   it('offers the experimental precision visual proposal without replacing default', () => {
-    expect(availableStudioThemes()).toContainEqual({ id: 'precision', label: 'Precision' })
-    expect(availableStudioThemes()[0]).toEqual({ id: 'default', label: 'Default (Light)' })
+    expect(availableStudioThemes()).toContainEqual({
+      id: 'precision',
+      label: 'Precision',
+      profile: 'brand',
+      accessibilityTarget: 'best-effort'
+    })
+    expect(availableStudioThemes()[0]).toEqual({
+      id: 'default',
+      label: 'Default (Light)',
+      profile: 'brand',
+      accessibilityTarget: 'best-effort'
+    })
+  })
+
+  it('offers the accessible profile with its WCAG AA target', () => {
+    expect(availableStudioThemes()).toContainEqual({
+      id: 'accessible',
+      label: 'Accessible (WCAG AA)',
+      profile: 'accessible',
+      accessibilityTarget: 'wcag-aa'
+    })
+    expect(tokenValue('focus.ring', undefined, 'accessible')).toBe('0 0 0 3px #1d4ed8')
+    expect(tokenValue('color.warning', undefined, 'accessible')).toBe('#9a4d00')
   })
 
   it('keeps Precision small text fluid while enforcing a readable minimum', () => {

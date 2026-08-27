@@ -76,6 +76,43 @@
       }
     }
   },
+  "accessible": {
+    "$description": "Accessibility profile. It targets WCAG 2.2 AA for the audited opaque text, surface and focus pairs while preserving the default visual language. CSS expressions and instance overrides remain author-controlled.",
+    "color": {
+      "text": {
+        "default": { "$value": "#111827" },
+        "muted": { "$value": "#4b5563" }
+      },
+      "bg": {
+        "canvas": { "$value": "#ffffff" },
+        "surface-subtle": { "$value": "#f8fafc" },
+        "surface": { "$value": "#ffffff" },
+        "surface-hover": { "$value": "#f1f5f9" },
+        "surface-elevated": { "$value": "#ffffff" }
+      },
+      "border": {
+        "default": { "$value": "#94a3b8" },
+        "active": { "$value": "#1d4ed8" }
+      },
+      "border-hover": { "$value": "#64748b" },
+      "primary": { "$value": "#1d4ed8" },
+      "success": { "$value": "#1f6b37" },
+      "warning": { "$value": "#9a4d00" },
+      "danger": { "$value": "#c81e1e" },
+      "info": { "$value": "#0369a1" }
+    },
+    "focus": {
+      "border-color": { "$value": "#1d4ed8" },
+      "ring": { "$value": "0 0 0 3px #1d4ed8" }
+    },
+    "state": {
+      "success": { "focus-ring": { "$value": "0 0 0 3px #1f6b37" } },
+      "warning": { "focus-ring": { "$value": "0 0 0 3px #9a4d00" } },
+      "danger": { "focus-ring": { "$value": "0 0 0 3px #c81e1e" } },
+      "error": { "focus-ring": { "$value": "0 0 0 3px #c81e1e" } },
+      "info": { "focus-ring": { "$value": "0 0 0 3px #0369a1" } }
+    }
+  },
   "dark": {
     "$description": "Dark theme",
     "date-range": {
