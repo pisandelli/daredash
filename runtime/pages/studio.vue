@@ -18,10 +18,6 @@ const componentSearch = ref('')
 const isComponentPickerOpen = ref(false)
 const componentSearchInput = ref<HTMLInputElement | null>(null)
 
-const activeTheme = computed(() =>
-  availableThemes.find((theme) => theme.id === activeThemeId.value) ?? availableThemes[0]
-)
-
 const activeTab = computed<StudioTabDefinition | null>(() => {
   return tabs.find((tab) => tab.id === activeTabId.value) ?? tabs[0] ?? null
 })
@@ -384,9 +380,6 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
               {{ theme.label }}
             </option>
           </select>
-          <small class="dde-theme-profile">
-            {{ activeTheme?.profile === 'accessible' ? 'Accessible profile · WCAG AA target' : 'Brand profile · best effort' }}
-          </small>
         </div>
         <button
           class="dde-btn dde-btn-ghost"
@@ -1662,18 +1655,10 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 }
 
 .dde-theme-selector {
-  display: grid;
-  grid-template-columns: auto auto;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   margin-inline-end: 0.5rem;
-}
-
-.dde-theme-profile {
-  grid-column: 2;
-  color: var(--studio-text-muted);
-  font-size: 0.66rem;
-  line-height: 1;
 }
 
 .dde-theme-label {
