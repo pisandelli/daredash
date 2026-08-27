@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { studioTokenDiagnostic } from '../../runtime/studio/tokens'
+import { availableStudioThemes, studioTokenDiagnostic } from '../../runtime/studio/tokens'
 
 describe('Studio token diagnostics', () => {
+  it('offers the experimental precision visual proposal without replacing default', () => {
+    expect(availableStudioThemes()).toContainEqual({ id: 'precision', label: 'Precision' })
+    expect(availableStudioThemes()[0]).toEqual({ id: 'default', label: 'Default (Light)' })
+  })
+
   it('resolves theme aliases recursively and exposes their chain', () => {
     const diagnostic = studioTokenDiagnostic('button.base-color', 'dark')
 
