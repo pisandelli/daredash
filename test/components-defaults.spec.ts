@@ -466,14 +466,16 @@ describe('default component tokens', () => {
     expect(switchCss).not.toContain('#fff')
   })
 
-  it('ships dark, redish, and blueish theme override layers', () => {
+  it('ships precision and color theme override layers', () => {
     const themesPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/themes.json'
     )
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['dark', 'redish', 'blueish', 'darker'])
+    expect(Object.keys(themes)).toEqual(['precision', 'dark', 'redish', 'blueish', 'darker'])
+    expect(themes.precision['border-radius'].base.$value).toBe('0.5rem')
+    expect(themes.precision['font-size'].sm.$value).toContain('clamp(')
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
     expect(themes.dark.color.bg['surface-subtle'].$value).toBe('{color.gray.900}')
