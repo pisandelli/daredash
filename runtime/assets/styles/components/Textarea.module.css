@@ -75,7 +75,7 @@
     border-color: var(--local-error-border-color);
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--local-error-border-color) 30%, transparent);
+      box-shadow: v('state.error.focus-ring');
     }
   }
 
@@ -83,7 +83,7 @@
     border-color: var(--local-success-border-color);
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--local-success-border-color) 30%, transparent);
+      box-shadow: v('state.success.focus-ring');
     }
   }
 
@@ -91,7 +91,7 @@
     border-color: var(--local-warning-border-color);
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--local-warning-border-color) 30%, transparent);
+      box-shadow: v('state.warning.focus-ring');
     }
   }
 }
