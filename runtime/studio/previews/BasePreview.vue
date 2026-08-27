@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 import { STUDIO_PREVIEW_CONTEXT_KEY } from '../interaction'
+import { studioContrast } from '../contrast'
 import getPrefixName from '#dd/utils/getPrefixName'
 
 const previewContext = inject(STUDIO_PREVIEW_CONTEXT_KEY, null)
@@ -149,6 +150,27 @@ function tokenColor(fieldPath: string, cssVarPath: string) {
 function tokenValue(fieldPath: string, fallback: string) {
   return previewContext?.resolveFieldValue(fieldPath) || fallback
 }
+
+const contrastPairs = [
+  { label: 'Default text', foreground: 'color.text.default', background: 'color.bg.surface' },
+  { label: 'Muted text', foreground: 'color.text.muted', background: 'color.bg.surface' },
+  { label: 'Primary', foreground: 'color.primary', background: 'color.bg.surface' },
+  { label: 'Success', foreground: 'color.success', background: 'color.bg.surface' },
+  { label: 'Warning', foreground: 'color.warning', background: 'color.bg.surface' },
+  { label: 'Danger', foreground: 'color.danger', background: 'color.bg.surface' },
+  { label: 'Error', foreground: 'color.error', background: 'color.bg.surface' },
+  { label: 'Info', foreground: 'color.info', background: 'color.bg.surface' }
+]
+
+const contrastChecks = computed(() => contrastPairs.map((pair) => ({
+  ...pair,
+  result: studioContrast(tokenValue(pair.foreground, ''), tokenValue(pair.background, ''))
+})))
+
+function contrastLabel(status: string, ratio: number | null) {
+  if (status === 'indeterminate') return 'Indeterminate'
+  return `${status.toUpperCase()} · ${ratio?.toFixed(2)}:1`
+}
 </script>
 
 <template>
@@ -226,6 +248,24 @@ function tokenValue(fieldPath: string, fallback: string) {
             </button>
           </div>
         </article>
+      </div>
+    </div>
+
+    <div class="dd-studio-preview-block">
+      <h3>Contrast checks</h3>
+      <p class="dd-base-contrast-note">Opaque resolved colors are checked against the surface. CSS expressions, alpha colors and gradients remain indeterminate by design.</p>
+      <div class="dd-base-contrast-grid">
+        <button
+          v-for="check in contrastChecks"
+          :key="check.label"
+          type="button"
+          class="dd-base-contrast-check"
+          :class="`dd-base-contrast-check-${check.result.status}`"
+          @click="focusField(check.foreground)"
+        >
+          <span>{{ check.label }}</span>
+          <strong>{{ contrastLabel(check.result.status, check.result.ratio) }}</strong>
+        </button>
       </div>
     </div>
 
@@ -398,6 +438,39 @@ function tokenValue(fieldPath: string, fallback: string) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
+
+.dd-base-contrast-note {
+  margin: 0 0 0.75rem;
+  color: v('color.text.muted', 'inherit');
+  font-size: 0.78rem;
+}
+
+.dd-base-contrast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.55rem;
+}
+
+.dd-base-contrast-check {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid v('color.border.default', 'rgba(148 163 184 / 0.2)');
+  border-radius: 10px;
+  background: v('color.bg.surface', '#ffffff');
+  color: v('color.text.default', 'inherit');
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  text-align: left;
+}
+
+.dd-base-contrast-check strong { font-size: 0.68rem; }
+.dd-base-contrast-check-aaa strong { color: #15803d; }
+.dd-base-contrast-check-aa strong { color: #0369a1; }
+.dd-base-contrast-check-fail strong { color: #b91c1c; }
+.dd-base-contrast-check-indeterminate strong { color: v('color.text.muted', 'inherit'); }
 
 .dd-base-surface-card,
 .dd-base-token-card {
