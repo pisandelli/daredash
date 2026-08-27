@@ -1698,6 +1698,8 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  /* The editor shell keeps its tooling font; the evaluated UI inherits the active theme. */
+  font-family: v('font.base');
   background: v('color.bg.canvas', v('color.bg.surface', '#ffffff'));
   color: v('color.text.default', 'inherit');
   border-radius: 18px;

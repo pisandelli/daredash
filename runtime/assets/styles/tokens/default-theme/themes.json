@@ -27,8 +27,8 @@
       "xl": { "$value": "1rem" }
     },
     "font-size": {
-      "xs": { "$value": "0.75rem" },
-      "sm": { "$value": "0.875rem" }
+      "xs": { "$value": "clamp(0.75rem, 0.72rem + 0.08vw, 0.8125rem)" },
+      "sm": { "$value": "clamp(0.875rem, 0.84rem + 0.1vw, 0.9375rem)" }
     },
     "card": {
       "border-radius": { "$value": "{border-radius.lg}" },
