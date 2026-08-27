@@ -9,6 +9,7 @@
   --local-trigger-font-size: v('tabs.trigger.font-size');
   --local-trigger-font-weight: v('tabs.trigger.font-weight');
   --local-trigger-border-radius: v('tabs.trigger.border-radius');
+  --local-trigger-disabled-opacity: v('tabs.trigger.disabled.opacity');
   --local-trigger-small-padding: v('tabs.trigger.size.small.padding');
   --local-trigger-small-font-size: v('tabs.trigger.size.small.font-size');
   --local-trigger-large-padding: v('tabs.trigger.size.large.padding');
@@ -111,7 +112,7 @@
 }
 
 .tab[disabled] {
-  opacity: 0.5;
+  opacity: var(--local-trigger-disabled-opacity);
   cursor: not-allowed;
   pointer-events: none;
 }

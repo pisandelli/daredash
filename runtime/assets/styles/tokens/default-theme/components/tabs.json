@@ -70,6 +70,12 @@
         "$value": "transparent"
       }
     },
+    "disabled": {
+      "$type": "object",
+      "opacity": {
+        "$value": 0.6
+      }
+    },
     "indicator": {
       "$type": "object",
       "color": {

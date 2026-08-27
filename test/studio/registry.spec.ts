@@ -320,7 +320,7 @@ describe('DareDash Studio registry', () => {
     expect(modalTab).toBeDefined()
     expect(modalTab!.navigationKind).toBe('component')
     expect(radiusField?.referencePath).toBe('border-radius.xl')
-    expect(shadowField?.referencePath).toBe('card.box-shadow')
+    expect(shadowField?.referencePath).toBe('card.elevated.box-shadow')
   })
 
   it('registers pagination with preserved token references', () => {
@@ -534,11 +534,13 @@ describe('DareDash Studio registry', () => {
   it('registers tabs with preserved token references', () => {
     const tabsTab = STUDIO_TABS.find((tab) => tab.id === 'tabs')
     const paddingField = tabsTab?.fields.find((field) => field.path === 'tabs.trigger.padding')
+    const disabledOpacityField = tabsTab?.fields.find((field) => field.path === 'tabs.trigger.disabled.opacity')
     const indicatorField = tabsTab?.fields.find((field) => field.path === 'tabs.trigger.indicator.color')
 
     expect(tabsTab).toBeDefined()
     expect(tabsTab!.navigationKind).toBe('component')
     expect(paddingField?.referencePath).toBe('tabs.trigger.size.regular.padding')
+    expect(disabledOpacityField?.defaultValue).toBe('0.6')
     expect(indicatorField?.referencePath).toBe('color.primary')
   })
 

@@ -964,6 +964,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('tabs.trigger.active.color', 'Active Color', 'color', 'Active'),
       componentField('tabs.trigger.active.border-color', 'Active Border Color', 'color', 'Active'),
       componentField('tabs.trigger.active.bg', 'Active Background', 'text', 'Active'),
+      componentField('tabs.trigger.disabled.opacity', 'Disabled Opacity', 'text', 'Disabled'),
       componentField('tabs.trigger.indicator.color', 'Indicator Color', 'color', 'Indicator'),
       componentField('tabs.trigger.indicator.size', 'Indicator Size', 'text', 'Indicator'),
       componentField('tabs.trigger.size.small.padding', 'Small Padding', 'text', 'Sizes'),
