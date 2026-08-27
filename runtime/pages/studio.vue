@@ -517,15 +517,22 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     <span>{{ displayFieldLabel(field) }}</span>
                     <code class="dde-field-path">{{ field.path }}</code>
                   </label>
-                  <div class="dde-field-info">
-                    <button
-                      type="button"
-                      class="dde-field-info-trigger"
-                      :aria-label="fieldInfoAriaLabel(field)"
-                    >
-                      i
-                    </button>
-                    <div class="dde-field-info-tooltip" role="tooltip">
+                  <div class="dde-field-tools">
+                    <span
+                      v-if="isFieldChanged(field.path)"
+                      class="dde-field-changed"
+                      title="Modified"
+                      aria-label="Modified"
+                    >●</span>
+                    <div class="dde-field-info">
+                      <button
+                        type="button"
+                        class="dde-field-info-trigger"
+                        :aria-label="fieldInfoAriaLabel(field)"
+                      >
+                        i
+                      </button>
+                      <div class="dde-field-info-tooltip" role="tooltip">
                       <div class="dde-field-info-section">
                         <span class="dde-field-info-title">Accepted input</span>
                         <div class="dde-field-info-chips">
@@ -595,6 +602,7 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                       >
                         {{ field.description }}
                       </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -782,12 +790,6 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
                     </div>
                   </div>
                 </div>
-
-                <span
-                  v-if="isFieldChanged(field.path)"
-                  class="dde-field-changed"
-                  title="Modified"
-                >●</span>
               </div>
             </div>
           </section>
@@ -1294,6 +1296,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
   flex: 0 0 auto;
 }
 
+.dde-field-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+}
+
 .dde-field-info-trigger {
   display: inline-grid;
   place-items: center;
@@ -1541,12 +1550,13 @@ provide(STUDIO_PREVIEW_CONTEXT_KEY, {
 }
 
 .dde-field-changed {
-  grid-column: 2;
-  grid-row: 1;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
   font-size: 0.5rem;
+  line-height: 1;
   color: var(--studio-accent);
-  align-self: start;
-  padding-block-start: 0.2rem;
 }
 
 .dde-input {

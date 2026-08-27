@@ -33,6 +33,10 @@ describe('DareDash Studio page', () => {
 
     expect(styleValue).toBeTruthy()
     expect(preview.attributes('style') ?? (preview.element as HTMLElement).style.cssText).not.toContain(':root')
+
+    const changedIndicator = wrapper.find('.dde-field-changed')
+    expect(changedIndicator.exists()).toBe(true)
+    expect(changedIndicator.element.nextElementSibling?.classList.contains('dde-field-info')).toBe(true)
   })
 
   it('reflects referenced color aliases in the base palette ramp', async () => {
