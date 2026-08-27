@@ -28,6 +28,9 @@
   "item-bg-hover": {
     "$value": "{color.bg.surface-hover}"
   },
+  "item-bg-active": {
+    "$value": "transparent"
+  },
   "item-radius": {
     "$value": "{border-radius.base}"
   },

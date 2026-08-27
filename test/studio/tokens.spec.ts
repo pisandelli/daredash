@@ -59,6 +59,12 @@ describe('Studio token diagnostics', () => {
     )
   })
 
+  it('aligns Precision anchors with the active navigation surface', () => {
+    expect(tokenValue('anchor.item-bg-active', undefined, 'precision')).toBe(
+      'color-mix(in srgb, #2563eb 8%, #ffffff)'
+    )
+  })
+
   it('resolves theme aliases recursively and exposes their chain', () => {
     const diagnostic = studioTokenDiagnostic('button.base-color', 'dark')
 

@@ -145,6 +145,7 @@ describe('default component tokens', () => {
     expect(anchorTokens['link-color'].$value).toBe('{color.text.muted}')
     expect(anchorTokens['link-color-hover'].$value).toBe('{color.text.default}')
     expect(anchorTokens['item-bg-hover'].$value).toBe('{color.bg.surface-hover}')
+    expect(anchorTokens['item-bg-active'].$value).toBe('transparent')
 
     expect(breadcrumbsTokens.item.color.$value).toBe('{color.text.muted}')
     expect(breadcrumbsTokens['item-current'].color.$value).toBe('{color.text.default}')

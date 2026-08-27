@@ -512,6 +512,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('anchor.link-color-hover', 'Link Hover Color', 'color', 'Core'),
       componentField('anchor.indicator-color-hover', 'Indicator Hover', 'color', 'Core'),
       componentField('anchor.item-bg-hover', 'Hover Background', 'color', 'Core'),
+      componentField('anchor.item-bg-active', 'Active Background', 'text', 'Core'),
       componentField('anchor.item-radius', 'Item Radius', 'text', 'Core'),
       componentField('anchor.padding-inline', 'Padding Inline', 'text', 'Spacing'),
       componentField('anchor.padding-block', 'Padding Block', 'text', 'Spacing')
