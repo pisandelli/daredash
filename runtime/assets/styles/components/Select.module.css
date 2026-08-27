@@ -75,7 +75,7 @@
     border-color: var(--local-error-border-color);
 
     &:focus {
-      box-shadow: v('state.error.focus-ring');
+      box-shadow: v('state.error.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.error') 30%, transparent));
     }
   }
 
@@ -83,7 +83,7 @@
     border-color: var(--local-success-border-color);
 
     &:focus {
-      box-shadow: v('state.success.focus-ring');
+      box-shadow: v('state.success.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.success') 30%, transparent));
     }
   }
 
@@ -91,7 +91,7 @@
     border-color: var(--local-warning-border-color);
 
     &:focus {
-      box-shadow: v('state.warning.focus-ring');
+      box-shadow: v('state.warning.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.warning') 30%, transparent));
     }
   }
 
