@@ -64,6 +64,19 @@
     },
     "input": {
       "border-radius": { "$value": "{shape.control}" }
+    },
+    "table": {
+      "border-radius": { "$value": "{shape.container}" },
+      "header": {
+        "font-weight": { "$value": "{font-weight.semi-bold}" },
+        "background-color": { "$value": "#f8fafc" }
+      },
+      "density": {
+        "comfortable": {
+          "header": { "padding": { "$value": "{space.sm}" } },
+          "cell": { "padding": { "$value": "{space.sm}" } }
+        }
+      }
     }
   },
   "dark": {
