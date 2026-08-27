@@ -37,6 +37,14 @@ describe('Studio token diagnostics', () => {
     )
   })
 
+  it('keeps Precision tabs compact with a subtle active surface', () => {
+    expect(tokenValue('tabs.list.gap', undefined, 'precision')).toBe('clamp(0.51rem, 0.46rem + 0.21vw, 0.64rem)')
+    expect(tokenValue('tabs.trigger.border-radius', undefined, 'precision')).toBe('0.5rem')
+    expect(tokenValue('tabs.trigger.active.bg', undefined, 'precision')).toBe(
+      'color-mix(in srgb, #2563eb 8%, #ffffff)'
+    )
+  })
+
   it('resolves theme aliases recursively and exposes their chain', () => {
     const diagnostic = studioTokenDiagnostic('button.base-color', 'dark')
 

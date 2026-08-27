@@ -68,6 +68,21 @@
     "input": {
       "border-radius": { "$value": "{shape.control}" }
     },
+    "tabs": {
+      "list": {
+        "gap": { "$value": "{space.xs}" },
+        "padding": { "$value": "{space.xs}" }
+      },
+      "trigger": {
+        "border-radius": { "$value": "{shape.control}" },
+        "hover": {
+          "bg": { "$value": "{color.bg.surface-hover}" }
+        },
+        "active": {
+          "bg": { "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})" }
+        }
+      }
+    },
     "table": {
       "border-radius": { "$value": "{shape.container}" },
       "header": {
