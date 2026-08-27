@@ -19,6 +19,17 @@
     "$description": "Text color (for initials)",
     "$value": "contrast-color({avatar.background-color})"
   },
+  "random-palette": {
+    "1": { "$value": "#fee2e2" },
+    "2": { "$value": "#ffedd5" },
+    "3": { "$value": "#fef9c3" },
+    "4": { "$value": "#dcfce7" },
+    "5": { "$value": "#cffafe" },
+    "6": { "$value": "#dbeafe" },
+    "7": { "$value": "#ede9fe" },
+    "8": { "$value": "#fae8ff" },
+    "9": { "$value": "#ffe4e6" }
+  },
   "font-size": {
     "$value": "{font-size.md}"
   },

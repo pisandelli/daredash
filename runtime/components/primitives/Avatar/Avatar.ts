@@ -41,18 +41,7 @@ export default defineNuxtComponent({
       imgError.value = true
     }
 
-    // Palette colors for random backgrounds (lighter pastel shades)
-    const palette = [
-      '#fee2e2',
-      '#ffedd5',
-      '#fef9c3',
-      '#dcfce7',
-      '#cffafe',
-      '#dbeafe',
-      '#ede9fe',
-      '#fae8ff',
-      '#ffe4e6'
-    ]
+    const randomPaletteSize = 9
 
     const backgroundColor = computed(() => {
       if (hasImage.value || !usesRandomPalette.value) return undefined
@@ -63,8 +52,8 @@ export default defineNuxtComponent({
       for (let i = 0; i < str.length; i++) {
         hash = str.charCodeAt(i) + ((hash << 5) - hash)
       }
-      const index = Math.abs(hash) % palette.length
-      return palette[index]
+      const index = (Math.abs(hash) % randomPaletteSize) + 1
+      return getPrefixName(`avatar-random-palette-${index}`, { type: 'css-var' })
     })
 
     const bgVar = getPrefixName('avatar-background-color', {
