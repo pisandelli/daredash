@@ -72,7 +72,7 @@
     --local-border-color: v('input.error-state.border-color');
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.danger') 30%, transparent);
+      box-shadow: v('state.danger.focus-ring');
     }
   }
 
@@ -80,7 +80,7 @@
     --local-border-color: v('color.warning');
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.warning') 30%, transparent);
+      box-shadow: v('state.warning.focus-ring');
     }
   }
 
@@ -88,7 +88,7 @@
     --local-border-color: v('color.success');
 
     &:focus {
-      box-shadow: 0 0 0 4px color-mix(in srgb, v('color.success') 30%, transparent);
+      box-shadow: v('state.success.focus-ring');
     }
   }
 

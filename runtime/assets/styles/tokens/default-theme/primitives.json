@@ -154,6 +154,7 @@
       "$value": "{color.accent.500}"
     },
     "success": {
+      "focus-ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.success} 30%, transparent)" },
       "50": {
         "$value": "#d4f6c9"
       },
@@ -298,6 +299,7 @@
       "$value": "{color.info.600}"
     },
     "warning": {
+      "focus-ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.warning} 30%, transparent)" },
       "50": {
         "$value": "#ffe9bd"
       },
@@ -410,6 +412,7 @@
       }
     },
     "danger": {
+      "focus-ring": { "$value": "0 0 0 4px color-mix(in srgb, {color.danger} 30%, transparent)" },
       "surface": {
         "$value": "color-mix(in srgb, {color.danger} 14%, {color.bg.surface})"
       },
