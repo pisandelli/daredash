@@ -395,6 +395,7 @@ describe('default component tokens', () => {
 
     expect(modalTokens['background-color'].$value).toBe('{color.bg.surface-elevated}')
     expect(modalTokens.color.$value).toBe('{color.text.default}')
+    expect(modalTokens['box-shadow'].$value).toBe('{card.elevated.box-shadow}')
     expect(modalTokens.close.color.$value).toBe('{color.text.muted}')
     expect(modalTokens.close.hover.color.$value).toBe('{color.danger.600}')
     expect(modalTokens.close.hover['background-color'].$value).toBe('{color.danger.50}')

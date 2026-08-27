@@ -11,7 +11,7 @@
     "$value": "{border-radius.xl}"
   },
   "box-shadow": {
-    "$value": "{card.box-shadow}"
+    "$value": "{card.elevated.box-shadow}"
   },
   "inline-size": {
     "$description": "Preferred size of the modal",
