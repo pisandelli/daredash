@@ -51,7 +51,7 @@
       "$value": "{color.bg.surface-hover}"
     },
     "bg-active": {
-      "$value": "{color.bg.surface-hover}"
+      "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})"
     },
     "icon-size": {
       "$value": "1.125rem"
@@ -105,7 +105,7 @@
       "$value": "{color.border.default}"
     },
     "shadow": {
-      "$value": "{shadow.lg}"
+      "$value": "0 12px 24px rgb(15 23 42 / 0.12), 0 2px 6px rgb(15 23 42 / 0.06)"
     },
     "border-radius": {
       "$value": "{border-radius.lg}"

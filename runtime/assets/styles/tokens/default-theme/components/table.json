@@ -25,7 +25,7 @@
   "header": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.bg.surface-hover}"
+      "$value": "#f8fafc"
     },
     "color": {
       "$value": "{color.text.default}"
@@ -37,7 +37,7 @@
       "$value": "{font-size.sm}"
     },
     "font-weight": {
-      "$value": "{font-weight.bold}"
+      "$value": "{font-weight.semi-bold}"
     },
     "text-transform": {
       "$value": "none"
@@ -70,7 +70,7 @@
   "row-striped": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.bg.surface-hover}"
+      "$value": "{color.bg.surface-subtle}"
     }
   },
   "row": {
@@ -82,7 +82,7 @@
   "row-hover": {
     "$type": "object",
     "background-color": {
-      "$value": "{color.bg.surface-hover}"
+      "$value": "color-mix(in srgb, {color.primary} 4%, {color.bg.surface})"
     }
   },
   "density": {

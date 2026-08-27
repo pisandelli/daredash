@@ -34,6 +34,10 @@ The library's default prefix is `dd`. With this default configuration, component
 
 All examples in this file assume `prefix: 'dd'`.
 
+### Default visual language
+
+Precision is DareDash's built-in default visual language. It is emitted at `:root`, so AI agents must not add `data-theme="precision"` to obtain the modern default appearance. Use named `data-theme` values only for alternate profiles such as `dark`, `darker`, `redish`, `blueish`, or `accessible`.
+
 If a consuming project changes the module `prefix`, the AI must adjust:
 
 - the registered component names;

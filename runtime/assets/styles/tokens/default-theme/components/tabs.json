@@ -9,10 +9,10 @@
       "$value": "1px"
     },
     "gap": {
-      "$value": "{space.sm}"
+      "$value": "{space.xs}"
     },
     "padding": {
-      "$value": "{space.sm}"
+      "$value": "{space.xs}"
     }
   },
   "trigger": {
@@ -67,7 +67,7 @@
         "$value": "{color.primary}"
       },
       "bg": {
-        "$value": "transparent"
+        "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})"
       }
     },
     "disabled": {

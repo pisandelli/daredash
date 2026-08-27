@@ -62,7 +62,7 @@ describe('DareDash Studio registry', () => {
     const grayAlias = baseTab?.fields.find((field) => field.path === 'color.gray')
 
     expect(errorAlias?.referencePath).toBe('color.danger.500')
-    expect(borderAlias?.referencePath).toBe('color.light-gray')
+    expect(borderAlias?.referencePath).toBeUndefined()
     expect(grayAlias?.referencePath).toBe('color.gray.500')
   })
 
@@ -308,8 +308,8 @@ describe('DareDash Studio registry', () => {
 
     expect(menuTab).toBeDefined()
     expect(menuTab!.navigationKind).toBe('component')
-    expect(activeField?.referencePath).toBe('color.bg.surface-hover')
-    expect(floatField?.referencePath).toBe('shadow.lg')
+    expect(activeField?.referencePath).toBeUndefined()
+    expect(floatField?.referencePath).toBeUndefined()
   })
 
   it('registers modal with preserved token references', () => {
@@ -320,7 +320,7 @@ describe('DareDash Studio registry', () => {
     expect(modalTab).toBeDefined()
     expect(modalTab!.navigationKind).toBe('component')
     expect(radiusField?.referencePath).toBe('border-radius.xl')
-    expect(shadowField?.referencePath).toBe('card.elevated.box-shadow')
+    expect(shadowField?.referencePath).toBeUndefined()
   })
 
   it('registers pagination with preserved token references', () => {
@@ -342,7 +342,7 @@ describe('DareDash Studio registry', () => {
     expect(popoverTab).toBeDefined()
     expect(popoverTab!.navigationKind).toBe('component')
     expect(backgroundField?.referencePath).toBe('color.bg.surface-elevated')
-    expect(shadowField?.referencePath).toBe('shadow.md')
+    expect(shadowField?.referencePath).toBeUndefined()
   })
 
   it('registers input with preserved token references', () => {
@@ -519,7 +519,7 @@ describe('DareDash Studio registry', () => {
     expect(colorField?.referencePath).toBe('color.text.default')
     expect(borderField?.referencePath).toBe('card.border-color')
     expect(borderWidthField?.defaultValue).toBe('1px')
-    expect(headerField?.referencePath).toBe('color.bg.surface-hover')
+    expect(headerField?.referencePath).toBeUndefined()
     expect(headerColorField?.referencePath).toBe('color.text.default')
     expect(headerFontSizeField?.referencePath).toBe('font-size.sm')
     expect(cellFontSizeField?.referencePath).toBe('font-size.sm')

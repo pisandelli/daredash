@@ -33,6 +33,12 @@ DareDash combines three concerns that are often split across separate tools:
 
 The result is not just a bag of components. It is a working product system that can be consumed by app teams and evolved by maintainers without drifting into one-off styling.
 
+## Default visual language
+
+The built-in default is the **Precision** visual language: a calm, high-clarity SaaS system with Inter, fluid small type, restrained radii, subtle navigation selection, and layered surfaces. It is emitted at `:root`; consumers do not need `data-theme="precision"`.
+
+Named themes such as `dark`, `darker`, `redish`, `blueish`, and `accessible` remain opt-in through `data-theme`.
+
 ## Quick Start
 
 ### Install

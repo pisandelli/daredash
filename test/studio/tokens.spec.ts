@@ -2,13 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { availableStudioThemes, studioTokenDiagnostic, tokenValue } from '../../runtime/studio/tokens'
 
 describe('Studio token diagnostics', () => {
-  it('offers the experimental precision visual proposal without replacing default', () => {
-    expect(availableStudioThemes()).toContainEqual({
-      id: 'precision',
-      label: 'Precision',
-      profile: 'brand',
-      accessibilityTarget: 'best-effort'
-    })
+  it('uses Precision as the built-in default rather than a named theme', () => {
+    expect(availableStudioThemes()).not.toContainEqual(expect.objectContaining({ id: 'precision' }))
     expect(availableStudioThemes()[0]).toEqual({
       id: 'default',
       label: 'Default (Light)',
@@ -28,39 +23,39 @@ describe('Studio token diagnostics', () => {
     expect(tokenValue('color.warning', undefined, 'accessible')).toBe('#9a4d00')
   })
 
-  it('keeps Precision small text fluid while enforcing a readable minimum', () => {
-    expect(tokenValue('font-size.xs', undefined, 'precision')).toBe(
+  it('keeps the default small text fluid while enforcing a readable minimum', () => {
+    expect(tokenValue('font-size.xs')).toBe(
       'clamp(0.75rem, 0.72rem + 0.08vw, 0.8125rem)'
     )
-    expect(tokenValue('font-size.sm', undefined, 'precision')).toBe(
+    expect(tokenValue('font-size.sm')).toBe(
       'clamp(0.875rem, 0.84rem + 0.1vw, 0.9375rem)'
     )
   })
 
-  it('keeps Precision tabs compact with a subtle active surface', () => {
-    expect(tokenValue('tabs.list.gap', undefined, 'precision')).toBe('clamp(0.51rem, 0.46rem + 0.21vw, 0.64rem)')
-    expect(tokenValue('tabs.trigger.border-radius', undefined, 'precision')).toBe('0.5rem')
-    expect(tokenValue('tabs.trigger.active.bg', undefined, 'precision')).toBe(
+  it('keeps default tabs compact with a subtle active surface', () => {
+    expect(tokenValue('tabs.list.gap')).toBe('clamp(0.51rem, 0.46rem + 0.21vw, 0.64rem)')
+    expect(tokenValue('tabs.trigger.border-radius')).toBe('0.5rem')
+    expect(tokenValue('tabs.trigger.active.bg')).toBe(
       'color-mix(in srgb, #2563eb 8%, #ffffff)'
     )
   })
 
-  it('keeps Precision table hierarchy subtle and scannable', () => {
-    expect(tokenValue('table.row-striped.background-color', undefined, 'precision')).toBe('#fbfcfe')
-    expect(tokenValue('table.row-hover.background-color', undefined, 'precision')).toBe(
+  it('keeps default table hierarchy subtle and scannable', () => {
+    expect(tokenValue('table.row-striped.background-color')).toBe('#fbfcfe')
+    expect(tokenValue('table.row-hover.background-color')).toBe(
       'color-mix(in srgb, #2563eb 4%, #ffffff)'
     )
   })
 
-  it('uses a distinct active surface for Precision menu navigation', () => {
-    expect(tokenValue('menu.item.bg-hover', undefined, 'precision')).toBe('#f1f5f9')
-    expect(tokenValue('menu.item.bg-active', undefined, 'precision')).toBe(
+  it('uses a distinct active surface for default menu navigation', () => {
+    expect(tokenValue('menu.item.bg-hover')).toBe('#f1f5f9')
+    expect(tokenValue('menu.item.bg-active')).toBe(
       'color-mix(in srgb, #2563eb 8%, #ffffff)'
     )
   })
 
-  it('aligns Precision anchors with the active navigation surface', () => {
-    expect(tokenValue('anchor.item-bg-active', undefined, 'precision')).toBe(
+  it('aligns default anchors with the active navigation surface', () => {
+    expect(tokenValue('anchor.item-bg-active')).toBe(
       'color-mix(in srgb, #2563eb 8%, #ffffff)'
     )
   })

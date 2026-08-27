@@ -8,10 +8,10 @@
     "$value": "{color.border.default}"
   },
   "border-radius": {
-    "$value": "{border-radius.base}"
+    "$value": "{border-radius.lg}"
   },
   "shadow": {
-    "$value": "{shadow.md}"
+    "$value": "0 12px 24px rgb(15 23 42 / 0.12), 0 2px 6px rgb(15 23 42 / 0.06)"
   },
   "padding": {
     "$value": "{space.md}"

@@ -11,7 +11,7 @@
     "$value": "{border-radius.xl}"
   },
   "box-shadow": {
-    "$value": "{card.elevated.box-shadow}"
+    "$value": "0 20px 40px rgb(15 23 42 / 0.18), 0 4px 12px rgb(15 23 42 / 0.08)"
   },
   "inline-size": {
     "$description": "Preferred size of the modal",
@@ -46,10 +46,10 @@
     "$description": "Styles for the modal's scrim (backdrop)",
     "$type": "object",
     "filter": {
-      "$value": "blur(5px)"
+      "$value": "blur(3px)"
     },
     "background-color": {
-      "$value": "rgba(0, 0, 0, 0.7)"
+      "$value": "rgb(15 23 42 / 0.48)"
     }
   },
   "title": {

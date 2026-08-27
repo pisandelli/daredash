@@ -145,7 +145,7 @@ describe('default component tokens', () => {
     expect(anchorTokens['link-color'].$value).toBe('{color.text.muted}')
     expect(anchorTokens['link-color-hover'].$value).toBe('{color.text.default}')
     expect(anchorTokens['item-bg-hover'].$value).toBe('{color.bg.surface-hover}')
-    expect(anchorTokens['item-bg-active'].$value).toBe('transparent')
+    expect(anchorTokens['item-bg-active'].$value).toContain('color-mix(')
 
     expect(breadcrumbsTokens.item.color.$value).toBe('{color.text.muted}')
     expect(breadcrumbsTokens['item-current'].color.$value).toBe('{color.text.default}')
@@ -171,8 +171,8 @@ describe('default component tokens', () => {
     expect(primitives.color['light-gray'].$value).toBe('{color.gray.200}')
     expect(primitives.color['dark-gray'].$value).toBe('{color.gray.600}')
     expect(primitives.color['darker-gray'].$value).toBe('{color.gray.900}')
-    expect(primitives.color.text.muted.$value).toBe('{color.gray.500}')
-    expect(primitives.color['border-hover'].$value).toBe('{color.gray.300}')
+    expect(primitives.color.text.muted.$value).toBe('#63708a')
+    expect(primitives.color['border-hover'].$value).toBe('#cbd5e1')
   })
 
   it('ships reusable semantic state surface tokens', () => {
@@ -245,15 +245,15 @@ describe('default component tokens', () => {
 
     expect(tableTokens.header.color.$value).toBe('{color.text.default}')
     expect(tableTokens['border-color'].$value).toBe('{card.border-color}')
-    expect(tableTokens.header['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(tableTokens.header['background-color'].$value).toBe('#f8fafc')
     expect(tableTokens.header['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.header.padding.$value).toBe('{space.sm}')
     expect(tableTokens.cell['font-size'].$value).toBe('{font-size.sm}')
     expect(tableTokens.cell.padding.$value).toBe('{space.sm}')
     expect(tableTokens.cell['border-color'].$value).toBe('{color.border.default}')
-    expect(tableTokens['row-striped']['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(tableTokens['row-striped']['background-color'].$value).toBe('{color.bg.surface-subtle}')
     expect(tableTokens.row['background-color'].$value).toBe('transparent')
-    expect(tableTokens['row-hover']['background-color'].$value).toBe('{color.bg.surface-hover}')
+    expect(tableTokens['row-hover']['background-color'].$value).toContain('color-mix(')
     expect(tableTokens.header['text-transform'].$value).toBe('none')
     expect(tableTokens.density.large.header['font-size'].$value).toBe('{font-size.base}')
     expect(tableTokens.density.large.header.padding.$value).toBe('{space.md}')
@@ -281,7 +281,7 @@ describe('default component tokens', () => {
     const switchTokens = JSON.parse(readFileSync(switchTokensPath, 'utf8'))
 
     expect(menuTokens.item['color-disabled'].$value).toBe('{color.text.muted}')
-    expect(menuTokens.item['bg-active'].$value).toBe('{color.bg.surface-hover}')
+    expect(menuTokens.item['bg-active'].$value).toContain('color-mix(')
     expect(menuTokens.separator.color.$value).toBe('{color.text.muted}')
     expect(switchTokens.track['background-color'].$value).toBe('{color.text.muted}')
   })
@@ -396,7 +396,7 @@ describe('default component tokens', () => {
 
     expect(modalTokens['background-color'].$value).toBe('{color.bg.surface-elevated}')
     expect(modalTokens.color.$value).toBe('{color.text.default}')
-    expect(modalTokens['box-shadow'].$value).toBe('{card.elevated.box-shadow}')
+    expect(modalTokens['box-shadow'].$value).toContain('0 20px 40px')
     expect(modalTokens.close.color.$value).toBe('{color.text.muted}')
     expect(modalTokens.close.hover.color.$value).toBe('{color.danger.600}')
     expect(modalTokens.close.hover['background-color'].$value).toBe('{color.danger.50}')
@@ -468,16 +468,14 @@ describe('default component tokens', () => {
     expect(switchCss).not.toContain('#fff')
   })
 
-  it('ships precision and color theme override layers', () => {
+  it('ships accessible and color theme override layers', () => {
     const themesPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/themes.json'
     )
 
     const themes = JSON.parse(readFileSync(themesPath, 'utf8'))
 
-    expect(Object.keys(themes)).toEqual(['precision', 'accessible', 'dark', 'redish', 'blueish', 'darker'])
-    expect(themes.precision['border-radius'].base.$value).toBe('0.5rem')
-    expect(themes.precision['font-size'].sm.$value).toContain('clamp(')
+    expect(Object.keys(themes)).toEqual(['accessible', 'dark', 'redish', 'blueish', 'darker'])
     expect(themes.accessible.focus.ring.$value).toBe('0 0 0 3px #1d4ed8')
     expect(themes.dark.color.text.default.$value).toBe('{color.gray.50}')
     expect(themes.dark.color.bg.canvas.$value).toBe('{color.gray.950}')
