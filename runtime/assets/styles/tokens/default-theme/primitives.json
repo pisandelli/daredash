@@ -383,6 +383,12 @@
   },
   "state": {
     "$description": "Semantic surface tokens for reusable operational states",
+    "selected": {
+      "$description": "Shared active navigation surface",
+      "surface": {
+        "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})"
+      }
+    },
     "success": {
       "surface": {
         "$value": "color-mix(in srgb, {color.success} 14%, {color.bg.surface})"

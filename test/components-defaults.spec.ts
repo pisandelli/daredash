@@ -145,7 +145,7 @@ describe('default component tokens', () => {
     expect(anchorTokens['link-color'].$value).toBe('{color.text.muted}')
     expect(anchorTokens['link-color-hover'].$value).toBe('{color.text.default}')
     expect(anchorTokens['item-bg-hover'].$value).toBe('{color.bg.surface-hover}')
-    expect(anchorTokens['item-bg-active'].$value).toContain('color-mix(')
+    expect(anchorTokens['item-bg-active'].$value).toBe('{state.selected.surface}')
 
     expect(breadcrumbsTokens.item.color.$value).toBe('{color.text.muted}')
     expect(breadcrumbsTokens['item-current'].color.$value).toBe('{color.text.default}')
@@ -281,7 +281,7 @@ describe('default component tokens', () => {
     const switchTokens = JSON.parse(readFileSync(switchTokensPath, 'utf8'))
 
     expect(menuTokens.item['color-disabled'].$value).toBe('{color.text.muted}')
-    expect(menuTokens.item['bg-active'].$value).toContain('color-mix(')
+    expect(menuTokens.item['bg-active'].$value).toBe('{state.selected.surface}')
     expect(menuTokens.separator.color.$value).toBe('{color.text.muted}')
     expect(switchTokens.track['background-color'].$value).toBe('{color.text.muted}')
   })

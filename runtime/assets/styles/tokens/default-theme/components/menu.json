@@ -51,7 +51,7 @@
       "$value": "{color.bg.surface-hover}"
     },
     "bg-active": {
-      "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})"
+      "$value": "{state.selected.surface}"
     },
     "icon-size": {
       "$value": "1.125rem"

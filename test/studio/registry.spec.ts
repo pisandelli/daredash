@@ -308,7 +308,7 @@ describe('DareDash Studio registry', () => {
 
     expect(menuTab).toBeDefined()
     expect(menuTab!.navigationKind).toBe('component')
-    expect(activeField?.referencePath).toBeUndefined()
+    expect(activeField?.referencePath).toBe('state.selected.surface')
     expect(floatField?.referencePath).toBeUndefined()
   })
 

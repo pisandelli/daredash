@@ -29,7 +29,7 @@
     "$value": "{color.bg.surface-hover}"
   },
   "item-bg-active": {
-    "$value": "color-mix(in srgb, {color.primary} 8%, {color.bg.surface})"
+    "$value": "{state.selected.surface}"
   },
   "item-radius": {
     "$value": "{border-radius.base}"

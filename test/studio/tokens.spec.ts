@@ -54,6 +54,15 @@ describe('Studio token diagnostics', () => {
     )
   })
 
+  it('shares the selected surface across navigation primitives', () => {
+    expect(studioTokenDiagnostic('state.selected.surface').value).toBe(
+      'color-mix(in srgb, #2563eb 8%, #ffffff)'
+    )
+    expect(studioTokenDiagnostic('menu.item.bg-active').rawValue).toBe('{state.selected.surface}')
+    expect(studioTokenDiagnostic('tabs.trigger.active.bg').rawValue).toBe('{state.selected.surface}')
+    expect(studioTokenDiagnostic('anchor.item-bg-active').rawValue).toBe('{state.selected.surface}')
+  })
+
   it('aligns default anchors with the active navigation surface', () => {
     expect(tokenValue('anchor.item-bg-active')).toBe(
       'color-mix(in srgb, #2563eb 8%, #ffffff)'
