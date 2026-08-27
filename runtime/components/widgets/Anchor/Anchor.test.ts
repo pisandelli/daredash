@@ -75,4 +75,21 @@ describe('Anchor Widget', () => {
     const emittedItem = firstEmission![1]
     expect(emittedItem).toEqual(mockItems[0])
   })
+
+  it('renders disabled items as unavailable and does not emit navigation clicks', async () => {
+    const wrapper = await mountSuspended(Anchor, {
+      props: {
+        items: [...mockItems, { key: 'locked', href: '#locked', title: 'Locked', disabled: true }]
+      }
+    })
+
+    const disabledItem = wrapper.find('li[data-disabled]')
+    const disabledLink = disabledItem.find('a')
+
+    expect(disabledLink.attributes('aria-disabled')).toBe('true')
+    expect(disabledLink.attributes('tabindex')).toBe('-1')
+
+    await disabledLink.trigger('click')
+    expect(wrapper.emitted('click')).toBeUndefined()
+  })
 })

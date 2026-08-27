@@ -19,7 +19,8 @@ const sidebarItems: MenuEntry[] = [
     ],
     action: { type: 'none' }
   },
-  { key: 'settings', label: 'Settings', icon: 'lucide:settings', action: { type: 'none' } }
+  { key: 'settings', label: 'Settings', icon: 'lucide:settings', action: { type: 'none' } },
+  { key: 'billing', label: 'Billing locked', icon: 'lucide:lock', disabled: true, action: { type: 'none' } }
 ]
 
 const floatingItems: MenuEntry[] = [
@@ -63,6 +64,7 @@ function focusField(path: string) {
         <div class="dd-menu-actions">
           <button type="button" class="dd-menu-action" @click="focusField('menu.width')">Width</button>
           <button type="button" class="dd-menu-action" @click="focusField('menu.item.bg-active')">Active item</button>
+          <button type="button" class="dd-menu-action" @click="focusField('menu.item.color-disabled')">Disabled item</button>
           <button type="button" class="dd-menu-action" @click="focusField('menu.separator.border-color')">Separator</button>
           <button type="button" class="dd-menu-action" @click="focusField('menu.toggle.icon-size')">Toggle</button>
         </div>

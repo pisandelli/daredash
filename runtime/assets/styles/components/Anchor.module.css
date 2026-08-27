@@ -62,6 +62,12 @@
   background-color: var(--local-item-bg-hover);
 }
 
+.link[aria-disabled='true'] {
+  opacity: v('opacity.disabled');
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* Active State */
 .item[data-active] .link {
   color: var(--local-active-color);

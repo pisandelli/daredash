@@ -2,7 +2,7 @@
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Anchor</h2>
-      <p>Navigation component for navigating between sections of a page.</p>
+      <p>Navigation component for navigating between sections of a page, including active and disabled items.</p>
     </header>
 
     <div class="dd-studio-preview-block">
@@ -21,6 +21,7 @@ const mockItems = ref([
   { key: 'section1', href: '#section1', title: 'Introduction' },
   { key: 'section2', href: '#section2', title: 'Components' },
   { key: 'section3', href: '#section3', title: 'Tokens & Styling' },
-  { key: 'section4', href: '#section4', title: 'Resources' }
+  { key: 'section4', href: '#section4', title: 'Resources' },
+  { key: 'section5', href: '#section5', title: 'Advanced settings', disabled: true }
 ])
 </script>

@@ -8,6 +8,7 @@ export interface AnchorItem {
   key: string
   href: string
   title: string | (() => VNode)
+  disabled?: boolean
 }
 
 export default defineNuxtComponent({
@@ -147,6 +148,10 @@ export default defineNuxtComponent({
     })
 
     const handleClick = (e: MouseEvent, item: AnchorItem) => {
+      if (item.disabled) {
+        e.preventDefault()
+        return
+      }
       emit('click', e, item)
     }
 
@@ -158,11 +163,14 @@ export default defineNuxtComponent({
         return h('li', {
           key: item.key,
           class: styles.item,
-          'data-active': isActive ? '' : undefined
+          'data-active': isActive ? '' : undefined,
+          'data-disabled': item.disabled ? '' : undefined
         }, [
           h('a', {
             class: styles.link,
             href: sanitizeHref(item.href),
+            'aria-disabled': item.disabled ? 'true' : undefined,
+            tabindex: item.disabled ? -1 : undefined,
             onClick: (e: MouseEvent) => handleClick(e, item)
           }, titleContent)
         ])
