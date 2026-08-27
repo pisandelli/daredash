@@ -102,7 +102,7 @@
   "required-marker": {
     "$type": "object",
     "color": {
-      "$value": "{color.danger}"
+      "$value": "{color.error}"
     }
   },
   "focus": {

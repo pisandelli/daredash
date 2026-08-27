@@ -2,7 +2,6 @@ import primitives from '../assets/styles/tokens/default-theme/primitives.json'
 import themes from '../assets/styles/tokens/default-theme/themes.json'
 import type { StudioFieldDefinition } from './types'
 import { STUDIO_COMPONENT_TOKENS } from './componentTokens'
-import getPrefixName from '#dd/utils/getPrefixName'
 
 export interface StudioThemeOption {
   id: string
@@ -23,6 +22,10 @@ export interface StudioTokenDiagnostic {
   chain: string[]
   status: StudioTokenResolutionStatus
   cycle?: string[]
+}
+
+function studioCssFallback(path: string): string {
+  return `var(--dd-${path.replace(/\./g, '-')})`
 }
 
 export function availableStudioThemes(): StudioThemeOption[] {
@@ -84,7 +87,7 @@ export function studioTokenDiagnostic(path: string, themeId?: string): StudioTok
       return {
         path: currentPath,
         rawValue,
-        value: getPrefixName(currentPath.replace(/\./g, '-'), { type: 'css-var' }),
+        value: studioCssFallback(currentPath),
         references,
         chain: [...stack, currentPath],
         status: 'cyclic-reference',
@@ -117,7 +120,7 @@ export function studioTokenDiagnostic(path: string, themeId?: string): StudioTok
         status = 'unresolved-reference'
       }
 
-      return reference.value || getPrefixName(refPath.replace(/\./g, '-'), { type: 'css-var' })
+      return reference.value || studioCssFallback(refPath)
     })
 
     return { path: currentPath, rawValue, value, references, chain, status, cycle }

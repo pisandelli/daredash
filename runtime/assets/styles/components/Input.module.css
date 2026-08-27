@@ -72,7 +72,15 @@
     --local-border-color: v('input.error-state.border-color');
 
     &:focus {
-      box-shadow: v('state.danger.focus-ring');
+      box-shadow: v('state.error.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.error') 30%, transparent));
+    }
+  }
+
+  &[data-danger] {
+    --local-border-color: v('color.danger');
+
+    &:focus {
+      box-shadow: v('state.danger.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.danger') 30%, transparent));
     }
   }
 
@@ -80,7 +88,7 @@
     --local-border-color: v('color.warning');
 
     &:focus {
-      box-shadow: v('state.warning.focus-ring');
+      box-shadow: v('state.warning.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.warning') 30%, transparent));
     }
   }
 
@@ -88,7 +96,7 @@
     --local-border-color: v('color.success');
 
     &:focus {
-      box-shadow: v('state.success.focus-ring');
+      box-shadow: v('state.success.focus-ring', 0 0 0 4px color-mix(in srgb, v('color.success') 30%, transparent));
     }
   }
 
