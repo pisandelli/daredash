@@ -22,6 +22,11 @@
   "box-shadow": {
     "$value": "{shadow.sm}"
   },
+  "elevated": {
+    "box-shadow": {
+      "$value": "{shadow.md}"
+    }
+  },
   "max-width": {
     "$value": "content"
   },

@@ -45,6 +45,7 @@
 
   &[data-elevated] {
     --local-bg: v('color.bg.surface-elevated');
+    --local-shadow: v('card.elevated.box-shadow');
   }
 
   &[data-canvas] {
