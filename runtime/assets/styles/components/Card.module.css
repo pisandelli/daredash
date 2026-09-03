@@ -104,13 +104,12 @@
 }
 
 /* -- Scrollable content -- */
-.card[data-scroll] > * {
+.card > * {
   flex: 1 1 auto;
   min-block-size: 0;
 }
 
 .card[data-scroll] .body {
-  min-block-size: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
 }

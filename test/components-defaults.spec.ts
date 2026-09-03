@@ -383,13 +383,13 @@ describe('default component tokens', () => {
     expect(cardCss).toContain("--local-footer-padding: v('card.footer.padding', var(--local-padding));")
   })
 
-  it('makes only the card body scrollable when scroll is enabled', () => {
+  it('keeps card wrappers shrinkable and scrolls only the body when enabled', () => {
     const cardCssPath = getModulePath(
       'runtime/assets/styles/components/Card.module.css'
     )
     const cardCss = readFileSync(cardCssPath, 'utf8')
 
-    expect(cardCss).toContain('.card[data-scroll] > *')
+    expect(cardCss).toContain('.card > *')
     expect(cardCss).toContain('.card[data-scroll] .body')
     expect(cardCss).toContain('flex: 1 1 auto;')
     expect(cardCss).toContain('min-block-size: 0;')
