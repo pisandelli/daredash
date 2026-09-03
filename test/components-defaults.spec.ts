@@ -391,6 +391,7 @@ describe('default component tokens', () => {
 
     expect(cardCss).toContain('.card[data-scroll] > *')
     expect(cardCss).toContain('.card[data-scroll] .body')
+    expect(cardCss).toContain('flex: 1 1 auto;')
     expect(cardCss).toContain('min-block-size: 0;')
     expect(cardCss).toContain('overflow-y: auto;')
     expect(cardCss).toContain('overscroll-behavior: contain;')

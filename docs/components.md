@@ -14,6 +14,32 @@ Use this file in three ways:
 
 For deeper theming and token behavior, continue to [Features, Tokens, and Theming](./features.md).
 
+Attributes shown below are boolean visual or structural attributes, so write them without a value (for example, `<dd-progress success large />`). Only use attributes listed for that component; a boolean attribute is forwarded to the rendered element, but affects its appearance only when the component implements it.
+
+### Visual attribute index
+
+Use this index to find component-specific boolean attributes quickly. Props such as `disabled`, `loading`, and `vertical` remain documented in their component sections because they control behavior as well as presentation.
+
+| Component | Supported visual attributes |
+| :--- | :--- |
+| `dd-button` | `primary`, `success`, `warning`, `danger`, `info`, `ghost`, `outline`, `full`, `icon-right`, `icon-only`, `tiny`, `small`, `large`, `xlarge` |
+| `dd-card` | `canvas`, `subtle`, `elevated`, `flat`, `noborder`, `scroll`, `success`, `warning`, `danger`, `info` |
+| `dd-badge` | `primary`, `success`, `warning`, `danger`, `info` |
+| `dd-avatar` | `square`, `random`, `online`, `offline`, `busy`, `away`, `small`, `large`, `xlarge` |
+| `dd-avatar-group` | `square`, `small`, `large`, `xlarge` |
+| `dd-alert` | `primary`, `success`, `warning`, `danger`, `error`, `info` |
+| `dd-progress` | `primary`, `success`, `warning`, `danger`, `info`, `tiny`, `small`, `large`, `xlarge` |
+| `dd-input` | `error`, `warning`, `success`, `danger`, `small`, `large`, `no-message` |
+| `dd-textarea`, `dd-select` | `error`, `warning`, `success`, `no-message` (`dd-select` also supports `small`, `large`) |
+| `dd-checkbox`, `dd-radio` | `error`, `warning` |
+| `dd-toggle` | `primary`, `success`, `warning`, `danger`, `info`, `small`, `large`, `xlarge` |
+| `dd-accordion` | `primary`, `success`, `warning`, `danger`, `info` |
+| `dd-input-search` | `success`, `danger`, `neutral` |
+| `dd-tabs` | `small`, `large` |
+| `dd-tab` | `primary`, `success`, `warning`, `danger`, `info`, `small`, `large` |
+| `dd-table` | `large`, `comfortable`, `compact`, `striped`, `striped-odd`, `loading-overlay` |
+| `dd-pagination` | `small`, `compact`, `simple` |
+
 ## 2. Primitives
 
 ### Button (`<dd-button>`)
@@ -73,12 +99,41 @@ Use `dd-card` to group related content with optional header and footer regions.
 - `default`
 - `footer`
 
-#### Common attrs
+#### Attributes
 
-- `flat`
-- `noborder`
+| Attribute | Effect |
+| --- | --- |
+| `elevated` | Uses the `surface-elevated` background and the stronger `card.elevated.box-shadow` shadow. Use for highlighted or floating content. |
+| `subtle` | Uses the recessed `surface-subtle` background. |
+| `canvas` | Uses the base `canvas` background. |
+| `flat` | Removes the border radius and shadow. |
+| `noborder` | Removes the border and shadow. |
+| `scroll` | Makes only the default-slot body scroll when the card has a constrained height; header and footer remain visible. |
+| `success`, `warning`, `danger`, `info` | Applies the corresponding semantic state surface, foreground, and borders. |
+
+Cards have a light default shadow (`card.box-shadow`). There is no `shadow="…"` attribute: use `elevated` for the built-in stronger elevation, or customize the `card.box-shadow` and `card.elevated.box-shadow` theme tokens. See [Surface Hierarchy](./features.md#surface-hierarchy-depth--visual-layering) for guidance on choosing `canvas`, `subtle`, default, and `elevated` surfaces.
 
 Consumer classes passed to `dd-card` are preserved on the card root and can be used as local visual hooks.
+
+Use `scroll` when a card must fit in a constrained vertical area. The card (or a flex ancestor) must have a bounded height and `min-block-size: 0`; the card keeps its clipping behavior while only the default-slot body receives vertical scrolling.
+
+```vue
+<template>
+  <dd-card scroll class="activity-card">
+    <template #header>Activity</template>
+    <activity-list :items="items" />
+    <template #footer>
+      <dd-button primary>View all</dd-button>
+    </template>
+  </dd-card>
+</template>
+
+<style scoped>
+.activity-card {
+  block-size: 24rem;
+}
+</style>
+```
 
 ### Badge (`<dd-badge>`)
 
@@ -157,13 +212,12 @@ Displays profile images or initials.
 #### Common attrs
 
 - `square`
-- `circle`
 - `online`
 - `offline`
 - `busy`
 - `away`
 - `random`
-- size attrs such as `xxs`, `small`, `medium`, `large`
+- size attrs: `small`, `large`, `xlarge`
 
 #### `dd-avatar-group` props
 
@@ -198,6 +252,12 @@ Use `dd-alert` for inline contextual messages.
 - `update:modelValue`
 - `close`
 
+#### Common attrs
+
+- semantic intent: `primary`, `success`, `warning`, `danger`, `error`, `info`
+
+The semantic attribute selects the alert's base color. `color` takes precedence when a one-off custom color is needed.
+
 #### Slots
 
 - `title`
@@ -229,6 +289,13 @@ Linear progress bar with optional label and tooltip slot.
 
 - `label`
 - `tooltip` with `{ percentage }`
+
+#### Common attrs
+
+- semantic indicator color: `primary`, `success`, `warning`, `danger`, `info`
+- size: `tiny`, `small`, `large`, `xlarge`
+
+`color` overrides a semantic indicator color for the instance; a matching entry in `ranges` takes precedence over both.
 
 ### Loading (`<dd-loading>`)
 
@@ -353,11 +420,12 @@ Styled text input for short values.
 - `error`
 - `warning`
 - `success`
+- `danger`
 - `small`
 - `large`
 - `no-message`
 
-Disabled selects follow the same shared field tokens as inputs and textareas, which keeps light and dark themes aligned across the full form primitive set.
+Disabled inputs follow the same shared field tokens as textareas and selects, which keeps light and dark themes aligned across the full form primitive set.
 - standard native attrs such as `required` and `disabled`
 
 Use `no-message` for compact filter/search rows where the reserved helper/error area would disrupt alignment.
@@ -473,7 +541,8 @@ Common supported behavior across these controls includes:
 - props: `name`, `value`, `id`, `label`, `disabled`, `loading`, `model-value`
 - emits: `update:modelValue`
 - slots: `default`, `checked`, `unchecked`
-- supports semantic and size attrs where implemented by the toggle CSS
+- semantic attrs: `primary`, `success`, `warning`, `danger`, `info`
+- size attrs: `small`, `large`, `xlarge`
 
 ### InputSearch (`<dd-input-search>`)
 
@@ -501,6 +570,8 @@ Search input with an embedded button.
 - `search`
 
 Semantic button intent is driven by attrs on the component, not by a generic variant prop.
+
+`primary` is the default search-button intent. Use `success`, `danger`, or `neutral` to change it; `disabled` disables both the input and search button.
 
 ### InputGroup (`<dd-input-group>`)
 
@@ -585,6 +656,8 @@ Use accordions for reveal/hide patterns that stay in the same scroll flow.
 - `accent-color`
 
 When `default-open` is used inside `dd-accordion-group`, the group honors that initial open state. With the default `multiple=false`, only the first `default-open` item stays open on first render.
+
+`accent-color` accepts a CSS color or one of `primary`, `success`, `warning`, `danger`, or `info`. Those semantic names can also be passed as boolean attributes directly to an individual `dd-accordion`.
 
 ### Modal (`<dd-modal>`)
 
@@ -682,6 +755,9 @@ Important pieces:
   - slots: `default`, `prefix`, `suffix`
 - `dd-tab`
   - props: `value`, `disabled`, `loading`, `closable`, `icon`, `to`, `href`
+  - semantic attrs: `primary`, `success`, `warning`, `danger`, `info`
+- `dd-tabs` and `dd-tab`
+  - size attrs: `small`, `large`
 - `dd-tab-panel`
   - prop: `value`
 
