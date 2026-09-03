@@ -60,6 +60,7 @@ export const customAttributes = new Set([
   // from Card.vue
   'noborder',
   'flat',
+  'scroll',
   // default colors
   'primary',
   'accent',

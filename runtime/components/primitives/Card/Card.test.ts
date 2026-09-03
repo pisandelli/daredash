@@ -56,6 +56,22 @@ describe('Card Primitive', () => {
     expect(wrapper.attributes('data-canvas')).toBeDefined()
   })
 
+  it('forwards scroll as a structural data attribute on the card root', async () => {
+    const wrapper = await mountSuspended(Card, {
+      attrs: { scroll: true },
+      slots: {
+        header: () => 'Card Header',
+        default: () => 'Scrollable content',
+        footer: () => 'Card Footer'
+      }
+    })
+
+    expect(wrapper.attributes('data-scroll')).toBeDefined()
+    expect(wrapper.find('header').text()).toBe('Card Header')
+    expect(wrapper.find('section').text()).toBe('Scrollable content')
+    expect(wrapper.find('footer').text()).toBe('Card Footer')
+  })
+
   it('preserves consumer classes on the card root', async () => {
     const wrapper = await mountSuspended(Card, {
       attrs: {

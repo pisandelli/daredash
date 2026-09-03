@@ -383,6 +383,19 @@ describe('default component tokens', () => {
     expect(cardCss).toContain("--local-footer-padding: v('card.footer.padding', var(--local-padding));")
   })
 
+  it('makes only the card body scrollable when scroll is enabled', () => {
+    const cardCssPath = getModulePath(
+      'runtime/assets/styles/components/Card.module.css'
+    )
+    const cardCss = readFileSync(cardCssPath, 'utf8')
+
+    expect(cardCss).toContain('.card[data-scroll] > *')
+    expect(cardCss).toContain('.card[data-scroll] .body')
+    expect(cardCss).toContain('min-block-size: 0;')
+    expect(cardCss).toContain('overflow-y: auto;')
+    expect(cardCss).toContain('overscroll-behavior: contain;')
+  })
+
   it('uses modal body as the effective scroll container', () => {
     const modalTokensPath = getModulePath(
       'runtime/assets/styles/tokens/default-theme/components/modal.json'

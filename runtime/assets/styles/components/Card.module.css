@@ -102,3 +102,14 @@
   border-block-start: var(--local-footer-border-width) solid var(--local-footer-border-color);
   background-color: v('color.bg.surface-hover');
 }
+
+/* -- Scrollable content -- */
+.card[data-scroll] > * {
+  min-block-size: 0;
+}
+
+.card[data-scroll] .body {
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
