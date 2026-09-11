@@ -17,6 +17,7 @@ export const customAttributes = new Set([
   'xlarge',
   'size',
   'icon-only',
+  'no-button',
   // from Avatar
   'square',
   'circle',

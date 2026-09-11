@@ -93,6 +93,12 @@ export default defineNuxtComponent({
     const isDisabled = computed(
       () => attrs.disabled !== undefined && attrs.disabled !== false
     )
+    const isButtonless = computed(
+      () => attrs['no-button'] !== undefined && attrs['no-button'] !== false
+    )
+    const isIconRight = computed(
+      () => attrs['icon-right'] !== undefined && attrs['icon-right'] !== false
+    )
 
     // Button colour variant: read from component attrs and pass as data-* on the button.
     // processAttrs handles the root element; we mirror manually for the inner button.
@@ -121,7 +127,10 @@ export default defineNuxtComponent({
         name: props.name,
         type: 'search',
         enterkeyhint: 'search',
-        class: styles.input,
+        class: [
+          styles.input,
+          isButtonless.value && styles.inputWithInlineIcon
+        ],
         placeholder: props.placeholder,
         value: props.modelValue,
         disabled: isDisabled.value || undefined,
@@ -156,15 +165,32 @@ export default defineNuxtComponent({
         buttonContentNodes
       )
 
+      const inlineIconNode = h(
+        'span',
+        {
+          class: [
+            styles.inlineIcon,
+            isIconRight.value ? styles.inlineIconEnd : styles.inlineIconStart
+          ],
+          'aria-hidden': 'true'
+        },
+        [h(Icon, { name: searchIcon.value, class: styles.inlineIconGlyph })]
+      )
+
       return h(
         DdCluster as any,
         {
           nowrap: true,
           stretch: true,
           nogap: true,
+          small: attrs.small,
+          large: attrs.large,
           class: [styles.group, processedAttrs.value.class]
         },
-        () => [inputNode, buttonNode]
+        () =>
+          isButtonless.value
+            ? [inputNode, inlineIconNode]
+            : [inputNode, buttonNode]
       )
     }
   }

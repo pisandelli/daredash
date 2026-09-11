@@ -34,7 +34,7 @@ Use this index to find component-specific boolean attributes quickly. Props such
 | `dd-checkbox`, `dd-radio` | `error`, `warning` |
 | `dd-toggle` | `primary`, `success`, `warning`, `danger`, `info`, `small`, `large`, `xlarge` |
 | `dd-accordion` | `primary`, `success`, `warning`, `danger`, `info` |
-| `dd-input-search` | `success`, `danger`, `neutral` |
+| `dd-input-search` | `success`, `danger`, `neutral`, `no-button`, `icon-right`, `small`, `large` |
 | `dd-tabs` | `small`, `large` |
 | `dd-tab` | `primary`, `success`, `warning`, `danger`, `info`, `small`, `large` |
 | `dd-table` | `large`, `comfortable`, `compact`, `striped`, `striped-odd`, `loading-overlay` |
@@ -546,11 +546,13 @@ Common supported behavior across these controls includes:
 
 ### InputSearch (`<dd-input-search>`)
 
-Search input with an embedded button.
+Search input with an embedded action button, or with a non-interactive search icon inside the field.
 
 ```vue
 <template>
   <dd-input-search v-model="query" @search="runSearch" />
+  <dd-input-search v-model="query" no-button placeholder="Search clients" />
+  <dd-input-search v-model="query" no-button icon-right large />
 </template>
 ```
 
@@ -572,6 +574,8 @@ Search input with an embedded button.
 Semantic button intent is driven by attrs on the component, not by a generic variant prop.
 
 `primary` is the default search-button intent. Use `success`, `danger`, or `neutral` to change it; `disabled` disables both the input and search button.
+
+Use `no-button` for the compact search-field variation. It removes the action button and renders the configured search icon inside the input; the icon is leading by default and `icon-right` places it after the text. This variation supports the same `small` and `large` input sizes as the default field. Pressing Enter continues to emit `search`.
 
 ### InputGroup (`<dd-input-group>`)
 

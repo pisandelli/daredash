@@ -1015,7 +1015,7 @@ If a slot is not explicit in the code, do not describe it just because it would 
 
 ### `DdInputSearch`
 
-- Description: search input with an embedded button.
+- Description: search input with an embedded button, or a compact no-button field with an inline search icon.
 - When to use: simple search forms.
 - When not to use: complex filter forms with many fields.
 - Import: auto-registered by the module.
@@ -1032,9 +1032,11 @@ If a slot is not explicit in the code, do not describe it just because it would 
   - `search`
 - Slots: none explicitly declared.
 - Correct example: `<DdInputSearch v-model="query" @search="runSearch" />`.
+- Correct example: `<DdInputSearch v-model="query" no-button placeholder="Search clients" />`.
+- Correct example: `<DdInputSearch v-model="query" no-button icon-right large />`.
 - Incorrect example: `<DdInputSearch :options="options" />`.
 - Accessibility notes: provide an external label if the placeholder is not sufficient.
-- Restrictions: `search` is an explicit part of the API.
+- Restrictions: `search` is an explicit part of the API. `no-button` renders the search icon inside the field; it is leading by default, and `icon-right` places it at the end. Both the button and no-button variations support `small` and `large`.
 
 ### `DdInputGroup`
 

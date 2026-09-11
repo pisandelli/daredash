@@ -91,6 +91,21 @@ describe('Input Primitive', () => {
     expect(html).toContain('mdi:check')
   })
 
+  it('keeps compact icon inputs identifiable by both size and icon attributes', async () => {
+    const wrapper = await mountSuspended(Input, {
+      attrs: {
+        small: true
+      },
+      props: {
+        icon: 'mdi:magnify'
+      }
+    })
+
+    const input = wrapper.find('input')
+    expect(input.attributes('data-small')).toBeDefined()
+    expect(input.attributes('data-has-icon-left')).toBeDefined()
+  })
+
   it('applies consumer layout hooks to the outer wrapper', async () => {
     const wrapper = await mountSuspended(Input, {
       attrs: {

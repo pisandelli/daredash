@@ -129,7 +129,7 @@
       "$value": "{border-radius.md}"
     },
     "icon-size": {
-      "$value": "1.25rem"
+      "$value": "1rem"
     }
   }
 }

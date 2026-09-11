@@ -20,7 +20,7 @@ function focusField(path: string) {
       <h3>Sizes</h3>
       <div class="dd-form-grid">
         <div class="dd-form-card">
-          <DdInput small label="Small" placeholder="Compact entry" />
+          <DdInput small label="Small" placeholder="Compact entry" icon="lucide:search" />
           <button type="button" class="dd-form-link" @click="focusField('input.size.small.height')">Edit small size</button>
         </div>
         <div class="dd-form-card">

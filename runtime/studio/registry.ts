@@ -699,6 +699,7 @@ export const STUDIO_TABS: StudioTabDefinition[] = [
       componentField('input.size.small.height', 'Small Height', 'text', 'Sizes'),
       componentField('input.size.small.font-size', 'Small Font Size', 'text', 'Sizes'),
       componentField('input.size.small.padding-inline', 'Small Padding Inline', 'text', 'Sizes'),
+      componentField('input.size.small.icon-padding-inline', 'Small Icon Padding Inline', 'text', 'Sizes'),
       componentField('input.size.large.height', 'Large Height', 'text', 'Sizes'),
       componentField('input.size.large.font-size', 'Large Font Size', 'text', 'Sizes'),
       componentField('input.size.large.padding-inline', 'Large Padding Inline', 'text', 'Sizes'),

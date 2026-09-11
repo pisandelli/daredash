@@ -13,7 +13,7 @@ function focusField(path: string) {
   <section class="dd-studio-preview">
     <header class="dd-studio-preview-header">
       <h2>Input Search</h2>
-      <p>Search field pattern combining an inherited Input surface with a tokenized action button. The action foreground can be controlled globally with `input-search.button.color` or per variant with semantic text tokens.</p>
+      <p>Search field pattern combining an inherited Input surface with either a tokenized action button or an inline search icon. The action foreground can be controlled globally with `input-search.button.color` or per variant with semantic text tokens.</p>
       <div class="dd-form-note">
         <strong>How to read this preview</strong>
         <span><b>Token-driven here:</b> the group shell and the search button variants.</span>
@@ -39,6 +39,22 @@ function focusField(path: string) {
         <div class="dd-form-card">
           <DdInputSearch placeholder="Quick filter" button-label="Filter" neutral />
           <button type="button" class="dd-form-link" @click="focusField('input-search.button.neutral.background-color')">Edit neutral action</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dd-studio-preview-block">
+      <h3>Inline icon variants</h3>
+      <div class="dd-form-grid">
+        <div class="dd-form-card">
+          <DdInputSearch no-button placeholder="Search clients" />
+          <DdInputSearch no-button small placeholder="Small search" />
+          <DdInputSearch no-button large placeholder="Large search" />
+        </div>
+        <div class="dd-form-card">
+          <DdInputSearch no-button icon-right placeholder="Search clients" />
+          <DdInputSearch no-button icon-right small placeholder="Small search" />
+          <DdInputSearch no-button icon-right large placeholder="Large search" />
         </div>
       </div>
     </div>

@@ -45,7 +45,7 @@
         "$value": "{font-size.sm}"
       },
       "icon-size": {
-        "$value": "1.25rem"
+        "$value": "1rem"
       }
     },
     "regular": {

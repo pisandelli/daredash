@@ -18,7 +18,10 @@
         "$value": "{font-size.xs}"
       },
       "padding-inline": {
-        "$value": "{space.sm}"
+        "$value": "{space.xxs}"
+      },
+      "icon-padding-inline": {
+        "$value": "{input.size.small.height}"
       }
     },
     "large": {

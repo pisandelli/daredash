@@ -23,6 +23,7 @@
   --local-small-height: v('input.size.small.height');
   --local-small-font-size: v('input.size.small.font-size');
   --local-small-padding-inline: v('input.size.small.padding-inline');
+  --local-small-icon-padding-inline: v('input.size.small.icon-padding-inline');
   --local-large-height: v('input.size.large.height');
   --local-large-font-size: v('input.size.large.font-size');
   --local-large-padding-inline: v('input.size.large.padding-inline');
@@ -100,9 +101,6 @@
     }
   }
 
-  &[data-has-icon-left]  { padding-inline-start: 2.5rem; }
-  &[data-has-icon-right] { padding-inline-end: 2.5rem; }
-
   &[data-small] {
     block-size: var(--local-small-height);
     font-size: var(--local-small-font-size);
@@ -113,6 +111,18 @@
     block-size: var(--local-large-height);
     font-size: var(--local-large-font-size);
     padding-inline: var(--local-large-padding-inline);
+  }
+
+  /* Apply icon offsets after size padding so compact inputs retain room for icons. */
+  &[data-has-icon-left]  { padding-inline-start: 2.5rem; }
+  &[data-has-icon-right] { padding-inline-end: 2.5rem; }
+
+  &[data-small][data-has-icon-left] {
+    padding-inline-start: var(--local-small-icon-padding-inline);
+  }
+
+  &[data-small][data-has-icon-right] {
+    padding-inline-end: var(--local-small-icon-padding-inline);
   }
 }
 
