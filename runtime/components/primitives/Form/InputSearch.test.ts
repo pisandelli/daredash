@@ -10,6 +10,23 @@ describe('InputSearch Primitive', () => {
     expect(wrapper.find('input').attributes('type')).toBe('search')
   })
 
+  it('applies consumer layout hooks to the outer search group', async () => {
+    const wrapper = await mountSuspended(InputSearch, {
+      attrs: {
+        class: 'toolbarField',
+        style: 'flex: 0 1 256px;',
+        autocomplete: 'off'
+      }
+    })
+
+    expect(wrapper.classes()).toContain('toolbarField')
+    expect(wrapper.attributes('style')).toContain('flex-basis: 256px;')
+
+    const input = wrapper.find('input')
+    expect(input.attributes('autocomplete')).toBe('off')
+    expect(input.classes()).not.toContain('toolbarField')
+  })
+
   it('renders a leading inline search icon without a button', async () => {
     const wrapper = await mountSuspended(InputSearch, {
       attrs: { 'no-button': true }

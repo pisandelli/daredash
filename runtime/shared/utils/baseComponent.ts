@@ -52,7 +52,11 @@ export default function (Styles: StylesObject, name?: string) {
         // 3. The default slot content is rendered as the component's children.
         return h(
           props.tag as string,
-          { ...processedAttrs.value, class: classList.value },
+          {
+            ...processedAttrs.value,
+            class: classList.value,
+            style: attrs.style
+          },
           slots
         )
       }

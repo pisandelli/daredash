@@ -185,7 +185,8 @@ export default defineNuxtComponent({
           nogap: true,
           small: attrs.small,
           large: attrs.large,
-          class: [styles.group, processedAttrs.value.class]
+          class: [styles.group, attrs.class],
+          style: attrs.style
         },
         () =>
           isButtonless.value

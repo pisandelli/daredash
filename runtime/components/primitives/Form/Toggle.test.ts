@@ -10,6 +10,19 @@ describe('Toggle Primitive', () => {
     expect(input.exists()).toBe(true)
   })
 
+  it('applies consumer layout hooks to the outer wrapper', async () => {
+    const wrapper = await mountSuspended(Toggle, {
+      attrs: {
+        class: 'toolbarField',
+        style: 'flex: 0 1 256px;'
+      }
+    })
+
+    const rootLabel = wrapper.find('label')
+    expect(rootLabel.classes()).toContain('toolbarField')
+    expect(rootLabel.attributes('style')).toContain('flex-basis: 256px;')
+  })
+
   it('binds native HTML properties correctly', async () => {
     const wrapper = await mountSuspended(Toggle, {
       props: {

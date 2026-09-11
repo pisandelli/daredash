@@ -133,7 +133,8 @@ export default defineNuxtComponent({
           'div',
           {
             ...processedAttrs.value,
-            class: [styles.wrapper, processedAttrs.value.class],
+            class: [styles.wrapper, attrs.class],
+            style: attrs.style,
             'data-disabled': props.disabled || undefined,
             'data-error': hasError.value ? '' : undefined,
             'data-warning': hasWarning.value ? '' : undefined

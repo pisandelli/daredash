@@ -10,6 +10,19 @@ describe('Checkbox Primitive', () => {
     expect(input.exists()).toBe(true)
   })
 
+  it('applies consumer layout hooks to the outer wrapper', async () => {
+    const wrapper = await mountSuspended(Checkbox, {
+      attrs: {
+        class: 'toolbarField',
+        style: 'flex: 0 1 256px;'
+      }
+    })
+
+    const field = wrapper.findAll('div')[1]
+    expect(field.classes()).toContain('toolbarField')
+    expect(field.attributes('style')).toContain('flex-basis: 256px;')
+  })
+
   it('binds native HTML properties correctly', async () => {
     const wrapper = await mountSuspended(Checkbox, {
       props: {

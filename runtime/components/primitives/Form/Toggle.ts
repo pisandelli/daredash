@@ -136,7 +136,8 @@ export default defineNuxtComponent({
         'label',
         {
           ...processedAttrs.value,
-          class: [styles.wrapper, processedAttrs.value.class],
+          class: [styles.wrapper, attrs.class],
+          style: attrs.style,
           for: identifier.value,
           'data-checked': isChecked.value ? '' : undefined,
           'data-disabled': props.disabled ? '' : undefined,
