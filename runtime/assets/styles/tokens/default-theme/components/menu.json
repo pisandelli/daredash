@@ -54,7 +54,7 @@
       "$value": "{state.selected.surface}"
     },
     "icon-size": {
-      "$value": "1.125rem"
+      "$value": "1rem"
     },
     "font-size": {
       "$value": "{font-size.sm}"
