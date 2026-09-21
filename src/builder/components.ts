@@ -1,6 +1,5 @@
-import { resolve } from 'path'
-import { mkdir, writeFile, readFile, access } from 'fs/promises'
-import { addComponent } from '@nuxt/kit'
+import { access } from 'fs/promises'
+import { addComponent, addTemplate } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../types'
@@ -93,15 +92,6 @@ export async function setupComponents(
       )
   })
 
-  // Directory to store generated component wrappers (for simple/style-only components)
-  const generatedComponentsDir = resolve(
-    nuxt.options.buildDir,
-    'daredash/components'
-  )
-  await mkdir(generatedComponentsDir, { recursive: true })
-
-  const generationPromises: Promise<void>[] = []
-
   async function resolvePublishedFilePath(filePath: string) {
     const candidates = [
       filePath,
@@ -135,23 +125,21 @@ export async function setupComponents(
 import baseComponent from '${baseComponentPath}'
 export default baseComponent(styles, '${componentName}')
 `
-      const componentPath = resolve(
-        generatedComponentsDir,
-        `${componentName}.ts`
-      )
-      generationPromises.push(
-        writeFile(componentPath, componentContent, 'utf-8').then(() => {
-          if (debugMode) debugLog(`Generated component file: ${componentPath}`)
-        })
-      )
+      const template = addTemplate({
+        filename: `daredash/components/${componentName}.ts`,
+        getContents: () => componentContent,
+        write: true
+      })
 
       addComponent({
         name: prefixedName,
-        filePath: componentPath,
+        filePath: template.dst,
         global: true
       })
 
-      if (debugMode) debugLog(`Registered simple component: ${prefixedName}`)
+      if (debugMode) {
+        debugLog(`Registered generated component: ${prefixedName} -> ${template.dst}`)
+      }
     }
 
     if (config.filePath) {
@@ -170,5 +158,4 @@ export default baseComponent(styles, '${componentName}')
     }
   }
 
-  await Promise.all(generationPromises)
 }

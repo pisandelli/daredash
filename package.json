@@ -1,6 +1,6 @@
 {
   "name": "@pisandelli/daredash",
-  "version": "0.0.53-beta",
+  "version": "0.0.54-beta",
   "type": "module",
   "description": "Provides a design token-powered UI component library and styling system for Nuxt.",
   "main": "./dist/module.mjs",
@@ -30,6 +30,7 @@
     "lint:ts": "vue-tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "test:studio": "vitest run test/studio",
+    "test:nuxt-lifecycle": "nuxt prepare test/fixtures/basic && nuxt build test/fixtures/basic",
     "verify:publish": "npm run prepack && npm run pack:dry-run"
   },
   "author": "Pedro Pisandelli",

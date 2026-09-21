@@ -1,5 +1,4 @@
-import { resolve, dirname } from 'path'
-import { readFile, writeFile, mkdir } from 'fs/promises'
+import { readFile } from 'fs/promises'
 import { addTemplate, addPlugin } from '@nuxt/kit'
 import type { Resolver } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
@@ -124,15 +123,14 @@ export async function setupTokens(
     }
   }
 
-  const jsonPath = resolve(nuxt.options.buildDir, 'design-tokens.json')
-  await mkdir(dirname(jsonPath), { recursive: true })
-  if (typedTokens.length > 0) {
-    await writeFile(jsonPath, JSON.stringify(typedTokens), 'utf-8')
-    if (debugMode) debugLog(`Typed tokens JSON generated at ${jsonPath}`)
-  } else {
-    await writeFile(jsonPath, JSON.stringify([]), 'utf-8')
-    if (debugMode)
-      debugLog('No typed tokens found. Generated empty JSON file.', 'warn')
+  const typedTokensTemplate = addTemplate({
+    filename: 'design-tokens.json',
+    getContents: () => JSON.stringify(typedTokens),
+    write: true
+  })
+
+  if (debugMode) {
+    debugLog(`Typed tokens JSON registered at ${typedTokensTemplate.dst}`)
   }
 
   addPlugin(resolver.resolve('./runtime/typedTokens.client'))

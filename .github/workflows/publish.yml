@@ -36,6 +36,9 @@ jobs:
       - name: Verify publish artifact
         run: npm run verify:publish
 
+      - name: Verify Nuxt prepare/build lifecycle
+        run: npm run test:nuxt-lifecycle
+
       - name: Publish package to npm
         run: |
           VERSION="$(node -p "require('./package.json').version")"
